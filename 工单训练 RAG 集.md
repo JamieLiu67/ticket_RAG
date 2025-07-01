@@ -241,6 +241,37 @@ httpcode ：400
 
 ---
 
+# **编号：35768**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.5.1**
+
+**SDK Platform: Android**
+
+**Request type: 线上报错**
+
+问：1. 问题表现： Android端的用户和web的客服建立双向视频后，Android端看不见web端客服的视频，只能看到自己。 Web端可以看到自己 也可以看到用户
+2. 线上出现概率为1% - 2%
+3. 经过开发代码排查，定位原因是 Android端AgoraSdk的 onUserJoined 方法没有被调用，导致自定义videoview无法显示出来
+
+override fun onUserJoined(uid: Int, elapsed: Int)
+
+{ Log.i("AgoraManager", "CS-UserJoined uid = $uid") *levelLiveData.postValue(false)* uidJoinLiveData.postValue(uid) }
+
+回答思维链：onUserJoined回调被触发是有条件的，比如远端用户是否是主播身份，需要先提供相关频道和uid信息来佐证
+
+答：您好，onUserJoined回调在如下情况下被触发：
+远端用户/主播加入频道。
+远端用户加入频道后将用户角色改变为主播。
+远端用户/主播网络中断后重新加入频道。
+
+需要您这边提供下频道号，时间点，以及uid，我们查下远端用户是否是主播身份
+
+[https://doc.shengwang.cn/api-ref/rtc/android/API/toc_channel#callback_irtcengineeventhandler_onuserjoined](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_channel#callback_irtcengineeventhandler_onuserjoined)
+
+---
+
 # **编号：35760**
 
 **SDK Product: RTC**
@@ -305,37 +336,6 @@ engine.setParameters("
 回答思维链：客户调用了私参接口来让android设备发送G711音频编码，但是G711编码只有8K采样率，无法切换到16K，G722才是16K的，所以这个需求无法实现
 
 答：您好，G711 只有 8k 采样率，G722 才是 16k，没有办法指定 G711 用 16k 的
-
----
-
-# **编号：35768**
-
-**SDK Product: RTC**
-
-**SDK Version: 4.5.1**
-
-**SDK Platform: Android**
-
-**Request type: 线上报错**
-
-问：1. 问题表现： Android端的用户和web的客服建立双向视频后，Android端看不见web端客服的视频，只能看到自己。 Web端可以看到自己 也可以看到用户
-2. 线上出现概率为1% - 2%
-3. 经过开发代码排查，定位原因是 Android端AgoraSdk的 onUserJoined 方法没有被调用，导致自定义videoview无法显示出来
-
-override fun onUserJoined(uid: Int, elapsed: Int)
-
-{ Log.i("AgoraManager", "CS-UserJoined uid = $uid") *levelLiveData.postValue(false)* uidJoinLiveData.postValue(uid) }
-
-回答思维链：onUserJoined回调被触发是有条件的，比如远端用户是否是主播身份，需要先提供相关频道和uid信息来佐证
-
-答：您好，onUserJoined回调在如下情况下被触发：
-远端用户/主播加入频道。
-远端用户加入频道后将用户角色改变为主播。
-远端用户/主播网络中断后重新加入频道。
-
-需要您这边提供下频道号，时间点，以及uid，我们查下远端用户是否是主播身份
-
-[https://doc.shengwang.cn/api-ref/rtc/android/API/toc_channel#callback_irtcengineeventhandler_onuserjoined](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_channel#callback_irtcengineeventhandler_onuserjoined)
 
 ---
 
