@@ -1,6 +1,6 @@
 # 工单训练 RAG 集
 
-**编号：35745**
+# **编号：35745**
 
 **SDK Product: RTC**
 
@@ -20,7 +20,7 @@
 
 ---
 
-**编号：35864**
+# **编号：35864**
 
 **SDK Product: RTC**
 
@@ -38,7 +38,7 @@
 
 ---
 
-**编号：35758**
+# **编号：35758**
 
 **SDK Product: RTC**
 
@@ -62,7 +62,7 @@ engine.setParameters("
 
 ---
 
-**编号：35849**
+# **编号：35849**
 
 **SDK Product: Cloud-recording**
 
@@ -83,7 +83,7 @@ engine.setParameters("
 
 ---
 
-**编号：35862**
+# **编号：35862**
 
 **SDK Product: RTC**
 
@@ -104,7 +104,7 @@ engine.setParameters("
 
 ---
 
-**编号：35780**
+# **编号：35780**
 
 **SDK Product: RTC**
 
@@ -129,7 +129,7 @@ engine.setParameters("
 
 ---
 
-**编号：35759**
+# **编号：35759**
 
 **SDK Product: RTC**
 
@@ -149,7 +149,7 @@ engine.setParameters("
 
 ---
 
-**编号：35770**
+# **编号：35770**
 
 **SDK Product: RTC**
 
@@ -169,7 +169,7 @@ engine.setParameters("
 
 ---
 
-**编号：35760**
+# **编号：35760**
 
 **SDK Product: RTC**
 
@@ -192,7 +192,7 @@ app 端 调用获取房间列表的接口为啥显示不出来？
 
 ---
 
-**编号：35774**
+# **编号：35774**
 
 **SDK Product: RTC**
 
