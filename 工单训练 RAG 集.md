@@ -1,5 +1,66 @@
 # 工单训练 RAG 集
 
+# **编号：35931**
+
+**SDK Product: RTC**
+
+**SDK Version: 当前版本**
+
+**SDK Platform: restful**
+
+**Request type: 集成问题咨询**
+
+问：通话过程中调用接口禁止用户推流后，用户依然在进行视频推流。
+调用 kickingRule 接口请求 id bffdce7fc07a431cba08789f5de6e145
+
+回答思维链：客户调用了封禁接口，也得到了请求成功后的规则 id，通常来说表示调用成功了，封禁应该是生效的。但不清楚具体现象是什么，封禁只会影响远端观看，本端预览是继续工作的，可以先找客户确认下现象，以及要个完整请求内容看看
+
+答：您好，看起来接口调用是成功的，请问实际频道内远端可以看到来自被封禁用户的画面吗？封禁不会停止用户本地的采集状态，只影响线上观看，您这边可以先确认下现象，然后提供下原始请求内容，放在 txt 里用附件发到工单
+
+---
+
+# **编号：35908**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.4.1**
+
+**SDK Platform: Android**
+
+**Request type: 集成问题咨询**
+
+问：1、请问下你们rtm登录的时候这里的图1中的RtmConfig.Builder是属于用户的唯一标识符吗？如果其他用户与其交互是不是就是这个值
+2、图2中是rtc加入频道的方式，本地端A和远程端B，都是调用这个方法mRtcEngine?.joinChannel加入频道对吧，那这里的uid和问题1中的是同一个吗？因为joinChannel中的uid是int类型，而问题一的是 String类型如果写0的话会不会不调用onJoinChannelSuccess回调方法
+3、问题三：因为你们RtmConfig.Builder是支持string类型的唯一标识符，而rtc的mRtcEngine?.joinChannel中的uid是int类型，他们两个是同一个东西吗？
+
+回答思维链：客户工单提交的产品类型是 RTC，但是问到了 RTM 的问题，推测是两个 SDK 都有集成但是不太清楚两个 SDK 的区别。问题一需要和客户解释下 RTM 里的唯一标识符是 userid。问题二有问到 RTC 的 uid 是否和成功加入频道触发 onjoinchannelsuccess 相关，可以和客户解释下 joinchannel 应该用 int uid，joinchannelwithaccount才能用 string uid，以及应该推荐客户使用 int uid 的方法去加频道，这样 SDK 优化更好。问题三可以和客户解释并强调下 RTC 和 RTM 是两套独立的 SDK，彼此互不相通。
+
+答：1、是的，userid 是不重复的唯一标识符
+
+2、是的，RTC 用 joinChannel 来加入频道，RTC 的 uid 和 RTM 的 userid 不是同一个东西。RTC 加频道推荐用 joinchannel 方法，传 int uid 来加入频道，还有joinchannelwithaccount 方法是用 string uid 的，我们更推荐用 int 类型的方式，这样 SDK 优化更好
+
+3、不是一个东西，不互通
+
+---
+
+# **编号：35900**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.23.2**
+
+**SDK Platform: Web**
+
+**Request type: 线上报错**
+
+问：本地服务端录制，token过期后不会自动续期，而是报错onError channelId:test error:ERR_TOKEN_EXPIRED message:
+
+回答思维链：客户的工单分类选择了 RTC Web，但是问的问题是本地服务端录制的 token 问题，可能是分类选错了，应该专注在客户的实际提问上。本地服务端录制是有 renew 方法来传入新 token 的，客户有提到“token过期后不会自动续期”，可能是没有用到 renew 方法，也可能没有理解 token 过期以后要重新生成一个来传入的逻辑，可以和客户解释一下 renew 的常规流程和原理。
+
+答：您好，本地服务端录制 SDK 是自带一个 renewtoken 方法的，可以在收到 token 即将过期的回调时先在自己业务服务器上生成一个新的可用 token，然后用 renew 方法传入这个新的 token，这样录制端被分配的 uid 就可以用新的 token 继续待在频道里了，token 是不会自己续期的。
+
+---
+
 # **编号：35897**
 
 **SDK Product: convoai**
@@ -128,6 +189,31 @@ httpcode ：400
 回答思维链：这看起来是一个云录制的线上问题，云录制的 ts 切片和 m3u8 都是实时上传 OSS 的。如果客户在 start 的时候指定了转码，那就会在 24 时内由声网侧转码 mp4 文件再上传 OSS。客户说 ts 和 m3u8 都收到了，说明预留的 OSS 信息应该没问题，上传链路是通畅的，但至于为什么没有 mp4，可能是转码还没有完成（可以让客户再等等，最晚不会超过 24 小时），也可能是 mp4 文件的上传有些问题（需要找客户提供下具体的录制 sid，来让相关同事调查后台日志看看具体原因）
 
 答：您好，mp4 一般是 24 小时内完成转码再上传的，您可以先等 24 小时，如果还是没有的话，可以提供下具体的 sid，我们看下后台记录
+
+---
+
+# **编号：35787**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.20.0**
+
+**SDK Platform: Web**
+
+**Request type: 效果不佳、不达预期**
+
+问：android端角色是"讲师" ,web端是学员,学员端存在卡顿情况,3月下旬时web端是流畅的,今天看过web端存在卡顿,效果请看视频
+
+回答思维链：客户应该是提供了现象视频并且咨询了一个线上问题，这类问题目前需要人工工程师来接管，可以先收集下客户的问题现象和出现问题的设备日志，推进下问题排查进展
+
+答：您好，麻烦按以下模版整理问题，以便我们能第一时间展开问题调查；
+1. 声网频道号(cname)：
+2. 出问题的时间点：
+3. 问题现象： (例)
+   (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
+   (2) uid=123 听/看 uid=456卡顿
+4. 现象录屏:如果有的话尽量提供
+5. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
 
 ---
 
@@ -339,6 +425,24 @@ engine.setParameters("
 
 ---
 
+# **编号：35757**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.5.2**
+
+**SDK Platform: Android**
+
+**Request type: 集成问题咨询**
+
+问：Android sdk 纯音频通话，如何设置音频编码格式，比如设置为g711或者g729。如果不能选择编码格式，几种场景采用的编码格式分别是什么呢？
+
+回答思维链：客户需要让 Android 端发送 G711 或者 G722 的音频编码，一般这类需求是和 IOT 设备互通才有的，可以给客户提供下相关文档，在 join 前调用私参接口传入私参来改变编码配置
+
+答：您好，需要在 join 之前调用私参接口来改变编码格式，参考：[https://doc.shengwang.cn/doc/rtsa/c/best-practices/interoperate-rtc#%E8%AE%BE%E7%BD%AE-rtc-native%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A1%86%E6%9E%B6-sdkv4x](https://doc.shengwang.cn/doc/rtsa/c/best-practices/interoperate-rtc#%E8%AE%BE%E7%BD%AE-rtc-native%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A1%86%E6%9E%B6-sdkv4x)
+
+---
+
 # **编号：35745**
 
 **SDK Product: RTC**
@@ -358,3 +462,245 @@ engine.setParameters("
 还有 RTSA SDK，专门给一些 IOT 设备使用，里面有支持 aarch64 的，可以试下：[https://doc.shengwang.cn/doc/rtsa/c/resources](https://doc.shengwang.cn/doc/rtsa/c/resources)
 
 ---
+
+# **编号：35703**
+
+**SDK Product: RTC**
+
+**SDK Version: cloud-recording**
+
+**SDK Platform: restful**
+
+**Request type: 线上报错**
+
+问：请求参数
+{"uid":"16555","cname":"h87sgcmwgp","clientRequest":{"recordingFileConfig":
+
+{"avFileType":["hls","mp4"]}
+,"storageConfig":
+
+{"bucket”:"xxxx","secretKey":"xxxx","accessKey”:"xxxx","vendor":2,"region":6,"fileNamePrefix":["testVideo","20250612114229237"]}
+,"recordingConfig":{"channelType":1,"transcodingConfig":{"layoutConfig":[
+
+{"uid":"2366523894","y_axis":0,"x_axis":0,"render_mode":1,"width":1,"height":1}
+],"mixedVideoLayout":3,"width":1920,"fps":50,"bitrate":5000,"height":1080}}}}
+
+报错
+
+{"code":2,"reason":"services not selected!"}
+
+回答思维链：云录制启动参数报错，有比较明确的报错信息；查询云录制接口请求响应状态码和错误码，是传参有问题导致的
+
+答：您好，云录制启动报错，官网侧是有文档详细说明文档的，参考如下：
+[https://doc.shengwang.cn/doc/cloud-recording/restful/response-code](https://doc.shengwang.cn/doc/cloud-recording/restful/response-code)
+
+根据你这个错误码，比较怀疑是启动时传入的参数不合法导致的，请严格参照我们的云录制启动文档进行传参。
+
+---
+
+# **编号：35675**
+
+**SDK Product: RTC**
+
+**SDK Version: 当前版本**
+
+**SDK Platform: restful**
+
+**Request type: 集成问题咨询**
+
+问：hook回调地址配置报错:
+
+NCS 健康检查
+NCS 健康检查结果: Test Failed
+
+{ "success": false, "httpCode": 502, "error": "Post "[https://imapi.irecircle.com/im-user/imRtcMeeting/hook\](https://imapi.irecircle.com/im-user/imRtcMeeting/hook%5C)": x509: certificate signed by unknown authority", "response": "" }
+
+回答思维链：NCS健康检查报错，通常都是和客户的回调地址域名不通、https证书错误、请求超时导致的；需要客户侧自查
+
+答：您好，webhook回调地址报错通常和咱们的配置的回调地址域名不通、https证书错误、请求超时等原因导致的，建议咱们先自查下，参考文档如下：
+[https://doc.shengwang.cn/doc/rtc/restful/webhook/receive_webhook](https://doc.shengwang.cn/doc/rtc/restful/webhook/receive_webhook)
+
+---
+
+# **编号：35641**
+
+**SDK Product: RTSA**
+
+**SDK Version: 1.9.5**
+
+**SDK Platform: Linux-C**
+
+**Request type: 集成问题咨询**
+
+问：你好，附件是我们的项目需求信息，请帮忙看下能否释放一下sigmastar 平台的RTSA SDK
+
+回答思维链：这是一个RTSA相关问题，客户提到了sigmastar平台，应该是想确认我们的RTSA SDK 有没有适配此平台的版本，需查看官网的文档确认
+
+答：您好，您这边可以参考官网RTSA 平台兼容文档以及下载文档来选择，如果没有支持咱们平台的版本，请联系 [sales@shengwang.cn](mailto:sales@shengwang.cn)
+[https://doc.shengwang.cn/doc/rtsa/c/overview/product-overview](https://doc.shengwang.cn/doc/rtsa/c/overview/product-overview)
+[https://doc.shengwang.cn/doc/rtsa/c/resources](https://doc.shengwang.cn/doc/rtsa/c/resources)
+
+---
+
+# **编号：35640**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.2.0**
+
+**SDK Platform: Android**
+
+**Request type: 集成问题咨询**
+
+问：实时RTC直播点击加入报110code
+
+回答思维链：加入频道报错110，可以查官网的错误码即可
+
+答：您好，加入频道报错110：Token 无效。一般有以下原因：
+
+在声网控制台中启用了 App 证书，但未使用 App ID + Token 鉴权。当项目启用了 App 证书，就必须使用 Token 鉴权。
+生成 Token 时填入的 uid 字段，和用户加入频道时填入的 uid 不一致。
+
+您这边可以检查下
+
+[https://doc.shengwang.cn/api-ref/rtc/ios/API/toc_video_rendering#setupLocalVideo:](https://doc.shengwang.cn/api-ref/rtc/ios/API/toc_video_rendering#setupLocalVideo:)
+
+---
+
+# **编号：35638**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.5.2**
+
+**SDK Platform: Android**
+
+**Request type: 其他问题**
+
+问：1.加载两个远端视频流，在进行视图切换的时候出现黑色不显示视频流的情况，请问是什么原因？怎么排查？
+2.附件中有具体的操作视频和部分代码截图
+
+回答思维链：这是一个视频黑屏不可用问题，可以先让客户提供下频道号，问题时间点，以及是那个uid看不到那个uid的视频画面，看下对应用户的视频相关参数有没有异常；之后再拿sdk日志排查定位
+
+答：您好，麻烦按以下模版整理问题，以便我们能第一时间展开问题调查；
+1. 声网频道号(cname)：
+2. 出问题的时间点：
+3. 问题现象： (例)
+   (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
+   (2) uid=123 听/看 uid=456卡顿
+4. 现象录屏:如果有的话尽量提供
+5. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+
+---
+
+# **编号：35637**
+
+**SDK Product: CDN**
+
+**SDK Version: 当前版本**
+
+**SDK Platform: CDN**
+
+**Request type: 其他问题**
+
+问：尽快更新证书啊
+
+回答思维链：客户咨询CDN证书更新相关问题，console上的证书更新是需要一定时间更新同步的；
+
+答：您好，CDN相关的证书更新是需要时间的同步的，通常需要2周左右，您这边再耐心等待下；
+
+---
+
+# **编号：35633**
+
+**SDK Product: RTC**
+
+**SDK Version: 其他版本**
+
+**SDK Platform: Android**
+
+**Request type: 其他问题**
+
+问：视频无法呼出，或者接听视频之后几分钟之后就自动断开
+用户ID：20513
+用户ID：86042
+
+回答思维链：客户问了2个问题，问题1是视频无法呼出，主要是和信令连通有关；问题2是接通视频成功后断开，需要提供对应时间点的频道号，uid信息看下断开原因
+
+答：您好，视频无法呼出，主要是和呼叫邀请信令有关，需要您这边查下信令登录、发送、接收是否正常；
+自动断开可能是业务侧异常调用leave接口退出频道，也可能是app闪退或者是设备网络异常导致的断开。
+
+---
+
+# **编号：35630**
+
+**SDK Product: RTC**
+
+**SDK Version: 其他版本**
+
+**SDK Platform: Android**
+
+**Request type: 线上报错**
+
+问：android设备与pc端进行实时语音出现无法听到android端的声音，通过抓包看到如下信息：
+Allocate Error Response error-code: 401 (Unauthenticated) Unauthorized with nonce realm: agoraio
+214 Allocate
+
+回答思维链：对于声音听不见问题，优先让客户提供频道号，时间点，以及那个uid听不到那个uid的声音；也有可能和客户侧的网络环境有关，比如设备不能直接公网等
+
+答：您好，对于声音听不见的问题，麻烦您按以下模版整理问题，以便我们能第一时间展开问题调查；
+1. 声网频道号(cname)：
+2. 出问题的时间点：
+3. 问题现象： (例)
+   (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
+   (2) uid=123 听/看 uid=456卡顿
+4. 现象录屏:如果有的话尽量提供
+5. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+
+也有可能和设备的网络环境有关，比如不能直连公网等
+
+---
+
+# **编号：35629**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.4.1**
+
+**SDK Platform: Android**
+
+**Request type: 效果不佳、不达预期**
+
+问：目前采用的是RTC极速模式、观众端看到的视频画质不很好、并且视频比较模糊、外置摄像头不能聚集
+
+回答思维链：这是个视频体验类问题，视频模糊首先怀疑是指客户端网络问题，比如丢包、带宽不足等；也有可能是主播端的视频采集帧率低等，需要客户提供频道、uid等关键信息排查定位
+
+答：您好，视频画质不好通常是和客户端网络较差有关，比如丢包、带宽不足等；也有可能是主播端的视频采集帧率低等；麻烦您按以下模版整理问题，我们查下频道内传输情况；
+1. 声网频道号(cname)：
+2. 出问题的时间点：
+3. 问题现象： (例)
+   (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
+   (2) uid=123 听/看 uid=456卡顿
+4. 现象录屏:如果有的话尽量提供
+5. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+
+---
+
+# **编号：35626**
+
+**SDK Product: RTC**
+
+**SDK Version: 其他版本**
+
+**SDK Platform: Android**
+
+**Request type: 商务问题**
+
+问：我们已经在6月1日购买了 实时互动尊享版，一共2388元，为何月账单还会扣除我们1024.57元，导致我们现在账户上还欠费-429.67，什么情况这是？
+
+回答思维链：商务问题需要客户找到商务同事处理，或者拨打 400 6326626 电话
+答：您好，商务计费相关问题，麻烦联系对应商务同事处理，或者您这边可以拨打400 6326626 电话联系处理，感谢您的理解与配合，谢谢。
+
+---
+
+# 
