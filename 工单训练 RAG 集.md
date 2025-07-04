@@ -443,6 +443,29 @@ engine.setParameters("
 
 ---
 
+# **编号：35750**
+
+**SDK Product: RTC**
+
+**SDK Version: 当前版本**
+
+**SDK Platform: Restful**
+
+**Request type: 效果不佳、不达预期**
+
+问：疑似未收到声网推送的主播离开频道事件。
+需要协助排查该频道主播离开频道时的事件推送日志。
+
+回答思维链：客户反馈没有收到主播离开频道的事件，但没有说明是服务端的Webhook NCS 事件还是客户端的回调，可以先和客户确认下这个细节来推进问题调查
+
+答：您好，请问没收到的是客户端回调还是服务端 NCS 事件？
+
+客户端的话可以提供下 sdk 日志：[https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+
+NCS 事件的话可以先去声网 console 上检查下回调地址是否有配置，以及健康检查是否通过
+
+---
+
 # **编号：35745**
 
 **SDK Product: RTC**
@@ -463,11 +486,52 @@ engine.setParameters("
 
 ---
 
-# **编号：35703**
+# **编号：35740**
 
 **SDK Product: RTC**
 
-**SDK Version: cloud-recording**
+**SDK Version: 4.5.0**
+
+**SDK Platform: Android**
+
+**Request type: 效果不佳、不达预期**
+
+问：当前版本4.5.0，2个移动端设备，互相呼叫，通过服务器生成同样的 token 和 channelName，调用 joinChannel 后，均回调了onJoinChannelSuccess，但是没有回调 onUserJoined，这是为什么？
+用旧的版本 3.2.0 能回调 onUserJoined。业务依赖 onUserJoined 来判断远端用户是否加入成功，加入了则认为通话建立成功，若没回调，则一直处于拨号中的状态。
+
+回答思维链：客户反馈用相同的 token 加入相同的频道以后都触发了onJoinChannelSuccess 但是没有 onUserJoined ，需要和客户确认下是否出现了用相同 token 和 uid 来加入频道导致互踢的情况，以及也要和客户确认下加入频道时双方的身份都是否为主播，onUserJoined 只有在远端是主播身份加入的时候才会触发。
+
+答：您好，
+
+1、onUserJoined只会在远端以主播身份加入的时候才触发，如果身份是观众就不触发了
+
+2、如果用的是相同的 token，需要确认下 uid 是否相同，token 是和 uid 、频道名绑定的，但是 uid 在频道内不能重复，所以理论上不同 uid 的 token 应该不同，请确认下是否用了相同的 uid 加频道，导致了互踢
+
+---
+
+# **编号：35721**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.21.0**
+
+**SDK Platform: Web**
+
+**Request type: 集成问题**
+
+问：之前集成了实时共享RTC，加入频道也能正常共享视频，现在想在共享视频时，再共享屏幕，视频共享成功后调用了方法AgoraRTC.createScreenVideoTrack创建屏幕共享，然后在创建成功后调用rtc.Client.publish([localScreenTrack])，但是控制台报错AgoraRTCError CAN_NOT_PUBLISH_MULTIPLE_VIDEO_TRACKS；不知道什么原因，请教一下该如何处理。
+
+回答思维链：报错写的是AgoraRTCError CAN_NOT_PUBLISH_MULTIPLE_VIDEO_TRACKS，这表示不能发送对路视频流。SDK 一个 uid 只能发送一路视频流，推测客户是用一个 uid 既发送屏幕共享流又发送摄像头流导致的。 
+
+答：您好，一个 uid 只能发一路视频流，要发两路流就需要再创建一个 client，然后用不同的 uid 加入频道，指定发屏幕共享流。
+
+---
+
+# **编号：35703**
+
+**SDK Product: cloud-recording**
+
+**SDK Version: 当前版本**
 
 **SDK Platform: restful**
 
@@ -495,6 +559,30 @@ engine.setParameters("
 [https://doc.shengwang.cn/doc/cloud-recording/restful/response-code](https://doc.shengwang.cn/doc/cloud-recording/restful/response-code)
 
 根据你这个错误码，比较怀疑是启动时传入的参数不合法导致的，请严格参照我们的云录制启动文档进行传参。
+
+---
+
+# **编号：35702**
+
+**SDK Product: RTM**
+
+**SDK Version: 其他版本**
+
+**SDK Platform: Java**
+
+**Request type: 线上报错**
+
+问：我们公司的声网SDK，是声网之前给我们的内测版本。
+平台：Android
+今天上午发现大面积报错：Agora RTM join topic failed by join ret: -10001。无法加入RTM频道，RTC也不可用。相关错误码查不到，请教一下如何解决。
+
+回答思维链：客户有提到用的是以前的内测版本，可能是个老版本了，应该推荐客户用现在最新的 RTM 2.x 来上线使用。
+
+-10001 的错误码是有文档可以查看的，这表示没有初始化，可以让客户自查一下相关业务并且提供错误码文档给他。
+
+答：您好，内测版本不推荐上线使用，建议集成我们2.x 最新的对外版本：[https://doc.shengwang.cn/doc/rtm2/android/landing-page](https://doc.shengwang.cn/doc/rtm2/android/landing-page)
+
+10001 是没有初始化的报错，可以先检查下相关业务：[https://doc.shengwang.cn/doc/rtm2/android/error-codes#%E9%94%99%E8%AF%AF%E7%A0%81%E5%AF%B9%E7%85%A7%E8%A1%A8](https://doc.shengwang.cn/doc/rtm2/android/error-codes#%E9%94%99%E8%AF%AF%E7%A0%81%E5%AF%B9%E7%85%A7%E8%A1%A8)
 
 ---
 
@@ -702,3 +790,40 @@ Allocate Error Response error-code: 401 (Unauthenticated) Unauthorized with nonc
 答：您好，商务计费相关问题，麻烦联系对应商务同事处理，或者您这边可以拨打400 6326626 电话联系处理，感谢您的理解与配合，谢谢。
 
 ---
+
+# **编号：35580**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.5.2**
+
+**SDK Platform: Android**
+
+**Request type: 崩溃（闪退、卡死）**
+
+问：接收端是Linux系统，发端是安卓手机，型号是Vivo Z5x，安卓版本10，第二次发起后，Linux端会崩溃。
+然后换另一台安卓手机，型号是荣耀X50，安卓版本15，多次发起，Linux 端不会崩溃。
+
+回答思维链：客户咨询了一个崩溃问题，无法直接分析问题所在，应该先找客户收集崩溃堆栈、双方崩溃时的 SDK 日志信息，方便后续人工工程师调查。
+
+答：您好，可以先参考下这篇文档收集崩溃时的堆栈和双方 SDK 日志，稍后人工工程师会解析崩溃查看具体堆栈在哪里了。
+
+[https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+
+---
+
+# **编号：35444**
+
+**SDK Product: Cloud-transcoder**
+
+**SDK Version: 当前版本**
+
+**SDK Platform: Restful**
+
+**Request type: 开通权限、提高配额、上量报备**
+
+问：帮我把这个appid开通云端转码服务 7dacdca9362c47289595189fe551c5c9
+
+回答思维链：客户需要开通云端转码服务，并且提供了 appid，可以让客户稍作等待，人工工程师稍后就会开通
+
+答：您好，已收到您的申请，稍后人工工程师会帮您开通这个服务，请稍等片刻。
