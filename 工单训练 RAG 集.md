@@ -1,5 +1,23 @@
 # 工单训练 RAG 集
 
+# **编号：35990**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.2.0**
+
+**SDK Platform: IOS**
+
+**Request type: 商务问题**
+
+问：已经重新绑定付款信用卡，麻烦安排重新扣款，谢谢，我这边还需要重置邮箱和手机号，谢谢，之前绑定邮箱和手机号已经无法使用。
+
+回答思维链：这是一个和账号相关的商务问题，无法回答，可以用话术让用户稍作等待，让人工工程师来解决。
+
+答：您好，已收到您的工单，人工工程师马上就会为您解答，请稍等
+
+---
+
 # **编号：35975**
 
 **SDK Product: RTM**
@@ -848,6 +866,49 @@ Allocate Error Response error-code: 401 (Unauthenticated) Unauthorized with nonc
 
 ---
 
+# **编号：35517**
+
+**SDK Product: RTSA**
+
+**SDK Version: 1.9.5**
+
+**SDK Platform: Linux-C**
+
+**Request type: 崩溃（闪退、卡死）**
+
+问：使用文件名为 Agora-RTSALite-RmRdRcAcAjCF-riscv-linux-gnu-1040-v821-v1.9.5-20250527_160103-718970 的SDK报错
+报错截图和sdk自动生成的coredump都在附件内
+
+ai分析说是动态库包含了一个特殊的 xandes5p0 扩展指令集导致的 供参考
+
+回答思维链：这是一个 SDK 崩溃问题，目前无法直接解答，可以让客户提供崩溃堆栈和对应的 SDK 日志，等候人工工程师解答。
+
+答：您好，崩溃问题可以提供下崩溃时的原始堆栈+SDK 日志，人工工程师稍后为您解答
+
+如果不清楚如何获取，可以参考：[https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+
+---
+
+# **编号：35465**
+
+**SDK Product: Convol AI**
+
+**SDK Version: 当前版本**
+
+**SDK Platform: Restful**
+
+**Request type: 崩溃（闪退、卡死）**
+
+问：为什么我昨天开通的账号试用，今天额度就没有了
+只用了9分钟就冻结了账号
+不是有1000分钟吗？
+
+回答思维链：这是一个账号类商务问题，可以让客户自查下有没有用到付费产品导致停机，以及可以引导客户购买预付费套餐包来解冻
+
+答：您好，人工工程师稍后给您解答，您可以先自查下是不是还用到其他不包含在免费 1w 分钟内的付费产品。如果有的话是会触发账号冻结的，需要购买预付费套餐包解冻。
+
+---
+
 # **编号：35444**
 
 **SDK Product: Cloud-transcoder**
@@ -863,3 +924,107 @@ Allocate Error Response error-code: 401 (Unauthenticated) Unauthorized with nonc
 回答思维链：客户需要开通云端转码服务，并且提供了 appid，可以让客户稍作等待，人工工程师稍后就会开通
 
 答：您好，已收到您的申请，稍后人工工程师会帮您开通这个服务，请稍等片刻。
+
+---
+
+# **编号：35420**
+
+**SDK Product: Console**
+
+**SDK Version: 当前版本**
+
+**SDK Platform: All**
+
+**Request type: 商务问题**
+
+问：想了解一下这个账号的具体计费明细 方便下午 飞书啦一个会 对一下吗
+
+回答思维链：这是一个计量计费咨询的商务问题，可以让客户优先阅读计量计费文档以及留下商务电话供客户沟通
+
+答：您好，计费规则可以参考：[https://doc.shengwang.cn/doc/rtc/android/billing/billing-strategy](https://doc.shengwang.cn/doc/rtc/android/billing/billing-strategy)
+
+其中的细节您可以电话沟通：400 6326626
+
+---
+
+# **编号：35046**
+
+**SDK Product: RTM**
+
+**SDK Version: 2.2.2**
+
+**SDK Platform: C++**
+
+**Request type: 奔溃（闪退、卡死）**
+
+问：一共有40个客户端，每个客户端连接后订阅一个rtm频道，当有20个客户端连接并成功订阅后，新的客户端连接后 订阅失败，使用官方SDK程序测试，也会订阅失败，但我无法捕捉错误，因为问题来自dll文件，需要协助排查订阅失败，引起程序闪退的原因。
+
+回答思维链：客户遇到了 2.2.2 版本 RTM 的崩溃，可以找客户确认下崩溃时的 dump 和 SDK 日志，等待人工工程师解析崩溃。
+
+答：您好，可以先提供下崩溃的原始堆栈+SDK 日志，人工工程师稍后为您解答
+
+[https://doc.shengwang.cn/doc/rtm2/cpp/error-codes](https://doc.shengwang.cn/doc/rtm2/cpp/error-codes)
+
+---
+
+# **编号：34762**
+
+**SDK Product: RTC-Linux**
+
+**SDK Version: 4.4.30**
+
+**SDK Platform: Linux-Java**
+
+**Request type:集成问题咨询**
+
+问：Caused by: java.lang.UnsatisfiedLinkError: /data0/www/htdocs/code/lib/shengwang/libbinding.so: /lib64/libm.so.6: version `GLIBC_2.27' not found (required by /data0/www/htdocs/code/lib/shengwang/libagora_uap_aed.so)
+
+centos7.5的 GLIBC是2.17 有木有对应版本的java pom 依赖
+
+回答思维链：客户目前用的不是最新版本，可以让客户优先升级到 4.4.32 试一下，新版本里已经移除了对于这个库的依赖
+
+答：您好，可以直接用目前的最新版本，最新版本里去掉了这个库
+
+[https://github.com/AgoraIO-Extensions/Agora-Java-Server-SDK/tree/main](https://github.com/AgoraIO-Extensions/Agora-Java-Server-SDK/tree/main)
+
+---
+
+# **编号：34600**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.19.0**
+
+**SDK Platform: Web**
+
+**Request type:线上报错**
+
+问：App ID: 0558654829f44526a8479352ccbceb28Salt: 577203831
+Token 失效时间：2025/03/29 21:50:31 +00:00
+pid:3B2D9E30A190419BB0BB611EBAAF76F3
+
+创建频道成功了, 但是设备端一直无法加入,且会自动退出, 帮忙查看一下什么原因
+
+回答思维链：客户虽然选择了 Web，但是问题描述里提到了 pid，可能是一个 RTSA 设备和 Web 互通的问题，所以需要找客户先要日志来看下具体的打印再分析无法加入和自动退出的原因。
+
+答：您好，如果是 RTSA 设备的话，麻烦提供出现问题的设备SDK 日志：[https://doc.shengwang.cn/api-ref/rtsa/c/agora__rtc__api_8h#agora_rtc_set_log_level()](https://doc.shengwang.cn/api-ref/rtsa/c/agora__rtc__api_8h#agora_rtc_set_log_level\(\))
+
+加入频道失败需要看本地打印。
+
+---
+
+# **编号：34538**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.19.0**
+
+**SDK Platform: Web**
+
+**Request type:其他问题**
+
+问：我的发票为什么还不开啊？
+
+回答思维链：看起来是涉及到发票的商务问题，可以让客户先提供下申请发票的事件和具体cid，并且让客户稍作等待，等人工工程师处理。
+
+答：您好，麻烦提供下具体的 cid 和申请时间，稍后人工工程师就为您解答。
