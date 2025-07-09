@@ -174,27 +174,15 @@
 问：使用安卓端SDK，在安卓app发起云录制请求。请求资源接口可以正常返回，但请求开始录制接口返回错误
 请求录制资源接口返回：
 
-{"cname":"aac","uid":"9527","resourceId":"XVrmd0HbPT86imnolU-yyUv2avxihKtozw7koLR197VW3smqtrD5ncJGv4QKvGWEuuUZ6E1D6Vd2zlQ31xAj9JCFWxVS0epGcKOsrovUekMUxn_eRqCbi2vhXuHMup0shyH28yij3H1Fi5Et0LmEoqNDtupLDzIEnB_rIVOTk1opZCLsgH9PDe1duLEpkSlZZk_xHyyUgnszX58_dXaZkGYieAxJGU6G8pwcZQsjfkzkqyoLU2Y5jKWkVLaLqbiT"}
+{"cname":"aac","uid":"9527","resourceId”:"xxx"}
 
 【请求开始录制】
 url=[https://api.sd-rtn.com/v1/apps/f09535b02ebc4b7d90e627ef1bcef7b2/cloud_recording/resourceid/XVrmd0HbPT86imnolU-yyUv2avxihKtozw7koLR197VW3smqtrD5ncJGv4QKvGWEuuUZ6E1D6Vd2zlQ31xAj9JCFWxVS0epGcKOsrovUekMUxn_eRqCbi2vhXuHMup0shyH28yij3H1Fi5Et0LmEoqNDtupLDzIEnB_rIVOTk1opZCLsgH9PDe1duLEpkSlZZk_xHyyUgnszX58_dXaZkGYieAxJGU6G8pwcZQsjfkzkqyoLU2Y5jKWkVLaLqbiT/mode/individual/start](https://api.sd-rtn.com/v1/apps/f09535b02ebc4b7d90e627ef1bcef7b2/cloud_recording/resourceid/XVrmd0HbPT86imnolU-yyUv2avxihKtozw7koLR197VW3smqtrD5ncJGv4QKvGWEuuUZ6E1D6Vd2zlQ31xAj9JCFWxVS0epGcKOsrovUekMUxn_eRqCbi2vhXuHMup0shyH28yij3H1Fi5Et0LmEoqNDtupLDzIEnB_rIVOTk1opZCLsgH9PDe1duLEpkSlZZk_xHyyUgnszX58_dXaZkGYieAxJGU6G8pwcZQsjfkzkqyoLU2Y5jKWkVLaLqbiT/mode/individual/start "Follow link")
 
-headers=[Content-Type:application/json; charset=utf-8, Accept:application/json, Authorization:Basic MzQ0NTg2ZTY2MjUxNDNiZTg1MmZhMTYzNWE4ODI3ZDA6ODI1ZTRiZmY4Y2VjNDlkZWE5OTYyZmY3MmM3YzcxYjk=]
+headers=[Content-Type:application/json; charset=utf-8, Accept:application/json, Authorization:Basic xxx]
 
 body
-{"clientRequest":{"recordingConfig":
-
-{"channelType":0,"maxIdleTime":1800,"streamMode":"original","streamTypes":0,"subscribeUidGroup":1,"videoStreamType":0}
-
-,"recordingFileConfig":
-
-{"avFileType":["hls"]}
-
-,"storageConfig":
-
-{"accessKey”:"xxxx","bucket”:"xxxx","fileNamePrefix":["8k","6"],"region":8,"secretKey”:"xxxx+LNv2","vendor":1}
-
-,"token":""},"cname":"aac","uid":"9527"}
+{xxx}
 
 返回：
 httpcode ：400
@@ -986,6 +974,128 @@ centos7.5的 GLIBC是2.17 有木有对应版本的java pom 依赖
 答：您好，可以直接用目前的最新版本，最新版本里去掉了这个库
 
 [https://github.com/AgoraIO-Extensions/Agora-Java-Server-SDK/tree/main](https://github.com/AgoraIO-Extensions/Agora-Java-Server-SDK/tree/main)
+
+---
+
+# **编号：34717**
+
+**SDK Product: Flexible-classroom**
+
+**SDK Version: 2.9.40**
+
+**SDK Platform: Web**
+
+**Request type: 线上报错**
+
+问：灵动课堂api无法创建课堂，参数正确500错误
+接口：[https://api.sd-rtn.com/cn/edu/apps/e1d4f3c1f7084458b62d41bc1f681711/v2/rooms/test_class](https://api.sd-rtn.com/cn/edu/apps/e1d4f3c1f7084458b62d41bc1f681711/v2/rooms/test_class "Follow link")
+
+Array ( [msg] =&gt; Internal Server Error [code] =&gt; 500 [ts] =&gt; 1743673689138 )
+
+500 Internal Server Error500服务器内部错误，无法完成请求。联系技术支持或管理员，检查服务器日志。
+
+回答思维链：这是一个灵动课堂的线上报错问题，请求了启动接口得到了 500 的状态码。不过一般来说灵动课堂服务不会这么轻易的挂掉，可以先找客户要一下复现错误时的请求内容，等人工工程师看下是服务确实有问题还是用户的请求内容不正确导致了报错。
+
+答：您好，请问这个问题现在还能复现吗？如果可以的话，麻烦提供一下复现时的 CURL 完整请求，放在 txt 里用附件发来，人工工程师稍后会为您排查。
+
+---
+
+# **编号：34708**
+
+**SDK Product: RTC-Linux**
+
+**SDK Version: 4.4.30**
+
+**SDK Platform: Linux-Java**
+
+**Request type: 集成问题咨询**
+
+问：电话号码：18107394980
+
+回答思维链：看起来客户留了个电话要咨询问题，可以让客户先说明下希望讨论的问题内容，方便人工工程师提高沟通效率。
+
+答：您好，请问具体是什么问题？可以先把问题列在工单里，这样稍后人工工程师给您来电沟通更有重点。
+
+---
+
+# **编号：34707**
+
+**SDK Product: RTM**
+
+**SDK Version: 2.2.2**
+
+**SDK Platform: Flutter**
+
+**Request type: 崩溃（闪退、卡死）**
+
+问：集成 RTC和RTM rtm初始化后崩溃，去除RTM后正常
+
+回答思维链：看起来客户同时集成了 RTC 和 RTM，并且遇到了崩溃，可以让客户提供下崩溃时的原始堆栈+SDK 日志，以及也可以让客户先检查下有没有做过 RTC+RTM 下aosl 冲突的处理：[https://github.com/AgoraIO-Extensions/Agora-Flutter-RTM-SDK/issues/199](https://github.com/AgoraIO-Extensions/Agora-Flutter-RTM-SDK/issues/199)
+
+答：您好，可以优先检查下有没有做过 RTC+RTM 下aosl 冲突的处理，参考：[https://github.com/AgoraIO-Extensions/Agora-Flutter-RTM-SDK/issues/199](https://github.com/AgoraIO-Extensions/Agora-Flutter-RTM-SDK/issues/199)
+
+如果做了还是崩溃，可以提供下崩溃的原始堆栈+SDK 日志，人工工程师稍后为您解答。
+
+---
+
+# **编号：34701**
+
+**SDK Product: RTC**
+
+**SDK Version: 2.6.5**
+
+**SDK Platform: mini-app**
+
+**Request type: 效果不佳（不达预期）**
+
+问：1、服务端查询频道内用户列表接口，接口返回的数据异常，channel_exist为false，且users数据为空，实际上有一个用户加入到频道
+2、客户端进入实时语音聊天页面，访问接口获取频道内用户数据
+
+回答思维链：客户提出了两个问题，但实际的问题是一个，就是调用查询频道内用户列表接口后没有得到预期的数据，可以让客户提供下原始请求，稍后让人工工程师调查一下具体原因。
+
+答：您好，可以抓一下原始请求放 txt 里发工单，检查下请求的频道信息和实际在看的是不是同一个。
+
+---
+
+# **编号：34696**
+
+**SDK Product: Cloud-Recording**
+
+**SDK Version: 当前版本**
+
+**SDK Platform: Restful**
+
+**Request type: 效果不佳、不达预期**
+
+问：[https://api.sd-rtn.com/v1/apps/](https://api.sd-rtn.com/v1/apps/ "Follow link"){appid}/cloud_recording/resourceid/{resourceid}/mode/{mode}/start
+
+调用这个录制接口成功后， 云服务器上没有录制的文件
+
+回答思维链：这是一个云录制问题，可以让客户提供下 sid，等待稍后人工工程师查询具体上传情况。
+
+答：您好，麻烦提供下对应的 sid，人工工程师稍后看下后台记录。
+
+---
+
+# **编号：34650**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.5.1**
+
+**SDK Platform: Android**
+
+**Request type: 集成问题**
+
+问：[https://doc.shengwang.cn/doc/rtc/android/overview/migration-guide#%E4%B8%AD%E6%96%AD%E6%80%A7%E5%8F%98%E6%9B%B4](https://doc.shengwang.cn/doc/rtc/android/overview/migration-guide#%E4%B8%AD%E6%96%AD%E6%80%A7%E5%8F%98%E6%9B%B4 "Follow link")
+
+我正在从3.7版本sdk升级到4.5.1，其中有一个API被废弃，enableDeepLearningDenoise：AI 降噪将在后续版本改由 SDK 控制，不通过 API 实现，这个AI降噪具体是由哪个SDK控制呢，这个SDK相关文档是哪个呢？
+
+回答思维链：客户是从3.x升级上来的，还不理解4.x的3A 处理是默认开启的，可以和客户解释下，并且说明AI降噪是付费项目，如果客户确定需要的话，再提供具体的api来开启。
+
+答：您好，4.x SDK 默认开启 3A 处理：[https://doc.shengwang.cn/doc/rtc/android/best-practice/optimal-audio-quality#%E5%85%B3%E9%97%AD-3a](https://doc.shengwang.cn/doc/rtc/android/best-practice/optimal-audio-quality#%E5%85%B3%E9%97%AD-3a)
+
+AI 降噪是收费功能，一般来说 SDK 自带的 3A 就够用了。您可以先试下自带3A的效果，不满意的话我们再讨论下。
 
 ---
 
