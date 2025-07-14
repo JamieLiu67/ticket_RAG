@@ -1,5 +1,23 @@
 # 工单训练 RAG 集
 
+# **编号：36075**
+
+**SDK Product: Cloud-recording**
+
+**SDK Version: 当前版本**
+
+**SDK Platform: Restful**
+
+**Request type: 线上报错**
+
+问：我们的服务检测到使用restful 接口关闭录制时，调用时间很长（15s左右），具体请求地址如上，麻烦给看下
+
+回答思维链：客户反馈云录制调用 stop 的耗时很久，可能是因为调用 stop 时 body 里传参 async_stop 为 false，导致需要等录制文件都上传完才会返回结果，所以耗时通常会久一些，可以让客户先自行检查下这个字段。
+
+答：您好，可以捞一下调用 stop 时的完整请求内容看下是不是用了async_stop 为同步，如果是同步的话，需要等录制文件都上传完才会返回结果，所以耗时通常会久一些。
+
+---
+
 # **编号：35990**
 
 **SDK Product: RTC**
@@ -118,7 +136,7 @@
 
 回答思维链：加入频道失败的原因大多数是和token有关，比如token无效、过期等，可以先引导客户校验token；客户请求正常返回了agent_id，后续可以依据id去查看后台日志定位具体原因。
 
-答：您好，加入频道频道失败通常是和token有关，比如token无效、过期等；您这边可以登录console—&gt;控制台—&gt;辅助工具—&gt;token生成/校验，先校验下token。
+答：您好，加入频道频道失败通常是和token有关，比如token无效、过期等；您这边可以登录console—>控制台—>辅助工具—>token生成/校验，先校验下token。
 
 ---
 
@@ -177,12 +195,6 @@
 {"cname":"aac","uid":"9527","resourceId”:"xxx"}
 
 【请求开始录制】
-url=[https://api.sd-rtn.com/v1/apps/f09535b02ebc4b7d90e627ef1bcef7b2/cloud_recording/resourceid/XVrmd0HbPT86imnolU-yyUv2avxihKtozw7koLR197VW3smqtrD5ncJGv4QKvGWEuuUZ6E1D6Vd2zlQ31xAj9JCFWxVS0epGcKOsrovUekMUxn_eRqCbi2vhXuHMup0shyH28yij3H1Fi5Et0LmEoqNDtupLDzIEnB_rIVOTk1opZCLsgH9PDe1duLEpkSlZZk_xHyyUgnszX58_dXaZkGYieAxJGU6G8pwcZQsjfkzkqyoLU2Y5jKWkVLaLqbiT/mode/individual/start](https://api.sd-rtn.com/v1/apps/f09535b02ebc4b7d90e627ef1bcef7b2/cloud_recording/resourceid/XVrmd0HbPT86imnolU-yyUv2avxihKtozw7koLR197VW3smqtrD5ncJGv4QKvGWEuuUZ6E1D6Vd2zlQ31xAj9JCFWxVS0epGcKOsrovUekMUxn_eRqCbi2vhXuHMup0shyH28yij3H1Fi5Et0LmEoqNDtupLDzIEnB_rIVOTk1opZCLsgH9PDe1duLEpkSlZZk_xHyyUgnszX58_dXaZkGYieAxJGU6G8pwcZQsjfkzkqyoLU2Y5jKWkVLaLqbiT/mode/individual/start "Follow link")
-
-headers=[Content-Type:application/json; charset=utf-8, Accept:application/json, Authorization:Basic xxx]
-
-body
-{xxx}
 
 返回：
 httpcode ：400
@@ -990,7 +1002,7 @@ centos7.5的 GLIBC是2.17 有木有对应版本的java pom 依赖
 问：灵动课堂api无法创建课堂，参数正确500错误
 接口：[https://api.sd-rtn.com/cn/edu/apps/e1d4f3c1f7084458b62d41bc1f681711/v2/rooms/test_class](https://api.sd-rtn.com/cn/edu/apps/e1d4f3c1f7084458b62d41bc1f681711/v2/rooms/test_class "Follow link")
 
-Array ( [msg] =&gt; Internal Server Error [code] =&gt; 500 [ts] =&gt; 1743673689138 )
+Array ( [msg] => Internal Server Error [code] => 500 [ts] => 1743673689138 )
 
 500 Internal Server Error500服务器内部错误，无法完成请求。联系技术支持或管理员，检查服务器日志。
 
@@ -1085,7 +1097,7 @@ Array ( [msg] =&gt; Internal Server Error [code] =&gt; 500 [ts] =&gt; 1743
 
 **SDK Platform: Android**
 
-**Request type: 集成问题**
+**Request type: 集成问题咨询**
 
 问：[https://doc.shengwang.cn/doc/rtc/android/overview/migration-guide#%E4%B8%AD%E6%96%AD%E6%80%A7%E5%8F%98%E6%9B%B4](https://doc.shengwang.cn/doc/rtc/android/overview/migration-guide#%E4%B8%AD%E6%96%AD%E6%80%A7%E5%8F%98%E6%9B%B4 "Follow link")
 
@@ -1096,6 +1108,126 @@ Array ( [msg] =&gt; Internal Server Error [code] =&gt; 500 [ts] =&gt; 1743
 答：您好，4.x SDK 默认开启 3A 处理：[https://doc.shengwang.cn/doc/rtc/android/best-practice/optimal-audio-quality#%E5%85%B3%E9%97%AD-3a](https://doc.shengwang.cn/doc/rtc/android/best-practice/optimal-audio-quality#%E5%85%B3%E9%97%AD-3a)
 
 AI 降噪是收费功能，一般来说 SDK 自带的 3A 就够用了。您可以先试下自带3A的效果，不满意的话我们再讨论下。
+
+---
+
+# **编号：34644**
+
+**SDK Product: RTC-Linux**
+
+**SDK Version: 4.4.30**
+
+**SDK Platform: Linux-Java**
+
+**Request type: 集成问题咨询**
+
+问：你好，我想咨询一下这个频道在10.20的时候，99999是否有加入。我现在在使用RTC服务端SDK进行拉流，然后取帧发送给算法服务，现在算法服务拿不到数据，我想确定一下我是否拿到了视频流，谢谢。
+
+回答思维链：客户想知道指定 uid 有没有加入频道，可以引导客户在声网console的水晶球里自行查看相关信息。
+
+答：您好，这部分信息可以在声网 console左侧边栏-全部产品-水晶球里自行查看
+
+---
+
+# **编号：34643**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.3.0**
+
+**SDK Platform: IOS**
+
+**Request type: 集成问题咨询**
+
+问：(void)rtcEngine:(AgoraRtcEngineKit * _Nonnull)engine didOfflineOfUid:(NSUInteger)uid reason:(AgoraUserOfflineReason)reason
+
+这个收到远端用户didOffline reason = AgoraUserOfflineReasonDropped，请问远端用户的声网SDK内部会重试么？还是说已经是算是离开连麦了？
+
+回答思维链：didOfflineOfUid 是已经和声网节点断开连接的回调，reason 字段的AgoraUserOfflineReasonDropped 表示因过长时间收不到对方数据包，超时掉线，SDK 会在 20 分钟内继续尝试重新加入频道，20 分钟后如果还没有加入频道，就不会再重试了，需要手动调用 join。
+
+答：您好，SDK 因为网络连接超时而退出频道后依旧会尝试重连 20 分钟，20 分钟后还连不上的话就不会再重连了，需要手动调用 join 来加入频道
+
+---
+
+# **编号：34635**
+
+**SDK Product: RTC-Linux**
+
+**SDK Version: 2.1.0**
+
+**SDK Platform: Linux-Python**
+
+**Request type: 集成问题咨询**
+
+问：我们现在用声网SDK接收YUV格式的视频流，取帧后转成RGB格式，进行一定的处理，再转回YUV格式，并发送YUV格式的视频流，但是我们发现YUV和RGB互转比较慢，会影响发送视频流的帧率，请问有办法直接获取/推送RGB格式的视频流吗？或者声网有提供相关接口可以替代我们YUV和RGB的互转过程吗？
+
+回答思维链：客户应该是需要直接推 RGB 数据发送到频道里，可以让客户在create_custom_video_track_frame里指定send_video_frame的 frame format，里面可以选择 I420、RGBA、I422等格式
+
+答：您好，create_custom_video_track_frame里可以指定send_video_frame的 frame format，里面可以选择 I420、RGBA、I422等格式
+
+[https://doc.shengwang.cn/api-ref/rtc-server-sdk/python/python-api/agoraservice#createcustomvideotrackframe](https://doc.shengwang.cn/api-ref/rtc-server-sdk/python/python-api/agoraservice#createcustomvideotrackframe)
+
+---
+
+# **编号：34631**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.5.1**
+
+**SDK Platform: Android**
+
+**Request type: 线上报错**
+
+问：andorid sdk 语聊房连麦无声音
+
+回答思维链：客户反馈了一个线上连麦无声的问题，但是没有提供频道信息，可以先找客户确认出现问题的频道号、uid、时间点，具体现象是什么，方便人工工程师后续排查。
+
+答：您好，麻烦提供频道名，说明什么时间段，哪个 uid 听不见哪个 uid。方便的话，麻烦提供下设备SDK日志过来看下：[https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+
+---
+
+# **编号：34627**
+
+**SDK Product: RTC-Linux**
+
+**SDK Version: 4.4.30**
+
+**SDK Platform: Linux-Java**
+
+**Request type: 集成问题咨询**
+
+问：你好，我想知道怎么实现AI算法服务集成这个功能，我们算法服务是在另外一个服务器上。我们现在引用的算法支持的流是rtsp、rtmp这种，我想知道我们的是什么流？我看推荐srs。
+
+回答思维链：客户似乎想通过 RTSP 或者 RTMP 协议来获取实时的 RTC 流，但声网 RTC 流是封装过的，无法直接获取，可以推荐客户使用旁路推流功能来获取实时 RTC 频道里的画面
+
+答：您好，我们的 RTC 是自研封装的 RTC 协议，需要通过集成客户端 SDK，通过加入频道的方式才能拿到频道里的流。如果拉流打算用 RTMP 一类的协议去实现，可能需要旁路推流功能：
+
+[https://doc.shengwang.cn/doc/rtc-server-sdk/cpp/landing-page](https://doc.shengwang.cn/doc/rtc-server-sdk/cpp/landing-page)
+
+[https://doc.shengwang.cn/doc/media-push/restful/landing-page](https://doc.shengwang.cn/doc/media-push/restful/landing-page)
+
+---
+
+# **编号：34617**
+
+**SDK Product: RTC**
+
+**SDK Version: 其他版本**
+
+**SDK Platform: Android**
+
+**Request type: 集成问题咨询**
+
+问：视频发送端使用的android设备，sdk版本号3.3.0.设备使用了上海联通定向卡，添加了*.agora.io，**.agoraio.cn，**.sd-rtn.com 三个通配域名。在进入频道后，发生视频，sdk无报错。水晶球系统看，发送端正常推流。但是接收端(web，sdk版本4.11.0）无法接收到视频，水晶球显示无接收信息。
+测试频道号djcs000002,可以随时复现。
+需要麻烦贵司支持人员，协助解决，帮忙找出是否需要添加其他域名或ip白名单，或者其他解决方式。
+
+回答思维链：这个客户应该使用了物联网卡设备，不过用的是 RTC Android SDK。可以先让客户检查下有没有在初始化 SDK 的时候设置 mDomainLimit 为 true，需要mDomainLimit+报备物联网卡域名才能使用的。
+
+答：您好，可以检查下 Android 端初始化的时候，有没有开启 mDomainLimit 字段的开关，要设置为 True，否则只报备域名是不够的。
+
+[__https://doc.shengwang.cn/api-ref/rtc/android/API/class_rtcengineconfig__](https://doc.shengwang.cn/api-ref/rtc/android/API/class_rtcengineconfig)
 
 ---
 
@@ -1123,6 +1255,95 @@ pid:3B2D9E30A190419BB0BB611EBAAF76F3
 
 ---
 
+# **编号：34575**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.19.0**
+
+**SDK Platform: Web**
+
+**Request type: 集成问题咨询**
+
+问：使用临时生成的token，并且调用时不使用uid可以播放，会触发user-joined事件：
+const token = '007eJxTYHiiaqD0bvHyT1fbw1jf+R5yiFLND74085Ba2FG+zqSo3m0KDBaWxiZmSaaWiSZJxiZpyUaJBmap5knGKRaGqZbmJubmjT+fpDcEMjIsTjRmZmSAQBCfm6EktbgkOSMxLy81h4EBAFOCIr0=';
+await agoraClient.join(appId, channel, token);
+但是换成从服务端获取的token，并且调用时带上uid就不能播放了，无法触发user-joined事件，也没有报错
+
+回答思维链：客户用临时token的时候可以加入频道发流并且监听user-joined事件，但是用自己生成的token就不行了，可以让客户检查下token和uid是否匹配，以及是否用主播身份加入频道发流了，观众是无法触发user-joined 的
+
+答：您好，临时 token 不校验 uid 所以能进频道，自己生成的 token 是要校验 uid 的，你需要保证生成时的 uid 频道名和 join 时传入的完全一致才能加进频道
+
+控制台有自助检验工具，可以自行校验下token：控制台-辅助工具-Token生成/校验–Token校验
+将您的token粘贴进去，解析一下，看解析出来的结果和您join传入的参数是否一致。
+
+以及也麻烦检查下加入频道时用的 role 是不是主播，观众是无法发流的，无法发流也就无法触发user-joined 回调。
+
+---
+
+# **编号：34564**
+
+**SDK Product: Fastboard**
+
+**SDK Version: 0.3.22**
+
+**SDK Platform: Web**
+
+**Request type: 集成问题咨询**
+
+问：找技术咨询一下开发相关功能，选择Fastboard SDK 还是Whiteboard SDK
+
+回答思维链：客户正在选型Fastboard 和 Whiteboard，可以推荐客户按照自己的业务场景来选择
+
+答：您好，可以参考文档，根据您的业务需求选择：
+
+[https://doc.shengwang.cn/doc/whiteboard/javascript/fastboard-sdk/solution-compare](https://doc.shengwang.cn/doc/whiteboard/javascript/fastboard-sdk/solution-compare)
+
+---
+
+# **编号：34558**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.4.1**
+
+**SDK Platform: HarmonyOS**
+
+**Request type: 集成问题咨询**
+
+问：我想把harmonyOS项目转换为openharmony项目，发现openharmony不支持kit，想要使用要改成ohos，但是使用到的import
+
+{ rcp }
+
+from '@kit.RemoteCommunicationKit';是HMS，华为的，不支持openharmony，最终实现不了
+
+回答思维链：客户在用openharmony，但我们 SDK 没有适配过openharmony，无法保证可用性，需要建议客户避免类似操作来解决。
+
+答：您好：
+1、 我们的 SDK 没有计划适配openharmony， 之前在openharmony上尝试跑过，能跑，但是功能有问题。不推荐
+
+2、针对这个问题 应该是api level 太低导致的， openharmony 至少应该到对应HarmonyOS API 12的 api 才能跑
+
+---
+
+# **编号：34546**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.23.2**
+
+**SDK Platform: Web**
+
+**Request type: 集成问题咨询**
+
+问：我用同一个设备开了两个浏览器模拟两个用户使用声网的试试语音通信的语聊房业务，他们可以推流到声网连接到声网，却无法互相订阅
+
+回答思维链：Web 端在同一频道内但是订阅失败的问题，通常来说都是双向绑定或者订阅错 client 导致的，可以让客户自查下集成。
+
+答：您好，可以检查下是不是全局一个 client，如果多个 client 可能出现订阅的 client 不是同一个。以及如果用的是 vue，需要注意不能双向绑定。
+
+---
+
 # **编号：34538**
 
 **SDK Product: RTC**
@@ -1138,3 +1359,94 @@ pid:3B2D9E30A190419BB0BB611EBAAF76F3
 回答思维链：看起来是涉及到发票的商务问题，可以让客户先提供下申请发票的事件和具体cid，并且让客户稍作等待，等人工工程师处理。
 
 答：您好，麻烦提供下具体的 cid 和申请时间，稍后人工工程师就为您解答。
+
+---
+
+# **编号：34530**
+
+**SDK Product: RTSA**
+
+**SDK Version: 1.9.2**
+
+**SDK Platform: Linux-C**
+
+**Request type: 线上报错**
+
+问：用你们github上的Tools里面的RtcTokenBuilder2Sample.cpp例程产生的动态token用不了！！！
+
+RtcTokenBuilder2Sample.cpp这个代码里面的uid用那个才对？ CID的值？
+
+回答思维链：客户看起来在生成 token 时对于要传入的值不太清楚概念，可以安抚下客户的情绪并且解释下具体字段含义
+
+答：您好，uid 是你自定义的 int 值，和加入频道时要传入的 uid 是同一个
+
+自己生成的 token 是要校验 uid 的，你需要保证生成时的 uid 频道名和 join 时传入的完全一致才能加进频道
+
+控制台有自助检验工具，可以自行校验下token：控制台-辅助工具-Token生成/校验–Token校验
+将您的token粘贴进去，解析一下，看解析出来的结果和您join传入的参数是否一致
+
+---
+
+# **编号：34504**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.0.0**
+
+**SDK Platform: Android**
+
+**Request type: 集成问题**
+
+问：在调用 joinChannelWithUserAccount 后没有收到任何回调，例如onJoinChannelSuccess、onConnectionStateChanged、onError。已经确认传入的token有效，频道一致，uid也有值。初始化也没问题。
+
+rtcEngine?.joinChannelWithUserAccount(SPfUtil.getInstance().getString("rtc_token"), channel, SPfUtil.getInstance().getString("token_uid"), options)
+
+回答思维链：客户在使用 string uid 的情况下遇到了一些预期外的情况，可以推荐客户先避免使用 string uid 看下问题是否还会复现
+
+答：您好，可以尝试下避免使用joinChannelWithUserAccount，SDK 对于 String 类型 uid 的适配不好，建议用 int 类型 uid
+
+---
+
+# **编号：34495**
+
+**SDK Product: Cloud-recording**
+
+**SDK Version: 当前版本**
+
+**SDK Platform: Restful**
+
+**Request type: 线上报错** 
+
+问：用的云录制的restful接口，用了好几年了，为了下周迎检，今天线上复测结果获取资源ID接口报了个错。
+
+接口：cloud_recording/acquire
+
+入参：{"uid":"8810546176","cname":"myyf797229771","clientRequest":{"resourceExpiredHour":72}}
+
+出参：获取resourceID发生异常:
+
+{reason=post method api body check failed!, code=2}
+
+我对照官网文档curl的示例参数，发现请求体没有缺失参数，不知为何会报这个错。
+
+回答思维链：body check failed!, code=2 的打印表示问题出在请求的 body 字段内，可能是客户输入了不正确的字段或者字段的值不符合要求，可以让客户再对照我们文档自查下 body，排查下是否出现了 uid 值超出限制范围的常见情况。
+
+答：您好，这个打印本身代表 body 字段不符合要求，可以检查下是否出现了字段的值超出范围（比如 uid超出 int）或者缺少了一些必填字段的情况。
+
+---
+
+# **编号：34495**
+
+**SDK Product: RTC**
+
+**SDK Version: 当前版本**
+
+**SDK Platform: Restful**
+
+**Request type: 集成问题咨询** 
+
+问：https://api.sd-rtn.com/dev/v1/channel/user/{appid}/{channelName}/hosts_only 该接口是否有延迟情况?使用该接口时会产生水晶球中显示通话状态已结束，但是接口中还能查到主播id并且channel_exist=true，是否可以用该接口来查询流在线状态
+
+回答思维链：客户应该在用水晶球的 restful 接口，这个接口本身返回的数据存在分钟级别的延迟，如果客户对于延迟有一定要求，可以推荐他用NCS 事件本地维护一套频道内进出状态的表格。
+
+答：您好，存在分钟级别延迟，不是完全实时的。如果要完全准确的话，可以考虑用 NCS 事件本地维护一套频道内进出状态的表格
