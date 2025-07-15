@@ -1486,3 +1486,86 @@ rtcEngine?.joinChannelWithUserAccount(SPfUtil.getInstance().getString("rtc_token
 回答思维链：客户在咨询云录制的线上问题，云录制的 ts 切片和 m3u8 都是实时上传 OSS 的。如果客户在 start 的时候指定了转码，那就会在 24 时内由声网侧转码 mp4 文件再上传 OSS。客户没有提到 ts 和 m3u8 的情况，可能是录制上传有些问题或者录制启动没有成功，需要找客户提供下具体的录制 sid，来让相关同事调查后台日志看看具体原因
 
 答：您好，可以提供下具体的 sid，人工工程师稍后为您解答
+
+---
+
+# **编号：34427**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.19.0** 
+
+**SDK Platform: Web**
+
+**Request type: 集成问题咨询**
+
+问：鉴权使用java端生成的token，在web端使用join的时候报错：Uncaught (in promise) AgoraRTCException: AgoraRTCError CAN_NOT_GET_GATEWAY_SERVER: flag: 4096, message: AgoraRTCError CAN_NOT_GET_GATEWAY_SERVER: invalid token, authorized failed，java端和demo流程是一样的
+
+回答思维链：客户使用了自己生成的 token，得到了 invalid token, authorized failed 的报错打印，这表示 token 不匹配，需要检查传入的 uid 频道名是否匹配。
+
+答：您好，invalid token, authorized failed 就是 token 错误，临时 token 不校验 uid 所以能进频道，自己生成的 token 是要校验 uid 的，需要保证生成时的 uid 频道名和 join 时传入的完全一致才能加进频道。
+
+控制台有自助检验工具，可以自行校验下token：控制台-辅助工具-Token生成/校验–Token校验
+
+将您的token粘贴进去，解析一下，看解析出来的结果和您join传入的参数是否一致
+
+---
+
+# **编号：34422**
+
+**SDK Product: RTC**
+
+**SDK Version: 2.1.6**
+
+**SDK Platform: Linux-Python**
+
+**Request type: 集成问题咨询**
+
+问：示例程序没跑通，连接不上频道，只打印了on_connecting，没打印on_connected
+命令：
+(yolov8py310) das@das:~/AI4UAVVideo/AIProcessor/Agora$ python agora_rtc/examples/example_audio_pcm_receive.py --appId=4c3d3f3f2d9a4141ad7c436c8755fc77 --channelId=test --userId=8 --sampleRate=16000 --numOfChannels=1
+
+输出：
+INFO:common.parse_args:Parsed arguments:Namespace(appId='4c3d3f3f2d9a4141ad7c436c8755fc77', token=None, channelId='test', connectionNumber=1, userId='8', audioFile=None, lowdelay=False, videoFile=None, sampleRate=16000, numOfChannels=1, fps=None, width=None, height=None, bitrate=None, message=None, hours='0', saveToDisk=0, mode=1, value=0)
+INFO:common.example_base:------channel_id: test, uid: 8
+INFO:common.example_base:connect_and_release: 0, auto_subscribe_audio: 1
+INFO:observer.connection_observer:on_connecting, agora_rtc_conn=<agora.rtc.rtc_connection.RTCConnection object at 0x7f4e8321b430>, local_user_id=8, state=2, internal_uid=0 ,reason=0
+
+回答思维链：客户的打印里没有出现加入频道成功的打印，但也没有失败的报错，推测是uid 频道名和 token 不匹配导致没加入频道，可以让客户自查一下，如果没问题，再让客户提供具体日志过来。
+
+答：您好，请问拉的是最新版本 Demo 吗？[https://github.com/AgoraIO-Extensions/Agora-Python-Server-SDK/tree/main/agora_rtc/examples](https://github.com/AgoraIO-Extensions/Agora-Python-Server-SDK/tree/main/agora_rtc/examples)
+
+跑的时候可以注意下 uid 频道名和 token 是否匹配，如果拉最新版本还是跑不通，可以拿一下 SDK 日志过来。初始化的时候可以配置日志等级 [https://doc.shengwang.cn/api-ref/rtc-server-sdk/python/python-api/agoraservice#setlogfile](https://doc.shengwang.cn/api-ref/rtc-server-sdk/python/python-api/agoraservice#setlogfile)
+
+---
+
+# **编号：34404**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.5.1**
+
+**SDK Platform: Flutter**
+
+**Request type: 集成问题咨询**
+
+问：需求：rtm 通信和 rtc 音频通话（不需要视频）。
+
+问题：Android 原生工程集成 rtm 和 rtc 分别有轻量级 sdk（implementation 'io.agora:agora-rtm-lite:x.y.z'） 和 纯音频 sdk （implementation.i'io.agora.rtc:voice-sdk:4.5.1）。
+
+Flutter版本没有提供轻量级的，这样会导致apk包体增加 40MB左右，Flutter有没有办法处理，我们只需要音频的功能即可。
+
+回答思维链：客户只需要在flutter上用音频SDK，需要提供对应的特殊版本才行
+
+答：您好，之前有过一个老版本的纯音频的包：[https://github.com/AgoraIO-Extensions/Agora-Flutter-SDK/tree/6.2.6-sp.426.a](https://github.com/AgoraIO-Extensions/Agora-Flutter-SDK/tree/6.2.6-sp.426.a)
+
+yaml 里用git依赖：
+agora_rtc_engine:
+
+git:
+
+url: [https://github.com/AgoraIO-Extensions/Agora-Flutter-SDK.git](https://github.com/AgoraIO-Extensions/Agora-Flutter-SDK.git)
+
+ref: 6.2.6-sp.426.a
+
+---
