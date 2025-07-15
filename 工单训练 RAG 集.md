@@ -1569,3 +1569,32 @@ url: [https://github.com/AgoraIO-Extensions/Agora-Flutter-SDK.git](https://gith
 ref: 6.2.6-sp.426.a
 
 ---
+
+# **编号：34395**
+
+**SDK Product: RTC**
+
+**SDK Version: 2.2.0**
+
+**SDK Platform: Linux-Go**
+
+**Request type: 集成问题咨询**
+
+问：我需要在无外网连接下，进行sdk升级。
+
+我是这样做的：
+
+1、在git上下载最新版本的Agora-Golang-Server-SDK代码，解压为：Agora-Golang-Server-SDK-main。
+
+2、下载agora_rtc_sdk-x86_64-linux-gnu-v4.4.31-20241223_111509-491956-aed.zip，重命名放置到Agora-Golang-Server-SDK-main/agora_sdk.zip。
+
+3、运行命令make install。
+
+运行结果和出现问题如下图所示：
+
+go: github.com/AgoraIO/Tools/DynamicKey/AgoraDynamicKey/go/src@v0.0.0-20240807100336-95d820182fef: Get "https://proxy.golang.org/github.com/%21agora%21i%21o/%21tools/%21dynamic%21key/%21agora%21dynamic%21key/go/src/@v/v0.0.0-20240807100336-95d820182fef.mod": dial tcp 142.251.211.241:443: i/o timeout
+make: *** [Makefile:33: deps] Error 1
+
+回答思维链：客户在没有链接外网的情况下升级 SDK，虽然替换了 SDK 到目录下，但是make install的时候应该会拉取一些在线依赖，这个是会受影响的，需要建议客户开放到外网的链接再升级 SDK
+
+答：您好，make install的时候应该会拉取一些在线依赖，一点外网都连不上还是有影响的，建议开放网络环境，目前报错的都是拉取其他地址的报错
