@@ -1636,8 +1636,68 @@ make: *** [Makefile:33: deps] Error 1
 问：我集成了RTC,然后本地调用了 进阶功能中 播放音效或音乐文件,,主要使用 startAudioMixing 等音乐 API 播放时长较短的音效文件这个方法;
 如果我加入频道会单独计费吗,如果不加入频道,调用这个方法,会计算费用吗
 
-回答思维链：客户可能不太了解声网 SDK 的计费模式，只要在频道内发流就会收费，不想产生用量的话，避免加入频道就行了
+回答思维链：客户可能不太了解声网 SDK 的计费模式，只要在频道内发流就会收费，不想产生用量的话，避免加入频道就行了，在频道外调用接口播放本地文件不会产生任何费用。
 
 答：您好，加入频道就会计费，不管发不发流都会计算音频费用。不加入的时候调用接口播放本地文件不会产生任何费用。
+
+---
+
+# **编号：34361**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.2.6**
+
+**SDK Platform: Android**
+
+**Request type: 集成问题咨询**
+
+问：根据官方文档关于计费的示例: "2 个人视频通话 10 分钟，则通话总时长为 2 × 10 = 20 分钟".
+请问, 如果channel中仅有一个用户,是否会计费呢?
+
+回答思维链：客户可能不太了解声网 SDK 的计费模式，只要在频道内发流就会收费，不想产生用量的话，避免加入频道就行了
+
+答：您好，加入频道就会计费，不管发不发流都会计算音频费用。
+
+---
+
+# **编号：34315**
+
+**SDK Product: RTM**
+
+**SDK Version: 其他版本**
+
+**SDK Platform: Java**
+
+**Request type: 集成问题咨询**
+
+问：我们公司2019年集成了声网SDK 实现视频通话、录制。去年公司服务器清理，不小心把 Agora_Recording_SDK_for_Linux_FULL 这个文件删除了。
+昨天在官网下载了 服务端 JAVA v3.0.7 版本更新之后，录制的通话视频全部都是黑屏。请帮忙提供解决方案，谢谢！
+
+回答思维链：客户咨询的问题是本地服务端录制，但是选择了 RTM 分类，应该是选错了。客户使用的还是旧的本地录制 SDK，3.x 的版本已经停止更新维护了，目前最新版本已经来到 4.x 了，但我们需要优先推荐客户使用云录制，如果客户拒绝再提供最新的本地服务端录制 SDK 过去
+
+答：您好，3.x 的本地服务端录制已经停止更新维护了，有录制需求建议走云录制：[https://doc.shengwang.cn/doc/cloud-recording/restful/landing-page](https://doc.shengwang.cn/doc/cloud-recording/restful/landing-page)
+
+---
+
+# **编号：34307**
+
+**SDK Product: RTC**
+
+**SDK Version: 其他版本**
+
+**SDK Platform: Web**
+
+**Request type: 效果不佳、不达预期**
+
+问：接入web版本，安卓web版本开启关闭扬声器正常，但是苹果的web版本关闭扬声器无效果，苹果需要特殊的设置吗？
+
+回答思维链：Web-IOS 上有一个已知问题描述和客户的现象类似，IOS 在 web 上调用 RemoteAudioTrack.setVolume 方法无法改变音量，需要让客户用unsubscribe 的方式来替换实现，可以让客户确认下是否调用了RemoteAudioTrack.setVolume 才出现类似情况
+[https://doc.shengwang.cn/doc/rtc/javascript/overview/browser-compatibility](https://doc.shengwang.cn/doc/rtc/javascript/overview/browser-compatibility)
+
+答：您好，请问现在有调用RemoteAudioTrack.setVolume 方法吗？IOS 在 web 上调用 RemoteAudioTrack.setVolume 方法无法改变音量，可以考虑用unsubscribe 的方式来替换实现
+
+已知问题：[https://doc.shengwang.cn/doc/rtc/javascript/overview/browser-compatibility](https://doc.shengwang.cn/doc/rtc/javascript/overview/browser-compatibility)
+unsubscribe: [https://doc.shengwang.cn/api-ref/rtc/javascript/interfaces/iagorartcclient#unsubscribe](https://doc.shengwang.cn/api-ref/rtc/javascript/interfaces/iagorartcclient#unsubscribe)
 
 ---
