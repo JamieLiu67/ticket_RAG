@@ -1701,3 +1701,157 @@ make: *** [Makefile:33: deps] Error 1
 unsubscribe: [https://doc.shengwang.cn/api-ref/rtc/javascript/interfaces/iagorartcclient#unsubscribe](https://doc.shengwang.cn/api-ref/rtc/javascript/interfaces/iagorartcclient#unsubscribe)
 
 ---
+
+# **编号：34306**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.4.2**
+
+**SDK Platform: HarmonyOS**
+
+**Request type: 集成问题咨询**
+
+问：为了解除某个远端用户的视图绑定，在调用setupRemoteVideo方法时，传入null或者undefined，抛出异常，提示类型错误。
+this._rtcEngine?.setupRemoteVideo(null)。
+我应该怎么做才嫩解除某个远端用户的绑定视图。
+
+回答思维链：客户正在尝试在HarmonyOS平台上解除远端试图绑定，但是直接给setupRemoteVideo传了null，应该引导客户给videocanvas里的xcomponentId传空
+
+答：您好，不是在setupRemoteVideo里传空，应该给videocanvas里的xcomponentId传空来实现。
+
+---
+
+# **编号：34300**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.0.0**
+
+**SDK Platform: Android**
+
+**Request type: 集成问题咨询**
+
+问：声网加入频道joinChannelWithUserAccount返回0说明加入成功，但是偶现收不到自己加入成功的回调onJoinChannelSuccess，帮忙排查一下原因
+
+回答思维链：没有收到onJoinChannelSuccess 大概率是加入频道失败了，客户以为joinChannelWithUserAccount 返回 0 就表示加入成功的理解是不对的，需要解释一下加入频道需要以会掉为准，并且引导客户监听onConnectionStateChanged 来了解实际的频道链接状态
+
+答：您好，调用 join 方法后 return0 只代表方法执行完毕，收到onJoinChannelSuccess才算加入成功。可以业务上监听onConnectionStateChanged 来判断实际的频道链接状态。参考：[https://doc.shengwang.cn/doc/rtc/android/basic-features/channel-connection](https://doc.shengwang.cn/doc/rtc/android/basic-features/channel-connection)
+
+---
+
+# **编号：34299**
+
+**SDK Product: RTC-Linux**
+
+**SDK Version: 2.2.0**
+
+**SDK Platform: Linux-Go**
+
+**Request type: 集成问题咨询**
+
+问：1、我目前使用的demo是go-AIGC-AGEN-DEMO-2.7，用于实现实时语音交互功能，该示例应该阅读哪一个类别的技术文档，web类别吗？
+2、该项目目前使用的sdk是[https://download.agora.io/sdk/release/agora_rtc_sdk-x86_64-linux-gnu-v4.4.30-20241024_101940-398537.zip](https://download.agora.io/sdk/release/agora_rtc_sdk-x86_64-linux-gnu-v4.4.30-20241024_101940-398537.zip "Follow link")，[https://doc.shengwang.cn/doc/rtc/javascript/advanced-features/noise-reduction](https://doc.shengwang.cn/doc/rtc/javascript/advanced-features/noise-reduction "Follow link")中描述AI降噪需要 集成 v4.15.0 或以上版本的 Web SDK，v4.4.30和v4.15.0是同一个系列的sdk吗？哪一个版本更新？
+
+回答思维链：客户应该在用 convoAI 的服务端 SDK，问题 1可以让客户拉一下最新的 convoAI go SDK 代码。问题 2 应该是客户想要用 Web 端和 convoAI 的智能体对话，但是不知道服务端 SDK 和客户端 SDK 的区别是什么，可以给他 Web Demo 了解下 Web SDK 和服务端 SDK 的区别
+
+答：您好，服务端要使用 convoAI 的话有自己的 SDK，参考：[https://doc.shengwang.cn/doc/convoai/restful/get-started/quick-start-go](https://doc.shengwang.cn/doc/convoai/restful/get-started/quick-start-go)
+
+这个 SDK 提供了让智能体加入 RTC 频道的能力，要和智能体互通的话需要用客户端加入频道发流来实现，可以考虑用 Web SDK，具体文档参考：[https://doc.shengwang.cn/doc/rtc/javascript/get-started/run-demo](https://doc.shengwang.cn/doc/rtc/javascript/get-started/run-demo)
+
+convoAI 的服务端 SDK 和 Web SDK 不是一个东西，但都是提供了让各自平台加入 RTC 频道的能力
+
+---
+
+# **编号：34206**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.2.0**
+
+**SDK Platform: Windows**
+
+**Request type: 集成问题咨询**
+
+问：摄像头和屏幕共享视频合流。尝试用C#调用SDK
+int mergeResult = rtc_engine_.
+StartLocalVideoTranscoder(new LocalTranscoderConfiguration
+{
+streamCount = 2,
+videoInputStreams = new TranscodingVideoStream[]
+{
+new TranscodingVideoStream
+
+{ sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_SCREEN, x = 0, y = 0, width = VideoTrackParam.bgWidth, height = VideoTrackParam.bgHeight, zOrder=0, }
+
+,
+new TranscodingVideoStream
+
+{ sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA, x = VideoTrackParam.frontX, y = VideoTrackParam.frontY, width = VideoTrackParam.frontWidth, height = VideoTrackParam.frontHeight, zOrder=1, }
+
+}
+});
+启动摄像头，屏幕截图正常。合成流在观众端只看到桌面画面，没有看到摄像头画面。摄像头的width=screenWidth/10,height=screenheight/10,
+附件是SDK LOg.哪些地方调用错误？
+
+回答思维链：客户在咨询合流发流失败的问题，并且提供了 SDK 日志，可以让客户先自查下是不是join 的时候配置了多个发布视频流的字段，然后等人工工程师稍后解决。
+
+答：您好，可以自查下是不是 join 的时候配置了多个发布视频流的字段，一个 uid 只能发一路视频流的。以及请您稍等，人工工程师稍后会来查看日志解答问题。
+
+---
+
+# **编号：34199**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.2.0**
+
+**SDK Platform: Windows**
+
+**Request type: 集成问题咨询**
+
+问：windows或者android在调用joinchannelex的时候，多个 channel 的 channelid 和userintid 可以相同吗？
+
+回答思维链：客户在尝试加入多频道，但是不知道频道内的 uid 不能重复，需要强调下频道内 uid 重复会导致互踢的特效，避免此类操作。
+
+答：您好，channelid可以，但是userid 一定不能，频道内 uid 不能重复，否则会导致互踢。
+
+---
+
+# **编号：34195**
+
+**SDK Product: Cloud-recording**
+
+**SDK Version: 当前版本**
+
+**SDK Platform: Restful**
+
+**Request type: 集成问题咨询**
+
+问：使用声网云录制截图，调用start开始截图，经20秒左右调用stop 报435频道内无推流，但实际上是有推流的，并且期间调用query 返回status 5服务进行中，求解
+
+回答思维链：客户在尝试用云录制的截图上传功能，435 的错误码是指没有可录制内容能够被上传到 OSS 才触发的，如果云录制配置的是仅截图也是会触发的，因为仅截图是不录制内容的，所以需要让客户先自查下有没有配置仅截图。
+
+答：您好，可以检查下是否配置了仅截图，435 的报错是根据是否有录制内容被上传 OSS 来判断的，如果设置了仅截图也是会触发的，但截图还是正常工作的，可以在 OSS 里看看截图文件是否存在。
+
+---
+
+# **编号：34150**
+
+**SDK Product: RTSA**
+
+**SDK Version: 1.9.2**
+
+**SDK Platform: Linux-C**
+
+**Request type: 集成问题咨询**
+
+问：你好，现在还是会有错误
+[ERR] License verified failed, reason: 1
+[2025-03-04 14:36:01.714][ERR] License verified failed, reason: 1
+
+回答思维链：这是一个 RTSA 鉴权失败的打印，客户应该是传入了无效 License 或者没有传入 License 导致的，可以引导客户自查下 License 本身是否有效或者有没有传值传错成其他数据。
+
+答：您好，这个打印是License 不正确导致的，可以检查下License 是否有效或者是不是错传成其他值了
+
+---
