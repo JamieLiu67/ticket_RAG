@@ -2155,3 +2155,65 @@ at async c.uploadPersonalResource ([https://download.agora.io/edu-apaas/release/
 答：您好，问题 1 的报错都是 OSS 的，可以去声网 console 上检查一下您的的白板 OSS 相关配置是否正确，比如 endpoint 是否正确、是否开启了跨域配置。
 
 公共资源一般指教育机构上传和管理公共的课件资源，以供老师上课使用，个人无法编辑修改，您这边具体是什么需求？如果是让学生也上传东西的话这个做不到的
+
+---
+
+# **编号：34061**
+
+**SDK Product: RTC**
+
+**SDK Version: 当前版本**
+
+**SDK Platform: Restful**
+
+**Request type: 集成问题咨询**
+
+问：咨询一下，一个频道从创建、到销毁，它的生命周期是怎么维护的，有哪些场景会触发销毁机制，文档没看到说明，如有请提供下文档。谢谢
+
+回答思维链：客户在尝试理解 RTC 的频道什么周期，但是频道的创建和销毁是我们后端完成的，可以告诉客户无需关心，专注于频道内事件。
+
+答：您好，频道的创建和销毁是由我们后端做的，对于用户来说只需要考虑加入频道和退出频道就行，频道里有人就是频道存在，频道里没人就是不存在
+https://doc.shengwang.cn/doc/rtc/restful/webhook/events
+
+---
+
+# **编号：33961**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.4.1**
+
+**SDK Platform: Android**
+
+**Request type: 效果不佳、不达预期**
+
+问：mRtcEngine.muteRemoteAudioStream(uid, true); 关闭远程用户的语音流 ， 远程用户 onRemoteAudioStateChanged 回调未触发
+
+回答思维链：客户以为 muteRemoteAudioStream 会控制远端的发流状态，需要提醒客户muteRemoteAudioStream 只能控制本端不订阅，onRemoteAudioStateChanged 回调只有在远端自己改动发流状态的时候才会触发
+
+答：您好，muteRemoteAudioStream只是控制本端不去订阅远端发出的音频流，不会控制远端的实际发流情况。
+onRemoteAudioStateChanged是远端用户采集、发送层面出现变动时才会触发的回调，mute 方法不会影响到远端的实际发流所以不会触发。
+
+https://doc.shengwang.cn/api-ref/rtc/android/API/toc_publishnsubscribe#api_irtcengine_muteremoteaudiostream
+
+https://doc.shengwang.cn/api-ref/rtc/android/API/toc_audio_basic#onRemoteAudioStateChanged
+
+---
+
+# **编号：33931**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.23.0**
+
+**SDK Platform: Web**
+
+**Request type: 集成问题咨询**
+
+问：如何在使用过程，切换转换前置和后置摄像头
+
+回答思维链：客户需要在Web上实现切换设备，可以让客户参考我们Demo的实现，用setDevice来切换。
+
+https://doc.shengwang.cn/doc/rtc/javascript/basic-features/switch-device
+
+https://doc.shengwang.cn/doc/rtc/javascript/get-started/run-demo
