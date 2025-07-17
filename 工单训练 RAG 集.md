@@ -1,4 +1,6 @@
-# 工单训练 RAG 集
+# **工单训练 RAG 集**
+
+本篇《工单训练 RAG 集》汇集了近期在声网各类 SDK 产品集成与使用过程中遇到的典型问题及解答。内容涵盖了从技术集成、线上报错、效果优化到商务和权限相关的常见场景，旨在为开发者和技术支持人员提供高效、实用的参考。通过梳理每个工单的提问、分析思路与标准回复，本文帮助读者快速定位问题本质，掌握处理思路，提升工单首次响应与技术支持的专业能力。
 
 # **编号：36075**
 
@@ -1855,3 +1857,69 @@ new TranscodingVideoStream
 答：您好，这个打印是License 不正确导致的，可以检查下License 是否有效或者是不是错传成其他值了
 
 ---
+
+# **编号：34128**
+
+**SDK Product: RTSA**
+
+**SDK Version: 1.9.2**
+
+**SDK Platform: Linux-C**
+
+**Request type: 集成问题咨询**
+
+问：我的帐号下面有10个license，是好早前申请的，现在要预授权？
+
+回答思维链：客户应该是在初始化 RTSA SDK，传入 license 的时候遇到了问题。激活 license 的标准流程是申请-预激活-激活-使用，客户应该已经申请完毕了，现在可以引导他去声网 console 自行完成预激活
+
+答：您好，需要在声网 console 左侧边栏自行预授权，预授权完成后再去激活使用
+
+[https://doc.shengwang.cn/doc/rtsa/c/basic-features/license](https://doc.shengwang.cn/doc/rtsa/c/basic-features/license)
+
+---
+
+# **编号：34111**
+
+**SDK Product: RTSA**
+
+**SDK Version: 1.9.2**
+
+**SDK Platform: Linux-C**
+
+**Request type: 集成问题咨询**
+
+问：请问嵌入式linux由实时音视频的SDK吗？
+
+回答思维链：客户应该是没有找到 RTSA 的文档页面，可以提供下并引导客户跑通 Demo
+
+答：您好，有的，可以看下文档：[https://doc.shengwang.cn/doc/rtsa/c/landing-page](https://doc.shengwang.cn/doc/rtsa/c/landing-page)
+
+先找到您设备对应的 SDK 版本然后跑通 Demo
+
+---
+
+# **编号：34063**
+
+**SDK Product: Flexiable-classroom**
+
+**SDK Version: 2.9.40**
+
+**SDK Platform: Linux-C**
+
+**Request type: 集成问题咨询**
+
+问：拷贝文档中心网页上的代码，CDN 集成灵动课堂，修成自己的appid token,登录网页，登录正常，白板也正常，云盘功能不正常。
+1. “我的资源”上传资料出现异常，前后上传了两个文档，控制台打印error
+2025-02-25 15:29:20 ERROR [EduErrorCenter] error 600064: Error: upload to oss error
+at c._putFile ([https://download.agora.io/edu-apaas/release/edu_sdk@2.9.40.bundle.js:2:9461176](https://download.agora.io/edu-apaas/release/edu_sdk@2.9.40.bundle.js:2:9461176 "Follow link"))
+at async c.uploadPersonalResource ([https://download.agora.io/edu-apaas/release/edu_sdk@2.9.40.bundle.js:2:9462184](https://download.agora.io/edu-apaas/release/edu_sdk@2.9.40.bundle.js:2:9462184 "Follow link"))
+edu_sdk@2.9.40.bundle.js:2 2025-02-25 15:29:20 ERROR [EduErrorCenter] error 600005: Error: upload to oss error
+at c._putFile ([https://download.agora.io/edu-apaas/release/edu_sdk@2.9.40.bundle.js:2:9461176](https://download.agora.io/edu-apaas/release/edu_sdk@2.9.40.bundle.js:2:9461176 "Follow link"))
+at async c.uploadPersonalResource ([https://download.agora.io/edu-apaas/release/edu_sdk@2.9.40.bundle.js:2:9462184](https://download.agora.io/edu-apaas/release/edu_sdk@2.9.40.bundle.js:2:9462184 "Follow link"))
+2. 公共资源，能否统一上传，大家都能看到，如何操作？
+
+回答思维链：客户在用灵动课堂的白板，上传时出错了，看起来问题 1 出在 OSS 上，可以建议用户自查一下 OSS 的存储信息是否正确（比如 endpoint）或者是否配置了跨域规则。问题 2 的公共资源一般指教育机构上传和管理公共的课件资源，以供老师上课使用，个人无法编辑修改，需要咨询下用户的具体需求是什么
+
+答：您好，问题 1 的报错都是 OSS 的，可以去声网 console 上检查一下您的的白板 OSS 相关配置是否正确，比如 endpoint 是否正确、是否开启了跨域配置。
+
+公共资源一般指教育机构上传和管理公共的课件资源，以供老师上课使用，个人无法编辑修改，您这边具体是什么需求？如果是让学生也上传东西的话这个做不到的
