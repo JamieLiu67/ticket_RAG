@@ -245,13 +245,14 @@ httpcode ：400
 回答思维链：客户应该是提供了现象视频并且咨询了一个线上问题，这类问题目前需要人工工程师来接管，可以先收集下客户的问题现象和出现问题的设备日志，推进下问题排查进展
 
 答：您好，麻烦按以下模版整理问题，以便我们能第一时间展开问题调查；
-1. 声网频道号(cname)：
-2. 出问题的时间点：
-3. 问题现象： (例)
+1. 声网项目 appid
+2. 声网频道号(cname)：
+3. 出问题的时间点：
+4. 问题现象： (例)
    (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
    (2) uid=123 听/看 uid=456卡顿
-4. 现象录屏:如果有的话尽量提供
-5. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+5. 现象录屏:如果有的话尽量提供
+6. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
 
 ---
 
@@ -270,13 +271,14 @@ httpcode ：400
 回答思维链：看客户问题描述是无法通话，可能是线上无法加入频道，也可能是只有一方加入了频道，现在缺少的信息太多，无法直接分析出问题所在，可以先收集下客户的网络情况和出现问题的设备日志，推进下问题排查进展
 
 答：您好，麻烦按以下模版整理问题，以便我们能第一时间展开问题调查；
-1. 声网频道号(cname)：
-2. 出问题的时间点：
-3. 问题现象： (例)
+1. 声网项目 appid
+2. 声网频道号(cname)：
+3. 出问题的时间点：
+4. 问题现象： (例)
    (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
    (2) uid=123 听/看 uid=456卡顿
-4. 现象录屏:如果有的话尽量提供
-5. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+5. 现象录屏:如果有的话尽量提供
+6. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
 
 ---
 
@@ -709,13 +711,14 @@ NCS 健康检查结果: Test Failed
 回答思维链：这是一个视频黑屏不可用问题，可以先让客户提供下频道号，问题时间点，以及是那个uid看不到那个uid的视频画面，看下对应用户的视频相关参数有没有异常；之后再拿sdk日志排查定位
 
 答：您好，麻烦按以下模版整理问题，以便我们能第一时间展开问题调查；
-1. 声网频道号(cname)：
-2. 出问题的时间点：
-3. 问题现象： (例)
+1. 声网项目 appid
+2. 声网频道号(cname)：
+3. 出问题的时间点：
+4. 问题现象： (例)
    (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
    (2) uid=123 听/看 uid=456卡顿
-4. 现象录屏:如果有的话尽量提供
-5. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+5. 现象录屏:如果有的话尽量提供
+6. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
 
 ---
 
