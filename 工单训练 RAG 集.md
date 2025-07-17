@@ -2,6 +2,48 @@
 
 本篇《工单训练 RAG 集》汇集了近期在声网各类 SDK 产品集成与使用过程中遇到的典型问题及解答。内容涵盖了从技术集成、线上报错、效果优化到商务和权限相关的常见场景，旨在为开发者和技术支持人员提供高效、实用的参考。通过梳理每个工单的提问、分析思路与标准回复，本文帮助读者快速定位问题本质，掌握处理思路，提升工单首次响应与技术支持的专业能力。
 
+---
+
+# **编号：36144**
+
+**SDK Product: Cloud-recording**
+
+**SDK Version: 当前版本**
+
+**SDK Platform: Restful**
+
+**Request type: 效果不佳、不达预期**
+
+问：云端录制单流录制模式只有分片文件？不能设置输出一个完整的录制文件？现在看每个分片只有15秒，太少了
+
+回答思维链：客户应该已经收到了云录制的录制文件，但是不知道录制完成后会生成一个完整的 m3u8 来播放，可以让客户查询下 OSS 内是否有 m3u8 文件
+
+答：您好，录制结束以后会有一个 m3u8 文件可以完整播放所有切片文件，您播放 m3u8 就可以了，参考：[https://doc.shengwang.cn/doc/cloud-recording/restful/user-guides/manage-file/introduce-recorded-files](https://doc.shengwang.cn/doc/cloud-recording/restful/user-guides/manage-file/introduce-recorded-files)
+
+---
+
+# **编号：36136**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.2.0**
+
+**SDK Platform: React Native**
+
+**Request type: 集成问题咨询**
+
+问：我们想在linux上做使用java做服务，可以服务很多客户端。
+对每个客户端，java服务都可以进入的一个房间给客户端1对1的进行语音应答。
+请问，这边有linux-java的sdk吗
+
+回答思维链：客户需要 Linux Java 服务端的 SDK，给他提供对应地址即可
+
+答：您好，服务端 SDK 支持创建多个 connect，每个 connect 对应一个频道
+
+[https://doc.shengwang.cn/doc/rtc-server-sdk/java/resources](https://doc.shengwang.cn/doc/rtc-server-sdk/java/resources)
+
+---
+
 # **编号：36075**
 
 **SDK Product: Cloud-recording**
@@ -245,13 +287,21 @@ httpcode ：400
 回答思维链：客户应该是提供了现象视频并且咨询了一个线上问题，这类问题目前需要人工工程师来接管，可以先收集下客户的问题现象和出现问题的设备日志，推进下问题排查进展
 
 答：您好，麻烦按以下模版整理问题，以便我们能第一时间展开问题调查；
+
 1. 声网项目 appid
+
 2. 声网频道号(cname)：
+
 3. 出问题的时间点：
+
 4. 问题现象： (例)
-   (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
-   (2) uid=123 听/看 uid=456卡顿
+
+ (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
+
+ (2) uid=123 听/看 uid=456卡顿
+
 5. 现象录屏:如果有的话尽量提供
+
 6. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
 
 ---
@@ -271,13 +321,21 @@ httpcode ：400
 回答思维链：看客户问题描述是无法通话，可能是线上无法加入频道，也可能是只有一方加入了频道，现在缺少的信息太多，无法直接分析出问题所在，可以先收集下客户的网络情况和出现问题的设备日志，推进下问题排查进展
 
 答：您好，麻烦按以下模版整理问题，以便我们能第一时间展开问题调查；
+
 1. 声网项目 appid
+
 2. 声网频道号(cname)：
+
 3. 出问题的时间点：
+
 4. 问题现象： (例)
-   (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
-   (2) uid=123 听/看 uid=456卡顿
+
+ (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
+
+ (2) uid=123 听/看 uid=456卡顿
+
 5. 现象录屏:如果有的话尽量提供
+
 6. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
 
 ---
@@ -711,13 +769,21 @@ NCS 健康检查结果: Test Failed
 回答思维链：这是一个视频黑屏不可用问题，可以先让客户提供下频道号，问题时间点，以及是那个uid看不到那个uid的视频画面，看下对应用户的视频相关参数有没有异常；之后再拿sdk日志排查定位
 
 答：您好，麻烦按以下模版整理问题，以便我们能第一时间展开问题调查；
+
 1. 声网项目 appid
+
 2. 声网频道号(cname)：
+
 3. 出问题的时间点：
+
 4. 问题现象： (例)
-   (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
-   (2) uid=123 听/看 uid=456卡顿
+
+ (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
+
+ (2) uid=123 听/看 uid=456卡顿
+
 5. 现象录屏:如果有的话尽量提供
+
 6. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
 
 ---
