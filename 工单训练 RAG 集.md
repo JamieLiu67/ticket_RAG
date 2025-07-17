@@ -136,14 +136,14 @@
 
 回答思维链：这是一个web 和native 互通的问题，web端无法监听到安卓上线，怀疑是安卓端没有加入频道成功，需要先收集频道相关信息分析
 
-答：您好，麻烦按以下模版整理问题，以便我们能第一时间展开问题调查；
-1. 声网频道号(cname)：
+答：您好，麻烦您按以下模版整理问题，以便我们能第一时间展开问题调查；
+1. 声网项目APPID、频道号(cname)：
 2. 出问题的时间点：
 3. 问题现象： (例)
    (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
    (2) uid=123 听/看 uid=456卡顿
 4. 现象录屏:如果有的话尽量提供
-5. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+5. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](~https://doc.shengwang.cn/faq/integration-issues/set-log-file~)
 
 ---
 
