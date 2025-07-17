@@ -44,6 +44,65 @@
 
 ---
 
+# **编号：36112**
+
+**SDK Product: RTC**
+
+**SDK Version: 其他版本**
+
+**SDK Platform: Android**
+
+**Request type: 线上报错**
+
+问：这个频道，1个老师，2个学生上课。但是1个学生反馈他能看到听到老师，但老师好像没看见他。
+后台看了下，这个有问题的学生，一开始进入了6874e8bef0db19910003557e的通话ID，然后又超时退出了。老师进入了另一个通话ID。
+既然退出了，那么学生怎么没有被踢出房间，而且还能看到在另一个通话ID的老师，但老师没有看见他？
+
+回答思维链：针对线上视频可用性问题，用户必需先提供准确的问题频道号、时间点、以及那个uid看不到那个uid，以便去查看后台的对应用户的视频相关参数有没有异常，进而给出初步的答复。
+
+答：您好，麻烦您按以下模版整理问题，以便我们能第一时间展开问题调查；
+1. 声网项目APPID、频道号(cname)：
+2. 出问题的时间点：
+3. 问题现象： (例)
+   (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
+   (2) uid=123 听/看 uid=456卡顿
+4. 现象录屏:如果有的话尽量提供
+5. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+   另外也麻烦您看下本身设备侧采集是否正常，比如使用其他语聊类app（微信）通话是否正常；或者使用自带的录音机录制看下是否正常
+
+另外建议您这边可以这样做下
+1、联系下学生检查下设备的摄像头是否正常；
+2、业务侧根据onLocalVideoStateChanged回调的state和reason参数 在UI上提示用户当前的视频采集状态以及错误原因，引导用户退出重进频道或者重启设备后重进等。
+
+---
+
+# **编号：36099**
+
+**SDK Product: Flexible-classroom**
+
+**SDK Version: 其他版本**
+
+**SDK Platform: Android**
+
+**Request type: 线上报错**
+
+问：孩子用的新东方小课屏那种平板上课，老师反馈听不清，孩子的声音很小，有时有回音。孩子也听不清老师的声音。
+
+回答思维链：针对线上音频体验类问题，声音小，听不清，回声等问题，初步都是需要客户侧提供频道号、时间点、uid信息等关键信息，结合内部排查工具后才能给初步结论
+
+答：您好，麻烦您按以下模版整理问题，以便我们能第一时间展开问题调查；
+1. 声网项目APPID、频道号(cname)：
+2. 出问题的时间点：
+3. 问题现象： (例)
+   (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
+   (2) uid=123 听/看 uid=456卡顿
+4. 现象录屏:如果有的话尽量提供
+5. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+   另外也麻烦您看下本身设备侧采集是否正常，比如使用其他语聊类app（微信）通话是否正常；或者使用自带的录音机录制看下是否正常
+   另外也麻烦您看下本身设备侧采集是否正常，比如使用其他语聊类app（微信）通话是否正常；或者使用自带的录音机录制看下是否正常
+
+---
+
 # **编号：36075**
 
 **SDK Product: Cloud-recording**
@@ -59,6 +118,32 @@
 回答思维链：客户反馈云录制调用 stop 的耗时很久，可能是因为调用 stop 时 body 里传参 async_stop 为 false，导致需要等录制文件都上传完才会返回结果，所以耗时通常会久一些，可以让客户先自行检查下这个字段。
 
 答：您好，可以捞一下调用 stop 时的完整请求内容看下是不是用了async_stop 为同步，如果是同步的话，需要等录制文件都上传完才会返回结果，所以耗时通常会久一些。
+
+---
+
+# **编号：36024**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.23.2**
+
+**SDK Platform: Web**
+
+**Request type: 线上报错**
+
+问：多人视频聊天场景, web端和安卓端都是用了相同的appID, 证书也都获取到了token, web端和web端可以视频聊天, 安卓端和安卓端也可以正常视频聊天
+但是web端的"user-published"可以监听到web端的上线信息, 但是无法监听到安卓端的上线信息是为什么? 我的电话15623522002
+
+回答思维链：这是一个web 和native 互通的问题，web端无法监听到安卓上线，怀疑是安卓端没有加入频道成功，需要先收集频道相关信息分析
+
+答：您好，麻烦按以下模版整理问题，以便我们能第一时间展开问题调查；
+1. 声网频道号(cname)：
+2. 出问题的时间点：
+3. 问题现象： (例)
+   (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
+   (2) uid=123 听/看 uid=456卡顿
+4. 现象录屏:如果有的话尽量提供
+5. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
 
 ---
 
@@ -80,6 +165,30 @@
 
 ---
 
+# **编号：35989**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.2.0**
+
+**SDK Platform: Android**
+
+**Request type: 线上报错**
+
+问：两个主播连麦，看不到双方画面并提示连麦回调失败，请断开连麦后重新连接！
+
+回答思维链：1、需要和客户确认采用那种连麦方式，如果是跨频道mediarelay方式需要确认是否开通服务权限2、需要和客户确认UI侧提示连麦回调失败 是根据声网那个回调实现的；3、需要和客户收集频道号、时间点查看频道内的数据情况
+
+答：您好，需要您这边确认以下几点：
+
+1、使用那种连麦方式，多频道方式还是跨频道mediarelay方式，如果是后者，需要提供下项目appid我们查下是否开通服务；
+
+2、UI侧提示连麦回调失败 是根据声音那个回调实现的？
+
+3、您这边也可以提供下出现问题的声网频道号，问题时间点以及声网的sdk日志（https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file），
+
+---
+
 # **编号：35975**
 
 **SDK Product: RTM**
@@ -95,6 +204,55 @@
 回答思维链：客户用的是 RTM，现在需要发送图片消息，但是 RTM 本身不支持传输图片消息，客户有需要的话可以建议他用环信 IM 这类即时聊天 SDK 来实现更好。
 
 答：您好，RTM 是信令 SDK，不支持直接传输图片，有图片传输需求的话可以考虑环信 IM：[https://www.easemob.com/](https://www.easemob.com/)
+
+---
+
+# **编号：35950**
+
+**SDK Product: RTSA**
+
+**SDK Version: 1.9.5**
+
+**SDK Platform: Linux-C**
+
+**Request type: 线上报错**
+
+问：当设备有双网卡时 会偶现不停地断线重连断线重连持续好多遍 单4G 或 单WIFI 不会出问题
+
+回答思维链：根据客户的描述，sdk重连和设备多网卡有必然联系；比较怀疑是sdk在适配这种特殊的双网卡设备有兼容性问题，需要拿到sdk日志进一步确认
+答：您好，建议您先确认下设备在双网卡下对外网络连接是否正常，如果确认没有问题，需要您这边提供以下信息进一步排查定位：
+1. 声网项目APPID、频道号(cname)：
+   2.问题时间点:
+   3.需要您拿下rtsa sdk的日志，参考文档 [https://doc.shengwang.cn/api-ref/rtsa/c/structlog__config__t#log_path](https://doc.shengwang.cn/api-ref/rtsa/c/structlog__config__t#log_path)
+
+---
+
+# **编号：35935**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.3.0**
+
+**SDK Platform: Android**
+
+**Request type: 效果不佳、不达预期**
+
+问：双人连麦，编码配置：720p，1600kbps，20fps。 室内连麦直播时，帧率正常可达到20fps。跑到室外后，帧率掉到7fps。码率能保持在1600kbps。
+这情况下因为帧率太低能明显感觉到画面一卡一卡的。这情况怎么优化？
+环境变差时sdk内部是优先确保码率的吗？有没有其他配置可以动态调优
+
+回答思维链：1、通过客户描述看视频编码帧率下降大概率是因为网络变差导致的，需要和客户收集频道号、时间点、uid 等信息进一步确认 2、sdk内部编码降级偏好是通过setVideoEncoderConfiguration方法可以配置的
+
+答：1、您好，看您的描述视频帧率下降可能是因为室外网络变差导致的，麻烦您这边提供以下信息我们排查下：
+1. 声网项目APPID、频道号(cname)：
+2. 出问题的时间点：
+3. 问题现象： (例)
+   (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
+   (2) uid=123 听/看 uid=456卡顿
+4. 现象录屏:如果有的话尽量提供
+5. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+   2、我们是有api 是调整sdk 编码降级偏好的，setVideoEncoderConfiguration方法，参考文档如下:
+   [https://doc.shengwang.cn/api-ref/rtc/android/API/class_videoencoderconfiguration](https://doc.shengwang.cn/api-ref/rtc/android/API/class_videoencoderconfiguration)
 
 ---
 
@@ -114,6 +272,35 @@
 回答思维链：客户调用了封禁接口，也得到了请求成功后的规则 id，通常来说表示调用成功了，封禁应该是生效的。但不清楚具体现象是什么，封禁只会影响远端观看，本端预览是继续工作的，可以先找客户确认下现象，以及要个完整请求内容看看
 
 答：您好，看起来接口调用是成功的，请问实际频道内远端可以看到来自被封禁用户的画面吗？封禁不会停止用户本地的采集状态，只影响线上观看，您这边可以先确认下现象，然后提供下原始请求内容，放在 txt 里用附件发到工单
+
+---
+
+# **编号：35927**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.5.1**
+
+**SDK Platform: Android**
+
+**Request type: 效果不佳、不达预期**
+
+问：1、使用场景：调用加入频道方法joinChannel，并 监听onConnectionStateChanged及onJoinChannelSuccess回调，如果onJoinChannelSuccess触发认为加入成功，显示画面；若onConnectionStateChanged触发且state == 5，则退出该次录制，并提示错误原因；
+
+2、问题表现：客户使用华为P30准备录制，页面一直黑屏，未退出无任何提示；
+
+3、备注：我们本地使用安卓10及更老的设备都未复现该问题，线上客户100%复现该情况，通过后端日志，确实可以推断出用户尝试了几十次；
+
+回答思维链：该问题是个视频不可见，需要和客户收集频道号、时间点查看频道内的数据情况，看下视频采集为啥失败了
+
+答：您好，视频黑屏的可能因素有很多，比如摄像头异常，摄像头被占用等；这边需要您提供下以下信息，我们进一步排查下：
+1. 声网项目APPID、频道号(cname)：
+2. 出问题的时间点：
+3. 问题现象： (例)
+   (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
+   (2) uid=123 听/看 uid=456卡顿
+4. 现象录屏:如果有的话尽量提供
+5. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
 
 ---
 
@@ -286,23 +473,15 @@ httpcode ：400
 
 回答思维链：客户应该是提供了现象视频并且咨询了一个线上问题，这类问题目前需要人工工程师来接管，可以先收集下客户的问题现象和出现问题的设备日志，推进下问题排查进展
 
-答：您好，麻烦按以下模版整理问题，以便我们能第一时间展开问题调查；
-
-1. 声网项目 appid
-
-2. 声网频道号(cname)：
-
-3. 出问题的时间点：
-
-4. 问题现象： (例)
-
- (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
-
- (2) uid=123 听/看 uid=456卡顿
-
-5. 现象录屏:如果有的话尽量提供
-
-6. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+答：您好，麻烦您按以下模版整理问题，以便我们能第一时间展开问题调查；
+1. 声网项目APPID、频道号(cname)：
+2. 出问题的时间点：
+3. 问题现象： (例)
+   (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
+   (2) uid=123 听/看 uid=456卡顿
+4. 现象录屏:如果有的话尽量提供
+5. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+   另外也麻烦您看下本身设备侧采集是否正常，比如使用其他语聊类app（微信）通话是否正常；或者使用自带的录音机录制看下是否正常
 
 ---
 
@@ -320,23 +499,15 @@ httpcode ：400
 
 回答思维链：看客户问题描述是无法通话，可能是线上无法加入频道，也可能是只有一方加入了频道，现在缺少的信息太多，无法直接分析出问题所在，可以先收集下客户的网络情况和出现问题的设备日志，推进下问题排查进展
 
-答：您好，麻烦按以下模版整理问题，以便我们能第一时间展开问题调查；
-
-1. 声网项目 appid
-
-2. 声网频道号(cname)：
-
-3. 出问题的时间点：
-
-4. 问题现象： (例)
-
- (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
-
- (2) uid=123 听/看 uid=456卡顿
-
-5. 现象录屏:如果有的话尽量提供
-
-6. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+答：您好，麻烦您按以下模版整理问题，以便我们能第一时间展开问题调查；
+1. 声网项目APPID、频道号(cname)：
+2. 出问题的时间点：
+3. 问题现象： (例)
+   (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
+   (2) uid=123 听/看 uid=456卡顿
+4. 现象录屏:如果有的话尽量提供
+5. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+   另外也麻烦您看下本身设备侧采集是否正常，比如使用其他语聊类app（微信）通话是否正常；或者使用自带的录音机录制看下是否正常
 
 ---
 
@@ -768,23 +939,15 @@ NCS 健康检查结果: Test Failed
 
 回答思维链：这是一个视频黑屏不可用问题，可以先让客户提供下频道号，问题时间点，以及是那个uid看不到那个uid的视频画面，看下对应用户的视频相关参数有没有异常；之后再拿sdk日志排查定位
 
-答：您好，麻烦按以下模版整理问题，以便我们能第一时间展开问题调查；
-
-1. 声网项目 appid
-
-2. 声网频道号(cname)：
-
-3. 出问题的时间点：
-
-4. 问题现象： (例)
-
- (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
-
- (2) uid=123 听/看 uid=456卡顿
-
-5. 现象录屏:如果有的话尽量提供
-
-6. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+答：您好，麻烦您按以下模版整理问题，以便我们能第一时间展开问题调查；
+1. 声网项目APPID、频道号(cname)：
+2. 出问题的时间点：
+3. 问题现象： (例)
+   (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
+   (2) uid=123 听/看 uid=456卡顿
+4. 现象录屏:如果有的话尽量提供
+5. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+   另外也麻烦您看下本身设备侧采集是否正常，比如使用其他语聊类app（微信）通话是否正常；或者使用自带的录音机录制看下是否正常
 
 ---
 
