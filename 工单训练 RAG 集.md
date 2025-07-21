@@ -2244,3 +2244,101 @@ ERROR: Error: Cannot read properties of undefined (reading 'split')
 答：您好，请问您这边目前在用的是声网 RTC 还是 IM 呢？麻烦确认下目前使用的产品是哪一个。以及看打印像是依赖添加有问题导致调用了undefined的对象，可以检查下这个 SDK 的依赖添加是否正确。
 
 ---
+
+# **编号：33916**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.3.0**
+
+**SDK Platform: IOS**
+
+**Request type: 集成问题咨询**
+
+问：咨询虚拟直播
+
+回答思维链：客户在咨询虚拟直播，但没有提到具体问题是什么，可以让客户留个联系方式方便后续人工工程师跟进，以及建议客户列举下具体想要讨论的问题内容。
+
+答：您好，请问这里说的“虚拟直播”具体是什么场景？可以完整描述下问题和需求以及留个联系方式吗？人工工程师稍后为您解答。
+
+---
+
+# **编号：33910**
+
+**SDK Product: Flexible-classroom**
+
+**SDK Version: 2.8.100**
+
+**SDK Platform: Android**
+
+**Request type: 集成问题咨询**
+
+问：请问该灵动课堂如何配置 同步播放设备的屏幕
+
+回答思维链：客户的需求是“同步播放设备的屏幕”，听起来是屏幕共享的意思，可以和客户确认下是不是这个需求。如果是的话，需要提醒客户灵动课堂的移动端不支持屏幕共享，只有 Web 或者 Electron 才支持
+
+答：您好，请问您说的“同步播放设备的屏幕”是指屏幕共享吗？如果是的话需要注意：移动端灵动课堂不支持屏幕共享，Web 和桌面端支持，可以跑下对应的 Demo，修改相关配置：https://doc.shengwang.cn/api-ref/flexible-classroom/javascript/classroom-sdk#mediaoptions
+
+---
+
+# **编号：33897**
+
+**SDK Product: Fastboard**
+
+**SDK Version: 0.3.22**
+
+**SDK Platform: Web**
+
+**Request type: 集成问题咨询**
+
+问：Fastboard web集成是否支持比较老的项目环境？  
+昨天使用vite+vue3集成完成，但是老项目使用的webpack+vue2，集成进去后报错mobx使用错误。  
+不影响大部分功能的使用，但是无法选择画笔颜色
+
+回答思维链：客户提到自己的环境项目较老，集成后会报错mobx使用错误，推测是webpack 可能会不识别新语法导致的，之前有其他用户也遇到过类似问题：[https://github.com/netless-io/fastboard/issues/23](https://github.com/netless-io/fastboard/issues/23)。应该推荐客户避免使用旧的打包器，因为 SDK 再发版本也不会适配旧的打包器版本了
+
+答：您好，webpack 可能会不识别新语法，参考：[https://github.com/netless-io/fastboard/issues/23](https://github.com/netless-io/fastboard/issues/23)
+如果某些老打包器会有问题就更换吧，后续 SDK 不会再针对旧的去做适配了。
+
+---
+
+# **编号：33892**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.19.0**
+
+**SDK Platform: Web**
+
+**Request type: 崩溃 (闪退、卡死)**
+
+问：推拉流掉帧，卡顿
+
+回答思维链：客户反馈了掉帧问题，但是没有提供具体的频道信息，无法一句话就解答完毕。应该找客户收集频道号、uid 、时间点以及问题现象，方便后续人工工程师排查问题
+
+答：您好，麻烦您按以下模版整理问题，以便我们能第一时间展开问题调查；
+1. 声网项目APPID、频道号(cname)：
+2. 出问题的时间点：
+3. 问题现象： (例) (1) uid=123 听不到/看不到 uid=456，大约持续20分钟 (2) uid=123 听/看 uid=456卡顿
+4. 现象录屏:如果有的话尽量提供
+5. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+
+---
+
+# **编号：33848**
+
+**SDK Product: Media-push**
+
+**SDK Version: 当前版本**
+
+**SDK Platform: Restful**
+
+**Request type: 集成问题咨询**
+
+问：旁路推流可以推rtsp的流吗？或者平台有转rtsp流的功能吗
+
+回答思维链：客户在咨询旁路推流是否支持推 rtsp 流，这个是不支持的。后半句又有转换 rtsp 流的需求，可以咨询下客户目前的场景，了解下是什么原因让客户如此需要 rtsp 流，理论上 RTMP 和  RTSP 的区别不会特别大。
+
+答：您好，不支持，平台也不提供转换的能力。请问您这边是什么场景一定需要 RTSP？可以考虑下用旁路推流推到 RTMP 地址上然后自行转换到 RTSP地址。
+
+---
