@@ -2342,3 +2342,238 @@ ERROR: Error: Cannot read properties of undefined (reading 'split')
 答：您好，不支持，平台也不提供转换的能力。请问您这边是什么场景一定需要 RTSP？可以考虑下用旁路推流推到 RTMP 地址上然后自行转换到 RTSP地址。
 
 ---
+
+# **编号：33836**
+
+**SDK Product: Media-pull**
+
+**SDK Version: 当前版本**
+
+**SDK Platform: Restful**
+
+**Request type: 集成问题咨询**
+
+问：使用在线媒体流功能，AppID=3fdb8517f7f84aed9198e2960f3f4400，房间号：test_agora；  
+请求参数中开启了如下配置，通过数据流返回点播流播放进度：  
+"dataStreamOptions":
+
+{ "enable": true }
+
+然后使用API-Examples中的「Create Data Stream」demo看收到的消息都是固定的（长度为21个字节）：  
+66 72 6f 6d 3a 20 31 39 38 37 37 20 6d 65 73 73 61 67 65 3a 20，转换为ascii码为：from: 19877 message:
+
+回答思维链：客户使用了输入在线媒体流服务，并且在字段里开启了datastream 配置来传递点播流总时长，但客户好像没有提到自己有没有使用Protobuf解析，可能是造成无法解析点播进度的原因。可以让客户检查下相关实现。
+
+答：您好，如果通过 Data stream 展示点播流总时长，发出的 Data stream 需要使用 Protobuf 解析，而不能用 ASCII 码直接解析。可以确认下现在的实现有没有用 Protobuf 去解析，参考文档内相关字段描述：https://doc.shengwang.cn/doc/media-pull/restful/media-pull/operations/get-region-v1-projects-appId-cloud-player-players
+
+---
+
+# **编号：33819**
+
+**SDK Product: CDN**
+
+**SDK Version: 当前版本**
+
+**SDK Platform: CDN**
+
+**Request type: 集成问题咨询**
+
+问：跨频道流媒体转发这个要怎么开启，或者在站内开启哪个就可以了，文档太模糊完全搞不懂
+
+回答思维链：客户提交的产品是 CDN，但问的是 RTC 的跨频道流媒体转发功能，这个是 RTC 才会用到的能力，可以让客户先确认下自己目前在用的产品到底是哪一个。
+
+答：您好，跨频道流媒体转发需要人工工程师为您手动开启，但这个服务是给 RTC 使用的，您工单里提交的问题产品是 CDN，CDN 是用不上这个功能的，请确认下您现在要用 RTC 还是 CDN，这是两套完全不同的产品。
+
+---
+
+# **编号：33813**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.22.0**
+
+**SDK Platform: Web**
+
+**Request type: 集成问题咨询**
+
+问：使用 rtc 开启直播时使用 createCameraVideoTrack(
+{ encoderConfig: '720p', cameraId: videoId }
+) 发布 720p 的视频流，在某些时候会变成推送 680 * 480 的流  
+通过 ILocalVideoTrack 中的 setEncoderConfiguration 无法修改， 重新初始化也不能修改为 720p
+想问下有可能原因有哪些，如何排查？
+
+回答思维链：客户在指定了编码为 720 的情况下依旧达不到编码预期，推测可能是浏览器限制了编码，可以让用户调用浏览器接口看下浏览器的选择是什么分辨率，如果浏览器原生接口返回的就是低分辨率，那有可能和硬件自身的限制有关。
+
+答：您好，编码分辨率选择上不去是浏览器行为导致的，您可以调用浏览器原生接口看下得到的分辨率配置是不是本身就低于预期。
+getSettings是 WebRTC 官方的接口，这个接口是浏览器根据你的硬件能力最终选择的分辨率配置，属于浏览器行为
+getConstraints是你直接设置的配置，但只能告诉浏览器你期望设置到什么分辨率的采集，实际的情况还要看硬件上限以及浏览器行为选择，一般会受到硬件自身限制的影响。
+https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamTrack/getSettings
+https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamTrack/getConstraints
+
+---
+
+# **编号：33772**
+
+**SDK Product: RTC**
+
+**SDK Version: 6.5.0**
+
+**SDK Platform: Flutter**
+
+**Request type: 集成问题咨询**
+
+问：能夠在直撥元件首次載入的時候預設使用後置攝像頭嗎？能的話該如何做？不能的話能怎麼辦？
+
+回答思维链：客户想要在直播加频道的时候直接用后置摄像头开播，提示客户在 setCameraCapturerConfiguration 的时候指定使用后置摄像头，这样加入频道就默认用后置摄像头了。
+
+答：您好，可以使用 setCameraCapturerConfiguration 来指定 前置 or 后置 摄像头。不过请注意，该方法必须在开启本地摄像头采集前调用。
+https://doc.shengwang.cn/api-ref/rtc/flutter/API/toc_video_device#api_irtcengine_setcameracapturerconfiguration
+
+---
+
+# **编号：33754**
+
+**SDK Product: RTC**
+
+**SDK Version: 其他版本**
+
+**SDK Platform: Web**
+
+**Request type: 集成问题咨询**
+
+问：【环境】
+前端vue项目： 采用 sdk包，版本是："agora-rtc-sdk-ng": "^4.12.1",  
+后端java项目：采用github源码，版本是：
+
+<groupId>io.agora</groupId>  
+<artifactId>authentication</artifactId>  
+<version>2.1.2</version>  
+<description>Agora Authentication</description>
+
+利用RtcTokenBuilder2Sample.java生成了 Token （Token with uid)，该Token在辅助工具--Token校验工具中，是校验通过的。
+
+【问题】  
+前端代码在运行时，提示：  
+AgoraRTCError CAN_NOT_GET_GATEWAY_SERVER: flag: 4096, message: AgoraRTCError CAN_NOT_GET_GATEWAY_SERVER: invalid token, authorized failed
+出现问题的调用代码：
+agoraClient.join(agoraPara.appid, agoraPara.channel, agoraPara.token)
+【尝试过】  
+已经检查过“客户端”join()的参数appId、chanel和“服务端”生成token时完全一致；
+【疑问】  
+1、是因为web-sdk版本和服务器authenticated的 maven版本不匹配导致的吗?  
+2、我看论坛有些提及join方法需要加 uid为最后的参数，我也尝试过，加入后，不会提示 「invalid token, authorized failed」，但是直播画面是【黑屏】。
+以上问题，烦请声网专家支持，不胜感激。
+
+回答思维链：客户遇到了 invalid token的打印，这就是 token 不正确导致 join 失败了。加上用户的疑问，看起来不太了解 token 的工作原理，除了告诉客户如何自查 token 以外还可以介绍一下 token 的工作原理。
+
+答：您好，invalid token, authorized failed表示您 join 是传入的 token 和频道名、uid 不匹配，自己生成的 token 是要校验 uid 的，您需要保证生成时的 uid 频道名和 join 时传入的完全一致才能加进频道。
+
+控制台有自助检验工具，可以自行校验下token：控制台-辅助工具-Token生成/校验–Token校验
+将您的token粘贴进去，解析一下，看解析出来的结果和您join传入的参数是否一致
+
+以及请保证 RTC 频道内的 uid 不重复，避免出现互踢情况。
+
+---
+
+# **编号：33752**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.5.0**
+
+**SDK Platform: Unity**
+
+**Request type: 集成问题咨询**
+
+问：Unity 使用 Agora_Unity_RTC_SDK_v4.5.0_VOICE SDK时，平台为VisionOS,打包Xcode工程进行编译时，会出现错误：  
+Undefined symbol: _AddVideoFrameCacheKey
+Undefined symbol: _CallIrisApi
+Undefined symbol: _CreateIrisApiEngine
+Undefined symbol: _CreateIrisEventHandler
+Undefined symbol: _CreateIrisRtcRendering
+Undefined symbol: _DestroyIrisApiEngine
+Undefined symbol: _DestroyIrisEventHandler
+Undefined symbol: _FreeIrisRtcRendering
+Undefined symbol: _GetVideoFrameCache
+Undefined symbol: _ILocalSpatialAudioEngine_ClearRemotePositions
+Undefined symbol: _ILocalSpatialAudioEngine_ClearRemotePositionsEx
+
+回答思维链：客户在尝试打包到 VisionOS 上使用，但使用的是 4.5.0 的官网版本。目前Unity 只有一个内部特殊版本适配了 VisionOS ，需要让人工工程师提供内部下载地址给到客户。
+
+答：您好，目前只有一个未上架官网的版本适配了 VisionOS，您稍作等待，人工工程师稍后提供下载地址为您解答。
+
+---
+
+# **编号：33748**
+
+**SDK Product: RTC**
+
+**SDK Version: 6.5.0**
+
+**SDK Platform: Flutter**
+
+**Request type: 集成问题咨询**
+
+问：目前根据文档集成了本地截图功能，但是没有上传成功且没有收到回调，目前不知道到底是客户端问题还是服务端问题，请问如何进行自查：  
+已知：  
+1. 回调地址能够正常访问  
+2. 本地截图配置：
+```
+engine.enableContentInspect(enabled: true, config: const ContentInspectConfig(extraInfo: "test", modules: [ContentInspectModule(interval: 5, type: ContentInspectType.contentInspectSupervision)])) 
+```
+
+3. 打开后输出：
+```
+api name RtcEngine_enableContentInspect_e15e514 params "{"enabled":true,"config":{"extraInfo":"test","modules":[
+{"type":2,"interval":5}
+]}}"
+和 
+api name RtcEngine_enableContentInspect_e15e514 result 0 outdata
+{"result":0}
+```
+4. 使用flutter集成，无dll问题
+
+回答思维链：客户在使用客户端 SDK 的本地截图功能，虽然调用成功但是没有回调。需要确认下客户端 SDK 日志，以及让用户自查下网关是否有拦截情况
+
+答：您好，麻烦提供下复现时的 SDK 日志，人工工程师稍微排查下具体原因。以及您也可以自查下是否存在网关拦截的情况。
+https://doc.shengwang.cn/faq/integration-issues/set-log-file
+
+---
+
+# **编号：33714**
+
+**SDK Product: RTMP**
+
+**SDK Version: 当前版本**
+
+**SDK Platform: Restful**
+
+**Request type: 集成问题咨询**
+
+问：在测试环境生成推流码，通过测试环境的域名 rtmp://rtls-ingress-test.agoramdn.com/live 一直推流不成功
+
+回答思维链：客户选的是旁路推流，但问的问题是RTMP 网关，需要和客户再次确认下用的到底是哪个产品。如果是 RTMP网关的话，这个推流域名地址不应该有 test，正确的地址是 rtls-ingress-prod-{region}.agoramdn.com/live
+
+答：您好，请问现在在用的是旁路推流还是 RTMP 网关？这是两个不同的产品。如果是后者的话，需要注意：推流域名地址不应该有 test，正确的地址是 rtls-ingress-prod-{region}.agoramdn.com/live
+参考文档：https://doc.shengwang.cn/doc/rtmp-gateway/restful/get-started/use-gateway
+
+---
+
+# **编号：33699**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.4.2**
+
+**SDK Platform: HarmonyOS**
+
+**Request type: 集成问题咨询**
+
+问：鸿蒙的声网sdk。我在设置了这个enableLocalAudio(false)的时候，除了第一次回调了没有权限之后，我增加了权限之后，就没有回调了。
+
+回答思维链：客户在用鸿蒙 SDK，但是没有说明“没有回调”具体指的是什么回调，需要确认下具体现象以及客户说的回调是哪个回调。并且收集日志以便稍后人工工程师解答，因为客户用的是鸿蒙 SDK，所以获取日志的方式是：hdc file recv /data/app/el2/100/base/packagename/haps/entryname/files
+
+答：您好，enableLocalAudio是控制本地音频采集的接口，设置为 false 以后就关闭采集了。请问现在的现象是接收不到哪一个回调？
+以及有复现时的 SDK 日志吗？鸿蒙获取日志的方式为：hdc file recv /data/app/el2/100/base/packagename/haps/entryname/files，您可以完整描述下现象并且提供对应时间的日志，人工工程师稍后为您解答
+
+---

@@ -152,7 +152,8 @@
               "title": "工单训练 RAG 集 的大纲"
             }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
