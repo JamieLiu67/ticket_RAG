@@ -2214,6 +2214,33 @@ https://doc.shengwang.cn/api-ref/rtc/android/API/toc_audio_basic#onRemoteAudioSt
 
 回答思维链：客户需要在Web上实现切换设备，可以让客户参考我们Demo的实现，用setDevice来切换。
 
+答：您好，可以参考我们Demo的实现，用setDevice来切换
+
 https://doc.shengwang.cn/doc/rtc/javascript/basic-features/switch-device
 
 https://doc.shengwang.cn/doc/rtc/javascript/get-started/run-demo
+
+---
+
+# **编号：33918**
+
+**SDK Product: RTC**
+
+**SDK Version: 4.4.2**
+
+**SDK Platform: HarmonyOS**
+
+**Request type: 集成问题咨询**
+
+问：1.问题表现  
+ERROR: Error: Cannot read properties of undefined (reading 'split')  
+2.复现步骤  
+1）根据IM通信的快速开始前提条件进行配置  
+2）当使用sdk中的方法或类时进行编译  
+3）编译未通过，报错信息为Error: Cannot read properties of undefined (reading 'split')
+
+回答思维链：客户提交的SDK Product是 RTC，但是问题内容里提到了 IM，不确定他现在用的产品到底是哪个，需要优先确认下正确的相关信息。以及看打印是调用了undefined的对象，并进行操作了的报错，可以让客户检查下依赖添加是否正确。
+
+答：您好，请问您这边目前在用的是声网 RTC 还是 IM 呢？麻烦确认下目前使用的产品是哪一个。以及看打印像是依赖添加有问题导致调用了undefined的对象，可以检查下这个 SDK 的依赖添加是否正确。
+
+---
