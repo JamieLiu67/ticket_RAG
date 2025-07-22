@@ -144,7 +144,7 @@
               "type": "outline",
               "state": {
                 "file": "工单训练 RAG 集.md",
-                "followCursor": false,
+                "followCursor": true,
                 "showSearch": false,
                 "searchQuery": ""
               },

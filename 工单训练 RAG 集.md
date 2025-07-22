@@ -2578,6 +2578,48 @@ https://doc.shengwang.cn/faq/integration-issues/set-log-file
 
 ---
 
+# **编号：33683**
+
+**SDK Product: Cloud-Recording**
+
+**SDK Version: 当前版本**
+
+**SDK Platform: Restful**
+
+**Request type: 效果不佳、不达预期
+
+问：1、开始录制正常，停止录制在oss中为生成MP4格式文件；  
+2、停止录制返回结果如下，payload显示Failed，具体结果如下：
+{"cname":"123456","uid":"10002","resourceId":"VIFvR6qvdFkRNRDsj9uhhEgnjLZrTmUD8olvImTJYa2AG3nJ3sFuW56NIVBSlorjqUXA8NREU7o_0O_OqzHYDuRpxX7YoztodTrox6tqSFWRPhi4XUiGFbkgv7IlXV7aDq32wfE1NEXUXyz4kE4hJb9C3WS5p5XeFccuYVTdjmb34Bpgcr7O9fgz8CgVGB6Q","sid":"2354cf898b41b76d70850ba58b9b9ffb","code":49,"serverResponse":{"backuped":0,"fileListMode":"string","fileListStr":"quickstart/2354cf898b41b76d70850ba58b9b9ffb_123456.m3u8","gwWorkerVersion":1,"inProgressBitmask":1,"output":{},"payload":
+{"message":"Failed"}
+,"selectionBitmask":1,"subscribeModeBitmask":1}}
+3、录制视频的账号key，secret非当前账号，是公司账号；
+
+回答思维链：客户在云录制 stop 的时候遇到了 49 报错，根据错误码文档解释，这个是任务正在退出，不能进行当前操作，可能是重复调用 Stop 或者其他原因导致任务正在退出。常见的有录制机器人被剔出房间，或者没有用户发流触发 maxIdleTime 逻辑自动停止任务。可以让客户自查下是不是把频道内已有的 uid 分配给录制端了，导致录制端加入频道失败或者在频道内被踢出，从而出现了报错。
+
+答：您好，49可以参考错误码：[https://doc.shengwang.cn/doc/cloud-recording/restful/response-code#code](https://doc.shengwang.cn/doc/cloud-recording/restful/response-code#code)
+您可以自查下是不是把频道内已有的 uid 分配给录制端了，导致录制端加入频道失败或者在频道内被踢出，从而出现了报错。录制端需要被分配一个频道内不重复的 uid，start 时候配置的 uid 是录制段加频道用的 uid，不是要录制哪个 uid。
+
+---
+
+# **编号：33679**
+
+**SDK Product: RTM**
+
+**SDK Version: 其他版本**
+
+**SDK Platform: JavaScript**
+
+**Request type: 效果不佳、不达预期
+
+问："agora-rtm-sdk": "^1.5.1"  
+监听rtm频道用户进入不触发，rtmChannel?.on("MemberJoined"）
+
+回答思维链：客户用的还是 1.x 的 RTM SDK，这个版本已经不再更新维护了，应该推荐客户尽早升级到 2.x
+
+答：您好，您目前在用的是 RTM 1.x，这个版本已经停止更新维护很久了，建议尽早升级到 2.x ：https://doc.shengwang.cn/doc/rtm2/javascript/overview/migration-guide
+
+---
 # **编号：33677**
 
 **SDK Product: RTC**
@@ -2604,6 +2646,124 @@ https://doc.shengwang.cn/faq/integration-issues/set-log-file
 2、不建议同时开启 1 和 2，用一个就行。
 3、是实时性的，在设备上运行，参考Demo 写法，直接使用 vad_result_bytearray，不再需要自己去处理。回调里可以做抛出，然后在非主线程里进行调用来防止阻塞。
 4、近期需求较多，迭代较快，资源紧张。后续会在 README 里添加更多描述和引导，同时也会内部推进下官网文档的更新。
+
+---
+# **编号：33662**
+
+**SDK Product: Cloud-Recording**
+
+**SDK Version: 当前版本**
+
+**SDK Platform: Restful**
+
+**Request type: 集成问题咨询**
+
+问：我想python每隔2分钟检查一次实时互动RTC直播频道中主播是否在正常发流，如果没有正常发流 我需要触发无人机重新推流。请问有没有相关的api
+
+回答思维链：客户提交的产品是云录制，但问的问题和云录制看起来不相关的，需要找客户再确认下现在到底在用什么产品。问题本身是 RTC 检测远端主播发流的，可以让客户在 Python 里监听on_user_video_track_state_changed回调，更具这个回调去判断频道里的远端视频流发送情况。因为Python官网文档有些滞后，需要让客户检查下 SDK 代码来完成回调监听，参考：https://github.com/AgoraIO-Extensions/Agora-Python-Server-SDK/blob/12fcb294749875d19503c7a93f318f67da2b6187/agora_rtc/agora/rtc/local_user_observer.py#L73C9-L73C42
+
+答：您好，请问您这边是在用云录制还是 RTC？这个问题看起来是 RTC 监听远端发流状态的问题。Python SDK 可以通过监听里监听 on_user_video_track_state_changed 回调来了解远端发流状态，参考：https://github.com/AgoraIO-Extensions/Agora-Python-Server-SDK/blob/12fcb294749875d19503c7a93f318f67da2b6187/agora_rtc/agora/rtc/local_user_observer.py#L73C9-L73C42
+
+---
+
+# **编号：33651**
+
+**SDK Product: Cloud-Recording**
+
+**SDK Version: 当前版本**
+
+**SDK Platform: Restful**
+
+**Request type: 集成问题咨询**
+
+问：请问mix（合流录制模式）下录制的视频为什么比例有很大的问题，展示视频画面就一点，其它的都黑屏，录制产生的文件路径为：xxx
+
+一下是设置的参数；其中height和 width 无论设置成什么 最终录制的视频比例感觉都一样'recordingConfig' => [  
+'channelType' => 0,  
+'streamTypes' => 2,  
+'streamMode' => 'standard',  
+'videoStreamType' => 0,  
+'audioProfile' => 1,  
+'maxIdleTime' => 300,  
+'subscribeAudioUids' => ["#allstream#"](https://jira.agoralab.co/browse/CSP-33651#allstream#%22 "Follow link"),  
+'subscribeVideoUids' => ["#allstream#"](https://jira.agoralab.co/browse/CSP-33651#allstream#%22 "Follow link"),  
+'subscribeUidGroup' => 0  
+],  
+'transcodingConfig' => [  
+'height' => 1080,  
+'width' => 1920,  
+'bitrate' => 500,  
+'fps' => 30,  
+'mixedVideoLayout' => 0,  
+'backgroundColor' => '#FF0000'  
+],
+
+回答思维链：客户应该合流录制转码后的画面布局不符合预期,目前客户在用的mixedVideoLayout是 0，可以让客户优先检查下这个布局的效果本身是否符合预期。以及让客户留下对应的 sid，方便人工工程师稍后解答
+
+答：您好，频道里发的流如果就是竖屏的，那录制出来就是竖屏的。如果需要变成有左右黑边的那种，需要单独配置转码或者自行用工具去转
+您可以提供下这次录制的 sid，人工工程师稍后查看具体原因。以及您也可以看下合流布局的预设效果，看下mixedVideoLayout为 0 的效果是否符合预期。
+
+---
+
+# **编号：33650**
+
+**SDK Product: Cloud-Recording**
+
+**SDK Version: 当前版本**
+
+**SDK Platform: Restful**
+
+**Request type: 效果不佳、不达预期**
+
+问：正常录制视频是可以的，录制的是发起者的视频内容，但是我业务是想录制接收者的画面。
+transcodingConfig 这个参数配置了以后 录制产生报错。  
+想知道是为什么录制不成功。
+
+回答思维链：客户在使用云录制，但对于云录制的理解似乎有些问题。云录制是往 RTC 频道里额外加一个录制机器人来录制画面的，没有“发起者”这个概念，不是用频道内的用户去甪直别人来实现的。需要和客户解释一下这个逻辑。
+以及客户还提到了配置transcodingConfig后录制报错，需要确认下客户的具体参数内容和报错结果是什么。
+
+答：您好，云录制是往频道里额外加一个机器人对频道收流，所以没有“发起者”这个概念，频道里有流就全部录制的，请保证 start body 里的 uid 字段和频道里已有的 uid 不要重复。
+以及请问您的transcodingConfig是如何配置的？报错内容又是什么呢？可以抓一下原始请求和结果，放在 txt里发到工单附件里，稍后人工工程师为您解答。
+
+---
+
+# **编号：33644**
+
+**SDK Product: RTM**
+
+**SDK Version: 2.2.0**
+
+**SDK Platform: Object-C**
+
+**Request type: 集成问题咨询**
+
+问：rtm如何支持对方离线的时候，能够发送消息
+
+回答思维链：客户想要用 RTM 在远端离线的时候发送消息。如果用点对点消息的话肯定会失败，所以无法实现。但如果用频道消息+客户自行实现历史消息业务的话，客户就可以在远端用户重新上线后获取离线期间的消息了。
+以及客户目前在用 2.2.0 版本，2.2.2 版本上新增了 RTM 官方历史消息，如果客户升级到 2.2.2 后可以考虑使用官方的历史消息功能。
+
+答：您好，这个需求做不到，RTM 本身是实时消息传输的 SDK，对方不在线肯定是收不到的。
+您说的这种算历史消息或者离线消息，需要自己业务侧实现。比如加一个服务端或者客户端进所有频道，保存所有发送的消息，用户重新上线后可以自行获取不在线期间的消息。
+您也可以升级到 2.2.2 及以后的版本，RTM 官方支持了历史消息。
+https://doc.shengwang.cn/doc/rtm2/android/user-guide/message/history-message
+
+---
+
+# **编号：33643**
+
+**SDK Product: RTM**
+
+**SDK Version: 2.2.2**
+
+**SDK Platform: Java**
+
+**Request type: 集成问题咨询**
+
+问：rtm中有没有后端java使用的sdk。 我们的环境是Linux-centos系统，java-maven- springboot
+
+回答思维链：客户想要用 centOS 集成 RTM SDK，RTM 是有 Java 版本而且支持 centOS 的，可以给客户提供下文档地址
+
+答：您好，有的，支持 centOS，参考文档：https://doc.shengwang.cn/doc/rtm2/android/get-started/quick-start
 
 ---
 
