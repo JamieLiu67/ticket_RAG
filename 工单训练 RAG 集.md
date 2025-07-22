@@ -2412,6 +2412,29 @@ https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamTrack/getConstraints
 
 ---
 
+# **编号：33775**
+
+**SDK Product: RTMP-Converter**
+
+**SDK Version: 当前版本**
+
+**SDK Platform: restful**
+
+**Request type: 效果不佳、不达预期**
+
+问：无人机直播正常，使用旁路推流功能向阿里云推流；
+阿里云接收到的流是黑屏
+
+回答思维链：这个一个rtmp-converter 推流黑屏的问题，客户反馈直播正常，说明rtc采集是正常，问题出在推流环节，需要先和客户收集频道信息看下推流数据是否正常
+答：您好，麻烦咱们提供以下信息，以便我们第一时间开展排查：
+1. 声网频道号(cname)：
+2. 出问题的时间点：
+3. 问题现象： (例)
+   (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
+   (2) uid=123 听/看 uid=456卡顿
+4. 现象录屏:如果有的话尽量提供
+
+---
 # **编号：33772**
 
 **SDK Product: RTC**
@@ -2431,6 +2454,29 @@ https://doc.shengwang.cn/api-ref/rtc/flutter/API/toc_video_device#api_irtcengine
 
 ---
 
+# **编号：33755**
+
+**SDK Product: RTC-Linux**
+
+**SDK Version: 4.2.31**
+
+**SDK Platform: Linux-C**
+
+**Request type: 效果不佳、不达预期**
+
+问：这是用阿里云的ecs推流到声网， 阿里的出口带宽是200M，但从水晶球看网络波动比较大，请问是什么原因？
+
+回答思维链：这个一个服务端推流带宽异常的问题，首先需要和客户确认推流方式，是自采集还是自编码方式；然后需要和客户收集频道号，uid，时间点等信息查询频道内linux上下行带宽情况；
+答：您好，请问您这边使用的视频推流使用的是自采集yuv还是自编码方法？另外也麻烦咱们提供以下信息：
+1. 声网频道号(cname)：
+2. 出问题的时间点：
+3. 问题现象： (例)
+   (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
+   (2) uid=123 听/看 uid=456卡顿
+4. 现象录屏:如果有的话尽量提供
+5. sdklog：如果有的话尽量提供，日志设置方式：https://doc.shengwang.cn/api-ref/rtc-server-sdk/cpp/structagora_1_1commons_1_1_log_config
+
+---
 # **编号：33754**
 
 **SDK Product: RTC**
@@ -2578,6 +2624,24 @@ https://doc.shengwang.cn/faq/integration-issues/set-log-file
 
 ---
 
+# **编号：33698**
+
+**SDK Product: RTC-Linux**
+
+**SDK Version: 4.4.30**
+
+**SDK Platform: Linux-Java**
+
+**Request type: 集成问题咨询**
+
+问：这个sdk 在windows上可以使用吗
+
+回答思维链：linux-java sdk 的使用环境必须是linux环境，window平台是不能使用的
+
+答：您好，linux-java sdk的使用环境必须是linux系统，如centos或者ubuntu；是不能再window上使用的
+
+---
+
 # **编号：33683**
 
 **SDK Product: Cloud-Recording**
@@ -2663,6 +2727,35 @@ https://doc.shengwang.cn/faq/integration-issues/set-log-file
 回答思维链：客户提交的产品是云录制，但问的问题和云录制看起来不相关的，需要找客户再确认下现在到底在用什么产品。问题本身是 RTC 检测远端主播发流的，可以让客户在 Python 里监听on_user_video_track_state_changed回调，更具这个回调去判断频道里的远端视频流发送情况。因为Python官网文档有些滞后，需要让客户检查下 SDK 代码来完成回调监听，参考：https://github.com/AgoraIO-Extensions/Agora-Python-Server-SDK/blob/12fcb294749875d19503c7a93f318f67da2b6187/agora_rtc/agora/rtc/local_user_observer.py#L73C9-L73C42
 
 答：您好，请问您这边是在用云录制还是 RTC？这个问题看起来是 RTC 监听远端发流状态的问题。Python SDK 可以通过监听里监听 on_user_video_track_state_changed 回调来了解远端发流状态，参考：https://github.com/AgoraIO-Extensions/Agora-Python-Server-SDK/blob/12fcb294749875d19503c7a93f318f67da2b6187/agora_rtc/agora/rtc/local_user_observer.py#L73C9-L73C42
+
+---
+
+# **编号：33658**
+
+**SDK Product: CDN**
+
+**SDK Version: 当前版本**
+
+**SDK Platform: CDN**
+
+**Request type: 效果不佳、不达预期**
+
+问：回调地址设置不上 报错如下
+NCS 健康检查结果: Test Failed
+f"success":false,"httpCode" 590,"eror":"Post
+"https://gl.kmg-s.kz:31443/fre-eye/agora/notice\".
+context deadline exceeded (Client.Timeout exceeded
+while awaiting headers)","response":"
+
+回答思维链：NCS 设置报错，通常都是回调地址不通，http证书异常等问题导致的，需要客户自查下
+
+答：您好，如果健康检查失败，请根据声网控制台的提示进行错误排查。常见的错误包括：
+
+请求超时：你的服务器没有在 10 秒内返回 200。请检查你的服务器是否及时对事件回调作出正确的响应。如果响应正确，请联系技术支持
+确认声网消息通知服务器到你的服务器之间的网络连接是否正常。
+证书错误：HTTPS 证书错误。请检查证书是否正确。如果你的服务器受防火墙限制，请检查是否已将声网消息通知服务器的 IP 地址全部添加到防火墙白名单。
+域名不可达：域名不合法，无法解析到目标 IP 地址。请检查你的服务器部署是否正确。
+响应错误：你的服务器返回的响应状态码不为 200，具体的状态码和描述详见控制台提示。
 
 ---
 
@@ -2767,6 +2860,31 @@ https://doc.shengwang.cn/doc/rtm2/android/user-guide/message/history-message
 
 ---
 
+# **编号：33640**
+
+**SDK Product: RTC-Linux**
+
+**SDK Version: 2.1.6**
+
+**SDK Platform: Linux-Python**
+
+**Request type: 效果不佳、不达预期**
+
+问：在单人的时候vad可以检测到对话，但是加入多个用户之后vad忽然就无法检测了（频道里面一个人说话也无法检测）
+
+VAD的设置我基本上参照了这里的代码 https://github.com/AgoraIO-Extensions/Agora-Python-Server-SDK/blob/main/agora_rtc/examples/example_audio_vad.py
+
+输入的配置类为 AudioVadConfigV2(16, 30, 50, 0.7, 0.5, 70, 70, -50))
+
+回答思维链：这个是一个linux-python vad模式使用问题，客户反馈当人正常，多人vad无法检测；比较怀疑是vad用法问题，另外对于linux sdk来说，通常需要使用最新的版本；
+答：您好，您这边可以这样试下：
+1、将linux-python sdk升级到最新的2.2.4版本，vad支持多人检测；
+2、def on_playback_audio_frame_before_mixing(self, agora_local_user, channelId, uid, audio_frame: AudioFrame, vad_result_state:int, vad_result_bytearray:bytearray):
+
+sdk会在这个回调里面返回vad的结果，使用uid来做区分不同的用户的结果。
+
+---
+
 # **编号：33638**
 
 **SDK Product: RTC**
@@ -2791,5 +2909,43 @@ https://doc.shengwang.cn/doc/rtm2/android/user-guide/message/history-message
 RTT Demo：[https://stt-demo.agora.io/#/home](https://stt-demo.agora.io/#/home)
 
 您可以先试下这两个产品的效果，我作为 AI 助手不方便直接推荐，您可以再介绍下完整场景，留个联系方式，方便人工工程师晚些时候和您语音沟通。
+
+---
+
+# **编号：33617**
+
+**SDK Product: RTC-linux**
+
+**SDK Version: 4.4.30**
+
+**SDK Platform: Linux-C**
+
+**Request type: 集成问题咨询**
+
+问：1. 我看sdk接受pcm流之后只有通道数，采样率这些信息，pcm的sample_fmt是什么呢？
+对应到ffmpeg中是
+enum AVSampleFormat {
+AV_SAMPLE_FMT_NONE = -1,
+AV_SAMPLE_FMT_U8, ///< unsigned 8 bits
+AV_SAMPLE_FMT_S16, ///< signed 16 bits
+AV_SAMPLE_FMT_S32, ///< signed 32 bits
+AV_SAMPLE_FMT_FLT, ///< float
+AV_SAMPLE_FMT_DBL, ///< double
+
+AV_SAMPLE_FMT_U8P, ///< unsigned 8 bits, planar
+AV_SAMPLE_FMT_S16P, ///< signed 16 bits, planar
+AV_SAMPLE_FMT_S32P, ///< signed 32 bits, planar
+AV_SAMPLE_FMT_FLTP, ///< float, planar
+AV_SAMPLE_FMT_DBLP, ///< double, planar
+AV_SAMPLE_FMT_S64, ///< signed 64 bits
+AV_SAMPLE_FMT_S64P, ///< signed 64 bits, planar
+
+AV_SAMPLE_FMT_NB ///< Number of sample formats. DO NOT USE if linking dynamically
+};
+是哪个枚举呀
+
+回答思维链：通过问题描述看，客户想咨询linux sdk 音频自采集接口相关功能；这里涉及到sendAudioPcmData()接口的使用，以及与FFMPGA的AVSampleFormat 之间的使用关联
+
+答：您好，对应声网sdk来说，pcm都是16位的，即2个字节，对应的是bytes_per_sample这个字段。
 
 ---
