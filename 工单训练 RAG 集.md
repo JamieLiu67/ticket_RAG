@@ -2642,6 +2642,25 @@ https://doc.shengwang.cn/faq/integration-issues/set-log-file
 
 ---
 
+# **编号：33686**
+
+**SDK Product: RTM**
+
+**SDK Version: 2.2.0**
+
+**SDK Platform: JavaScript**
+
+**Request type: 集成问题咨询
+
+问：我创建安卓应用，需要哪些合法域名，是否有限制
+
+回答思维链：创建 app 不需要合法域名，如果客户本身在内网需要使用 RTM 服务的话是需要付费私有化部署并且使用代理的，可以和客户解释一下。
+
+答：您好，创建 app 不需要合法域名，但是需要能够连接到公网的网络。如果是内网环境会需要付费私有化部署并且使用代理才可以使用。
+https://doc.shengwang.cn/doc/rtm2/android/user-guide/setup/private-setup
+
+---
+
 # **编号：33683**
 
 **SDK Product: Cloud-Recording**
