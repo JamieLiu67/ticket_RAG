@@ -2605,6 +2605,42 @@ https://doc.shengwang.cn/faq/integration-issues/set-log-file
 
 ---
 
+# **编号：33707**
+
+**SDK Product: RTM**
+
+**SDK Version: 2.1.2**
+
+**SDK Platform: JavaScript**
+
+**Request type: 线上报错**
+
+问：聊天的服务,每个人都能在群里说话， 有人捣乱的话 在群里能够把他踢出去+能够把他说的话清除
+
+回答思维链：客户需要踢人和清除聊天记录的功能，RTM 是不具备这些的，客户的需求更接近即时聊天，可以推荐客户用环信 IM 来实现
+
+答：您好，踢人和清除聊天记录的功能 RTM 本身不具备，您可以考虑下用即时聊天 SDK 来实现类似功能，比如环信 IM：https://www.easemob.com/
+
+---
+
+# **编号：33704**
+
+**SDK Product: Recording**
+
+**SDK Version: 其他版本**
+
+**SDK Platform: Linux-Java**
+
+**Request type: 线上报错**
+
+问：发现在录制过程中，有时候会出现调用stopService 返回-1的情况，导致结束录制出现异常
+
+回答思维链：客户在用本地服务端录制，应该先引导用户用云录制，在客户明确拒绝后再尝试索要日志进行排查
+
+答：您好，有录制需求我们优先推荐用云录制：https://doc.shengwang.cn/doc/cloud-recording/restful/landing-page
+
+---
+
 # **编号：33699**
 
 **SDK Product: RTC**
@@ -2639,6 +2675,45 @@ https://doc.shengwang.cn/faq/integration-issues/set-log-file
 回答思维链：linux-java sdk 的使用环境必须是linux环境，window平台是不能使用的
 
 答：您好，linux-java sdk的使用环境必须是linux系统，如centos或者ubuntu；是不能再window上使用的
+
+---
+
+# **编号：33695**
+
+**SDK Product: RTM**
+
+**SDK Version: 其他版本**
+
+**SDK Platform: JavaScript**
+
+**Request type: 线上报错**
+
+问：调用rtmClient.login（）显示超时
+
+回答思维链：客户可能在用 1.x 的老版本，可以先确认下版本情况，如果是的话要建议客户早日升级 2.x。以及 login 超时大概率是客户端自身网络连接有问题，可以让客户也自查一下是否能连接到公网，换一个网络再试试。
+
+答：您好，请问现在在用的 RTM 版本是多少？1.x 已经停止更新维护了，建议使用 2.x 版本：https://doc.shengwang.cn/doc/rtm2/javascript/overview/migration-guide
+login 超时大概率和客户端网络有关，可以检查下客户端的网络状况，切换可以稳定连接公网的热点或者 wifi 再试试。
+
+---
+
+# **编号：33689**
+
+**SDK Product: Cloud-Recording**
+
+**SDK Version: 当前版本**
+
+**SDK Platform: Restful**
+
+**Request type: 线上报错**
+
+问：该云端录制未生成回放，麻烦看一下什么原因：  
+sid:ad98e85fb842db158b928aa97908ec47  
+channelName:course-e08f1d45
+
+回答思维链：客户已经提供 sid 和频道名了，接下来等待人工工程师处理就够了。可以考虑再收集一下具体的录制时间点。
+
+答：您好，可以再确认下录制发送的时间点吗？人工工程师稍后为您排查
 
 ---
 
