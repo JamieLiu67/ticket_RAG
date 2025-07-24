@@ -2454,6 +2454,25 @@ https://doc.shengwang.cn/api-ref/rtc/flutter/API/toc_video_device#api_irtcengine
 
 ---
 
+# **编号：33768**
+
+**SDK Product: RTM**
+
+**SDK Version: 2.1.12**
+
+**SDK Platform: Java**
+
+**Request type: 线上报错**
+
+问：调用登录方法 RTM ERROR: login failed, error code: DUPLICATE_OPERATION, reason: Same subscribe, join or login request. 这个错误该如何解决 对我来说很重要请帮忙去询问开发 造成原因和解决方案 不要敷衍 感谢
+
+回答思维链：客户在用 RTM 产品，报错内容是error code: DUPLICATE_OPERATION, reason: Same subscribe, join or login request，应该是执行了重复的 login 操作导致 login 失败，应该让客户检查下自己的 login 调用相关业务，看下现在是按什么逻辑处理的
+
+答：您好，报错显示DUPLICATE_OPERATION，这表示 login 失败是因为重复操作导致的，您可以检查一下 login 相关的代码业务逻辑，看下什么情况会触发多次登录调用。
+https://doc.shengwang.cn/doc/rtm2/javascript/error-codes
+
+---
+
 # **编号：33755**
 
 **SDK Product: RTC-Linux**
