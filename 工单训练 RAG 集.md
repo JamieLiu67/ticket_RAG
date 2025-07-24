@@ -2586,6 +2586,85 @@ https://doc.shengwang.cn/faq/integration-issues/set-log-file
 
 ---
 
+# **编号：33747**
+
+**SDK Product: RTM**
+
+**SDK Version: 2.1.2**
+
+**SDK Platform: JavaScript**
+
+**Request type: 集成问题咨询**
+
+问：RTC成功了，音视频可以看到，RTM一直报错，排查uid、token应该也没发现不一致地方
+
+RTM:ERROR [UTC_Time: 02:44:25.38][uid: 3*12]login failed with args:
+{"tok**":"00681c759d8f65042f9b0c32564671dd478IAADXpNcE3ebSiooiLtiuvfbLF+g/LAKjorEGH5aNejfK***********************************"}
+. +0ms
+
+_MultiCameraControl.vue?t=1737081851336:304 rtm login error RtmInternalError: Cannot get illegal sid.  
+at get sid (agora-rtm-2.2.0.min.js:27:1040009)  
+at MutableReactiveHandler.set (chunk-O6NV3OV2.js?v=378681a1:1215:26)  
+at Proxy.login (agora-rtm-2.2.0.min.js:27:1099248)  
+at Proxy.login (agora-rtm-2.2.0.min.js:27:1135756)  
+at i.value (agora-rtm-2.2.0.min.js:7:271685)  
+at createTrackAndPublish (_MultiCameraControl.vue?t=1737081851336:297:36)
+
+回答思维链：打印里有Cannot get illegal sid的错误，而且在用vue，根据过往经验有遇到过其他客户在vue3里面把 new RTM 返回值赋值给了 ref 类型，改成普通 let 就可以了，可以让客户先自查一下是不是这个问题导致的。
+
+答：您好，请问您这边在用 vue3 吗？我们之前遇到过其他客户也有类似的情况，最后发现是在vue3里面把 new RTM 返回值赋值给了 ref 类型导致的，改成普通 let 就可以了。您可以自查一下有没有类似情况。
+如果无法解决的话，麻烦再提供下完整浏览器 console 打印，以及确认下 token、appid、userid 信息，人工工程师会为您继续排查。
+
+
+---
+
+# **编号：33744**
+
+**SDK Product: RTM**
+
+**SDK Version: 2.1.0**
+
+**SDK Platform: Unity**
+
+**Request type: 集成问题咨询**
+
+问：我测试直播，我的产品是用unity写的，一直都连接很好，但是创建项目你们版面都会不同，不知道我现在开的项目，测试直播填上了APID，没有影像，请问哪里出了错？
+
+回答思维链：客户提供的信息较少，而且问题描述不够清晰，需要再确认下目前的具体现象和“创建项目你们版面都会不同”是什么意思，以及客户提交的问题产品是 RTM，但是有提到没有影像。可能也有用到 RTC ，需要一起确认下。
+
+答：您好，请问现在在用的产品是 RTC 还是 RTM？如果是 RTC 遇到了无法出图的问题，麻烦您按以下模版整理问题，以便我们能第一时间展开问题调查；
+1. 声网项目APPID、频道号(cname)：
+2. 出问题的时间点：
+3. 问题现象： (例)
+   (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
+   (2) uid=123 听/看 uid=456卡顿
+4. 现象录屏:如果有的话尽量提供
+5. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+
+以及请问您反馈的“创建项目你们版面都会不同”具体是什么意思？麻烦也详细描述下这个现象，方便的话，麻烦提供截图，人工工程师稍后为您解答。
+
+---
+
+# **编号：33738**
+
+**SDK Product: Cloud-recording**
+
+**SDK Version: 当前版本**
+
+**SDK Platform: Restful**
+
+**Request type: 集成问题咨询**
+
+问：麻烦帮忙查下在调用/v1/apps/%s/cloud_recording/resourceid/%s/sid/%s/mode/mix/query这个接口时，sid：b024c073b94e0419c10b53aef14bcb71
+接口返回404，请问什么情况下会返回404-服务器无法根据请求找到资源（网页）？这些参数都是从声网获取的，为什么会404？
+
+回答思维链：客户成功开启云端录制后调用 query 方法返回了 404，可以让客户先参考文档自查，然后等人工工程师查找对应sid 的记录看下具体原因：https://doc.shengwang.cn/faq/integration-issues/return-404
+
+答：您好，query 404 是被查询的录制任务不存在或已经结束了，您可以先对照这篇文档自查一下，人工工程师稍后会查询 sid 的后台记录看下具体原因
+https://doc.shengwang.cn/faq/integration-issues/return-404
+
+---
+
 # **编号：33714**
 
 **SDK Product: RTMP**
