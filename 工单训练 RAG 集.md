@@ -2368,6 +2368,27 @@ ERROR: Error: Cannot read properties of undefined (reading 'split')
 
 ---
 
+# **编号：33830**
+
+**SDK Product: RTM**
+
+**SDK Version: 其他版本**
+
+**SDK Platform: Java**
+
+**Request type: 商务问题**
+
+问：本账号原来用的是体验版，但是24年9月份确自动变成了企业版，请问为什么会变成企业版，套餐的变更，并不是我们主动变更的，而且自动变成企业版后又产生了费用，这个问题谁来处理，如何处理？
+
+回答思维链：客户是在问商务问题，这类问题无需回答，引导客户等到人工工程师跟进或联系商务
+
+答：您好，人工工程师稍后跟进为您解答，如果您需要联系商务，请使用以下方式： 
+- 销售邮箱： sales@shengwang.cn 
+- 填写联系销售表单：[联系表单链接](https://www.shengwang.cn/contact-sales/) 
+- 客服电话： 400 632 6626
+
+---
+
 # **编号：33827**
 
 **SDK Product: RTM**
