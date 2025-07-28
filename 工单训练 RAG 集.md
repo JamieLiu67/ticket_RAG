@@ -2177,6 +2177,60 @@ https://doc.shengwang.cn/doc/rtc/restful/webhook/events
 
 ---
 
+# **编号：33985**
+
+**SDK Product: RTC-Linux**
+
+**SDK Version: 当前版本**
+
+**SDK Platform: Linux-Java**
+
+**Request type: 线上问题**
+
+问：1.与声网客户端创建连接，连接不上，回调方法没有打印日志
+2.通过webSocket与声网客户端创建连接，发出请求后没有日志打印且没有连接成功
+
+回答思维链：这是一个linux-java 加入频道失败的问题；针对加入频道失败的问题，需要提供问题时间点的agorasdk日志进一步排查
+答：您好，麻烦咱们提供以下信息，以便我们第一时间开展排查：
+1. 声网频道号(cname)：
+2. 出问题的时间点：
+3. 问题现象： (例)
+   (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
+   (2) uid=123 听/看 uid=456卡顿
+4. sdklog：https://doc.shengwang.cn/api-ref/rtc-server-sdk/java/classio_1_1agora_1_1rtc_1_1_agora_service_config
+另外加入频道失败通常和客户端网络异常，token无效或者过期；您这边也可以检查下，同时也建议咱们业务侧监听下onError 回调，接口参考文档如下：
+https://doc.shengwang.cn/doc/rtc-server-sdk/java/error-code
+
+---
+
+# **编号：33982**
+
+**SDK Product: RTC-Linux**
+
+**SDK Version: 2.1.0**
+
+**SDK Platform: Linux-Python**
+
+**Request type: 线上问题**
+
+问：代码： 参考了 https://github.com/AgoraIO-Extensions/Agora-Python-Server-SDK/blob/release/2.2.0/agora_rtc/examples/common/example_base.py 中的 connect_and_release方法。
+
+错误描述： 调用rtc sdk连接房间失败，十次中会失败一两次。ExampleConnectionObserver中的 on_connecting方法回调了，但是 on_connected没有回调， 且connection.connect返回值为0
+
+回答思维链：这是一个linux-Python SDK加入频道失败的问题，针对加入频道失败的问题，需要提供问题时间点的agorasdk日志
+答：您好，麻烦提供以下信息，以便我们能第一时间展开问题调查
+1. 声网频道号(cname)：
+2. 出问题的时间点：
+3. 问题现象： (例)
+   (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
+   (2) uid=123 听/看 uid=456卡顿
+4. 现象录屏:如果有的话尽量提供
+5.sdklog：如果有的话尽量提供，日志设置方式：https://doc.shengwang.cn/api-ref/rtc-server-sdk/python/python-api/apidatatype#agoraserviceconfig
+另外加入频道失败通常和客户端网络异常，token无效或者过期；您这边也可以检查下，同时也建议咱们业务侧监听下onError 回调，接口参考文档如下：
+https://doc.shengwang.cn/api-ref/rtc-server-sdk/python/error-code
+
+---
+
 # **编号：33961**
 
 **SDK Product: RTC**
@@ -2200,6 +2254,42 @@ https://doc.shengwang.cn/api-ref/rtc/android/API/toc_audio_basic#onRemoteAudioSt
 
 ---
 
+# **编号：33944**
+
+**SDK Product: Analytics**
+
+**SDK Version: 当前版本**
+
+**SDK Platform: Restful**
+
+**Request type: 线上问题**
+
+问：接口文档地址：https://doc.shengwang.cn/doc/analytics/general/restful-aa/operations/get-beta-insight-usage-by_time
+请求地址：
+https://api.sd-rtn.com/beta/insight/usage/by_time?start_ts=1738857600000&end_ts=1739499359000&appid=cf32bef49b4d47e0bdaf6dace009ae49&metric=totalDuration&aggregateGranularity=1h
+响应结果：
+{
+"code": 400,
+"message": "Bad request, parameter : startTs can not be null",
+"data": null
+}
+接口提示startTs没传，后改为
+https://api.sd-rtn.com/beta/insight/usage/by_time?startTs=1738857600000&endTs=1739499359000&appid=cf32bef49b4d47e0bdaf6dace009ae49&metric=totalDuration&aggregateGranularity=1h
+响应结果：
+{
+"code": 500,
+"message": "Unknown Error",
+"data": null
+}
+
+
+回答思维链：这是一个水晶球restful请求失败的问题，通常来说 返回500 都是内部错误，需要人工工程师介入排查
+
+答：您好，感谢您联系声网技术支持，我们已收到您提交的工单，正在为您处理。另外针对这个问题，建议您：
+1、再检查以下查询参数格式，是否异常或者有不合法的字段
+
+---
+
 # **编号：33931**
 
 **SDK Product: RTC**
@@ -2219,6 +2309,49 @@ https://doc.shengwang.cn/api-ref/rtc/android/API/toc_audio_basic#onRemoteAudioSt
 https://doc.shengwang.cn/doc/rtc/javascript/basic-features/switch-device
 
 https://doc.shengwang.cn/doc/rtc/javascript/get-started/run-demo
+
+---
+
+# **编号：33930**
+
+**SDK Product: RTSA**
+
+**SDK Version: 1.7.3**
+
+**SDK Platform: Linux-C**
+
+**Request type: 集成问题咨询**
+
+问：1. 使用定向流量卡，定向流量白名单IP包括以下：
+*.agora.io
+*.agoraio.cn
+*.sd-rtn.com
+2.设备无法正常加入直播间
+
+回答思维链：这是一个RTSA SDK 设备使用流量卡加入不了频道的问题；通常针对定向流量卡的适配，是需要先向运营商报备相关域名以及在初始化代码设置domainLimit
+
+答：您好，针对定向流量卡接入，需要您这边参考如下方案实现：
+1）、 向运营商报备*.agora.io, *.
+sd-rtn.com两个通配域名（至少需要*.
+agora.io，最好是也加上*.
+sd-rtn.com以满足高可用需求）。如需区域限制功能，需要增加*.
+agoraio.cn这个通配域名。
+
+2)、 代码设置
+```java
+RtcEngine create(RtcEngineConfig config) RtcEngineConfig->domainLimit = true
+
+/**
+
+Determines whether to enable domain limit
+-true: only connect to servers which already parsed by DNS
+-false: (Default) connect to servers with no limit
+*/
+
+bool domainLimit;
+
+```
+
 
 ---
 
@@ -2281,6 +2414,27 @@ ERROR: Error: Cannot read properties of undefined (reading 'split')
 
 ---
 
+# **编号：33906**
+
+**SDK Product: RTC-Linux**
+
+**SDK Version: 2.1.**
+
+**SDK Platform: Linux-Go**
+
+**Request type: 集成问题咨询**
+
+问：OnPlaybackAudioFrameBeforeMixing回调的音频流编码是什么格式的?
+
+回答思维链：这是一个linux-go 音频裸数据接口使用问题，可以给客户发下官网文档接口说明；另外声音的音频裸数据回调格式默认是PCM 16位的
+
+答：您好，OnPlaybackAudioFrameBeforeMixing 接口回调的音频格式默认是PCM 16位，您可以参考如下文档：
+https://doc.shengwang.cn/api-ref/rtc-server-sdk/go/go-api/audioframeobserver
+同时您这边可以通过SetPlaybackAudioFrameBeforeMixingParameters接口设置pcm的声道数和采样率
+https://doc.shengwang.cn/api-ref/rtc-server-sdk/go/go-api/localuser#setplaybackaudioframeparameters
+
+---
+
 # **编号：33897**
 
 **SDK Product: Fastboard**
@@ -2322,6 +2476,52 @@ ERROR: Error: Cannot read properties of undefined (reading 'split')
 3. 问题现象： (例) (1) uid=123 听不到/看不到 uid=456，大约持续20分钟 (2) uid=123 听/看 uid=456卡顿
 4. 现象录屏:如果有的话尽量提供
 5. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+
+---
+
+# **编号：33888**
+
+**SDK Product: rtmpconverter**
+
+**SDK Version: 当前版本**
+
+**SDK Platform: Restful**
+
+**Request type: 线上报错**
+
+问：1. 问题表现，使用旁路推流，无法将RTC的主播流旁路推流到声网的CDN
+
+2. 问题现场信息
+APPID: 7c14653b67e34bc7a2d5941f1544fef7
+channelId: 7c14653b67e34bc7a2d5941f1544fef7:1581F6Q8X24BP00G019C:81-0-0
+旁路推流开始时间： 11:23:50
+旁路推流地址： rtmp://pushcloudlive.czi.com.cn/live/7c14653b67e34bc7a2d5941f1544fef7:1581F6Q8X24BP00G019C:81-0-0
+
+回答思维链：这个一个rtmp-converter推流失败的问题，客户已经提供了频道号、时间点以及推流地址；需要人工技术工程师排查后给出答复。
+答：您好，感谢您联系声网技术支持，我们已收到您提交的工单，正在为您处理。另外针对这个问题，建议您：
+1、先查下converter是否创建成功，调用创建的接口是否返回200；
+2、检查rtmp地址是否可用，以及是否正在被应用使用；
+
+---
+
+# **编号：33881**
+
+**SDK Product: RTC-Linux**
+
+**SDK Version: 2.1.2**
+
+**SDK Platform: Linux-Go**
+
+**Request type: 集成问题咨询**
+
+问：PushPCMData 发送的数据比特率和采样率是多少？发送的语音消息过快，导致播放音频变成噪音
+
+回答思维链：这是一个linux-go sdk 自采集音频接口相关的问题，通常音频的pcm的样本字节数是16位的，采样率最低是8000；这里可以参考官网的接口文档；对于发送的语音消息过快，声网这里推荐是10ms发送一次音频采样样本；
+
+答：您好，对于接口使用来说，您这边可以参考我们的官网的接口使用说明，链接如下：
+https://doc.shengwang.cn/api-ref/rtc-server-sdk/go/go-api/apidatatype#audioframe
+另外对于音频发送过快导致的噪声问题，声网建议是每10ms发送一次音频采样样本。
+
 
 ---
 
