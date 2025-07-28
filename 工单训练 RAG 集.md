@@ -2368,6 +2368,42 @@ ERROR: Error: Cannot read properties of undefined (reading 'split')
 
 ---
 
+# **编号：33827**
+
+**SDK Product: RTM**
+
+**SDK Version: 2.1.4**
+
+**SDK Platform: Java**
+
+**Request type: 集成问题咨询**
+
+问：你好，我们在开发过程中，通过询问Ai助手得知类似禁言等一些功能需要我们的后端去实现，助手给了一些接口，咨询助手接口的文档后，根据指引没有找到对应的后端文档，例如它给的[https://doc.shengwang.cn/doc/rtm2/restful-api](https://doc.shengwang.cn/doc/rtm2/restful-api "Follow link")，访问是404，或者点击rtm的文档，看到的也都是一些前端的文档和sdk，你们有技术可以拉群吗
+
+回答思维链：客户想要在 RTM 上实现 restful 接口实现 RTM 的禁言功能，RTM 本身是无法实现这个需求的，只有 RTC 有后台封禁用户、禁言的 restful 接口，之前回复的 AI 已经给出了错误回答，所以接下来的回答一定要再谨慎一点。
+
+答：您好，RTM 是没有类似 RTC 那样的封禁、禁言 restful 接口的，如果有聊天发言管控的续期，可以考虑接入环信 IM，环信这类即时聊天的 SDK 是拥有 restful 封禁能力的，RTM 作为信令传输 SDK 没有这个能力。
+
+---
+
+# **编号：33823**
+
+**SDK Product: RTM**
+
+**SDK Version: 2.2.0**
+
+**SDK Platform: JavaScript**
+
+**Request type: 集成问题咨询**
+
+问：您好，请问RTM2.x有类似1.x点对点一样的hasPeerReceived判断对方已经收到消息的方法吗？
+
+回答思维链：RTM2.x 里发送消息是有Promise PublishResponse的，客户可以直接监听方法执行完的 result 来判断消息是否发送成功，让客户参考文档里的示例代码即可。
+
+答：您好，2.x 上publish方法本身就是带Promise的，您可以监听方法执行完成的 result 来判断消息是否发送成功，参考文档：https://doc.shengwang.cn/api-ref/rtm2/javascript/toc-message/message#publish
+
+---
+
 # **编号：33819**
 
 **SDK Product: CDN**
@@ -2409,6 +2445,86 @@ getSettings是 WebRTC 官方的接口，这个接口是浏览器根据你的硬�
 getConstraints是你直接设置的配置，但只能告诉浏览器你期望设置到什么分辨率的采集，实际的情况还要看硬件上限以及浏览器行为选择，一般会受到硬件自身限制的影响。
 https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamTrack/getSettings
 https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamTrack/getConstraints
+
+---
+
+# **编号：33803**
+
+**SDK Product: RTM**
+
+**SDK Version: 2.2.2**
+
+**SDK Platform: Java**
+
+**Request type: 集成问题咨询**
+
+问：maven 包： 2.2.2-beta  
+问题描述： 在k8s 内运行，首次可以调用 rtm 成功，第二次login rtm后，就无法加入 channel，日志执行到： log.info("rtm_start_join_channel"); 服务就卡死了
+
+回答思维链：看客户的问题描述是卡死，但不确定客户在第二次初始化并且调用 login 的时候有没有先销毁第一个实例，RTM 不支持多实例，只能全局保留一个实例，需要和客户确认下。
+
+答：您好，看您的描述像是创建了多个实例导致的，请问您有先销毁第一个实例以后再去创建新的实例并且调用 login 吗？
+如果您自查看不出来，可以提供下 SDK 日志，人工工程师稍微为您看下具体情况：https://doc.shengwang.cn/doc/rtm2/android/error-codes
+
+---
+
+# **编号：33781**
+
+**SDK Product: Cloud-recording**
+
+**SDK Version: 当前版本**
+
+**SDK Platform: Restful**
+
+**Request type: 集成问题咨询**
+
+问：1云端录制是否支持上传录制文件到七牛云  
+2云端录制是否支持m3u8文件加密  
+3支持最大开启直播数量是多少
+
+回答思维链：客户提问了 3 个问题，问题 1 是不支持的，可以提供下目前支持的 OSS 厂家枚举文档给客户。问题 2 是支持的，支持kms或者aes256，引导客户在 start 的时候自行配置字段 extensionParams-sse就行。问题 3 看起来不是云录制的问题，似乎是在问 RTC 有没有同时开播的频道数量上限，需要再确认下客户需求
+
+答：您好，
+1、不支持，目前我们支持的 OSS 厂商都在这里：[https://doc.shengwang.cn/doc/cloud-recording/restful/api/reference](https://doc.shengwang.cn/doc/cloud-recording/restful/api/reference)
+2、支持kms或者aes256，在 start 的时候可以自行配置字段 extensionParams-sse，参考：https://doc.shengwang.cn/doc/cloud-recording/restful/cloud-recording/operations/post-v1-apps-appid-cloud_recording-resourceid-resourceid-mode-mode-start
+3、请问您说的最大开启直播数量是指什么？是指 RTC 同时开播的频道数上限吗？如果是问这个的话，答案是没有上限的。
+
+---
+
+# **编号：33779**
+
+**SDK Product: RTM**
+
+**SDK Version: 2.2.2**
+
+**SDK Platform: Java**
+
+**Request type: 集成问题咨询**
+
+问：创建 RtmClient 时报错：Exception in thread "main" java.lang.UnsatisfiedLinkError: no aosl in java.library.path
+
+代码如下：  
+RtmConfig rtmConfig = new RtmConfig.Builder(APPID, userId)  
+.eventListener(mRtmEventListener)  
+.build();  
+mRtmClient = RtmClient.create(rtmConfig);
+
+实际报错如下：  
+Exception in thread "main" java.lang.UnsatisfiedLinkError: no aosl in java.library.path  
+at java.lang.ClassLoader.loadLibrary(ClassLoader.java:1867)  
+at java.lang.Runtime.loadLibrary0(Runtime.java:870)  
+at java.lang.System.loadLibrary(System.java:1122)  
+at io.agora.rtm.internal.RtmClientImpl.safeLoadLibrary(RtmClientImpl.java:200)  
+at io.agora.rtm.internal.RtmClientImpl.loadLibrary(RtmClientImpl.java:181)  
+at io.agora.rtm.internal.RtmClientImpl.initializeNativeLibs(RtmClientImpl.java:143)  
+at io.agora.rtm.RtmClient.create(RtmClient.java:34)  
+at com.xnx3.chongwulong.RtmDemo.init(RtmDemo.java:66)  
+at com.xnx3.chongwulong.RtmDemo.main(RtmDemo.java:148)
+
+回答思维链：客户的打印里有“no aosl in java.library.path”，看起来是没有配置本地变量路径。可以让客户参考我们的 README 文档配置下本地变量再试试
+
+答：您好，“no aosl in java.library.path”是本地变量没有配置好路径才会出现的报错，请问您这边有参考过我们 README 里的步骤，去配置环境吗？
+https://github.com/AgoraIO/RTM2/tree/main/Agora-RTM2-QuickStart-Linux-Java#4-build-and-run
 
 ---
 
