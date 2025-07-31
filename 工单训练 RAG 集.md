@@ -2158,6 +2158,74 @@ at async c.uploadPersonalResource ([https://download.agora.io/edu-apaas/release/
 
 ---
 
+# **编号：34089**
+
+**SDK Product: RTC-Linux**
+
+**SDK Version: 4.4.31**
+
+**SDK Platform: Linux-Java**
+
+**Request type: 集成问题咨询**
+
+问：Native 端需要开放的域名、端口、协议：
+
+.agora.io，.sd-rtn.com
+
+udp:8443, 5888-5889, 4000-4100, 8130
+
+tcp:443, 8443, 80
+
+服务端是不是只需要通过这些域名端口访问就行，我们服务还需不需要从服务端接收什么
+
+回答思维链：这是一个linuxSDK 网络环境配置问题；通过问题描述来看，客户的使用环境是有防火墙的，客户侧需要知道声网SDK在有限制的网络环境下如何配置，这里需要是声网云代理方案
+
+答：您好，针对网络访问限制的环境，需要使用声网云代理方案；参考文档如下：
+https://doc.shengwang.cn/doc/rtc-server-sdk/java/advanced-features/cloud-proxy
+
+---
+# **编号：34077**
+
+**SDK Product: SDK-extension**
+
+**SDK Version: 4.5.0**
+
+**SDK Platform: Android**
+
+**Request type: 线上问题**
+
+问：使用讯飞语言转写出现偶现的崩溃现象
+```
+#02 pc 000000000012360c /data/app/~~zo_uoDn8zaq9A__s_5X6NQ==/pieces.verdict.wicket-rMfY2uMUuh6ABK98L96cDQ==/lib/arm64/libagora-hy.so [arm64-v8a::41cb92e4e6e2cd08f17f07a9901100aa]
+4
+#03 pc 0000000000121660 /data/app/~~zo_uoDn8zaq9A__s_5X6NQ==/pieces.verdict.wicket-rMfY2uMUuh6ABK98L96cDQ==/lib/arm64/libagora-hy.so [arm64-v8a::41cb92e4e6e2cd08f17f07a9901100aa]
+5
+#04 pc 0000000000102ab4 /data/app/~~zo_uoDn8zaq9A__s_5X6NQ==/pieces.verdict.wicket-rMfY2uMUuh6ABK98L96cDQ==/lib/arm64/libagora-hy.so [arm64-v8a::41cb92e4e6e2cd08f17f07a9901100aa]
+6
+#05 pc 00000000000ff9e4 /data/app/~~zo_uoDn8zaq9A__s_5X6NQ==/pieces.verdict.wicket-rMfY2uMUuh6ABK98L96cDQ==/lib/arm64/libagora-hy.so [arm64-v8a::41cb92e4e6e2cd08f17f07a9901100aa]
+7
+#06 pc 0000000000110588 /data/app/~~zo_uoDn8zaq9A__s_5X6NQ==/pieces.verdict.wicket-rMfY2uMUuh6ABK98L96cDQ==/lib/arm64/libagora-hy.so [arm64-v8a::41cb92e4e6e2cd08f17f07a9901100aa]
+8
+#07 pc 00000000000fa538 /data/app/~~zo_uoDn8zaq9A__s_5X6NQ==/pieces.verdict.wicket-rMfY2uMUuh6ABK98L96cDQ==/lib/arm64/libagora-hy.so [arm64-v8a::41cb92e4e6e2cd08f17f07a9901100aa]
+9
+#08 pc 0000000000107b7c /data/app/~~zo_uoDn8zaq9A__s_5X6NQ==/pieces.verdict.wicket-rMfY2uMUuh6ABK98L96cDQ==/lib/arm64/libagora-hy.so [arm64-v8a::41cb92e4e6e2cd08f17f07a9901100aa]
+10
+#09 pc 0000000000107848 /data/app/~~zo_uoDn8zaq9A__s_5X6NQ==/pieces.verdict.wicket-rMfY2uMUuh6ABK98L96cDQ==/lib/arm64/libagora-hy.so [arm64-v8a::41cb92e4e6e2cd08f17f07a9901100aa]
+11
+#10 pc 0000000000124904 /data/app/~~zo_uoDn8zaq9A__s_5X6NQ==/pieces.verdict.wicket-rMfY2uMUuh6ABK98L96cDQ==/lib/arm64/libagora-hy.so [arm64-v8a::41cb92e4e6e2cd08f17f07a9901100aa]
+12
+#11 pc 0000000000124684 /data/app/~~zo_uoDn8zaq9A__s_5X6NQ==/pieces.verdict.wicket-rMfY2uMUuh6ABK98L96cDQ==/lib/arm64/libagora-hy.so [arm64-v8a::41cb92e4e6e2cd08f17f07a9901100aa]
+13
+#12 pc 00000000000a4f40 /data/app/~~zo_uoDn8zaq9A__s_5X6NQ==/pieces.verdict.wicket-rMfY2uMUuh6ABK98L96cDQ==/lib/arm64/libagora-hy.so [arm64-v8a::41cb92e4e6e2cd08f17f07a9901100aa]
+14
+#13 pc 00000000001733bc /data/app/~~zo_uoDn8zaq9A__s_5X6NQ==/pieces.verdict.wicket-rMfY2uMUuh6ABK98L96cDQ==/lib/arm64/libagora-hy.so [arm64-v8a::41cb92e4e6e2cd08f17f07a9901100aa]
+```
+
+回答思维链：这是一个使用声网讯飞云市场插件崩溃问题；对于云市场插件相关问题，都需要和客户确认使用的声网sdk版本，之后需要人工工程师内部确认插件版本是否适配。
+
+答：您好，麻烦您这边提供下使用的声网SDK版本，需要等候人工工程师确认对应的插件版本；感谢您的理解与配合，谢谢。
+
+---
 # **编号：34061**
 
 **SDK Product: RTC**
@@ -2177,6 +2245,122 @@ https://doc.shengwang.cn/doc/rtc/restful/webhook/events
 
 ---
 
+# **编号：34058**
+
+**SDK Product: RTC-Linux**
+
+**SDK Version: 当前版本**
+
+**SDK Platform: Linux-Java**
+
+**Request type: 其他问题**
+
+问：请问连接声网的服务端需要的网络配置有哪些
+
+回答思维链：这是一个使用声网sdk的网络配置问题；正常需要服务器接入公网，有公网 IP；且允许访问 .agora.io 以及 .agoralab.co
+
+答：您好，声网服务端网络要求如下:
+服务器接入公网，有公网 IP
+服务器允许访问 .agora.io 以及 .agoralab.co
+
+---
+# **编号：34044**
+
+**SDK Product: CDN**
+
+**SDK Version: 当前版本**
+
+**SDK Platform: CDN**
+
+**Request type: 其他问题**
+
+问：有没有类似，腾讯的拉流转推功能
+
+回答思维链：这是一个产品功能问题，首先融合cdn是不支持拉流转推的，拉流转推应该是伪直播功能，推荐使用云端播放器
+
+答：您好，融合CDN是不支持拉流能力的；这边您可以使用我们的云端播放器产品，实现拉流播放，参考文档如下：
+https://doc.shengwang.cn/doc/media-pull/restful/overview/product-overview
+
+---
+# **编号：34041**
+
+**SDK Product: RTMPCONVERTER**
+
+**SDK Version: 当前版本**
+
+**SDK Platform: Restful****
+
+**Request type: 线上报错**
+
+问：你好 我们用无人机进行声网rtmp推流的时候 发现特别卡顿 能帮忙看看问题吗
+
+回答思维链：这是一个rtmpconverter推流卡顿问题，卡顿通常是和端侧网络差、视频采集编码帧率抖动有关，需要具体case具体分析
+
+答：您好，麻烦提供以下信息，以便我们能第一时间展开问题调查
+1. 声网频道号(cname)：
+2. 出问题的时间点：
+3. 问题现象： (例)
+   (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
+   (2) uid=123 听/看 uid=456卡顿
+4. 现象录屏:如果有的话尽量提供
+
+另外也建议咱们检查下无人机的网络是否正常
+
+---
+# **编号：34039**
+
+**SDK Product: RTC-Linux**
+
+**SDK Version: 2.1.6**
+
+**SDK Platform: Linux-Python**
+
+**Request type: 集成问题**
+
+问：agora_python_server_sdk中的IVideoEncodedFrameObserver接口，触发时返回的image_buffer[:length]，我需要将缓存的数据进行解码转为图片存储到本地设备，但是使用pyav解码时，总是提示image_buffer[:length]数据无效，或者数据不完整，请问导致问题的原因是什么
+
+
+回答思维链：这个一个linux-python IVideoEncodedFrameObserver接口使用问题；客户反馈image_buffer数据无效、不完整；比较怀疑是不是推送进来的数据就出现异常；比如可以先在同一个频道加个接收端和python互通，图像是否正常；
+
+答：您好，这里比较怀疑是推送进来的数据就出现异常，建议您这边测试下在同一个频道加个接收端和python端互通，接收端图像是否正常；
+
+---
+# **编号：34019**
+
+**SDK Product: RTC-Linux**
+
+**SDK Version: 4.0.1**
+
+**SDK Platform: Linux-Java**
+
+**Request type: 集成问题咨询**
+
+问：创建 AI 智能体，报错请求参数错误，具体的返回内容：
+
+{"detail":"","reason":"InvalidRequest"}
+文档：https://doc.shengwang.cn/doc/convoai/restful/convoai/operations/start-agent
+
+请求参数：
+
+{
+"name": "1889f1ac6ac44d8c9bded3c2c4c53e3d",
+"properties": {
+"channel": "81471e0c5d654e56abf9531e63684a7c",
+"agent_rtc_uid": "0",
+"remote_rtc_uids": ["*"],
+"idle_timeout": 600,
+"asr":
+
+{ "language": "en-US" }
+}
+}
+
+回答思维链：这是一个conversationAI 智能体创建失败的问题；此类问题的通常解决思路是建议让客户使用控制台上的playground测试成功后，点击View Code拿到完整的请求即可
+
+答：您好，您给的请求参数是不完整，建议是先在控制台上的playground测试成功后，点击View Code拿到完整的请求即可；链接如下
+https://console.shengwang.cn/product/ConversationAI?tab=Playground
+
+---
 # **编号：33985**
 
 **SDK Product: RTC-Linux**
