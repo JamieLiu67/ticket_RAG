@@ -104,20 +104,20 @@ Android 端运行 adb bugreport 命令获取系统生成的崩溃报告。
 
 答：是的，声网为 HarmonyOS 平台提供了 **原生 SDK 支持**，开发者需通过集成原生 SDK 实现音视频功能。以下是关键信息：
 
-### 1. **HarmonyOS 原生 SDK 支持**
+1. **HarmonyOS 原生 SDK 支持**
 - 声网提供专为 HarmonyOS 设计的原生 SDK（`.har` 格式），支持完整的音视频通信能力。
 - 集成方式：下载 SDK 后，将 `AgoraRtcSdk.har` 文件放入项目的 `entry/libs` 目录，并在 `oh-package.json5` 中添加依赖。
 - 支持功能：音视频通话、设备管理、网络状态回调等，详见[快速开始指南](https://doc.shengwang.cn/doc/rtc/harmonyos/get-started/quick-start)。
 
-### 2. **与其他方案的对比**
+2. **与其他方案的对比**
 - **Web SDK 不适用**：HarmonyOS 的浏览器兼容性与标准 Web 不同，声网 Web SDK 未针对 HarmonyOS 浏览器优化（参考[浏览器兼容性](https://doc.shengwang.cn/doc/rtc/javascript/overview/browser-compatibility)）。
 - **跨平台方案（如 Flutter）有限制**：若使用跨平台框架，需通过原生桥接调用声网 HarmonyOS SDK，无直接封装。
 
-### 3. **注意事项**
+3. **注意事项**
 - **仅支持 HarmonyOS**：SDK 未适配 OpenHarmony，在 OpenHarmony 上功能可能异常（参考工单编号 34558）。
 - **最低要求**：需 HarmonyOS API Level ≥ 12。
 
-### 推荐步骤
+推荐步骤
 1. **下载 SDK**：[HarmonyOS 视频 SDK v4.4.2](https://doc.shengwang.cn/doc/rtc/harmonyos/resources)  
 2. **集成参考**：[跑通示例项目](https://doc.shengwang.cn/doc/rtc/harmonyos/get-started/run-demo)  
 
@@ -158,7 +158,7 @@ https://ext.dcloud.net.cn/plugin?id=3741
 
 答：针对您反馈的 Android 平台 RTC SDK 4.5.1 视频卡顿问题，我们需要以下信息来进一步排查：
 
-### 请提供以下关键信息：
+请提供以下关键信息：
 1. **声网项目 APPID 和频道号 (cname)**  
 2. **出问题的时间点**（精确到分钟）  
 3. **问题现象详细描述**（例如）：  
@@ -168,7 +168,7 @@ https://ext.dcloud.net.cn/plugin?id=3741
 5. **SDK 日志**（必提供）：  
    [如何收集 Android SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)  
 
-### 临时建议：
+临时建议：
 1. 请先确认设备网络状况（Wi-Fi/4G/5G 信号强度），尝试切换网络环境测试  
 2. 检查设备性能：  
    - 确保无其他高负载应用运行  
@@ -229,7 +229,7 @@ livepull.tanchenjituan.net
 
 ---
 
-### 下一步建议：
+下一步建议：
 1. 请确认 **跨频道功能** 是否需用于 RTC 产品（非 CDN），以便我们精准处理。  
 2. 域名配置变更已提交，请留意控制台状态或工程师回复。  
 
@@ -312,7 +312,7 @@ engine.setupRemoteVideo(canvas);
 
 答：根据您的需求，在Android平台上将实时音视频（RTC）与互动白板（Fastboard SDK）集成到在线教育直播场景中，可按以下方案实现：
 
-### 集成方案
+集成方案
 1. **双SDK并行集成**
    - 同时集成 **[声网RTC SDK](https://doc.shengwang.cn/doc/rtc/homepage)**（实现音视频直播）
    - 集成 **[Fastboard SDK](https://doc.shengwang.cn/doc/whiteboard/android/fastboard-sdk/landing-page)**（实现白板功能）
@@ -338,12 +338,12 @@ engine.setupRemoteVideo(canvas);
    - **角色控制**：学生端默认只读白板权限，老师端可编辑
    - **布局优化**：使用`ConstraintLayout`实现自适应布局，确保切换时界面不闪烁
 
-### 注意事项
+注意事项
 1. **生命周期管理**：在`onPause()`/`onResume()`中同步控制RTC和Fastboard的活跃状态
 2. **性能优化**：低端设备建议使用`SurfaceView`并启用硬件加速
 3. **推荐方案**：直接采用声网[小班课场景方案](https://doc.shengwang.cn/doc/small-classroom/android/paas/architecture)，已预置音视频+白板集成逻辑（知识库片段[6]）
 
-### 参考文档
+参考文档
 1. [Fastboard SDK Android集成指南](https://doc.shengwang.cn/doc/whiteboard/android/fastboard-sdk/get-started/join-room-fb)
 2. [音视频+白板场景方案](https://doc.shengwang.cn/doc/small-classroom/android/paas/architecture)
 3. [Fastboard与Whiteboard方案对比](https://doc.shengwang.cn/doc/whiteboard/android/fastboard-sdk/solution-compare)
@@ -365,7 +365,7 @@ engine.setupRemoteVideo(canvas);
 
 答：您可以按照以下步骤在声网控制台生成临时 Token（有效期 24 小时），适用于测试环境：
 
-### 生成步骤：
+生成步骤：
 1. 登录 **[声网控制台](https://console.shengwang.cn/)**
 2. 在左上角下拉框选择目标项目
 3. 进入项目总览页 → 点击 **「临时 Token 生成器」**
@@ -377,7 +377,7 @@ engine.setupRemoteVideo(canvas);
 > - 临时 Token **仅用于调试**，正式上线需自行部署 Token 服务端  
 > - 需确保加入频道时传入的 `频道名` 与生成时完全一致  
 
-### 参考文档：
+参考文档：
 详细操作指南见：  
 [声网控制台生成临时 Token 文档](https://doc.shengwang.cn/doc/rtc/ios/get-started/enable-service#获取临时-token)
 
@@ -432,7 +432,7 @@ engine.setupRemoteVideo(canvas);
 
 答：您好，关于 Android RTC SDK 4.3.2 的“只有声音没有视频”问题，请按以下步骤排查：
 
-### 可能原因及排查建议
+可能原因及排查建议
 1. **视频采集未开启**  
    - 检查是否调用 `enableVideo()` 初始化视频模块
    - 确认 `setupLocalVideo` 是否设置本地视图
@@ -457,7 +457,7 @@ engine.setupRemoteVideo(canvas);
 4. **编码配置问题**  
    - 检查 `setVideoEncoderConfiguration` 的分辨率/帧率是否支持当前设备
 
-### 需要您提供信息
+需要您提供信息
 为高效定位问题，请补充：
 ```
 1. 声网项目APPID和频道号(cname)
@@ -485,9 +485,9 @@ engine.setupRemoteVideo(canvas);
 
 问：如何集成 RTC
 
-答：### 集成声网 RTC iOS SDK 的步骤（4.2.1 版本）
+答： 集成声网 RTC iOS SDK 的步骤（4.2.1 版本）
 
-#### 1. **集成 SDK**
+1. **集成 SDK**
 - **手动集成**（推荐）：
   1. 下载 [iOS SDK](https://doc.shengwang.cn/doc/rtc/ios/resources)
   2. 解压后将 `libs` 目录下的动态库（`.framework` 文件）复制到 Xcode 项目目录
@@ -502,7 +502,7 @@ engine.setupRemoteVideo(canvas);
      `https://github.com/AgoraIO/AgoraRtcEngine_iOS.git`
   3. 指定版本：`4.2.1`
 
-#### 2. **初始化 SDK**
+4. **初始化 SDK**
 ```swift
 import AgoraRtcKit
 
@@ -519,7 +519,7 @@ class ViewController: UIViewController {
 }
 ```
 
-#### 3. **加入频道**
+ 3. **加入频道**
 ```swift
 // 设置频道场景（直播模式）
 agoraKit.setChannelProfile(.liveBroadcasting)
@@ -539,7 +539,7 @@ agoraKit.joinChannel(
 )
 ```
 
-#### 4. **本地视频预览**
+ 4. **本地视频预览**
 ```swift
 // 启用视频模块
 agoraKit.enableVideo()
@@ -559,13 +559,13 @@ agoraKit.setupLocalVideo(AgoraRtcVideoCanvas())
 agoraKit.startPreview()
 ```
 
-#### 5. **退出频道**
+ 5. **退出频道**
 ```swift
 agoraKit.leaveChannel(nil)
 AgoraRtcEngineKit.destroy()
 ```
 
-### 关键注意事项
+ 关键注意事项
 1. **权限配置**：在 `Info.plist` 中添加麦克风和摄像头权限描述：
    ```xml
    <key>NSCameraUsageDescription</key>
@@ -578,7 +578,7 @@ AgoraRtcEngineKit.destroy()
 
 3. **Token 安全**：生产环境务必使用 [Token 鉴权](https://doc.shengwang.cn/doc/rtc/android/basic-features/token-authentication)
 
-### 参考文档
+ 参考文档
 1. [iOS 快速开始](https://doc.shengwang.cn/doc/rtc/ios/landing-page)  
 2. [实现音视频互动](https://doc.shengwang.cn/doc/rtc/ios/get-started/quick-start)  
 3. [API 参考](https://doc.shengwang.cn/api-ref/rtc/ios/API/rtc_api_overview)
@@ -598,7 +598,7 @@ AgoraRtcEngineKit.destroy()
 
 答：根据您的需求，在 Android 端开启直播的同时开启云端录制，需要理解以下关键点：
 
-### 实现方案
+ 实现方案
 1. **客户端（Android）仅负责直播推流**  
    Android 端只需集成 RTC SDK 并正常加入频道发布音视频流（使用 `joinChannel` 和 `setClientRole(CLIENT_ROLE_BROADCASTER)`）。
 
@@ -608,7 +608,7 @@ AgoraRtcEngineKit.destroy()
    - **步骤2**：调用 [`start`](https://doc.shengwang.cn/doc/cloud-recording/restful/cloud-recording/operations/post-v1-apps-appid-cloud_recording-resourceid-resourceid-mode-mode-start) 接口开始录制（需指定频道名、UID、录制模式等）。
    - **步骤3**：直播结束时调用 [`stop`](https://doc.shengwang.cn/doc/cloud-recording/restful/cloud-recording/operations/post-v1-apps-appid-cloud_recording-resourceid-resourceid-sid-sid-mode-mode-stop) 接口结束录制。
 
-### 现成示例
+ 现成示例
 - **GitHub 完整示例项目**：  
   [Cloud-Recording-Nodejs 示例](https://github.com/AgoraIO-Community/agora-rest-client-nodejs/tree/main/examples/cloudrecording)（含服务端代码）
 - **关键代码片段（Node.js）**：
@@ -632,7 +632,7 @@ AgoraRtcEngineKit.destroy()
   );
   ```
 
-### 注意事项
+ 注意事项
 1. **安全提醒**：  
    **切勿在 Android 客户端存储 OSS/AWS 密钥**！云端录制 API 调用需在您的业务服务器完成，避免密钥泄露。
 2. **录制模式选择**：  
@@ -641,7 +641,7 @@ AgoraRtcEngineKit.destroy()
 3. **自动上传**：  
    录制文件会自动上传至您配置的第三方云存储（阿里云/腾讯云/AWS 等）。
 
-### 参考文档
+ 参考文档
 1. [云端录制 RESTful API 完整指南](https://doc.shengwang.cn/doc/cloud-recording/restful/landing-page)  
 2. [快速开始（含代码示例）](https://doc.shengwang.cn/doc/cloud-recording/restful/get-started/quick-start)  
 3. [单流录制模式](https://doc.shengwang.cn/doc/cloud-recording/restful/user-guides/individual-mode/set-individual)  
@@ -703,7 +703,7 @@ AgoraRtcEngineKit.destroy()
 
 答：根据您的问题，iOS平台RTC SDK 4.2.0版本中常见的Token相关错误码如下：
 
-### 主要Token错误码
+ 主要Token错误码
 1. **ERR_INVALID_TOKEN (110)**  
    - **原因**：Token无效
    - **常见场景**：
@@ -720,11 +720,11 @@ AgoraRtcEngineKit.destroy()
    - **触发场景**：初始化SDK或加入频道时返回
    - **可能关联Token**：启用了App证书但未正确配置Token
 
-### 其他相关错误码
+ 其他相关错误码
 - **ERR_DYNAMIC_KEY_TIMEOUT (7)**：动态密钥超时（旧版Token机制）
 - **ERR_CONNECTION_REJECTED (10)**：Token无效导致连接被拒绝
 
-### 排查建议
+ 排查建议
 1. 检查控制台是否启用了App证书
 2. 确保生成Token的频道名、UID与加入频道时完全一致
 3. 使用控制台[Token校验工具](https://console.shengwang.cn/toolbox/token)验证Token有效性
@@ -814,7 +814,7 @@ streamTypes参数若设置为仅录制小流（streamTypes=1），而频道内�
 
 答：根据您描述的问题（用户切换为主播身份后开麦并开启混音，但频道内其他人听不到声音），结合声网的技术支持流程，建议按以下步骤推进排查：
 
-### 需您补充的关键信息
+ 需您补充的关键信息
 1. **声网项目APPID**（必需）  
 2. **问题设备侧的SDK日志**（核心排查依据）：  
    - 日志收集方法：[如何设置日志文件](https://doc.shengwang.cn/faq/integration-issues/set-log-file)  
@@ -822,7 +822,7 @@ streamTypes参数若设置为仅录制小流（streamTypes=1），而频道内�
 
 ---
 
-### 初步排查方向（基于您提供的信息）
+ 初步排查方向（基于您提供的信息）
 1. **用户音频流发布状态**  
    - 需检查该用户（UID: 10089319）是否成功发布音频流（通过SDK日志中的`onLocalAudioStateChanged`回调验证）
 2. **混音功能执行状态**  
@@ -832,7 +832,7 @@ streamTypes参数若设置为仅录制小流（streamTypes=1），而频道内�
 
 ---
 
-### 建议立即验证的操作
+ 建议立即验证的操作
 1. **设备侧基础检查**  
    -该用户用其他应用（如微信通话）测试麦克风是否正常
    - 检查是否误触了`muteLocalAudioStream(true)`或`adjustRecordingSignalVolume(0)`等静音操作
@@ -842,7 +842,7 @@ streamTypes参数若设置为仅录制小流（streamTypes=1），而频道内�
 
 ---
 
-### 后续步骤
+ 后续步骤
 请提供 **APPID** 和 **SDK日志**，我们将通过声网控制台的数据分析工具核查：
 - 用户音频流的上行质量（包丢失率、网络延迟）
 - 混音服务的执行状态码
