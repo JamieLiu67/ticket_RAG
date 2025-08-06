@@ -4,6 +4,363 @@
 
 ---
 
+# **编号：36461**
+
+**SDK Product: RTC**
+
+**SDK Platform: HarmonyOS**
+
+**SDK Version: 4.4.0**
+
+**Request Type: 集成问题咨询**
+
+问：使用c++中的代码，在使用远程实时音视频时与本地摄像头存在冲突，如何解决
+
+答：您好，如果要和远端音视频互通，SDK 就需要使用摄像头来发流，肯定会有占用情况的，请问现在具体是什么现象？
+麻烦完整描述下使用场景并且提供 SDK 日志（使用命令 hdc file recv /data/app/el2/100/base/[包名]/haps/entry/files)，人工工程师稍后为您解答
+
+---
+# **编号：36488**
+
+**SDK Product: RTC**
+
+**SDK Platform: Android**
+
+**SDK Version: 4.5.2**
+
+**Request Type: 线上报错**
+
+问：这个房间：11843719894有回音
+
+用户id：113802  笙儿
+
+答：您好，针对回声问题，需要您补充提供以下信息，以便我们能够第一时间开展排查：
+1. 出问题的时间点：
+2. 定位引起回声的用户。可通过依次静音频道内的用户进行确认：当用户A静音时，频道内其他用户听不到回声了，则说明用户A是引起回声的用户。
+1 对 1 通话：如果您听到回声，临时建议请让对方佩戴耳机进行通话。
+多人通话：可以请用户轮流静音，找出回声源。引起回声的用户请佩戴耳机，或在无需发言时，请将自己设为静音状态
+3.提供回声源用户端的声网sdk日志：https://doc.shengwang.cn/faq/integration-issues/set-log-file
+
+---
+# **编号：36491**
+
+**SDK Product: RTC**
+
+**SDK Platform: Android**
+
+**SDK Version: 4.5.2**
+
+**Request Type: 集成问题咨询**
+
+问：  使用过程接听电话是会在哪个回调反馈？
+
+答：您好，在使用rtc通话中本地接听手机电话，rtc侧会可以通过onLocalAudioStateChanged回调来监听本地音频采集状态：
+reason：LOCAL_AUDIO_STREAM_REASON_INTERRUPTED (8)
+参考文档：https://doc.shengwang.cn/api-ref/rtc/android/API/toc_audio_basic#callback_irtcengineeventhandler_onlocalaudiostatechanged
+
+---
+# **编号：36492**
+
+**SDK Product: RTC**
+
+**SDK Platform: Android**
+
+**SDK Version: 4.5.0**
+
+**Request Type: 线上报错**
+
+问：课次id：578676826
+用户id：20249803
+问题：摄像头横屏，辛苦老师看下
+
+答：您好，针对线上单机摄像头横屏问题，人工工程师会根据您提供的课堂id 和用户id，通过内部分析工具排查定位，有结论后会尽快回复您；感谢您的理解与配合，另外建议您可以联系用户重启下设备重进频道是否正常。
+
+---
+# **编号：36494**
+
+**SDK Product: RTC**
+
+**SDK Platform: Android**
+
+**SDK Version: 4.5.2**
+
+**Request Type: 集成问题咨询**
+
+问：想做个1v1纯语音的 使用哪款产品？
+
+答：针对您的1v1纯语音通话需求，推荐使用**声网RTC SDK的纯音频方案**，这是最轻量高效的解决方案：
+
+推荐方案
+1. **集成RTC音频SDK**  
+   使用纯音频SDK（`voice-sdk`）可显著减小包体积（相比全功能SDK减少约40%），专为语音场景优化：
+   ```gradle
+   implementation 'io.agora.rtc:voice-sdk:4.5.2'
+   ```
+
+2. **核心实现步骤**  
+   - **初始化引擎**：仅启用音频模块
+   ```java
+   RtcEngineConfig config = new RtcEngineConfig();
+   config.mContext = getApplicationContext();
+   config.mAppId = "您的AppID"; // 替换为控制台获取的AppID
+   config.mEventHandler = iRtcEngineEventHandler; // 事件回调
+   mRtcEngine = RtcEngine.create(config);
+   mRtcEngine.enableAudio(); // 启用纯音频模式
+   ```
+   - **加入频道**：1v1场景建议使用`joinChannel`
+   ```java
+   mRtcEngine.joinChannel(
+       null, // 测试可临时用null（生产环境需Token）
+       "channelName", // 频道名
+       null, // 额外信息
+       0 // 自动分配UID
+   );
+   ```
+
+3. **关键文档**  
+   - [纯语音通话快速开始](https://doc.shengwang.cn/doc/rtc/android/basic-features/audio-quick-start)  
+     含完整代码示例和流程说明。
+   - [音频SDK包体积数据](https://doc.shengwang.cn/doc/rtc/android/resources)  
+     ARMv7仅9.44MB，显著节省用户流量。
+
+优势说明
+- **包体优化**：纯音频SDK比全功能SDK体积小40%以上
+- **功耗更低**：关闭视频模块延长设备续航
+- **兼容性强**：支持Android 5.0+所有主流设备
+
+> ⚠️ **注意**：若后续需扩展为视频通话，只需改用全功能SDK（`full-sdk`），API完全兼容无需重写逻辑。
+
+参考文档：  
+[声网RTC纯语音方案](https://doc.shengwang.cn/doc/rtc/android/basic-features/audio-quick-start) | [SDK下载](https://doc.shengwang.cn/doc/rtc/android/resources)
+
+---
+# **编号：36495**
+
+**SDK Product: RTC**
+
+**SDK Platform: Android**
+
+**SDK Version: 4.5.1**
+
+**Request Type: 效果不佳、不达预期**
+
+问：我们现在线上大多数主播都反馈音质不好，怎么调整？
+
+答：您好，针对线上主播反馈音质差的问题，需要您提供以下信息以便我们及时开展排查：
+1. 声网频道号(cname)：
+2. 出问题的时间点：
+3. 问题现象： (例)
+(1) uid=123 听不到/看不到 uid=456，大约持续20分钟
+4.SDK日志（非必提供)
+https://doc.shengwang.cn/faq/integration-issues/set-log-file
+(2) uid=123 听/看 uid=456卡顿
+4.主播是否使用声卡
+5.主播端声网sdk日志（非必需）
+https://doc.shengwang.cn/faq/integration-issues/set-log-file
+另外您这边也可以参考下我们的高音质实践文档，来对项目进行优化：
+https://doc.shengwang.cn/doc/rtc/android/best-practice/optimal-audio-quality
+
+
+
+---
+# **编号：36496**
+
+**SDK Product: RTC**
+
+**SDK Platform: Android**
+
+**SDK Version: 4.5.1**
+
+**Request Type: 集成问题咨询**
+
+问：CONNECTION_STATE_FAILED(5)：网络连接失败
+CONNECTION_CHANGED_BANNED_BY_SERVER (3)：网络连接被服务器禁止，例如，当用户被踢出频道时，会返回该状态。 确认下  只有用户被踢 这个reason 才会返回3  还是有其它情况 也会返回3
+
+答：您好，是的，CONNECTION_CHANGED_BANNED_BY_SERVER (3) 是只有用户被踢出频道（例如通过服务端RESTful API主动踢人）才会触发的
+
+---
+# **编号：36497**
+
+**SDK Product: Convol AI**
+
+**SDK Platform: Restful**
+
+**SDK Version: 当前版本**
+
+**Request Type: 集成问题咨询**
+
+问：给我一个 react的web的对话式AI引擎例子 你们的文档写的太过于差劲了
+
+答：您好，React Demo 参考 Web Demo 就行了，集成 WebSDK 加入频道就可以和智能体通话了。
+[React Web Demo](https://github.com/AgoraIO/API-Examples-Web/tree/main/src/example/framework/react)
+
+ConvoAI 是通过 Restful 接口启动的，启动以后就加入指定的 RTC 频道了，不需要 Web 端集成 convoAI 的 SDK。
+[使用 RESTful API 实现对话式 AI 引擎](https://doc.shengwang.cn/doc/convoai/restful/get-started/quick-start)
+
+---
+# **编号：36498**
+
+**SDK Product: RTC**
+
+**SDK Platform: Android**
+
+**SDK Version: 4.5.2**
+
+**Request Type: 集成问题咨询**
+
+问：  android 15需要升级声网SDK吗？
+
+答：根据声网RTC Android SDK的兼容性
+
+1. **当前SDK版本兼容性**  
+   声网RTC SDK 4.5.2 **支持Android 15**。该版本在Android 15经过基础功能验证（如音、设备权限适配等），可正常使用。
+
+2. **升级建议**：  
+   - 若您的仅需基础音视频功能**，且现有集成稳定，无需强制升级。  
+   - 若需**Android 15的新特性**（如细化媒体权限控制、硬件编码优化等），建议升级至[最新版SDK](https://doc.shengwang.cn/doc/rtc/android/release-notes/release-notes)，以获取最佳适配和性能优化。
+
+3. **适配注意事项**：  
+   - 确保在AndroidManifest.xml中声明Android 15新增权限（如`READ_MEDIA_VISUAL_USER_SELECTED`）。  
+   - 测试**摄像头/麦克风权限弹窗流程**，Android 15对部分媒体权限逻辑有调整。
+
+> 参考文档：  
+> - [Android SDK发版说明](https://doc.shengwang.cn/doc/rtc/android/overview/release-notes)  
+> - [Android权限管理指南](https://doc.shengwang.cn/doc/rtc/android/get-started/quick-start#%E5%A4%84%E7%90%86%E6%9D%83%E9%99%90%E8%AF%B7%E6%B1%82)
+
+---
+# **编号：36499**
+
+**SDK Product: Fastboard**
+
+**SDK Platform: iOS**
+
+**SDK Version: 1.4.2**
+
+**Request Type: 集成问题咨询**
+
+问：请问互动白板如何对房间里的用户进行权限管理，比如是否允许说话，是否允许在白板上画标注等？
+
+答：根据你的需求，在声网Fastboard SDK for iOS中管理用户权限主要涉及以下两个层面：
+
+1. 白板标注权限控制
+通过**Token角色系统**实现：
+- **Admin角色**：可编辑白板+管理房间权限
+- **Writer角色**：可编辑白板内容
+- **Reader角色**：仅查看白板（默认禁止标注）
+
+**实现方式**：
+```swift
+// 加入房间时指定角色
+let config = FastRoomConfiguration(
+    appIdentifier: "YOUR_APP_ID",
+    roomUUID: "ROOM_UUID",
+    roomToken: "ROOM_TOKEN", // Token需包含对应角色权限
+    region: .CN,
+    userUID: "USER_ID"
+)
+```
+
+动态修改权限（需管理员操作）：
+```swift
+// 设置用户为只读模式
+fastRoom.setWritable(false) { success, error in
+    if success {
+        print("权限修改成功")
+    }
+}
+
+// 检查当前权限状态
+let isWritable = fastRoom.isWritable()
+```
+2. 语音权限控制
+需通过**声网RTC SDK**实现：
+```swift
+// 静音特定用户
+agoraKit.muteRemoteAudioStream(uid, mute: true)
+
+// 全局禁言
+agoraKit.muteAllRemoteAudioStreams(true)
+```
+
+关键文档参考：
+1. [Fastboard权限管理指南](https://doc.shengwang.cn/doc/whiteboard/ios/fastboard-sdk/overview/concepts)（角色系统说明）
+2. [动态权限设置API](https://doc.shengwang.cn/api-ref/whiteboard/android/classcom_1_1herewhite_1_1sdk_1_1_room)（跨平台API原理相同）
+3. [RTC用户管理文档](https://doc.shengwang.cn/doc/rtc/ios/get-started/quick-start)（语音控制部分）
+
+> 建议：实际部署时应在服务端生成带权限的Token，避免客户端篡改权限。测试阶段可使用控制台生成的Token验证权限逻辑。
+
+---
+# **编号：36501**
+
+**SDK Product: RTC**
+
+**SDK Platform: iOS**
+
+**SDK Version: 4.5.1**
+
+**Request Type: 效果不佳、不达预期**
+
+问：我们是语聊房场景，现在一个房间有20个麦位，进入这样的房间，声网的CPU占用率非常高。这个有办法优化么？
+
+答：您好，针对观众端接收多个用户音频流导致cpu过高的问题，建议您可以尝试以下方案处理：
+1、降低编码码率为18 Kbps，调用setAudioProfile接口，参考文档
+https://doc.shengwang.cn/api-ref/rtc/android/API/toc_audio_basic#setAudioProfile%20[2/2]
+2、开启音强选流，默认是接收远端音频强度最高的3路音频流，可以减少接收端下行带宽压力及系统资源消耗，参考文档：
+https://doc.shengwang.cn/doc/rtc/android/advanced-features/audio-stream-filter
+
+---
+# **编号：36505**
+
+**SDK Product: RTC**
+
+**SDK Platform: Android**
+
+**SDK Version: 4.3.2**
+
+**Request Type: 集成问题咨询**
+
+问：我这边使用 joinChannelWithUserAccount 进入，一起正常，有视频流。
+然后调用 joinChannelWithUserAccountEx 加入额外频道，返回成功状态 0 。
+拿 uid 通过 setupRemoteVideoEx 创建视频流，函数调用返回成功状态 0 ，但是没有画面。
+有什么情况会导致这个原因？
+
+答：针对您描述的在使用 `joinChannelWithUserAccountEx` 加入额外频道后，调用 `setupRemoteVideoEx` 成功但无画面问题，以下是排查建议：
+
+核心排查方向
+1. **远端用户状态验证**
+   - 确认额外频道中的远端用户已成功发布视频流（调用 `enableVideo()` 且摄像头正常开启）。
+   - 检查远端用户是否在自身设备上能看到本地画面（排除远端采集问题）。
+
+2. **视图绑定时机问题**
+   - **调用顺序限制**：`setupRemoteVideoEx` 必须在 `joinChannelEx` **成功之后调用**（例如在 `onJoinChannelSuccess` 回调中触发）。若在加入频道前调用，会导致绑定失效。
+   - **视图参数检查**：
+     ```java
+     // 需确保传入有效的 RtcConnection 和 VideoCanvas
+     RtcConnection connection = new RtcConnection(); // 指定额外频道的连接对象
+     connection.channelId = "额外频道名";
+     VideoCanvas canvas = new VideoCanvas(surfaceView); // surfaceView 需已初始化且宽高不为0
+     engine.setupRemoteVideoEx(canvas, connection); // 明确绑定到额外频道
+     ```
+
+3. **多频道兼容性**
+   - SDK 4.3.2 在多频道场景下存在**首帧渲染延迟**的已知问题，建议升级至 [v4.5.1 或更高版本](https://doc.shengwang.cn/doc/rtc/android/overview/release-notes)（修复该问题）。
+
+4. **日志与信息收集**
+   若上述步骤无效，请提供以下信息：
+   - 声网项目 APPID 和两个频道的频道名（cname）
+   - 问题发生时间点（UTC+8）
+   - 具体现象（例：主频道 UID ______ 看不到额外频道 UID ______）
+   - SDK 日志（按指南抓取）：
+     [设置日志文件指南](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+
+临时建议
+尝试在 `onUserJoined` 回调中延迟 200ms 再调用 `setupRemoteVideoEx`，避免因频道建立未完成导致的绑定失败。
+
+参考文档：
+- [多频道管理](https://doc.shengwang.cn/doc/rtc/android/advanced-features/multiple-channel
+- [setupRemoteVideoEx 调用限制](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_video_rendering#api_irtcengineex_setupremotevideoex)
+
+---
 # **编号：36413**
 
 **SDK Product: RTC**
