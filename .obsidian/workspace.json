@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "工单 AI 提示词.md",
+                "file": "工单训练 RAG 集.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "工单 AI 提示词"
+              "title": "工单训练 RAG 集"
             }
           }
         ]
@@ -171,8 +171,8 @@
   },
   "active": "3b7230140c6a6599",
   "lastOpenFiles": [
-    "工单训练 RAG 集.md",
     "工单 AI 提示词.md",
+    "工单训练 RAG 集.md",
     "未命名.canvas"
   ]
 }

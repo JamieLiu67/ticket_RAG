@@ -4,6 +4,180 @@
 
 ---
 
+# **编号：36517**
+
+**SDK Product: RTC**
+
+**SDK Platform: Android**
+
+**SDK Version: 4.5.1**
+
+**Request Type: 集成问题咨询**
+
+问：请问安卓端调用 RtcEngineEx.destroy() 方法后，会触发下面的 Webhook 回调事件吗
+
+ * 直播场景下，主播加入频道。
+ */
+BROADCASTER_JOIN_CHANNEL(103, "broadcaster join channel"),
+
+/**
+ * 直播场景下，主播离开频道。
+ */
+BROADCASTER_LEAVE_CHANNEL(104, "broadcaster leave channel"),
+
+/**
+ * 直播场景下，观众加入频道。
+ */
+AUDIENCE_JOIN_CHANNEL(105, "audience join channel"),
+
+/**
+ * 直播场景下，观众离开频道。
+ */
+AUDIENCE_LEAVE_CHANNEL(106, "audience leave channel"),
+
+答：您好，调用destroy接口 是可以触发104、106 离开事件的；但是业务侧不建议这样调用，更合理的方式的是调用leavechannel接口，我们建议是 engine 在 app 声明周期里复用一个就可以，不要重复创建和销毁。
+
+---
+# **编号：36529**
+
+**SDK Product: RTSA**
+
+**SDK Platform: Linux-C**
+
+**SDK Version: 1.9.5**
+
+**Request Type: 集成问题咨询**
+
+问：问个问题，在帧模式下，RTSA是可以和咱们声网的web版sdk构造的应用是可以直接互通的吗
+
+答：是的，RTSA SDK 在帧模式下可以与声网的 Web SDK 直接互通。以下是关键信息：
+
+互通支持说明
+双向互通
+RTSA SDK（包括帧模式）支持与声网 Web SDK（v3.0.0 或更高版本）的双向音视频互通。
+
+音频互通：支持 G.722、G.711、Opus 编码格式
+视频互通：支持 H.264 编码格式
+帧模式要求
+在帧模式下传输时需确保：
+
+音频为单声道，采样率建议 16 kHz（双声道需转单声道）
+视频需符合 H.264 Baseline Profile
+数据发送间隔为 20 ms
+互通验证
+可通过以下步骤验证：
+
+设备端：使用 RTSA SDK 的 agora_rtc_send_audio_data 和 agora_rtc_send_video_data 发送帧数据
+Web 端：通过 RTC Web SDK 的 Client.on("stream-published") 接收流
+注意事项
+token使用：两端需使用相同的 App ID，相同的cname，不同的uid 分别 生成不同的token；禁止多个客户端使用同一个token
+编解码匹配：Web SDK 需开启对应编解码（例如通过 createClient({ codec: "h264" }) 指定）
+带宽适应：建议开启 RTSA 的带宽预测功能（通过 agora_rtc_set_bwe_config 配置）
+
+---
+# **编号：36533**
+
+**SDK Product: RTC**
+
+**SDK Platform: Android**
+
+**SDK Version: 4.3.0**
+
+**Request Type: 集成问题咨询**
+
+问： 请问下服务器api禁用用户视频推流后,会让画面保持在最后一帧.有没有办法在不调整客户端的情况,禁用推流后,让画面黑掉?
+
+答：您好，当通过服务器 API（如 RESTful API）禁用用户视频推流后，远端设备默认会显示最后一帧画面。这是声网 SDK 的默认行为；不修改客户端逻辑是无法实现黑屏的；建议您可以监听onremotevideostatechanged 回调来判断远端是否发流，如果远端不发流，既可以清除远端试图view，参考文档：
+https://doc.shengwang.cn/api-ref/rtc/android/API/toc_video_basic#callback_irtcengineeventhandler_onremotevideostatechanged
+
+---
+# **编号：36534**
+
+**SDK Product: RTC**
+
+**SDK Platform: Android**
+
+**SDK Version: 4.5.2**
+
+**Request Type: 集成问题咨询**
+
+问：这边想要体验一下声网的高级美颜。
+麻烦 发一下对接文档  Demo这些
+
+答：您好，声网的高级美颜参考文档如下：
+https://doc.shengwang.cn/doc/rtc/android/advanced-features/advanced-beauty
+
+---
+# **编号：36539**
+
+**SDK Product: Cloud-recording**
+
+**SDK Platform: Restful**
+
+**SDK Version: 当前版本**
+
+**Request Type: 集成问题咨询**
+
+问：发起录制报错
+
+请求： https://api-cn-east-1.sd-rtn.com/v1/apps/7184450bb5d14f4fa61a90f32c6ac131/cloud_recording/acquire
+请求体：{"cname":"10003","uid":"1754556256324","clientRequest":{"scene":0,"startParameter":{"token":"007eJxTYIh/ss7rgYTt29a/3/9n6jyweq1tvu5f1Pf5Fxvjbn5aZ/xFgcHc0MLExNQgKck0xdAkzSQt0cww0dIgzdgo2Swx2dDY8HnilIyGQEYGlRslTIwMEAjiszIYGhgYGDMwAACv0yLT","recordingConfig":{"channelType":1},"recordingFileConfig":{"avFileType":["hls","mp4"]},"storageConfig":{"vendor":2,"region":0,"bucket":"baomihua-short","accessKey":"xxx","secretKey":"xxx"}}}}
+返回：{"code":2,"reason":"api body validate failed!"}
+
+答：您好，您目前填写的 uid 超出了 int 值上限，请修改为 2^31-1（2147483647） 以内的大小。
+以及 startParameter 用于预配置后续 start 请求，但极易引发 request_hash mismatch 错误。建议省略此字段，直接在 start 接口配置录制参数。建议简化 acquire 请求，参考文档中的示例，用最少的内容去完成acquire。
+[获取云端录制资源](https://doc.shengwang.cn/doc/cloud-recording/restful/cloud-recording/operations/post-v1-apps-appid-cloud_recording-acquire)
+
+---
+# **编号：36547**
+
+**SDK Product: Convol AI**
+
+**SDK Platform: Restful**
+
+**SDK Version: 当前版本**
+
+**Request Type: 效果不佳、不达预期**
+
+问：Agent 说话突然中断，然后报错： agent-error" "5406"
+
+{"type":"tts","code":1002,"message":"rate limit","timestamp":1754531123280}
+
+答：您好，报错提示显示问题出在 tts 上，这个错误码来自第三方 tts 技术提供商，您可以在对应厂商的错误码文档上看下具体报错示意和解决方案。
+
+---
+# **编号：36551**
+
+**SDK Product: Recording**
+
+**SDK Platform: Linux-Java**
+
+**SDK Version: 4.4.150.5**
+
+**Request Type: 效果不佳、不达预期**
+
+问：现场环境启动录制的时候录到一般自己会离开
+
+答：您好，建议检查下录制端所在的频道内是否有人发流，如果录制端已经成功加入频道还主动离开的话，大概率是没有录制到画面自动退出了。如果确认加入频道成功并且有人发流还有这个现象，麻烦提供完整的 sdk.log 日志过来，人工工程师稍后为您解答。
+
+---
+# **编号：36553**
+
+**SDK Product: CDN**
+
+**SDK Platform: CDN**
+
+**SDK Version: 当前版本**
+
+**Request Type: 集成问题咨询**
+
+问：我这边是用uniapp的video组件进行拉流和live-pusher组件进行推流的，配置的域名推流是swpush.tohello.cn，播放域名是swpull.tohello.cn，CNAME也配置好了，推流请求的完整地址是rtmp://swpush.tohello.cn/live/stream1，拉流请求的完整地址是rtmp://swpull.tohello.cn/live/stream1。目前没跑鉴权
+目前测试推送是正常的，但拉流一直失败。我想问下是因为我播流地址写错了还是目前播放域名配置提示在审核中所以无法跑动，还是播放域名配置有哪些没配置好或者没开启之类的
+
+答：您好，可以先 dig 一下您目前在用的域名，确认下 CNAME 是否配置成功了。如果 CNAME 配置正常拉流还播放失败，麻烦提供下声网 console 里推拉流地址配置页面的截图，人工工程师稍后为您排查原因。
+
+
+---
 # **编号：36461**
 
 **SDK Product: RTC**
@@ -76,64 +250,6 @@ reason：LOCAL_AUDIO_STREAM_REASON_INTERRUPTED (8)
 答：您好，针对线上单机摄像头横屏问题，人工工程师会根据您提供的课堂id 和用户id，通过内部分析工具排查定位，有结论后会尽快回复您；感谢您的理解与配合，另外建议您可以联系用户重启下设备重进频道是否正常。
 
 ---
-# **编号：36494**
-
-**SDK Product: RTC**
-
-**SDK Platform: Android**
-
-**SDK Version: 4.5.2**
-
-**Request Type: 集成问题咨询**
-
-问：想做个1v1纯语音的 使用哪款产品？
-
-答：针对您的1v1纯语音通话需求，推荐使用**声网RTC SDK的纯音频方案**，这是最轻量高效的解决方案：
-
-推荐方案
-1. **集成RTC音频SDK**  
-   使用纯音频SDK（`voice-sdk`）可显著减小包体积（相比全功能SDK减少约40%），专为语音场景优化：
-   ```gradle
-   implementation 'io.agora.rtc:voice-sdk:4.5.2'
-   ```
-
-2. **核心实现步骤**  
-   - **初始化引擎**：仅启用音频模块
-   ```java
-   RtcEngineConfig config = new RtcEngineConfig();
-   config.mContext = getApplicationContext();
-   config.mAppId = "您的AppID"; // 替换为控制台获取的AppID
-   config.mEventHandler = iRtcEngineEventHandler; // 事件回调
-   mRtcEngine = RtcEngine.create(config);
-   mRtcEngine.enableAudio(); // 启用纯音频模式
-   ```
-   - **加入频道**：1v1场景建议使用`joinChannel`
-   ```java
-   mRtcEngine.joinChannel(
-       null, // 测试可临时用null（生产环境需Token）
-       "channelName", // 频道名
-       null, // 额外信息
-       0 // 自动分配UID
-   );
-   ```
-
-3. **关键文档**  
-   - [纯语音通话快速开始](https://doc.shengwang.cn/doc/rtc/android/basic-features/audio-quick-start)  
-     含完整代码示例和流程说明。
-   - [音频SDK包体积数据](https://doc.shengwang.cn/doc/rtc/android/resources)  
-     ARMv7仅9.44MB，显著节省用户流量。
-
-优势说明
-- **包体优化**：纯音频SDK比全功能SDK体积小40%以上
-- **功耗更低**：关闭视频模块延长设备续航
-- **兼容性强**：支持Android 5.0+所有主流设备
-
-> ⚠️ **注意**：若后续需扩展为视频通话，只需改用全功能SDK（`full-sdk`），API完全兼容无需重写逻辑。
-
-参考文档：  
-[声网RTC纯语音方案](https://doc.shengwang.cn/doc/rtc/android/basic-features/audio-quick-start) | [SDK下载](https://doc.shengwang.cn/doc/rtc/android/resources)
-
----
 # **编号：36495**
 
 **SDK Product: RTC**
@@ -198,98 +314,6 @@ ConvoAI 是通过 Restful 接口启动的，启动以后就加入指定的 RTC �
 [使用 RESTful API 实现对话式 AI 引擎](https://doc.shengwang.cn/doc/convoai/restful/get-started/quick-start)
 
 ---
-# **编号：36498**
-
-**SDK Product: RTC**
-
-**SDK Platform: Android**
-
-**SDK Version: 4.5.2**
-
-**Request Type: 集成问题咨询**
-
-问：  android 15需要升级声网SDK吗？
-
-答：根据声网RTC Android SDK的兼容性
-
-1. **当前SDK版本兼容性**  
-   声网RTC SDK 4.5.2 **支持Android 15**。该版本在Android 15经过基础功能验证（如音、设备权限适配等），可正常使用。
-
-2. **升级建议**：  
-   - 若您的仅需基础音视频功能**，且现有集成稳定，无需强制升级。  
-   - 若需**Android 15的新特性**（如细化媒体权限控制、硬件编码优化等），建议升级至[最新版SDK](https://doc.shengwang.cn/doc/rtc/android/release-notes/release-notes)，以获取最佳适配和性能优化。
-
-3. **适配注意事项**：  
-   - 确保在AndroidManifest.xml中声明Android 15新增权限（如`READ_MEDIA_VISUAL_USER_SELECTED`）。  
-   - 测试**摄像头/麦克风权限弹窗流程**，Android 15对部分媒体权限逻辑有调整。
-
-> 参考文档：  
-> - [Android SDK发版说明](https://doc.shengwang.cn/doc/rtc/android/overview/release-notes)  
-> - [Android权限管理指南](https://doc.shengwang.cn/doc/rtc/android/get-started/quick-start#%E5%A4%84%E7%90%86%E6%9D%83%E9%99%90%E8%AF%B7%E6%B1%82)
-
----
-# **编号：36499**
-
-**SDK Product: Fastboard**
-
-**SDK Platform: iOS**
-
-**SDK Version: 1.4.2**
-
-**Request Type: 集成问题咨询**
-
-问：请问互动白板如何对房间里的用户进行权限管理，比如是否允许说话，是否允许在白板上画标注等？
-
-答：根据你的需求，在声网Fastboard SDK for iOS中管理用户权限主要涉及以下两个层面：
-
-1. 白板标注权限控制
-通过**Token角色系统**实现：
-- **Admin角色**：可编辑白板+管理房间权限
-- **Writer角色**：可编辑白板内容
-- **Reader角色**：仅查看白板（默认禁止标注）
-
-**实现方式**：
-```swift
-// 加入房间时指定角色
-let config = FastRoomConfiguration(
-    appIdentifier: "YOUR_APP_ID",
-    roomUUID: "ROOM_UUID",
-    roomToken: "ROOM_TOKEN", // Token需包含对应角色权限
-    region: .CN,
-    userUID: "USER_ID"
-)
-```
-
-动态修改权限（需管理员操作）：
-```swift
-// 设置用户为只读模式
-fastRoom.setWritable(false) { success, error in
-    if success {
-        print("权限修改成功")
-    }
-}
-
-// 检查当前权限状态
-let isWritable = fastRoom.isWritable()
-```
-2. 语音权限控制
-需通过**声网RTC SDK**实现：
-```swift
-// 静音特定用户
-agoraKit.muteRemoteAudioStream(uid, mute: true)
-
-// 全局禁言
-agoraKit.muteAllRemoteAudioStreams(true)
-```
-
-关键文档参考：
-1. [Fastboard权限管理指南](https://doc.shengwang.cn/doc/whiteboard/ios/fastboard-sdk/overview/concepts)（角色系统说明）
-2. [动态权限设置API](https://doc.shengwang.cn/api-ref/whiteboard/android/classcom_1_1herewhite_1_1sdk_1_1_room)（跨平台API原理相同）
-3. [RTC用户管理文档](https://doc.shengwang.cn/doc/rtc/ios/get-started/quick-start)（语音控制部分）
-
-> 建议：实际部署时应在服务端生成带权限的Token，避免客户端篡改权限。测试阶段可使用控制台生成的Token验证权限逻辑。
-
----
 # **编号：36501**
 
 **SDK Product: RTC**
@@ -307,58 +331,6 @@ agoraKit.muteAllRemoteAudioStreams(true)
 https://doc.shengwang.cn/api-ref/rtc/android/API/toc_audio_basic#setAudioProfile%20[2/2]
 2、开启音强选流，默认是接收远端音频强度最高的3路音频流，可以减少接收端下行带宽压力及系统资源消耗，参考文档：
 https://doc.shengwang.cn/doc/rtc/android/advanced-features/audio-stream-filter
-
----
-# **编号：36505**
-
-**SDK Product: RTC**
-
-**SDK Platform: Android**
-
-**SDK Version: 4.3.2**
-
-**Request Type: 集成问题咨询**
-
-问：我这边使用 joinChannelWithUserAccount 进入，一起正常，有视频流。
-然后调用 joinChannelWithUserAccountEx 加入额外频道，返回成功状态 0 。
-拿 uid 通过 setupRemoteVideoEx 创建视频流，函数调用返回成功状态 0 ，但是没有画面。
-有什么情况会导致这个原因？
-
-答：针对您描述的在使用 `joinChannelWithUserAccountEx` 加入额外频道后，调用 `setupRemoteVideoEx` 成功但无画面问题，以下是排查建议：
-
-核心排查方向
-1. **远端用户状态验证**
-   - 确认额外频道中的远端用户已成功发布视频流（调用 `enableVideo()` 且摄像头正常开启）。
-   - 检查远端用户是否在自身设备上能看到本地画面（排除远端采集问题）。
-
-2. **视图绑定时机问题**
-   - **调用顺序限制**：`setupRemoteVideoEx` 必须在 `joinChannelEx` **成功之后调用**（例如在 `onJoinChannelSuccess` 回调中触发）。若在加入频道前调用，会导致绑定失效。
-   - **视图参数检查**：
-     ```java
-     // 需确保传入有效的 RtcConnection 和 VideoCanvas
-     RtcConnection connection = new RtcConnection(); // 指定额外频道的连接对象
-     connection.channelId = "额外频道名";
-     VideoCanvas canvas = new VideoCanvas(surfaceView); // surfaceView 需已初始化且宽高不为0
-     engine.setupRemoteVideoEx(canvas, connection); // 明确绑定到额外频道
-     ```
-
-3. **多频道兼容性**
-   - SDK 4.3.2 在多频道场景下存在**首帧渲染延迟**的已知问题，建议升级至 [v4.5.1 或更高版本](https://doc.shengwang.cn/doc/rtc/android/overview/release-notes)（修复该问题）。
-
-4. **日志与信息收集**
-   若上述步骤无效，请提供以下信息：
-   - 声网项目 APPID 和两个频道的频道名（cname）
-   - 问题发生时间点（UTC+8）
-   - 具体现象（例：主频道 UID ______ 看不到额外频道 UID ______）
-   - SDK 日志（按指南抓取）：
-     [设置日志文件指南](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
-
-临时建议
-尝试在 `onUserJoined` 回调中延迟 200ms 再调用 `setupRemoteVideoEx`，避免因频道建立未完成导致的绑定失败。
-
-参考文档：
-- [多频道管理](https://doc.shengwang.cn/doc/rtc/android/advanced-features/multiple-channel
-- [setupRemoteVideoEx 调用限制](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_video_rendering#api_irtcengineex_setupremotevideoex)
 
 ---
 # **编号：36413**
@@ -447,44 +419,6 @@ Android 端运行 adb bugreport 命令获取系统生成的崩溃报告。
 感谢您的理解与配合
 
 ---
-# **编号：36425**
-
-**SDK Product: RTC**
-
-**SDK Platform: HarmonyOS**
-
-**SDK Version: 4.4.2**
-
-**Request Type: 集成问题咨询**
-
-问：鸿蒙是不是只能走原生 SDK 的方式
-
-答：是的，声网为 HarmonyOS 平台提供了 **原生 SDK 支持**，开发者需通过集成原生 SDK 实现音视频功能。以下是关键信息：
-
-1. **HarmonyOS 原生 SDK 支持**
-- 声网提供专为 HarmonyOS 设计的原生 SDK（`.har` 格式），支持完整的音视频通信能力。
-- 集成方式：下载 SDK 后，将 `AgoraRtcSdk.har` 文件放入项目的 `entry/libs` 目录，并在 `oh-package.json5` 中添加依赖。
-- 支持功能：音视频通话、设备管理、网络状态回调等，详见[快速开始指南](https://doc.shengwang.cn/doc/rtc/harmonyos/get-started/quick-start)。
-
-2. **与其他方案的对比**
-- **Web SDK 不适用**：HarmonyOS 的浏览器兼容性与标准 Web 不同，声网 Web SDK 未针对 HarmonyOS 浏览器优化（参考[浏览器兼容性](https://doc.shengwang.cn/doc/rtc/javascript/overview/browser-compatibility)）。
-- **跨平台方案（如 Flutter）有限制**：若使用跨平台框架，需通过原生桥接调用声网 HarmonyOS SDK，无直接封装。
-
-3. **注意事项**
-- **仅支持 HarmonyOS**：SDK 未适配 OpenHarmony，在 OpenHarmony 上功能可能异常（参考工单编号 34558）。
-- **最低要求**：需 HarmonyOS API Level ≥ 12。
-
-推荐步骤
-1. **下载 SDK**：[HarmonyOS 视频 SDK v4.4.2](https://doc.shengwang.cn/doc/rtc/harmonyos/resources)  
-2. **集成参考**：[跑通示例项目](https://doc.shengwang.cn/doc/rtc/harmonyos/get-started/run-demo)  
-
-若需进一步协助，请提供具体集成问题场景（如代码报错、权限配置等）。
-
-参考：  
-1. [HarmonyOS SDK 下载文档](https://doc.shengwang.cn/doc/rtc/harmonyos/resources)  
-2. [快速开始指南](https://doc.shengwang.cn/doc/rtc/harmonyos/get-started/quick-start)
-
----
 # **编号：36426**
 
 **SDK Product: RTC**
@@ -499,42 +433,6 @@ Android 端运行 adb bugreport 命令获取系统生成的崩溃报告。
 
 答：您好，声网侧在uniapp平台只支持ios和android，参考文档如下：
 https://ext.dcloud.net.cn/plugin?id=3741
-
----
-# **编号：36427**
-
-**SDK Product: RTC**
-
-**SDK Platform: Android**
-
-**SDK Version: 4.5.1**
-
-**Request Type: 集成问题咨询**
-
-问：视频卡顿
-
-答：针对您反馈的 Android 平台 RTC SDK 4.5.1 视频卡顿问题，我们需要以下信息来进一步排查：
-
-请提供以下关键信息：
-1. **声网项目 APPID 和频道号 (cname)**  
-2. **出问题的时间点**（精确到分钟）  
-3. **问题现象详细描述**（例如）：  
-   - `uid=123 看 uid=456 的视频卡顿`  
-   - 卡顿持续时间及具体表现（画面冻结/跳帧等）  
-4. **现象录屏**（如有）  
-5. **SDK 日志**（必提供）：  
-   [如何收集 Android SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)  
-
-临时建议：
-1. 请先确认设备网络状况（Wi-Fi/4G/5G 信号强度），尝试切换网络环境测试  
-2. 检查设备性能：  
-   - 确保无其他高负载应用运行  
-   - 设备发热严重时请降温后重试  
-
-> ⚠️ 注意：视频卡顿通常与网络丢包、设备性能或编码配置相关，需通过日志和频道数据分析才能定位根因。请务必提供上述信息，我们将优先分析后台数据。
-
-参考文档：  
-[日志收集指南](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
 
 ---
 # **编号：36428**
@@ -552,94 +450,6 @@ https://ext.dcloud.net.cn/plugin?id=3741
 答：声网提供了支持电话会议（包括电话呼入和呼出）的完整方案，可通过 小樱桃 XSwitch PSTN 扩展 实现声网 RTC 与 SIP/PSTN 电话网络的互通。您可以参考文档来集成 [小樱桃 XSwitch PSTN 使用说明](https://doc.shengwang.cn/doc/marketplace/android/integrate-extensions/xyt-xswitch-pstn-cn)
 
 ---
-# **编号：36429**
-
-**SDK Product: CDN**
-
-**SDK Platform: CDN**
-
-**SDK Version: 当前版本**
-
-**Request Type: 开通权限、提供配额**
-
-问：麻烦这个声网cid下的明天处理下
-
-1.这个appid开通跨频道 
-880c3ccc01d046ddb943c4c51a206dd0
-2.这俩域名改为中国大陆
-livepush.tanchenjituan.net
-livepull.tanchenjituan.net
-
-答：您好，根据您提供的信息：
-
-1. **跨频道功能开通**：  
-   跨频道流媒体转发是 RTC 产品的功能，而您提交的工单产品类型为 CDN。CDN 产品不支持此功能。  
-   - 若您实际需要使用 **RTC 的跨频道功能**，请提供正确的产品类型（RTC）和 App ID（已提供 `880c3ccc01d046ddb943c4c51a206dd0`），我们将转交人工工程师为您开通。  
-   - 若您需要使用 CDN 相关功能，请进一步说明具体需求。
-
-2. **域名区域修改**：  
-   域名 `livepush.tanchenjituan.net` 和 `livepull.tanchenjituan.net` 的区域变更为中国大陆的需求已记录。  
-   **处理方式**：  
-   - 此操作需人工配置，我们已转交工程师处理，请耐心等待后续通知（通常需 1-2 个工作日）。  
-   - 您也可在控制台自助操作：  
-     [融合 CDN 域名配置指南](https://doc.shengwang.cn/doc/fusion-cdn/restful/get-started/quick-start#1-%E8%BF%9B%E5%85%A5%E9%85%8D%E7%BD%AE%E9%A1%B5%E9%9D%A2)
-
----
-
-下一步建议：
-1. 请确认 **跨频道功能** 是否需用于 RTC 产品（非 CDN），以便我们精准处理。  
-2. 域名配置变更已提交，请留意控制台状态或工程师回复。  
-
-若需加急处理，请联系商务：  
-📧 销售邮箱：sales@shengwang.cn  
-📞 客服电话：400 632 6626
-
----
-# **编号：36431**
-
-**SDK Product: RTC**
-
-**SDK Platform: Android**
-
-**SDK Version: 4.5.2**
-
-**Request Type: 集成问题咨询**
-
-问：我加频道方法调用完毕以后看不到远端画面，怎么回事
-
-答：针对您描述的加入频道后无法看到远端画面的问题，以下是系统的排查建议和解决方案：
-
-核心排查步骤
-检查远端用户状态
-
-确认远端用户已成功发布视频流（调用 enableVideo 且摄像头正常开启）
-验证远端用户是否在自己的设备上能看到自身画面（排除远端采集问题）
-本地视图绑定
-
-确保在 onUserJoined 回调中正确调用 setupRemoteVideo 绑定远端视图
-检查视图参数：
-VideoCanvas canvas = new VideoCanvas(surfaceView);
-canvas.uid = remoteUid; // 设置目标远端UID
-engine.setupRemoteVideo(canvas);
-若视图未初始化，请确认 surfaceView 宽高不为0且未被遮挡
-基础功能验证
-
-本地是否开启视频采集（enableVideo + startPreview）
-检查网络连接质量（水晶球或 onNetworkQuality 回调）
-尝试运行官方Demo 交叉验证
-信息收集（供进一步分析）
-请提供以下信息以便精准定位：
-
-1. 声网APPID和频道号(cname)：
-2. 问题时间点（UTC+8）：
-3. 具体现象：
-   - 本地UID ______ 看不到远端UID ______
-   - 是否所有远端都无法显示？ 
-4. SDK日志：
-   [日志收集指引](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
-⚠️ 注意：若上述步骤未解决，请务必提供SDK日志。
-
----
 # **编号：36433**
 
 **SDK Product: Convol AI**
@@ -653,90 +463,6 @@ engine.setupRemoteVideo(canvas);
 问：试用对话式 AI 引擎 Playground，配置了豆包、千问等LLM都不能使用。参数都是没有问题的，附件2图片是我测试豆包的LLM接口，是可以调用成功的。 错误信息：{ "module": "llm", "code": 500, "message": { "error": { "code": "AccessDenied", "message": "The request failed because you do not have access to the requested resource. Request id: 021754292599099078532ccda42bfe607645d235a467167bd1a7b", "param": "", "type": "Forbidden" } } }
 
 答：您好，这个表示我们访问您的 LLM 回调地址失败了，您可以先检查下 LLM 用到的 api key 是否正确。如果用的是 playground，可以刷新下页面再请求试试。如果都解决不了的话，麻烦您提供下 agentID，人工工程师稍后排查下具体原因。
-
----
-# **编号：36434**
-
-**SDK Product: Fastboard**
-
-**SDK Platform: Android**
-
-**SDK Version: 1.7.2**
-
-**Request Type: 集成问题咨询**
-
-问：1. 在线教育项目，想要在手机端实现老师直播上课的功能，需要实时互动和白板功能，如何将这个两个功能集成到一起，实现老师在直播中可以切换白板功能
-
-答：根据您的需求，在Android平台上将实时音视频（RTC）与互动白板（Fastboard SDK）集成到在线教育直播场景中，可按以下方案实现：
-
-集成方案
-1. **双SDK并行集成**
-   - 同时集成 **[声网RTC SDK](https://doc.shengwang.cn/doc/rtc/homepage)**（实现音视频直播）
-   - 集成 **[Fastboard SDK](https://doc.shengwang.cn/doc/whiteboard/android/fastboard-sdk/landing-page)**（实现白板功能）
-   - 两者可共存于同一Activity/Fragment中
-
-2. **UI切换实现**
-   - 使用`FrameLayout`作为容器层，分别承载：
-     - RTC视频渲染视图（`SurfaceView`/`TextureView`）
-     - Fastboard白板视图（`FastboardView`）
-   - 通过按钮控制视图可见性：
-     ```java
-     // 显示白板隐藏视频
-     fastboardView.setVisibility(View.VISIBLE);
-     rtcVideoView.setVisibility(View.GONE);
-     
-     // 显示视频隐藏白板
-     fastboardView.setVisibility(View.GONE);
-     rtcVideoView.setVisibility(View.VISIBLE);
-     ```
-
-3. **关键交互逻辑**
-   - **数据同步**：通过[RTM SDK](https://doc.shengwang.cn/doc/rtm2/homepage)广播白板状态（如页面切换、标注操作）
-   - **角色控制**：学生端默认只读白板权限，老师端可编辑
-   - **布局优化**：使用`ConstraintLayout`实现自适应布局，确保切换时界面不闪烁
-
-注意事项
-1. **生命周期管理**：在`onPause()`/`onResume()`中同步控制RTC和Fastboard的活跃状态
-2. **性能优化**：低端设备建议使用`SurfaceView`并启用硬件加速
-3. **推荐方案**：直接采用声网[小班课场景方案](https://doc.shengwang.cn/doc/small-classroom/android/paas/architecture)，已预置音视频+白板集成逻辑（知识库片段[6]）
-
-参考文档
-1. [Fastboard SDK Android集成指南](https://doc.shengwang.cn/doc/whiteboard/android/fastboard-sdk/get-started/join-room-fb)
-2. [音视频+白板场景方案](https://doc.shengwang.cn/doc/small-classroom/android/paas/architecture)
-3. [Fastboard与Whiteboard方案对比](https://doc.shengwang.cn/doc/whiteboard/android/fastboard-sdk/solution-compare)
-
-> 如需测试Demo，可下载[Flat开源教室](https://apps.apple.com/cn/app/flat-%E5%9C%A8%E7%BA%BF%E6%95%99%E5%AE%A4/id1598891661)体验完整功能
-
----
-# **编号：36435**
-
-**SDK Product: RTC**
-
-**SDK Platform: iOS**
-
-**SDK Version: 4.2.0**
-
-**Request Type: 其他问题**
-
-问：如何生成临时 token
-
-答：您可以按照以下步骤在声网控制台生成临时 Token（有效期 24 小时），适用于测试环境：
-
-生成步骤：
-1. 登录 **[声网控制台](https://console.shengwang.cn/)**
-2. 在左上角下拉框选择目标项目
-3. 进入项目总览页 → 点击 **「临时 Token 生成器」**
-4. 点击 **「添加产品」** → 选择 **RTC**
-5. 输入频道名（如 `testChannel`）→ 点击 **「确认」**
-6. 复制生成的 Token 用于 SDK 调试
-
-> ⚠️ 注意：  
-> - 临时 Token **仅用于调试**，正式上线需自行部署 Token 服务端  
-> - 需确保加入频道时传入的 `频道名` 与生成时完全一致  
-
-参考文档：
-详细操作指南见：  
-[声网控制台生成临时 Token 文档](https://doc.shengwang.cn/doc/rtc/ios/get-started/enable-service#获取临时-token)
 
 ---
 # **编号：36436**
@@ -775,357 +501,6 @@ engine.setupRemoteVideo(canvas);
 答：您好，可以先确认下您目前所用的 SDK 版本是否为官网最新版本，并且麻烦提供下问题复现时的SDK日志（hdc file recv /data/app/el2/100/base/[包名]/haps/entry/files），提供下复现问题时的现象视频。人工工程师稍微确认下这个问题的具体原因。
 
 ---
-# **编号：36438**
-
-**SDK Product: RTC**
-
-**SDK Platform: Android**
-
-**SDK Version: 4.3.2**
-
-**Request Type: 集成问题咨询**
-
-问：是购买错了吗？只有声音没有视频
-
-答：您好，关于 Android RTC SDK 4.3.2 的“只有声音没有视频”问题，请按以下步骤排查：
-
-可能原因及排查建议
-1. **视频采集未开启**  
-   - 检查是否调用 `enableVideo()` 初始化视频模块
-   - 确认 `setupLocalVideo` 是否设置本地视图
-   - 示例代码：
-     ```java
-     mRtcEngine.enableVideo(); // 开启视频模块
-     mRtcEngine.startPreview(); // 开启本地预览（可选）
-     mRtcEngine.setupLocalVideo(localVideoCanvas); // 绑定本地视图
-     ```
-
-2. **摄像头权限问题**  
-   - 检查 AndroidManifest.xml 是否声明权限：
-     ```xml
-     <uses-permission android:name="android.permission.CAMERA" />
-     ```
-   - 动态申请权限（Android 6.0+），参考：[摄像头权限指南](https://developer.android.com/training/permissions/requesting)
-
-3. **视图渲染异常**  
-   - 检查 `SurfaceView/RendererView` 是否被其他视图覆盖
-   - 尝试在 `onFirstRemoteVideoFrame` 回调中打印日志确认视频帧到达
-
-4. **编码配置问题**  
-   - 检查 `setVideoEncoderConfiguration` 的分辨率/帧率是否支持当前设备
-
-需要您提供信息
-为高效定位问题，请补充：
-```
-1. 声网项目APPID和频道号(cname)
-2. 问题发生时间点（UTC+8）
-3. 具体现象（例：uid=123 看不到 uid=456 的视频）
-4. SDK日志（按指南抓取）：  
-   [设置日志文件指南](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
-```
-
-> 📌 **注意**：若设备摄像头被其他应用占用（如微信视频通话），也会导致此现象。请先用系统相机App测试摄像头是否正常工作。
-
-参考文档：  
-[实现音视频互动](https://doc.shengwang.cn/doc/rtc/android/get-started/quick-start)
-
----
-# **编号：36439**
-
-**SDK Product: RTC**
-
-**SDK Platform: iOS**
-
-**SDK Version: 4.2.1**
-
-**Request Type: 集成问题咨询**
-
-问：如何集成 RTC
-
-答： 集成声网 RTC iOS SDK 的步骤（4.2.1 版本）
-
-1. **集成 SDK**
-- **手动集成**（推荐）：
-  1. 下载 [iOS SDK](https://doc.shengwang.cn/doc/rtc/ios/resources)
-  2. 解压后将 `libs` 目录下的动态库（`.framework` 文件）复制到 Xcode 项目目录
-  3. 在 Xcode 中：
-     - 添加动态库：**Project Navigator → Target → General → Frameworks, Libraries, and Embedded Content**
-     - 设置所有动态库的 **Embed** 属性为 **Embed & Sign**
-
-- **Swift Package Manager 集成**：
-  1. 在 Xcode 中选择：  
-     `File > Swift Packages > Add Package Dependency...`
-  2. 输入仓库 URL：  
-     `https://github.com/AgoraIO/AgoraRtcEngine_iOS.git`
-  3. 指定版本：`4.2.1`
-
-4. **初始化 SDK**
-```swift
-import AgoraRtcKit
-
-class ViewController: UIViewController {
-    var agoraKit: AgoraRtcEngineKit!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // 初始化 RTC 引擎
-        let config = AgoraRtcEngineConfig()
-        config.appId = "<YOUR_APP_ID>"  // 替换为你的 App ID
-        agoraKit = AgoraRtcEngineKit.sharedEngine(with: config, delegate: self)
-    }
-}
-```
-
- 3. **加入频道**
-```swift
-// 设置频道场景（直播模式）
-agoraKit.setChannelProfile(.liveBroadcasting)
-
-// 设置用户角色（主播/观众）
-agoraKit.setClientRole(.broadcaster)
-
-// 加入频道
-agoraKit.joinChannel(
-    byToken: "<YOUR_TOKEN>",  // 测试可用 nil，生产环境必填
-    channelId: "testChannel", 
-    info: nil, 
-    uid: 0,  // 0 表示自动分配 UID
-    joinSuccess: { (channel, uid, elapsed) in
-        print("加入频道成功")
-    }
-)
-```
-
- 4. **本地视频预览**
-```swift
-// 启用视频模块
-agoraKit.enableVideo()
-
-// 配置视频编码参数
-let videoConfig = AgoraVideoEncoderConfiguration(
-    size: CGSize(width: 640, height: 480),
-    frameRate: .fps15,
-    bitrate: AgoraVideoBitrateStandard,
-    orientationMode: .adaptative
-)
-agoraKit.setVideoEncoderConfiguration(videoConfig)
-
-// 设置本地视频视图
-let videoView = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
-agoraKit.setupLocalVideo(AgoraRtcVideoCanvas())
-agoraKit.startPreview()
-```
-
- 5. **退出频道**
-```swift
-agoraKit.leaveChannel(nil)
-AgoraRtcEngineKit.destroy()
-```
-
- 关键注意事项
-1. **权限配置**：在 `Info.plist` 中添加麦克风和摄像头权限描述：
-   ```xml
-   <key>NSCameraUsageDescription</key>
-   <string>需要摄像头权限进行视频通话</string>
-   <key>NSMicrophoneUsageDescription</key>
-   <string>需要麦克风权限进行语音通话</string>
-   ```
-
-2. **真机测试**：必须在 **iOS 真机** 上运行（模拟器不支持音视频功能）
-
-3. **Token 安全**：生产环境务必使用 [Token 鉴权](https://doc.shengwang.cn/doc/rtc/android/basic-features/token-authentication)
-
- 参考文档
-1. [iOS 快速开始](https://doc.shengwang.cn/doc/rtc/ios/landing-page)  
-2. [实现音视频互动](https://doc.shengwang.cn/doc/rtc/ios/get-started/quick-start)  
-3. [API 参考](https://doc.shengwang.cn/api-ref/rtc/ios/API/rtc_api_overview)
-
----
-# **编号：36440**
-
-**SDK Product: RTC**
-
-**SDK Platform: Android**
-
-**SDK Version: 4.5.2**
-
-**Request Type: 集成问题咨询**
-
-问：我想要在安卓端开启直播的同时开启云端录制，在你们平台找不到怎么实现，有现成示例吗
-
-答：根据您的需求，在 Android 端开启直播的同时开启云端录制，需要理解以下关键点：
-
- 实现方案
-1. **客户端（Android）仅负责直播推流**  
-   Android 端只需集成 RTC SDK 并正常加入频道发布音视频流（使用 `joinChannel` 和 `setClientRole(CLIENT_ROLE_BROADCASTER)`）。
-
-2. **云端录制独立于客户端**  
-   云端录制通过 **RESTful API** 在您的服务端触发（非 Android 客户端直接操作）。流程如下：
-   - **步骤1**：当主播加入频道时，您的业务服务器调用云端录制 [`acquire`](https://doc.shengwang.cn/doc/cloud-recording/restful/cloud-recording/operations/post-v1-apps-appid-cloud_recording-acquire) 接口申请资源。
-   - **步骤2**：调用 [`start`](https://doc.shengwang.cn/doc/cloud-recording/restful/cloud-recording/operations/post-v1-apps-appid-cloud_recording-resourceid-resourceid-mode-mode-start) 接口开始录制（需指定频道名、UID、录制模式等）。
-   - **步骤3**：直播结束时调用 [`stop`](https://doc.shengwang.cn/doc/cloud-recording/restful/cloud-recording/operations/post-v1-apps-appid-cloud_recording-resourceid-resourceid-sid-sid-mode-mode-stop) 接口结束录制。
-
- 现成示例
-- **GitHub 完整示例项目**：  
-  [Cloud-Recording-Nodejs 示例](https://github.com/AgoraIO-Community/agora-rest-client-nodejs/tree/main/examples/cloudrecording)（含服务端代码）
-- **关键代码片段（Node.js）**：
-  ```javascript
-  // 开始录制
-  const startResponse = await client.startRecording(
-    resourceId, 
-    cname, 
-    uid, 
-    {
-      storageConfig: {
-        accessKey: "YOUR_OSS_ACCESS_KEY",
-        secretKey: "YOUR_OSS_SECRET_KEY",
-        bucket: "YOUR_BUCKET",
-        region: 0 // 阿里云区域代码
-      },
-      recordingConfig: {
-        channelType: 1 // 直播模式
-      }
-    }
-  );
-  ```
-
- 注意事项
-1. **安全提醒**：  
-   **切勿在 Android 客户端存储 OSS/AWS 密钥**！云端录制 API 调用需在您的业务服务器完成，避免密钥泄露。
-2. **录制模式选择**：  
-   - `mix`：混合流（默认推荐，单文件包含所有用户音视频）
-   - `individual`：单流录制（每个用户单独文件）
-3. **自动上传**：  
-   录制文件会自动上传至您配置的第三方云存储（阿里云/腾讯云/AWS 等）。
-
- 参考文档
-1. [云端录制 RESTful API 完整指南](https://doc.shengwang.cn/doc/cloud-recording/restful/landing-page)  
-2. [快速开始（含代码示例）](https://doc.shengwang.cn/doc/cloud-recording/restful/get-started/quick-start)  
-3. [单流录制模式](https://doc.shengwang.cn/doc/cloud-recording/restful/user-guides/individual-mode/set-individual)  
-4. [合流录制模式](https://doc.shengwang.cn/doc/cloud-recording/restful/user-guides/mix-mode/set-composite)  
-
-> 如需进一步协助（如调试参数），请提供您的频道名和 App ID，我将给出具体 API 调用示例。
-
----
-# **编号：36441**
-
-**SDK Product: Cloud-recording**
-
-**SDK Platform: Restful**
-
-**SDK Version: 当前版本**
-
-**Request Type: 效果不佳、不达预期**
-
-问：视频录制结束后，无法在oss存储系统中找到视频文件。调用视频结束接口返回参数：{"cname":"925","resourceId":"cGduVnmGSjtUX7YoS4YoZ6LlwwAcUXF4sCiM3lL6mrK31wc7N9HVgQAcjkCbX1EvBrVR4S_or-poVaS8Jhndvk9Ig1hbWlJ-gtcvaB0h6hjJjVrkLB9NDvq9BL7K2sxheEsyFQct87ZsqqPUBSZqKu1-OLxa_UmIhycjUl9xTs-u-x1IYVzxbtlZCmD-mj8G5RO3tLcMDBfzbyDc_GIgnw","serverResponse":
-
-{"fileList":[],"fileListMode":"json","uploadingStatus":"backuped"}
-,"sid":"667218b0c9458dce1a7eea911853e5a0","uid":"29111000"}。
-
-答：您好，根据您提供的信息，分析如下：
-
-1. **问题现象分析**：
-   - 停止录制接口返回 `"fileList":[]` 表示录制文件列表为空
-   - `"uploadingStatus":"backuped"` 表示录制文件已备份完成
-   - 但OSS中未找到文件，可能存在以下情况：
-     ▶ 文件上传到OSS时路径配置错误
-     ▶ 录制任务未实际生成有效内容（如频道内无有效音视频流）
-     ▶ OSS存储权限配置问题
-
-2. **排查建议**：
-   - 请确认录制时频道内是否有真实用户发流（可通过[云端录制查询接口](https://doc.shengwang.cn/doc/cloud-recording/restful/cloud-recording/operations/get-v1-apps-appid-cloud_recording-resourceid-resourceid-sid-sid-mode-mode-query)验证录制状态）
-   - 检查`storageConfig`配置的OSS参数：
-     • `bucket`名称是否正确
-     • `fileNamePrefix`路径是否包含特殊字符
-     • AccessKey/SecretKey是否有写入权限
-
-3. **后续处理**：
-   我们将通过您提供的SID `667218b0c9458dce1a7eea911853e5a0` 查询后台日志，确认文件生成和上传过程。人工工程师将在1小时内通过工单系统反馈具体排查结果。
-
-参考文档：
-[云端录制文件管理](https://doc.shengwang.cn/doc/cloud-recording/restful/user-guides/manage-file/introduce-recorded-files)
-
----
-# **编号：36444**
-
-**SDK Product: RTC**
-
-**SDK Platform: iOS**
-
-**SDK Version: 4.2.0**
-
-**Request Type: 集成问题咨询**
-
-问：token 相关的错误码有哪些
-
-答：根据您的问题，iOS平台RTC SDK 4.2.0版本中常见的Token相关错误码如下：
-
- 主要Token错误码
-1. **ERR_INVALID_TOKEN (110)**  
-   - **原因**：Token无效
-   - **常见场景**：
-     - 项目启用了App证书但未使用Token鉴权
-     - 生成Token时填入的UID与加入频道时的UID不一致
-     - Token过期（默认有效期24小时）
-   - 参考文档：[Token错误处理指南](https://doc.shengwang.cn/faq/integration-issues/token-error)
-
-2. **ERR_TOKEN_EXPIRED (111)**  
-   - **原因**：Token已过期
-   - **解决方案**：重新生成有效Token
-
-3. **ERR_INVALID_APP_ID (101)**  
-   - **触发场景**：初始化SDK或加入频道时返回
-   - **可能关联Token**：启用了App证书但未正确配置Token
-
- 其他相关错误码
-- **ERR_DYNAMIC_KEY_TIMEOUT (7)**：动态密钥超时（旧版Token机制）
-- **ERR_CONNECTION_REJECTED (10)**：Token无效导致连接被拒绝
-
- 排查建议
-1. 检查控制台是否启用了App证书
-2. 确保生成Token的频道名、UID与加入频道时完全一致
-3. 使用控制台[Token校验工具](https://console.shengwang.cn/toolbox/token)验证Token有效性
-
-> 参考文档：  
-> 1. [iOS错误码文档](https://doc.shengwang.cn/doc/rtc/ios/error-code) 
-> 2. [Token错误处理指南](https://doc.shengwang.cn/faq/integration-issues/token-error) 
-
----
-# **编号：36446**
-
-**SDK Product: Cloud-recording**
-
-**SDK Platform: Restful**
-
-**SDK Version: 当前版本**
-
-**Request Type: 效果不佳、不达预期**
-
-问：云录制内容不符合预期，画面展示不全
-
-答：可能原因分析
-合流布局配置问题
-若使用合流录制模式（mode=mix），画面布局由mixedVideoLayout参数控制（值范围0-3）。不同布局模式对画面排列有不同要求，若布局模式与频道内实际视频流比例不匹配，会导致黑边或画面裁剪。
-
-转码分辨率不匹配
-在transcodingConfig中设置的width和height需与频道内主流分辨率比例一致。例如：
-
-频道内用户发送竖屏流（9:16），但转码设置为横屏（16:9）会导致画面压缩和黑边
-建议分辨率比例与主流保持一致（如都设为1080×1920或720×1280）
-视频流类型选择
-streamTypes参数若设置为仅录制小流（streamTypes=1），而频道内未开启小流，可能导致画面缺失。
-
-建议操作
-检查合流布局模式
-参考合流布局文档确认当前mixedVideoLayout值是否符合预期效果。
-
-提供录制SID
-请提供具体录制任务的SID（形如2354cf898b41b76d70850ba58b9b9ffb），我们将立即核查后台日志，定位画面处理异常原因。
-
-📌 注意：若频道内存在竖屏视频流，直接转码为横屏分辨率必然产生黑边。建议保持原始比例或后期用FFmpeg等工具二次处理。
-
-
----
 # **编号：36447**
 
 **SDK Product: RTC**
@@ -1150,65 +525,6 @@ streamTypes参数若设置为仅录制小流（streamTypes=1），而频道内�
 具体参考文档如下：
 [如何获取崩溃信息](https://doc.shengwang.cn/faq/integration-issues/system-crash-info)
 [如何设置日志文件](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
-
----
-# **编号：36448**
-
-**SDK Product: RTC**
-
-**SDK Platform: Android**
-
-**SDK Version: 4.5.0**
-
-**Request Type: 线上报错**
-
-问：时间：2025-08-03 19:00 ～ 2025-08-03 20:00
-用户ID： 10089319
-频道ID： 100865
-问题：用户正常加入频道切换为主播身份后，开麦并打开混音播放音乐。频道内其他人听不到她的声音。
-
-需要您帮忙确认这个时间段，用户的状态是否正常，为什么频道内其他人听不到声音。
-
-答：根据您描述的问题（用户切换为主播身份后开麦并开启混音，但频道内其他人听不到声音），结合声网的技术支持流程，建议按以下步骤推进排查：
-
- 需您补充的关键信息
-1. **声网项目APPID**（必需）  
-2. **问题设备侧的SDK日志**（核心排查依据）：  
-   - 日志收集方法：[如何设置日志文件](https://doc.shengwang.cn/faq/integration-issues/set-log-file)  
-   - 请提供问题时间点（2025-08-03 19:00～20:00）的完整日志
-
----
-
- 初步排查方向（基于您提供的信息）
-1. **用户音频流发布状态**  
-   - 需检查该用户（UID: 10089319）是否成功发布音频流（通过SDK日志中的`onLocalAudioStateChanged`回调验证）
-2. **混音功能执行状态**  
-   - 检查`startAudioMixing`方法的返回值及错误码（日志中搜索`AUDIO_MIXING_ERROR`）
-3. **接收端订阅状态**  
-   - 需验证其他用户是否成功订阅该用户的音频流（通过接收端日志中的`onRemoteAudioStateChanged`回调）
-
----
-
- 建议立即验证的操作
-1. **设备侧基础检查**  
-   -该用户用其他应用（如微信通话）测试麦克风是否正常
-   - 检查是否误触了`muteLocalAudioStream(true)`或`adjustRecordingSignalVolume(0)`等静音操作
-2. **混音配置检查**  
-   - 确认混音文件路径有效且格式支持（推荐MP3/WAV）
-   - 检查混音参数是否冲突（例如同时启用`startAudioMixing`和`playEffect`）
-
----
-
- 后续步骤
-请提供 **APPID** 和 **SDK日志**，我们将通过声网控制台的数据分析工具核查：
-- 用户音频流的上行质量（包丢失率、网络延迟）
-- 混音服务的执行状态码
-- 频道内其他用户的订阅异常记录
-
-> ⚠️ 注意：未提供日志前无法定位根因（可能涉及音频采集异常、混音配置错误或网络传输问题）
-
-参考文档：  
-[播放音效或音乐文件](https://doc.shengwang.cn/doc/rtc/android/advanced-features/audio-effect-mixing)
 
 ---
 
