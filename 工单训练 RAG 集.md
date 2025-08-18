@@ -1,4 +1,86 @@
+# ID: 36739
 
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.5.2
+
+Request Type: 开通权限、提供配额
+
+Request Description: demo跑不通，提示 请确保你的项目已开通声网音乐内容中心权限。
+
+Reply: 您好，音乐版权不支持自服务，所以必须要先联系销售跟进才能处理，请电话联系：400 6326626
+如果您有对接的销售，可以先找销售沟通下需要申请开通版权音乐，完成相关报备。
+
+---
+# ID: 36741
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.2.0
+
+Request Type: 集成问题咨询
+
+Request Description: 没有画面，调试连接直接断开， 看到里面有这样的log
+2025-08-18 17:17:14.512 27456-27456 getprop                                                      W  type=1400 audit(0.0:30565): avc:  denied  { open } for  path="/dev/__properties__/u:object_r:vendor_camera_software_moonlight_prop:s0" dev="tmpfs" ino=464 scontext=u:r:shell:s0 tcontext=u:object_r:vendor_camera_software_moonlight_prop:s0 tclass=file permissive=0
+2025-08-18 17:17:14.516 27458-27458 getprop                                                      W  type=1400 audit(0.0:30566): avc:  denied  { open } for  path="/dev/__properties__/u:object_r:vendor_camera_software_moonlight_prop:s0" dev="tmpfs" ino=464 scontext=u:r:shell:s0 tcontext=u:object_r:vendor_camera_software_moonlight_prop:s0 tclass=file permissive=0
+2025-08-18 17:17:14.612 27462-27462 cmd                     .                                    E  BBinder_init Processname  cmd  
+2025-08-18 17:17:14.613 27462-27462 cmd                     .                                    E  BBinder_init hasGetProcessName  cmd
+
+Reply: 您好，请问没有画面具体是哪个 uid 看不见哪个 uid？麻烦完整描述下具体现象和时间点并提供 SDK 日志，稍后人工工程师会根据日志分析一下具体情况。
+[如何开启日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+
+---
+# ID: 36740
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.2.0
+
+Request Type: 集成问题咨询
+
+Request Description: 请问一下，设备为Android aosp10的系统，设备如何打声网的log记录，然后发给你们云端。这个如何实现？谢谢
+
+Reply: 您好，声网只接受 Web 的日志上传，Native 的日志是不会主动收集保存的。您可以参考下方文档来开启 Native 日志输出，自行获取日志路径里的日志文件上传到您自己的业务服务器，在出现问题需要调查时提交工单来咨询我们，我们的人工工程师可以解密看到日志原文。
+[如何开启日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+
+---
+# ID: 36742
+
+SDK Product: RTM
+
+SDK Platform: Flutter
+
+SDK Version: 2.2.1
+
+Request Type: 集成问题咨询
+
+Request Description: 项目在做鸿蒙化适配，RTC有鸿蒙sdk吗
+
+Reply: 您好，目前RTM Flutter SDK 暂未提供专门适配鸿蒙系统（HarmonyOS）的版本，如果您有适配鸿蒙的需求，我们有一个 Beta 版本的纯血鸿蒙 RTM SDK，如果您考虑原生开发的话可以说明下，等候人工工程师稍后提供下载地址。
+
+---
+# ID: 36743
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 网页刷新，加入房间偶发出现（80%的概率）User join failed AgoraRTCError WS_ABORT: UID_BANNED
+
+Reply: 您好，UID_BANNED 是 uid 被踢出频道后的报错，您可以自查下踢人接口的相关调用记录，检查下自己的业务是否符合预期。
+踢人接口：https://doc.shengwang.cn/doc/rtc/restful/channel-management/operations/post-dev-v1-kicking-rule
+
+---
 # ID: 36517
 
 SDK Product: RTC
