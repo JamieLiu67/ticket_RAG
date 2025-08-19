@@ -1,3 +1,268 @@
+# ID: 36746
+
+SDK Product: RTC
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 云录播生成的地址无法播放：https://img.slowvers.com/cloud/consultant/20250818/c25081814368505348/cb1e074e6b41065cbe056abdd95c35b7_c25081814368505348.m3u8
+
+Reply: 您好，请问有尝试过用 VLC 或者 IINA 之类支持播放 m3u8 文件的播放器去播放吗？可以先尝试下不同的播放器。如果都放不出来可以检查下 OSS 是不是对 ts 进行鉴权了导致无法直接外部播放。如果也没有进行鉴权，可以等候人工工程师稍后跟进为您解答。
+
+---
+# ID: 36754
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.5.2
+
+Request Type: 集成问题咨询
+
+Request Description: 在Android 16kb 排查过程中检测出了：
+/var/folders/6w/fx8cm7lj7q75yb3tchdsv_1r0000gn/T/app-testenv-release_out_XXXXX.ZrwrRj5hRP/lib/armeabi-v7a/libagora-fdkaac.so: \e31mUNALIGNED\e0m (212)
+/var/folders/6w/fx8cm7lj7q75yb3tchdsv_1r0000gn/T/app-testenv-release_out_XXXXX.ZrwrRj5hRP/lib/armeabi-v7a/librongcloud_xcrash.so: \e31mUNALIGNED\e0m (212)
+
+
+这种UNALIGNED现象，后续会出新的版本支持吗
+
+Reply: 您好，只有 64 位设备需要支持 16kb，v7 是不需要支持的，可以忽略 v7 上的UNALIGNED 现象。
+
+---
+
+# ID: 36758
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 4.2.0
+
+Request Type: 集成问题咨询
+
+Request Description: 
+1. windows SDK中是在怎样接收视频，我想在接收每一帧视频的地方加一个时间戳打印，请问怎样添加；
+2. 我看示例是直接调用setupRemoteVideo设置远端视频，没有找到相关接收的地方：
+LRESULT CJoinChannelVideoByTokenDlg::OnEIDUserJoined(WPARAM wParam, LPARAM lParam)
+{
+    if (m_lstUids.size() == m_maxVideoCount)
+        return 0;
+    CString strInfo;
+    strInfo.Format(_T("%u joined"), wParam);
+    m_lstInfo.InsertString(m_lstInfo.GetCount(), strInfo);
+
+    m_lstUids.push_back(wParam);
+    for (int i = 1; i < m_maxVideoCount; i++) {
+        if (m_videoWnds[i].GetUID() == 0) {
+            VideoCanvas canvas;
+            canvas.uid  = wParam;
+            canvas.view = m_videoWnds[i].GetSafeHwnd();
+            canvas.renderMode = m_canvasRenderMode;
+			canvas.backgroundColor = m_canvasColor;
+            //setup remote video in engine to the canvas.
+            m_rtcEngine->setupRemoteVideo(canvas);
+			m_videoWnds[i].SetUID(wParam);
+            break;
+        }
+    }
+    return 0;
+}
+
+Reply: 您好，要获取到远端发来的每一帧进行处理需要用裸数据方案，注册观测位置在POSITION_PRE_RENDERER，监听onRenderVideoFrame 在回调触发时获取帧信息。其中包含了时间戳信息。但还想请问下您这边具体是什么场景和需求呢？
+
+[自定义视频数据处理](https://doc.shengwang.cn/doc/rtc/windows/advanced-features/video-processing)
+[getObservedFramePosition](https://doc.shengwang.cn/api-ref/rtc/windows/API/toc_video_raw#getObservedFramePosition)
+[onRenderVideoFrame](https://doc.shengwang.cn/api-ref/rtc/windows/API/toc_video_raw#onRenderVideoFrame)
+
+---
+# ID: 36759
+
+SDK Product: Marketplace
+
+SDK Platform: Flutter
+
+SDK Version: 视频特效
+
+Request Type: 开通权限、提供配额
+
+Request Description: 开通云市场的视频特效功能，我选择了  相芯美颜   的试用包
+开发文档里说需要提供包名，但是申请的时候没让填包名
+
+我的包名是 com.video.fruits.user
+希望尽快开通
+
+Reply: 您好，请问您是在声网 console 云市场插件里申请开通的吗？自动接口申请的测试证书不需要包名，后续改购买正式证书的时候才需要。
+如果是 console 里申请的，可以截图看下现在的证书申请状态，以及您是什么时候申请的？一般一个工作日内都会完成开通，超过一个工作日的话稍后人工工程师会帮您内部确认下开通情况
+
+---
+# ID: 36760
+
+SDK Product: RTSA
+
+SDK Platform: Linux-C
+
+SDK Version: 1.9.5
+
+Request Type: 线上报错
+
+Request Description: 我已经联系了 CAT1运营商(中国移动) 并添加了共三个域名的白名单. 通过测试, 可以在嵌入式设备上成功加入RTC CHANNEL并双向语音聊天. 但有发现, 在设备侧有较大概率连接失败, 从串口日志中大概看是以下出错: Join the channel xxxxx successfully, uid xxxxxx elapsed xxx ms Remote user "xxxxx" has joined the channel, elapsed xx ms connection timeout, reconnecting 然后会自动重连, 有时是可以成功的: Rejoin the channel successfully, uid xxxxxx elapsed xxxx ms video: uid=xxxxxx muted=1
+
+详细请看附件日志
+
+Reply: 您好，定向流量卡除了报备指定域名以外还需要在初始化 SDK 引擎的时候配置 domain_limit 字段为 true，请问您这边有进行过相关处理吗？
+如果有的话可以提供下完整 SDK 日志文件，稍后人工工程师为您确认具体原因
+
+---
+# ID: 36761
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.5.2
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 现在出现一个问题： 直播频道：1956338760737136640 主播ID：530306 观众ID：566817 会出现音频卡顿没声音(断断续续，有时候连续很久没声音)，IOS设备上会出现，android设备不出现，看数据是ios音频播放信号强度为-1，这个是什么原因造成的
+
+其他数据都正常，但是就是会没声音
+
+复现方式：
+用户加入房间，此时音频能正常播放
+用户退出房间后马上加入房间，此时音频会播放一会儿，然后就没声音了，然后过一会儿又恢复，然后卡卡顿顿
+如果退出直播间后等待一段时间再加入则音频正常播放，安卓不存在这个问题。 退出直播间仅执行了 leaveChannel 操作，加入直播间执行了 enableAudio 和 enableVideo，屏蔽 enableAudio 和 enableVideo 后一样音频卡顿
+
+日志相关文件如下，进行了几次直播间操作，期间重启了几次app，第一次进入都能正常播放，第二次进入都会没声音卡顿，属于必现
+
+Reply: 您好，可以优先检查下出现问题的 IOS 设备本身是否存在音频占用情况，以及您可以提供下完整 SDK 日志，说明下出现问题的时间点，稍后人工工程师为您排查下具体原因。
+[如何设置日志文件？](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+
+---
+# ID: 36764
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: pc端集成SDK，pc与pc可以正常通信，
+pc与react native 版App通信的时候pc收不到 user-published 回调，
+
+Reply: 您好，user-published 回调只有在频道内远端主播发流的时候才会触发，收不到的话可能是双方有人不在频道内或者没有发流。可以优先检查下 RN 的 SDK 日志，看下 RN 是否正常加入频道了。
+您可以提供以下信息：
+1. 声网项目APPID
+2. 频道名(cname)
+3. 问题发生时间点（精确到分钟）
+4. 现象细节：
+	* 受影响的具体UID（例：Web端UID=123无法监听到RN端UID=456发布流）
+	* 是否所有RN端都无法被监听到？
+5. 日志文件（必须提供）：
+	* Web端SDK日志：设置指南
+	* React Native端SDK日志（参考Android/iOS的获取方式）
+
+以及您也可以先按照以下内容进行自查：
+1. Token与APPID一致性
+确认Web和RN端使用完全相同的APPID，且Token生成时未指定不同权限（如RN端未禁用发布流）。
+2. SDK版本兼容性
+RN端使用的react-native-agora版本需与Web SDK兼容（推荐双方均使用v4.x+）。
+3. 基础流程验证
+RN端加入频道时配置 joinChannel 的 options 里开启发送视频流或音频流（Web端依赖此动作触发回调）。
+4. 检查频道内 uid 类型是否同意，建议全部用 int uid， string 或者 string + int 混用容易出现预期外情况。
+
+
+---
+
+# ID: 36770
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.5.2
+
+Request Type: 其他问题
+
+Request Description: 如附件：频道内大量用户的视频采集帧率为0但是发送帧率为15
+很好奇，按照我的理解，采集帧率不应该是设备的采集帧率，发送帧率不应该是推到频道的帧率吗？发送帧率可以大于采集帧率？
+
+Reply: 您好，采集帧率上报一般是 SDK 的采集数据，如果是用的是自采集方案，那采集上报就一直是 0 了。以及数据上报本身也可能出现上报丢失的情况，仅供参考。请问现在遇到什么问题了？可以描述下完整问题现象，提供对应的频道号、uid、时间点，如果可以的话再获取下 SDK 日志文件：[如何设置日志文件？](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+
+---
+
+# ID: 36773
+
+SDK Product: RTC
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 调用了启动内容审核(依图)之后，接口返回成功，并调用查询审核状态接口返回:
+{"cname":"33569888","resourceId":"mwwME88RCsfOLdLU7jz_vv96oQaavE6DxZUokGPrRqQzTTNMe_LwWQQVul8ZdLmre8FCHavQKtQwiKbIh_CCiDgA8cNaBA4KkJQ8SnyDkdIRwE2RbtaByJfRp1kkU3-achv2jhDgJU-h4cXE4anHOpHuAvoAG5HaByEKHYcAywCw3zx_74308gvXIHWwYyZZBSPFIQydW-MWhYzR7OO3Qw","serverResponse":{"extensionServiceState":{"serviceName":"yitu_voice_async_scan","streamState":{"status":"inProgress","streamType":"audio","uid":"0"}},"subServiceStatus":{"mediaDistributeService":"serviceReady","recordingService":"serviceInProgress"}},"sid":"90366c486949ec5bfef24cb787f113c6","uid":"999"}
+
+1.在客户端一对一保持视频通话的情况下，隔个几分钟再次调用查询审核状态接口返回{"cname":"33569888","code":404,"reason":"failed to find worker","uid":"999"},在测试过程中，有说一些违规内容，"加我微信，xxx"，但是好像并没有触发违规，并且在依图后台查询不到使用记录和内容记录
+帮我查询下，是否是参数的问题，还是有什么服务没有打开
+
+
+Reply: 您好，404 failed to find worker 大概率是因为录制端已经结束任务退出频道导致的。审核没有生效的问题请等候人工工程师为您解决，您可以先自查下第三方平台上是否有产生用量，以及确认下启动云录制填写的审核参数是否真实有效，如果填了错误的第三方信息，审核是无法启动的。
+
+---
+# ID: 36774
+
+SDK Product: RTSA
+
+SDK Platform: Linux-C
+
+SDK Version: 1.9.2
+
+Request Type: 集成问题咨询
+
+Request Description: 1, 问题表现
+我在esp32开发板上集成agora_rtsa_sdk(用的是这个包Agora-RTSALite-Rc-xtensa_lx7-freertos-eabi-v1.9.2-20231220_171304-287745），然后程序跑起来就core掉了
+2，重现步骤
+启动开发板，调用agora_rtc_init就崩， 主要是这个日志有点奇怪
+“ahpl_malloc 1070238160 byte failed”
+3，日志
+vlog_func_p ...
+ahpl_malloc 1070238160 byte failed
+
+abort() was called at PC 0x42091edc on core 0
+--- 0x42091edc: ahpl_malloc at /home/zgx/code/iot/1.9.2/iot-paas-package/rtc/iot-paas-sdk/ahpl/mm/mm.c:184
+--- (inlined by) ahpl_malloc at /home/zgx/code/iot/1.9.2/iot-paas-package/rtc/iot-paas-sdk/ahpl/mm/mm.c:171
+
+
+Backtrace: 0x40375a99:0x3fca8940 0x4037c309:0x3fca8960 0x40383a6a:0x3fca8980 0x42091edc:0x3fca89f0 0x4209403f:0x3fca8a10 0x42094622:0x3fca8a40 0x42093d14:0x3fca8a70 0x420bf293:0x3fca8a90 0x42
+0bf459:0x3fca8b40 0x4200b062:0x3fca8b80 0x4200aa93:0x3fca8c90 0x42115e5f:0x3fca8ff0
+--- 0x40375a99: panic_abort at E:/work/esp32/src/esp-adf/esp-idf/components/esp_system/panic.c:454
+--- 0x4037c309: esp_system_abort at E:/work/esp32/src/esp-adf/esp-idf/components/esp_system/port/esp_system_chip.c:92
+--- 0x40383a6a: abort at E:/work/esp32/src/esp-adf/esp-idf/components/newlib/abort.c:38
+--- 0x42091edc: ahpl_malloc at /home/zgx/code/iot/1.9.2/iot-paas-package/rtc/iot-paas-sdk/ahpl/mm/mm.c:184
+--- (inlined by) ahpl_malloc at /home/zgx/code/iot/1.9.2/iot-paas-package/rtc/iot-paas-sdk/ahpl/mm/mm.c:171
+--- 0x4209403f: mpqp_create at /home/zgx/code/iot/1.9.2/iot-paas-package/rtc/iot-paas-sdk/ahpl/kernel/mpqp.c:496
+--- 0x42094622: __mpqp_create_cpu_pool at /home/zgx/code/iot/1.9.2/iot-paas-package/rtc/iot-paas-sdk/ahpl/kernel/mpqp.c:547
+--- (inlined by) k_mpqp_init at /home/zgx/code/iot/1.9.2/iot-paas-package/rtc/iot-paas-sdk/ahpl/kernel/mpqp.c:626
+--- 0x42093d14: ahpl_ctor at /home/zgx/code/iot/1.9.2/iot-paas-package/rtc/iot-paas-sdk/ahpl/kernel/mpq.c:2118
+--- 0x420bf293: rtc_init_async at /home/zgx/code/iot/1.9.2/iot-paas-package/rtc/iot-paas-sdk/rtsa/rtc/rtc_service.c
+--- 0x420bf459: agora_rtc_init at /home/zgx/code/iot/1.9.2/iot-paas-package/rtc/iot-paas-sdk/rtsa/rtc/rtc_service.c:2295
+--- 0x4200b062: sheng_rtc_init at E:/work/esp32/src/esp-adf/examples/recorder/pipeline_raw_http.test/main/sheng_rtc.c:309
+--- 0x4200aa93: app_main at E:/work/esp32/src/esp-adf/examples/recorder/pipeline_raw_http.test/main/record_raw_http.c:156
+--- 0x42115e5f: main_task at E:/work/esp32/src/esp-adf/esp-idf/components/freertos/app_startup.c:208
+--- 0x403759dd: esp_restart_noos at E:/work/esp32/src/esp-adf/esp-idf/components/esp_system/port/soc/esp32s3/system_internal.c:16
+
+Reply: 您好，请确认下您现在在用的是 esp32 的什么套件？（比如 IDF 是否用的是 5.0 以上版本？）
+可以完整描述下目前的系统信息，推测是包不匹配导致的崩溃
+
+---
+
 # ID: 36739
 
 SDK Product: RTC
@@ -60,7 +325,7 @@ SDK Version: 2.2.1
 
 Request Type: 集成问题咨询
 
-Request Description: 项目在做鸿蒙化适配，RTC有鸿蒙sdk吗
+Request Description: 项目在做鸿蒙化适配，RTM有鸿蒙sdk吗
 
 Reply: 您好，目前RTM Flutter SDK 暂未提供专门适配鸿蒙系统（HarmonyOS）的版本，如果您有适配鸿蒙的需求，我们有一个 Beta 版本的纯血鸿蒙 RTM SDK，如果您考虑原生开发的话可以说明下，等候人工工程师稍后提供下载地址。
 
@@ -164,7 +429,7 @@ Request Type: 集成问题咨询
 
 Request Description:  请问下服务器api禁用用户视频推流后,会让画面保持在最后一帧.有没有办法在不调整客户端的情况,禁用推流后,让画面黑掉?
 
-Reply:  您好，当通过服务器 API（如 RESTful API）禁用用户视频推流后，远端设备默认会显示最后一帧画面。这是声网 SDK 的默认行为；不修改客户端逻辑是无法实现黑屏的；建议您可以监听onremotevideostatechanged 回调来判断远端是否发流，如果远端不发流，既可以清除远端试图view，参考文档：
+Reply:  您好，当通过服务器 API（如 RESTful API）禁用用户视频推流后，远端设备默认会显示最后一帧画面。这是声网 SDK 的默认行为；不修改客户端逻辑是无法实现黑屏的；建议您可以监听onremotevideostatechanged 回调来判断远端是否发流，如果远端不发流，既可以清除远端视图view，参考文档：
 https://doc.shengwang.cn/api-ref/rtc/android/API/toc_video_basic#callback_irtcengineeventhandler_onremotevideostatechanged
 
 ---
@@ -659,7 +924,7 @@ Request Description: 这个频道，1个老师，2个学生上课。但是1个�
 后台看了下，这个有问题的学生，一开始进入了6874e8bef0db19910003557e的通话ID，然后又超时退出了。老师进入了另一个通话ID。
 既然退出了，那么学生怎么没有被踢出房间，而且还能看到在另一个通话ID的老师，但老师没有看见他？
 
-回答思维链：针对线上视频可用性问题，用户必需先提供准确的问题频道号、时间点、以及那个uid看不到那个uid，以便去查看后台的对应用户的视频相关参数有没有异常，进而给出初步的答复。
+回答思维链：针对线上视频可用性问题，用户必需先提供准确的问题频道号、时间点、以及哪个uid看不到哪个uid，以便去查看后台的对应用户的视频相关参数有没有异常，进而给出初步的答复。
 
 Reply:  您好，麻烦您按以下模版整理问题，以便我们能第一时间展开问题调查；
 1. 声网项目APPID、频道号(cname)：
