@@ -1,3 +1,157 @@
+# ID: 36777
+
+SDK Product: Flexible-classroom
+
+SDK Platform: Web
+
+SDK Version: 2.9.40
+
+Request Type: 其他问题
+
+Request Description: 多人互动，有人数上限吗？现在6人以上就不能上台了
+
+Reply: 您好，灵动课堂默认只能限制 6 个远端的画面，超过 6 人上台的话画面是看不到的，除非您自行修改 UI。请问您这边具体是什么需求和场景需要超过 6 人同时上台？
+
+---
+
+# ID: 36782
+
+SDK Product: Flexible-classroom
+
+SDK Platform: Web
+
+SDK Version: 2.9.40
+
+Request Type: 集成问题咨询
+
+Request Description: 尝试运行跑通案例，发现跑不通
+
+Reply: 您好，请问跑不通的具体表现是什么？有具体的报错截图吗？
+可以先排查下 node 版本是否符合要求，灵动课堂需要 16-18 之间的node。以及尝试重新拉灵动课堂仓库最新的代码再试试：[灵动课堂Web/桌面端示例Demo](https://github.com/AgoraIO-Community/flexible-classroom-desktop)
+如果以上都无法解决您的问题，请等候人工工程师稍后为您解答。
+
+---
+
+# ID: 36784
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 切换音频输出设备（扬声器/听筒）是this.localTracks.audioTrack.setPlaybackDevice（‘speaker’）这个么，扬声器speaker听筒earpiece
+
+Reply: 您好，Web SDK 无法在移动端上选择播放设备，移动端输出是听筒还是扬声器取决于浏览器行为，Web SDK 只能选择采集设备。[音视频设备管理](https://doc.shengwang.cn/doc/rtc/javascript/basic-features/switch-device)
+
+---
+# ID: 36785
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.20.0
+
+Request Type: 集成问题咨询
+
+Request Description: 咨询个技术问题 频道销毁 是不是就是rtc互相挂断的通知，这个时候会通知我的服务端
+
+Reply: 您好，RTC 的频道销毁是频道里最后一个用户离开频道的时候才会触发的，触发时会有 NCS 事件。
+参考：[102 channel destroy](https://doc.shengwang.cn/doc/rtc/restful/webhook/events#102-channel-destroy)
+
+---
+# ID: 36786
+
+SDK Product: Marketplace
+
+SDK Platform: Web
+
+SDK Version: 自然语言处理
+
+Request Type: 开通权限、提供配额
+
+Request Description: 想测试rtt可以开通权限嘛
+
+Reply: 您好，请问是要开通 Restful 接口方案的 RTT 服务吗？如果是的话可以预留下需要开通的 appid，人工工程师稍后为您解答。
+如果您想用的是云市场转写插件，这个需要联系销售申请测试证书才能使用，商务联系电话：400 6326626。
+
+---
+# ID: 36787
+
+SDK Product: RTC
+
+SDK Platform: HarmonyOS
+
+SDK Version: 4.4.2
+
+Request Type: 集成问题咨询
+
+Request Description: 接入应用后，打开视频没有预览画面
+
+Reply: 您好，请问有跑通过我们的官方 Demo 吗？可以先跑下我们的 Demo 看下问题是否还会复现，检查下是否给予了相机权限、调用了enableVideo、setupLocalVideo、startPreview等接口，也可以检查下有没有错误码打印，如果自行排查无果，麻烦提供下问题复现时的SDK日志（hdc file recv /data/app/el2/100/base/包名/haps/entry/files），人工工程师稍微确认下这个问题的具体原因。
+
+---
+# ID: 36788
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 6.4.2-ohos.442029flutter版本接入，在鸿蒙手机上打开视频没有预览画面，黑屏，是什么原因呢
+
+Reply: 您好，声网的 Flutter RTC SDK 目前还没有适配过纯血鸿蒙设备，如果您考虑原生鸿蒙开发的话，可以参考下鸿蒙原生 RTC SDK 的文档：[鸿蒙 RTC SDK](https://doc.shengwang.cn/doc/rtc/harmonyos/landing-page)
+
+---
+
+# ID: 36790
+
+SDK Product: RTC
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 配置webhook后，为什么每个事件都要回调四次呢？时间都是在同一秒内。
+
+
+回调案例内容：
+
+{"sid":"185D526B7A9340298EBB55CAF9BDE93D","noticeId":"1217926940:819614:102","productId":1,"eventType":102,"notifyMs":1755675705500,"payload"{"channelName":"test#video_live_room#544886#1755668941","lastUid":539647,"ts":1755675704}}
+
+Reply: 您好，这是防止消息丢失的机制，我们会重复投递同一个事件 3-4 次，消息通知服务去重可以按照以下方式处理：
+1.ncs通知的事件，通过noticeId和eventType一起来做去重。
+2.根据状态去判断，例如收到同一个用户的 多个join 事件、quit 事件，先cache 后按照 ts 排序，然后根据在线状态判断。例如排序后顺序是 join(t1), join(t2), quit(t3), quit(t4)，那么就知道 join(t2) 和 quit(t4) 是重复的。
+3.对 eventType + payload 部分做比对，两部分都相同的是重复的。
+4.根据 ts，来的消息 ts 如果小于等于已处理过的最大 ts，就不处理。
+另外也可以参考我们的官网最佳实践文档：[维护用户在线状态](https://doc.shengwang.cn/doc/rtc/restful/best-practice/online-user-status)
+
+---
+# ID: 36791
+
+SDK Product: RTM
+
+SDK Platform: Flutter
+
+SDK Version: 2.2.1
+
+Request Type: 集成问题咨询
+
+Request Description: 你好，我们之前使用的是比较老的版本，agora-rtm1.1.1版本，现在看1.x已经被淘汰了，想咨询下，如果要升级的话，API对标信息有吗？例如1.1.1版本的createChannel，在2.X上面是createStreamChannel吗？sendMessage使用publish替代了吗？
+
+Reply: 您好，可以参考下 Native 的 [迁移指南](https://doc.shengwang.cn/doc/rtm2/android/overview/migration-guide),flutter 目前没有专门的文档。
+现在发消息全部用 publish 方法代替了，频道类型可以在 publish 的时候指定：[发送消息](https://doc.shengwang.cn/doc/rtm2/flutter/user-guide/message/send-message)
+
+---
+
 # ID: 36746
 
 SDK Product: RTC
@@ -343,7 +497,7 @@ Request Type: 其他问题
 Request Description: 网页刷新，加入房间偶发出现（80%的概率）User join failed AgoraRTCError WS_ABORT: UID_BANNED
 
 Reply: 您好，UID_BANNED 是 uid 被踢出频道后的报错，您可以自查下踢人接口的相关调用记录，检查下自己的业务是否符合预期。
-踢人接口：https://doc.shengwang.cn/doc/rtc/restful/channel-management/operations/post-dev-v1-kicking-rule
+[踢人接口](https://doc.shengwang.cn/doc/rtc/restful/channel-management/operations/post-dev-v1-kicking-rule)
 
 ---
 # ID: 36517
@@ -555,7 +709,7 @@ Reply:  您好，针对回声问题，需要您补充提供以下信息，以便
 2. 定位引起回声的用户。可通过依次静音频道内的用户进行确认：当用户A静音时，频道内其他用户听不到回声了，则说明用户A是引起回声的用户。
 1 对 1 通话：如果您听到回声，临时建议请让对方佩戴耳机进行通话。
 多人通话：可以请用户轮流静音，找出回声源。引起回声的用户请佩戴耳机，或在无需发言时，请将自己设为静音状态
-3.提供回声源用户端的声网sdk日志：https://doc.shengwang.cn/faq/integration-issues/set-log-file
+3.提供回声源用户端的[声网sdk日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
 
 ---
 # ID: 36491
@@ -572,7 +726,7 @@ Request Description:   使用过程接听电话是会在哪个回调反馈？
 
 Reply:  您好，在使用rtc通话中本地接听手机电话，rtc侧会可以通过onLocalAudioStateChanged回调来监听本地音频采集状态：
 reason：LOCAL_AUDIO_STREAM_REASON_INTERRUPTED (8)
-参考文档：https://doc.shengwang.cn/api-ref/rtc/android/API/toc_audio_basic#callback_irtcengineeventhandler_onlocalaudiostatechanged
+参考文档：[onLocalAudioStateChanged](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_audio_basic#callback_irtcengineeventhandler_onlocalaudiostatechanged)
 
 ---
 # ID: 36492
@@ -1051,7 +1205,7 @@ Reply:  您好，需要您这边确认以下几点：
 
 2、UI侧提示连麦回调失败 是根据声音那个回调实现的？
 
-3、您这边也可以提供下出现问题的声网频道号，问题时间点以及声网的sdk日志（https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file），
+3、您这边也可以提供下出现问题的声网频道号，问题时间点以及声网的sdk日志: [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
 
 ---
 
@@ -2327,7 +2481,7 @@ Request Description: 视频发送端使用的android设备，sdk版本号3.3.0.�
 
 Reply:  您好，可以检查下 Android 端初始化的时候，有没有开启 mDomainLimit 字段的开关，要设置为 True，否则只报备域名是不够的。
 
-[__https://doc.shengwang.cn/api-ref/rtc/android/API/class_rtcengineconfig__](https://doc.shengwang.cn/api-ref/rtc/android/API/class_rtcengineconfig)
+[https://doc.shengwang.cn/api-ref/rtc/android/API/class_rtcengineconfig](https://doc.shengwang.cn/api-ref/rtc/android/API/class_rtcengineconfig)
 
 ---
 
@@ -2660,13 +2814,12 @@ Flutter版本没有提供轻量级的，这样会导致apk包体增加 40MB左�
 Reply:  您好，之前有过一个老版本的纯音频的包：[https://github.com/AgoraIO-Extensions/Agora-Flutter-SDK/tree/6.2.6-sp.426.a](https://github.com/AgoraIO-Extensions/Agora-Flutter-SDK/tree/6.2.6-sp.426.a)
 
 yaml 里用git依赖：
+```
 agora_rtc_engine:
-
-git:
-
-url: [https://github.com/AgoraIO-Extensions/Agora-Flutter-SDK.git](https://github.com/AgoraIO-Extensions/Agora-Flutter-SDK.git)
-
-ref: 6.2.6-sp.426.a
+	git:
+		url: https://github.com/AgoraIO-Extensions/Agora-Flutter-SDK.git
+		ref: 6.2.6-sp.426.a
+```
 
 ---
 
@@ -3247,7 +3400,7 @@ Reply:  您好，麻烦咱们提供以下信息，以便我们第一时间开展
 3. 问题现象： (例)
    (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
    (2) uid=123 听/看 uid=456卡顿
-4. sdklog：https://doc.shengwang.cn/api-ref/rtc-server-sdk/java/classio_1_1agora_1_1rtc_1_1_agora_service_config
+4. 可以在初始化 SDK 的时候配置日志等级和路径：[AgoraServiceConfig](https://doc.shengwang.cn/api-ref/rtc-server-sdk/java/classio_1_1agora_1_1rtc_1_1_agora_service_config)
 另外加入频道失败通常和客户端网络异常，token无效或者过期；您这边也可以检查下，同时也建议咱们业务侧监听下onError 回调，接口参考文档如下：
 https://doc.shengwang.cn/doc/rtc-server-sdk/java/error-code
 
@@ -3275,7 +3428,7 @@ Reply:  您好，麻烦提供以下信息，以便我们能第一时间展开问
    (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
    (2) uid=123 听/看 uid=456卡顿
 4. 现象录屏:如果有的话尽量提供
-5.sdklog：如果有的话尽量提供，日志设置方式：https://doc.shengwang.cn/api-ref/rtc-server-sdk/python/python-api/apidatatype#agoraserviceconfig
+5.sdklog：如果有的话尽量提供，日志设置方式：[https://doc.shengwang.cn/api-ref/rtc-server-sdk/python/python-api/apidatatype#agoraserviceconfig](https://doc.shengwang.cn/api-ref/rtc-server-sdk/python/python-api/apidatatype#agoraserviceconfig)
 另外加入频道失败通常和客户端网络异常，token无效或者过期；您这边也可以检查下，同时也建议咱们业务侧监听下onError 回调，接口参考文档如下：
 https://doc.shengwang.cn/api-ref/rtc-server-sdk/python/error-code
 
@@ -3460,7 +3613,7 @@ Request Description: 请问该灵动课堂如何配置 同步播放设备的屏�
 
 回答思维链：客户的需求是“同步播放设备的屏幕”，听起来是屏幕共享的意思，可以和客户确认下是不是这个需求。如果是的话，需要提醒客户灵动课堂的移动端不支持屏幕共享，只有 Web 或者 Electron 才支持
 
-Reply:  您好，请问您说的“同步播放设备的屏幕”是指屏幕共享吗？如果是的话需要注意：移动端灵动课堂不支持屏幕共享，Web 和桌面端支持，可以跑下对应的 Demo，修改相关配置：https://doc.shengwang.cn/api-ref/flexible-classroom/javascript/classroom-sdk#mediaoptions
+Reply:  您好，请问您说的“同步播放设备的屏幕”是指屏幕共享吗？如果是的话需要注意：移动端灵动课堂不支持屏幕共享，Web 和桌面端支持，可以跑下对应的 Demo，修改相关配置：[https://doc.shengwang.cn/api-ref/flexible-classroom/javascript/classroom-sdk#mediaoptions](https://doc.shengwang.cn/api-ref/flexible-classroom/javascript/classroom-sdk#mediaoptions)
 
 ---
 
@@ -3614,7 +3767,7 @@ Request Description: 使用在线媒体流功能，AppID=3fdb8517f7f84aed9198e29
 
 回答思维链：客户使用了输入在线媒体流服务，并且在字段里开启了datastream 配置来传递点播流总时长，但客户好像没有提到自己有没有使用Protobuf解析，可能是造成无法解析点播进度的原因。可以让客户检查下相关实现。
 
-Reply:  您好，如果通过 Data stream 展示点播流总时长，发出的 Data stream 需要使用 Protobuf 解析，而不能用 ASCII 码直接解析。可以确认下现在的实现有没有用 Protobuf 去解析，参考文档内相关字段描述：https://doc.shengwang.cn/doc/media-pull/restful/media-pull/operations/get-region-v1-projects-appId-cloud-player-players
+Reply:  您好，如果通过 Data stream 展示点播流总时长，发出的 Data stream 需要使用 Protobuf 解析，而不能用 ASCII 码直接解析。可以确认下现在的实现有没有用 Protobuf 去解析，参考文档内相关字段描述：[创建云端播放器](https://doc.shengwang.cn/doc/media-pull/restful/media-pull/operations/get-region-v1-projects-appId-cloud-player-players)
 
 ---
 
@@ -3671,7 +3824,7 @@ Request Description: 您好，请问RTM2.x有类似1.x点对点一样的hasPeerR
 
 回答思维链：RTM2.x 里发送消息是有Promise PublishResponse的，客户可以直接监听方法执行完的 result 来判断消息是否发送成功，让客户参考文档里的示例代码即可。
 
-Reply:  您好，2.x 上publish方法本身就是带Promise的，您可以监听方法执行完成的 result 来判断消息是否发送成功，参考文档：https://doc.shengwang.cn/api-ref/rtm2/javascript/toc-message/message#publish
+Reply:  您好，2.x 上publish方法本身就是带Promise的，您可以监听方法执行完成的 result 来判断消息是否发送成功，参考文档：[https://doc.shengwang.cn/api-ref/rtm2/javascript/toc-message/message#publish](https://doc.shengwang.cn/api-ref/rtm2/javascript/toc-message/message#publish)
 
 ---
 
@@ -3735,7 +3888,7 @@ Request Description: maven 包： 2.2.2-beta
 回答思维链：看客户的问题描述是卡死，但不确定客户在第二次初始化并且调用 login 的时候有没有先销毁第一个实例，RTM 不支持多实例，只能全局保留一个实例，需要和客户确认下。
 
 Reply:  您好，看您的描述像是创建了多个实例导致的，请问您有先销毁第一个实例以后再去创建新的实例并且调用 login 吗？
-如果您自查看不出来，可以提供下 SDK 日志，人工工程师稍微为您看下具体情况：https://doc.shengwang.cn/doc/rtm2/android/error-codes
+如果您自查看不出来，可以提供下 [SDK 日志](https://doc.shengwang.cn/doc/rtm2/android/error-codes)，人工工程师稍微为您看下具体情况。
 
 ---
 
@@ -3757,7 +3910,7 @@ Request Description: 1云端录制是否支持上传录制文件到七牛云
 
 Reply:  您好，
 1、不支持，目前我们支持的 OSS 厂商都在这里：[https://doc.shengwang.cn/doc/cloud-recording/restful/api/reference](https://doc.shengwang.cn/doc/cloud-recording/restful/api/reference)
-2、支持kms或者aes256，在 start 的时候可以自行配置字段 extensionParams-sse，参考：https://doc.shengwang.cn/doc/cloud-recording/restful/cloud-recording/operations/post-v1-apps-appid-cloud_recording-resourceid-resourceid-mode-mode-start
+2、支持kms或者aes256，在 start 的时候可以自行配置字段 extensionParams-sse，参考：[https://doc.shengwang.cn/doc/cloud-recording/restful/cloud-recording/operations/post-v1-apps-appid-cloud_recording-resourceid-resourceid-mode-mode-start](https://doc.shengwang.cn/doc/cloud-recording/restful/cloud-recording/operations/post-v1-apps-appid-cloud_recording-resourceid-resourceid-mode-mode-start)
 3、请问您说的最大开启直播数量是指什么？是指 RTC 同时开播的频道数上限吗？如果是问这个的话，答案是没有上限的。
 
 ---
@@ -3880,7 +4033,7 @@ Reply:  您好，请问您这边使用的视频推流使用的是自采集yuv还
    (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
    (2) uid=123 听/看 uid=456卡顿
 4. 现象录屏:如果有的话尽量提供
-5. sdklog：如果有的话尽量提供，日志设置方式：https://doc.shengwang.cn/api-ref/rtc-server-sdk/cpp/structagora_1_1commons_1_1_log_config
+5. sdklog：如果有的话尽量提供，日志设置方式：[https://doc.shengwang.cn/api-ref/rtc-server-sdk/cpp/structagora_1_1commons_1_1_log_config](https://doc.shengwang.cn/api-ref/rtc-server-sdk/cpp/structagora_1_1commons_1_1_log_config)
 
 ---
 # ID: 33754
@@ -4086,7 +4239,7 @@ Request Description: 在测试环境生成推流码，通过测试环境的域�
 回答思维链：客户选的是旁路推流，但问的问题是RTMP 网关，需要和客户再次确认下用的到底是哪个产品。如果是 RTMP网关的话，这个推流域名地址不应该有 test，正确的地址是 rtls-ingress-prod-{region}.agoramdn.com/live
 
 Reply:  您好，请问现在在用的是旁路推流还是 RTMP 网关？这是两个不同的产品。如果是后者的话，需要注意：推流域名地址不应该有 test，正确的地址是 rtls-ingress-prod-{region}.agoramdn.com/live
-参考文档：https://doc.shengwang.cn/doc/rtmp-gateway/restful/get-started/use-gateway
+参考文档：[使用 RTMP 网关](https://doc.shengwang.cn/doc/rtmp-gateway/restful/get-started/use-gateway)
 
 ---
 
@@ -4104,7 +4257,7 @@ Request Description: 聊天的服务,每个人都能在群里说话， 有人捣
 
 回答思维链：客户需要踢人和清除聊天记录的功能，RTM 是不具备这些的，客户的需求更接近即时聊天，可以推荐客户用环信 IM 来实现
 
-Reply:  您好，踢人和清除聊天记录的功能 RTM 本身不具备，您可以考虑下用即时聊天 SDK 来实现类似功能，比如环信 IM：https://www.easemob.com/
+Reply:  您好，踢人和清除聊天记录的功能 RTM 本身不具备，您可以考虑下用即时聊天 SDK 来实现类似功能，比如[环信 IM](https://www.easemob.com/)
 
 ---
 
@@ -4122,7 +4275,7 @@ Request Description: 发现在录制过程中，有时候会出现调用stopServ
 
 回答思维链：客户在用本地服务端录制，应该先引导用户用云录制，在客户明确拒绝后再尝试索要日志进行排查
 
-Reply:  您好，有录制需求我们优先推荐用云录制：https://doc.shengwang.cn/doc/cloud-recording/restful/landing-page
+Reply:  您好，有录制需求我们优先推荐用[云录制](https://doc.shengwang.cn/doc/cloud-recording/restful/landing-page)
 
 ---
 
@@ -4177,7 +4330,7 @@ Request Description: 调用rtmClient.login（）显示超时
 
 回答思维链：客户可能在用 1.x 的老版本，可以先确认下版本情况，如果是的话要建议客户早日升级 2.x。以及 login 超时大概率是客户端自身网络连接有问题，可以让客户也自查一下是否能连接到公网，换一个网络再试试。
 
-Reply:  您好，请问现在在用的 RTM 版本是多少？1.x 已经停止更新维护了，建议使用 2.x 版本：https://doc.shengwang.cn/doc/rtm2/javascript/overview/migration-guide
+Reply:  您好，请问现在在用的 RTM 版本是多少？1.x 已经停止更新维护了，建议使用 [2.x 版本](https://doc.shengwang.cn/doc/rtm2/javascript/overview/migration-guide)
 login 超时大概率和客户端网络有关，可以检查下客户端的网络状况，切换可以稳定连接公网的热点或者 wifi 再试试。
 
 ---
@@ -4260,7 +4413,7 @@ Request Description: "agora-rtm-sdk": "^1.5.1"
 
 回答思维链：客户用的还是 1.x 的 RTM SDK，这个版本已经不再更新维护了，应该推荐客户尽早升级到 2.x
 
-Reply:  您好，您目前在用的是 RTM 1.x，这个版本已经停止更新维护很久了，建议尽早升级到 2.x ：https://doc.shengwang.cn/doc/rtm2/javascript/overview/migration-guide
+Reply:  您好，您目前在用的是 RTM 1.x，这个版本已经停止更新维护很久了，建议尽早升级到 2.x ：[迁移指南](https://doc.shengwang.cn/doc/rtm2/javascript/overview/migration-guide)
 
 ---
 # ID: 33677
@@ -4305,7 +4458,7 @@ Request Description: 我想python每隔2分钟检查一次实时互动RTC直播�
 
 回答思维链：客户提交的产品是云录制，但问的问题和云录制看起来不相关的，需要找客户再确认下现在到底在用什么产品。问题本身是 RTC 检测远端主播发流的，可以让客户在 Python 里监听on_user_video_track_state_changed回调，更具这个回调去判断频道里的远端视频流发送情况。因为Python官网文档有些滞后，需要让客户检查下 SDK 代码来完成回调监听，参考：https://github.com/AgoraIO-Extensions/Agora-Python-Server-SDK/blob/12fcb294749875d19503c7a93f318f67da2b6187/agora_rtc/agora/rtc/local_user_observer.py#L73C9-L73C42
 
-Reply:  您好，请问您这边是在用云录制还是 RTC？这个问题看起来是 RTC 监听远端发流状态的问题。Python SDK 可以通过监听里监听 on_user_video_track_state_changed 回调来了解远端发流状态，参考：https://github.com/AgoraIO-Extensions/Agora-Python-Server-SDK/blob/12fcb294749875d19503c7a93f318f67da2b6187/agora_rtc/agora/rtc/local_user_observer.py#L73C9-L73C42
+Reply:  您好，请问您这边是在用云录制还是 RTC？这个问题看起来是 RTC 监听远端发流状态的问题。Python SDK 可以通过监听里监听 on_user_video_track_state_changed 回调来了解远端发流状态，参考：[https://github.com/AgoraIO-Extensions/Agora-Python-Server-SDK/blob/12fcb294749875d19503c7a93f318f67da2b6187/agora_rtc/agora/rtc/local_user_observer.py#L73C9-L73C42](https://github.com/AgoraIO-Extensions/Agora-Python-Server-SDK/blob/12fcb294749875d19503c7a93f318f67da2b6187/agora_rtc/agora/rtc/local_user_observer.py#L73C9-L73C42)
 
 ---
 
@@ -4435,7 +4588,7 @@ Request Description: rtm中有没有后端java使用的sdk。 我们的环境是
 
 回答思维链：客户想要用 centOS 集成 RTM SDK，RTM 是有 Java 版本而且支持 centOS 的，可以给客户提供下文档地址
 
-Reply:  您好，有的，支持 centOS，参考文档：https://doc.shengwang.cn/doc/rtm2/android/get-started/quick-start
+Reply:  您好，有的，支持 centOS，参考文档：[https://doc.shengwang.cn/doc/rtm2/android/get-started/quick-start](https://doc.shengwang.cn/doc/rtm2/android/get-started/quick-start)
 
 ---
 
