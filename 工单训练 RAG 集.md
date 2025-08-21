@@ -1,3 +1,333 @@
+# ID: 36792
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 有一方视频首帧没有传输过去，8601963
+
+Reply: 您好，请提供以下信息：
+1. 问题发生的时间点
+2. 具体现象（哪个 uid 看不见哪个 uid）
+3. 方便的话提供下出现问题的设备日志，参考：[如何获取日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+人工工程师稍后为您解答，您可以先尝试重启设备或者 app，排除下是否有设备占用情况导致
+
+---
+# ID: 36793
+
+SDK Product: RTC
+
+SDK Platform: React Native
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 调研uniapp 中语音通话总是有回音，并且官方示列也有回音
+
+Reply: 您好，回音问题的本质是扬声器声音被麦克风采集到又发回去导致的，通话双方都带耳机基本可以解决这个现象。
+以及 uniapp SDK 已经停止更新维护很久了，建议您用我们还在更新维护的 SDK 进行开发：[实时互动](https://doc.shengwang.cn/doc/rtc/homepage)
+
+---
+# ID: 36797
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.5.2
+
+Request Type: 效果不佳、不达预期
+
+Request Description: SurfaceView 只能设置一次远程视频流   再次设置就不显示  
+按照ai 机器人回复的  需要重新设置   mRtcEngine.setupRemoteVideo(new VideoCanvas(null, VideoCanvas.RENDER_MODE_FIT, cuurentuid));
+然后在设置 
+ mRtcEngine.setupRemoteVideo(new VideoCanvas(sView1, VideoCanvas.RENDER_MODE_FIT, newuid));
+还是没有用  是怎么回事呢  
+
+Reply: 您好，在第二次 setupRemoteVideo之前有先把之前在用的 view 解除绑定或者置空吗？以及需要确认下新绑定的 uid 本身是否在频道里发流。
+或者您也可以参考我们 Demo 的处理：[https://github.com/AgoraIO/API-Examples/blob/main/Android/APIExample/app/src/main/java/io/agora/api/example/examples/basic/JoinChannelVideo.java#L452](https://github.com/AgoraIO/API-Examples/blob/main/Android/APIExample/app/src/main/java/io/agora/api/example/examples/basic/JoinChannelVideo.java#L452)
+
+---
+
+# ID: 36800
+
+SDK Product: RTC
+
+SDK Platform: HarmonyOS
+
+SDK Version: 4.4.2
+
+Request Type: 其他问题
+
+Request Description: 请问怎么在原生鸿蒙arkts环境下使用rtc多人会议，并且可以录制一段视频，上传到我们指定的网站
+
+Reply: 您好，鸿蒙有自己的 SDK[鸿蒙 SDK](https://doc.shengwang.cn/doc/rtc/harmonyos/landing-page)，SDK 内自带一个录制接口可以本地录制，但是录制完的内容需要您自行手动上传，SDK 没有上传机制。
+或者您也可以用云录制，云录制录制完自动上传您指定的 OSS，更方便一些：[云录制](https://doc.shengwang.cn/doc/cloud-recording/restful/landing-page)
+
+---
+# ID: 36801
+
+SDK Product: RTC
+
+SDK Platform: Electron
+
+SDK Version: 4.5.2
+
+Request Type: 线上报错
+
+Request Description: 
+```
+result = this.rtcEngine.joinChannel(
+                options.token || null,
+                options.channelName,
+                0,
+                options.info || null,
+            ); 
+```
+joinChannel错误码为-2是什么问题？ 没有在错误码页找到对应错误码描述
+
+Reply: 您好，错误码 2 对应无效参数，请您检查调用 joinchannel 时的传参内容
+推荐参考我们 Demo 的处理方式：[https://github.com/AgoraIO-Extensions/Electron-SDK/blob/main/example/src/renderer/examples/basic/JoinChannelVideo/JoinChannelVideo.tsx#L130](https://github.com/AgoraIO-Extensions/Electron-SDK/blob/main/example/src/renderer/examples/basic/JoinChannelVideo/JoinChannelVideo.tsx#L130)
+
+---
+# ID: 36802
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.5.2
+
+Request Type: 开通权限、提供配额
+
+Request Description: 项目已经开启旁路推流权限，但app里还是显示无权限
+
+Reply: 您好，可以先确认下开通权限的 appid 和实际在用的 appid 是否是同一个？如果是的话，请问您现在是用的是客户端旁路推流还是服务端旁路推流呢？目前客户端旁路推流已经不建议再使用了，建议您用服务端的 Restful 接口去实现。如果开的是服务端旁路推流，用的是客户端的话，确实是会报错没有权限的。
+
+---
+
+# ID: 36806
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.5.2
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 1.录音过程中，在我们设置了config.fileRecordOption = Constants.AUDIO_FILE_RECORDING_MIC前提，下还是录制到了远端的声音，代码如下，音频见附件，麻烦帮我们分析一下，这个对我们很重要，感谢
+```
+public void initializeAgoraEngine(Context context, String appId,RtcEngine rtcEngine){
+         mContext = context;
+        RtcEngineConfig config = new RtcEngineConfig();
+        config.mContext = context;
+        config.mAppId = appId;
+        mRtcEngine = rtcEngine;
+    }
+    int recordId1 = 0;
+    public int startLocalAudioRecording(ArrayList<TaskInfoData>  mTaskInfoDataList, int currentIndex) {
+        TaskInfoData taskInfoData = mTaskInfoDataList.get(currentIndex);
+        String taskId = taskInfoData.getTaskId();
+        String groupId = taskInfoData.getGroupId();
+        String queueSentence = taskInfoData.getQueueSentence();
+        String outFilePath = UiConfig.FILE_DATA_ROOT_PATH + taskId + "/" + groupId + "/";
+        String fileNamePrefix = taskId + groupId + queueSentence;
+        String baseFilePath = outFilePath + UiConfig.FILE_WAV_FILE_PATH + fileNamePrefix;
+        String outWavFile = baseFilePath + ".wav";// 无加密
+
+        File file = new File(outWavFile);
+        fileExist(file.getParentFile());
+        // 本地录音文件路径
+        AudioRecordingConfiguration config = new AudioRecordingConfiguration();
+        // 配置本地录音
+        config.filePath = outWavFile;
+        config.codec = false; // 使用 AAC 编码
+        config.fileRecordOption = Constants.AUDIO_FILE_RECORDING_MIC;
+        config.sampleRate = SAMPLE_RATE; // 采样率
+        config.recordingChannel = 1;
+
+        mRtcEngine.setAudioEffectPreset(Constants.AUDIO_EFFECT_OFF);
+
+        // 启用回声消除
+        mRtcEngine.enableAudio();
+
+        // 开始本地录音
+        recordId1 = mRtcEngine.startAudioRecording(config);
+
+        // 启用音量提示，设置报告间隔为 200 毫秒，平滑系数为 3，同时报告 VAD 信息
+        mRtcEngine.enableAudioVolumeIndication(200, 3, true);
+
+        return recordId1;
+
+    }
+```
+
+Reply: 您好，请问您说的录制到了远端的声音是指录到了远端被外放出来的声音还是录音里能清晰听见远端的发流？AUDIO_FILE_RECORDING_MIC 就是只录制自己麦克风采集的，但如果您外放的声音过大，是会被麦克风重新采集到的
+
+---
+
+# ID: 36807
+
+SDK Product: RTC
+
+SDK Platform: Electron
+
+SDK Version: 4.2.0
+
+Request Type: 其他问题
+
+Request Description: 我需要在我的这边配置访问的白名单ip,的话如何做。是否可以提供ip或者域名列表。开通云代理服务需要什么
+
+Reply: 您好，目前没有直接对外开放的域名、IP 白名单，如果您有内网使用 RTC 需求，需要付费开通云代理服务，开启后我们才能提供具体的域名、端口、协议来供您使用。[云代理](https://doc.shengwang.cn/doc/rtc/electron/basic-features/firewall)
+
+---
+
+# ID: 36809
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.5.2
+
+Request Type: 集成问题咨询
+
+Request Description: 我是在flutter中实现的ai对话，监听的是rtc的streamMessage，现在可以正常显示对话了，但是我应该怎么给智能体发送文字消息或者图片消息呢
+
+Reply: 发送文字消息直接往您的 LLM 回调地址去发就行，不依赖 RTC。
+发送图片需要用到 RTM 能力，参考[发送图片消息](https://doc.shengwang.cn/doc/convoai/restful/user-guides/send-multimodal-message)
+
+---
+# ID: 36810
+
+SDK Product: RTC
+
+SDK Platform: mini-app
+
+SDK Version: 2.6.5
+
+Request Type: 集成问题咨询
+
+Request Description: 请问声网有支持支付宝小程序的sdk吗
+
+Reply: 您好，目前没有支持支付宝小程序的 SDK，只有微信小程序的。Web SDK 需要 Webview 本身支持 webrtc 协议才行，支付宝小程序的 Webview 目前不支持 WebRTC 协议，所以也没法使用。
+
+---
+
+# ID: 36812
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 集成问题咨询
+
+Request Description: 我调用start接口返回了sid，但之后我stop返回{"cname":"24080002","code":404,"reason":"failed to find worker","uid":"1"}}，请问这是什么原因
+
+Reply: 您好，stop接口返回404错误（"code":404,"reason":"failed to find worker"）是典型的云端录制任务已结束的标识。
+录制任务自己结束或者 start 的时候实际启动失败，后续再调用接口进行操作就会有这种问题。建议您自查下 start 里配置的 token 和 uid、频道名是否匹配，以及录制端被分配的 uid 和频道里在发流的用户是否重复，相同 uid 会导致录制端被踢出频道从而提前结束录制的。
+如果自查无法分析出具体原因，您可以提供下 sid，人工工程师稍后为您排查。
+参考：[云录制 404 原因](https://doc.shengwang.cn/faq/integration-issues/return-404)
+
+
+---
+
+# ID: 36814
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 集成问题咨询
+
+Request Description: 我这边用uniapp刚开始开发但是我发现咱这边已经不维护相关插件了；想问下；uniapp这个框架还可以对接咱这个平台吗？
+
+Reply: 您好，我们的uni-app SDK 已经停止更新和维护了，不推荐新集成使用。目前只有老版本SDK对外开放，可以先参考文档跑通Demo，或者直接使用目前我们还在支持的平台来开发
+[SDK](https://github.com/AgoraIO-Community/Agora-Uniapp-SDK/tree/master)
+[uniapp 跑通](https://shimo.im/docs/sng09z58Jo4FWtoB/)
+文档密码：axucpk
+
+---
+
+# ID: 36819
+
+SDK Product: Whiteboard
+
+SDK Platform: Web
+
+SDK Version: 2.16.43
+
+Request Type: 其他问题
+
+Request Description: 原来没有开启文档转网页和文档转图片功能，在互动白版中上传文档报错，上传不成功；现在开启了这两个功能，还是上传不成功
+
+Reply: 您好，文档上传需要先进行文档转换，文档转换需要您配置正确的 OSS 信息，麻烦截图看下您现在声网 console 的配置截图，然后提供文档转换失败的对应 taskID，人工工程师稍后为您解答。
+
+---
+
+# ID: 36821
+
+SDK Product: RTSA
+
+SDK Platform: Linux-C
+
+SDK Version: 1.9.5
+
+Request Type: 集成问题咨询
+
+Request Description: 开发板(esp32s3, ESP32-S3-Korvo-2）
+adf ver:v2.7-0-g9cf556de500019bb79f3bb84c821fda37668c052; 
+idf ver:v5.2.3-0-gc9763f62dd00c887a1a8fafe388db868a7e44069)
+rtsa sdk ver:agora-iot-sdk-1.9.5-esp32s3-idf5.x-20250626
+设备已启动并且已加入频道，然后网页端（https://webdemo.agora.io/example/quickStart/videoAndVoiceCalling/index.html），加入频道后，设备端报错 Invalid payload type 100
+
+并且音频流回调(__on_audio_data)一直没有调用到，这是什么原因
+
+Reply: 您好，Invalid payload type 100 指的是音频播放异常，100 是 PCM 格式，所以是解码后播放 PCM 有问题，定位在解码上。RTSA 和 Web 的音频编码协议不同，您需要保证双方用都支持的协议来互通，具体实现方式参考[与 RTC SDK 互通音视频数据](https://doc.shengwang.cn/doc/rtsa/c/best-practices/interoperate-rtc)
+
+---
+# ID: 36822
+
+SDK Product: Cloud-recording
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 线上报错
+
+Request Description: 云端录制报错：{"notifyMs":1755765617377,"productId":3,"payload":{"serviceType":0,"uid":"999","serviceScene":"mix_record","sendts":1755765617340,"sequence":3,"cname":"show","details":{"stat":0,"errorLevel":5,"errorMsg":"","module":0,"errorCode":110,"msgName":"cloud_recording_error"},"sid":"fb9549dbc24a76aefa00739c7172a41b"},"eventType":1,"noticeId":"eb63b9b4304ba87769f708800ffc35b3","sid":"fb9549dbc24a76aefa00739c7172a41b"}
+如何定位错误原因？
+
+Reply: 您好，云录制收到errorCode:110 的事件表示 start 任务因为 token 不正确导致加频道、启动录制失败了，需要您检查下 start 的 body，保证 token 和 cname、uid 匹配，并且 uid 和频道内不冲突。
+
+---
+# ID: 36823
+
+SDK Product: RTC
+
+SDK Platform: React Native
+
+SDK Version: 其他版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 客户端播放服务端在 Channel 推送过来的流，没有按照预想顺序播放，而是一个播放一半播放别的了
+
+Reply: 您好，听您的描述像是服务端一直在按顺序轮流发送视频文件当视频流，所以问题应该是出在发送的服务端上的。建议自查下读取文件的业务代码处理逻辑，可能是文件读取的时候出现了问题。
+
+---
+
 # ID: 36777
 
 SDK Product: Flexible-classroom
