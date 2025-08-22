@@ -1,3 +1,160 @@
+
+# ID: 36825
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.5.1
+
+Request Type: 线上报错
+
+Request Description: 
+1. 问题表现
+Android用户反馈点击发起视频通话后，app端和web端双方无法看到对方，也听不到声音。 客服让用户重启app 切换网络，重新发起视频通话很多次，仍然不行。 iOS也有用户反馈类似问题
+2. 问题排查
+Android SDK调用AgoraManager.agoraEngine?.joinChannel(it.token, it.channelId,"" , it.uid.toInt()) 后，没有收到onJoinChannelSuccess的回调
+3. case详情：
+第一次：创建时间2025-08-13 08:15:04      频道名 2025_08_13_caseid80569781_1755072783074
+第二次：创建时间2025-08-13 08:23:22      频道名 2025_08_13_caseid80569781_1755073297459
+
+Reply: 您好，问题关键是joinChannel后未触发onJoinChannelSuccess，这表示没有实际加入频道成功，需要拿设备 SDK 日志过来看下具体原因，获取日志参考：[如何获取日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+常见的原因是 token 不正确导致的，您可以自行排查一下。
+
+---
+
+# ID: 36828
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: Android运行对话式AI的demo，配置过AG_APP_ID和AG_APP_CERTIFICATE，运行之后，点击连接AI引擎，提示“智能体加入失败，请稍后重试。”
+
+Reply: 您好，Android 的 convoAI Demo 除了 AG_APP_ID和AG_APP_CERTIFICATE 以外还需要填写 basic_auth 的 ak sk、LLM、tts 信息，请问您这些都正确填写了吗？可以参考下 Demo 仓库里的 [Readme](https://github.com/Shengwang-Community/Conversational-AI-Demo/blob/main/Android/scenes/convoai/README.md)
+
+---
+
+# ID: 36830
+
+SDK Product: Recording
+
+SDK Platform: Linux-Java
+
+SDK Version: 4.4.150.5
+
+Request Type: 崩溃（闪退、卡死）
+
+Request Description: 集成调用本地服务端录制，代码执行到agoraMediaRtcRecorder.joinChannel(token, channelName, userId);服务直接崩了，
+打印日志如下：2025-08-22 11:06:54.595 [http-nio-7005-exec-1] INFO  c.d.c.c.SWController - [start,302] - 收到开始录制请求 -> 频道: 张恒-李四-邻里纠纷-2025-08-22 08:57:12, 用户ID: 1, Token前缀: 007eJxTY
+2025-08-22 11:06:54.676 [http-nio-7005-exec-1] INFO  c.d.c.c.SWController - [start,321] - AgoraRecorderManager 初始化成功，录制路径: /home/yingzhen/dispute/uploadPath/video
+2025-08-22 11:06:54.676 [http-nio-7005-exec-1] INFO  c.d.c.d.v.AgoraRecorderManager - [startRecording,95] - 开始订阅音频流
+2025-08-22 11:06:54.677 [http-nio-7005-exec-1] INFO  c.d.c.d.v.AgoraRecorderManager - [startRecording,98] - 开始订阅视频流
+2025-08-22 11:06:54.678 [http-nio-7005-exec-1] INFO  c.d.c.d.v.AgoraRecorderManager - [startRecording,104] - 配置录制参数，存储路径: /home/yingzhen/dispute/uploadPath/video
+2025-08-22 11:06:54.680 [http-nio-7005-exec-1] INFO  c.d.c.d.v.AgoraRecorderManager - [startRecording,109] - 即将加入频道 -> 频道名: 张恒-李四-邻里纠纷-2025-08-22 08:57:12, 用户ID: 1
+
+A fatal error has been detected by the Java Runtime Environment:
+
+ SIGSEGV (0xb) at pc=0x00007f2f7e0912ec, pid=22303, tid=0x00007f2f7c8bd700
+
+JRE version: Java(TM) SE Runtime Environment (8.0_161-b12) (build 1.8.0_161-b12)
+Java VM: Java HotSpot(TM) 64-Bit Server VM (25.161-b12 mixed mode linux-amd64 compressed oops)
+Problematic frame:
+C  libagora_rtc_sdk.so+0xeb42ec
+
+Core dump written. Default location: /home/yingzhen/dispute/server/core or core.22303
+
+An error report file with more information is saved as:
+/home/yingzhen/dispute/server/hs_err_pid22303.log
+
+，房间已经创建，token有效，请帮忙排查是哪里的问题，如何解决，崩溃日志见附件
+
+Reply: 您好，看您的打印里频道名包含中文字符，我们的 SDK 是不支持中文字符当频道名使用的，建议先跑通我们的[官方示例](https://github.com/AgoraIO-Extensions/Agora-Recording-Java-SDK/blob/main/README.zh.md)
+
+---
+# ID: 36831
+
+SDK Product: RTC
+
+SDK Platform: React
+
+SDK Version: 2.4.0
+
+Request Type: 集成问题咨询
+
+Request Description: gateway.agora.io网关服务器连接不上  前提：关闭防火墙 并且使用ping尝试，提示如下：连接失败: AgoraRTCError CAN_NOT_GET_GATEWAY_SERVER: flag: 4096, message: AgoraRTCError CAN_NOT_GET_GATEWAY_SERVER: dynamic use static key
+
+Reply: 您好，AgoraRTCError CAN_NOT_GET_GATEWAY_SERVER: dynamic use static key 的打印表示 token 填写错误，可能是您传成了其他值，建议检查下前端上有没有地方写死，以及检查下 token 是否匹配。
+控制台有自助检验工具，可以自行校验下token：控制台-辅助工具-Token生成/校验–Token校验，将您的token粘贴进去，解析一下，看解析出来的结果和您join传入的参数是否一致。
+
+---
+# ID: 36832
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 很多用户反馈麦克风噪音比较大，怎么有效降噪
+
+Reply: 您好，可以考虑 audioScenario 调整为 chatroom 强制走听筒的话用硬件回声消除：[https://doc.shengwang.cn/api-ref/rtc/android/API/toc_audio_basic#api_irtcengine_setaudioscenario](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_audio_basic#api_irtcengine_setaudioscenario)
+
+如果效果一般可以再考虑[开启 AINS](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_audio_effect#api_irtcengine_setainsmode)，不过 AINS 需要 4.2.0 以上版本，如果您在用的版本在此之下，需要先升级。
+
+---
+# ID: 36834
+
+SDK Product: RTC
+
+SDK Platform: React
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 在 react 项目中 创建视频，在手机上 第一次连接，会提示是否允许开启视频和音频，允许后，都能正确显示本段和远端的视频，然后挂机，在继续连接，后面就在手机上 不能显示出远端的视频，只能显示出本地的视频，如果界面上有静音等这些按钮 然后设置下远端的视频就能出来了， 在电脑上 就没有这样的问题，都能正确显示出来
+
+Reply: 您好，您的现象描述看起来更像是业务处理问题，推荐参考我们 Demo ，对比下订阅并渲染远端的处理有什么区别，[React Demo](https://github.com/AgoraIO/API-Examples-Web/tree/main/src/example/framework/react)
+
+---
+# ID: 36835
+
+SDK Product: RTM
+
+SDK Platform: Unity
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 我需要创建新项目，提示本账号最多15个项目，怎么申请
+
+Reply: 您好，每个 CID 默认可以创建 20 个 appid，15 个的话还是有剩余空间的。如果您的账号appid 已经达到了上限最多再等待人工工程师手动创建 2-3 个，如果有更多需求的话建议再注册一个声网账号，这样每个 CID 都有 20 个 appid 的额度。
+
+---
+# ID: 36836
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 注销这个号     我其他号要绑定这个手机号。
+
+Reply: 您好，您可以在声网 console 左侧边栏-设置-安全设置 里自行注销账号。
+
+---
+
 # ID: 36792
 
 SDK Product: RTC
@@ -200,7 +357,7 @@ Request Type: 集成问题咨询
 
 Request Description: 我是在flutter中实现的ai对话，监听的是rtc的streamMessage，现在可以正常显示对话了，但是我应该怎么给智能体发送文字消息或者图片消息呢
 
-Reply: 发送文字消息直接往您的 LLM 回调地址去发就行，不依赖 RTC。
+Reply: 您好，发送文字消息直接往您的 LLM 回调地址去发就行，不依赖 RTC。
 发送图片需要用到 RTM 能力，参考[发送图片消息](https://doc.shengwang.cn/doc/convoai/restful/user-guides/send-multimodal-message)
 
 ---
@@ -957,7 +1114,7 @@ Reply:  您好，您目前填写的 uid 超出了 int 值上限，请修改为 2
 ---
 # ID: 36547
 
-SDK Product: Convol AI
+SDK Product: ConvoAI
 
 SDK Platform: Restful
 
@@ -1123,7 +1280,7 @@ Reply:  您好，是的，CONNECTION_CHANGED_BANNED_BY_SERVER (3) 是只有用�
 ---
 # ID: 36497
 
-SDK Product: Convol AI
+SDK Product: ConvoAI
 
 SDK Platform: Restful
 
@@ -1278,7 +1435,7 @@ Reply:  声网提供了支持电话会议（包括电话呼入和呼出）的完
 ---
 # ID: 36433
 
-SDK Product: Convol AI
+SDK Product: ConvoAI
 
 SDK Platform: Restful
 
@@ -2475,7 +2632,7 @@ Reply:  您好，崩溃问题可以提供下崩溃时的原始堆栈+SDK 日志�
 
 # ID: 35465
 
-SDK Product: Convol AI
+SDK Product: ConvoAI
 
 SDK Version: 当前版本
 
@@ -3186,7 +3343,7 @@ Reply:  您好，make install的时候应该会拉取一些在线依赖，一点
 
 # ID: 34385
 
-SDK Product: Convol AI
+SDK Product: ConvoAI
 
 SDK Version: 当前版本
 
@@ -3196,7 +3353,7 @@ Request type: 集成问题咨询
 
 Request Description: 已经创建了一个对话式智能体并且加入了同一个RTC频道，后面应该怎么样与智能体进行语音互动，文档中没有给出发送post请求的地址和携带数据的参数和格式
 
-回答思维链：看起来客户已经跑通了 convolAI 的流程，让 AI 加入频道了，但是不清楚如何和 AI 互动，让客户用客户端加频道以后开麦说话就可以了
+回答思维链：看起来客户已经跑通了 convoAI 的流程，让 AI 加入频道了，但是不清楚如何和 AI 互动，让客户用客户端加频道以后开麦说话就可以了
 
 Reply:  您好，需要用任意客户端集成我们 SDK 以后进入相同的RTC 频道来互通，你可以先用我们的 Demo 加入：[https://doc.shengwang.cn/doc/rtc/android/get-started/run-demo](https://doc.shengwang.cn/doc/rtc/android/get-started/run-demo)
 
