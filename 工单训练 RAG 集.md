@@ -1,4 +1,277 @@
 
+# ID: 36840
+
+SDK Product: RTM
+
+SDK Platform: Java
+
+SDK Version: 2.2.5
+
+Request Type: 集成问题咨询
+
+Request Description: 我想在本地运行一个demo，测试RTM
+我在mac上搭建了一个springboot项目，jdk17
+运行后提示我Caused by: java.lang.UnsatisfiedLinkError: no aosl in java.library.path: /Users/chenyu/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.
+	at java.base/java.lang.ClassLoader.loadLibrary(ClassLoader.java:2434) ~[na:na]
+
+我在咱们sdk里边指找到了.os，没有适合mac使用的
+是否能提供RTM纯java版本，或者提供适合mac使用的aosl.dylib等文件，dylib格式
+
+
+Reply: 您好，Java SDK 只适配了 Android 和 Linux 两种环境，没有适配过 Windows 或者 Mac 环境，如果您有 Mac 开发需求可以考虑用 OC 或者 Swift。
+[Java 适配平台](https://doc.shengwang.cn/doc/rtm2/android/overview/platform-support)
+[Swift 适配平台](https://doc.shengwang.cn/doc/rtm2/swift/overview/platform-support)
+[OC 适配平台](https://doc.shengwang.cn/doc/rtm2/ios/overview/platform-support)
+
+---
+# ID: 36841
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.5.2
+
+Request Type: 集成问题咨询
+
+Request Description: full sdk 升级到4.5.2 后，提交Google play 提示前台FOREGROUND_SERVICE_MEDIA_PROJECTION权限问题，是你们SDK里面新增了这个权限吗
+
+Reply: 您好，FOREGROUND_SERVICE_MEDIA_PROJECTION 是屏幕共享必须的权限，如果您有屏幕共享场景的话请添加权限声明。如果没有用到的话可以删除，参考[How to resolve FOREGROUND_SERVICE_MEDIA_PROJECTION when not using screen sharing](https://agoraio.zendesk.com/hc/en-us/articles/33544055408788-How-to-resolve-FOREGROUND-SERVICE-MEDIA-PROJECTION-when-not-using-screen-sharing)
+
+---
+# ID: 36842
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 集成问题咨询
+
+Request Description: 1 为什么我用手机浏览器和对方通话，对方听不到我的声音，我确能听到对方的声音那
+
+Reply: 您好，可以检查下初始化引擎时是不是用的主播身份，以及浏览器本身是否支持 WebRTC 协议，优先推荐 Chrome 或者微信浏览器。
+如果自查无果，可以提供下具体出现问题的频道号、uid、时间点，说明哪个 uid 听不见哪个 uid，并且开启[日志上传](https://doc.shengwang.cn/faq/integration-issues/set-log-file)，人工工程师稍后为您排查。
+```JavaScript
+// 开启日志上传功能
+AgoraRTC.enableLogUpload();
+// 将日志输出级别设置为 INFO
+AgoraRTC.setLogLevel(1);
+```
+
+---
+# ID: 36843
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.23.x
+
+Request Type: 集成问题咨询
+
+Request Description: : [client-cadcf] receive exception msg, code: 4001, mSg: AUDIO INPUT LEVEL TOO LOW RECOVER,这个是什么问题
+
+Reply: 您好，AUDIO INPUT LEVEL TOO LOW RECOVER 一般和AUDIO INPUT LEVEL TOO LOW 成对出现，表示音量输入较低的问题得到了恢复。但音量输入较低本身也不代表什么，不说话的时候就会触发这个打印，本身不影响实际通话，可以忽略。
+
+---
+# ID: 36845
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 集成问题咨询
+
+Request Description: 对方手机端没有音频接收信息 这个是为什么那
+
+Reply: 您好，麻烦提供具体的频道号、uid、时间点，说明哪个 uid 听不见哪个 uid，以及检查下手机端用户使用的浏览器是否支持 webrtc 协议，一般推荐 Chrome 或者微信浏览器。
+
+---
+# ID: 36846
+
+SDK Product: RTM
+
+SDK Platform: Java
+
+SDK Version: 2.2.0
+
+Request Type: 线上报错
+
+Request Description: rtm这个东西不能从声网的接口查询uid是否在线吗？ 你们代码中的回调根本不准确如果因为网络和推出后台热冷启动等问题 根本无法准确给予当前rtm是否在线 所以我线上的业务通知总是出问题 涉及钱上也有很大影响 请务必告诉我如何获取rtm准确的这一时刻的是否在线 一定要从远端接口获取才行不能信任本地
+
+Reply: 您好，RTM 没有直接查询远端 userid 是否在线的接口，Presence 只能检测频道内远端的状况，如果远端没有加入频道的话，只能用点对点消息去验证了。如果远端离线，点对点消息一定会发送失败。
+以及客户端的回调本身就是准确的，RtmLinkState 的[心跳链接](https://doc.shengwang.cn/doc/rtm2/android/user-guide/link/link-basic#%E5%BF%83%E8%B7%B3%E6%8E%A2%E6%B5%8B)时长可以自行调整，调短一点检测的就频繁了，这样状态会更及时。
+要检测远端是否在线就用点对点消息，要检测自己是否在线就关注客户端回调，这个一定是准的，把心跳间隔设置的短一点效果更好。以及建议升级 SDK 到最新版本，新版本修复了一些之前的已知问题。
+
+---
+
+# ID: 36848
+
+SDK Product: RTM
+
+SDK Platform: Java
+
+SDK Version: 2.2.5
+
+Request Type: 集成问题咨询
+
+Request Description: 需要 Windows x64 平台下搭配 rtm-java:2.2.5-beta / linux-java-sdk 使用的本地库 aosl.dll、agora_rtc_sdk.dll
+
+Reply: 您好，Java SDK 只适配了 Android 和 Linux 两种环境，没有适配过 Windows 平台。
+
+---
+# ID: 36849
+
+SDK Product: RTM
+
+SDK Platform: Java
+
+SDK Version: 2.1.12
+
+Request Type: 线上报错
+
+Request Description: 8月6日之后发送消息之前一直正常，8月6日开始就一直报下面这个错误。
+java.lang.RuntimeException: send message to channel failure: RTM ERROR: publish failed, error code: NOT_LOGIN, reason: Preform operation without login RTM service.
+	at com.eastedu.rtm.service.impl.AgoraImpl$6.onFailure(AgoraImpl.java:259)
+	at io.agora.rtm.internal.RtmClientImpl.processFailureCallback(RtmClientImpl.java:459)
+	at io.agora.rtm.internal.RtmClientImpl.publish(RtmClientImpl.java:325)
+	at com.eastedu.rtm.service.impl.AgoraImpl.sendChannelMessage(AgoraImpl.java:246)
+	at com.eastedu.balance.live.infrastructure.config.rtm.RtmClient.sendMessage(RtmClient.java:100)
+	at com.eastedu.balance.live.domain.service.impl.RtmServiceImpl.sendMessage(RtmServiceImpl.java:33)
+	at jdk.internal.reflect.GeneratedMethodAccessor40.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:355)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.interceptor.AsyncExecutionInterceptor.lambda$invoke$0(AsyncExecutionInterceptor.java:113)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+
+Reply: 您好，日志打印显示 NOT_LOGIN 这表示您在调用 publish 接口的时候处于登出 RTM 系统的状态，可能是 token 过期（token 最大有效期 24 小时，具体有效时长取决于生成 token 时的有效时间字段）或者网络波动之类的原因导致了这个情况。
+建议参考[连接管理基础](https://doc.shengwang.cn/doc/rtm2/android/user-guide/link/link-basic)，监听客户端连接状态的回调，确保在调用 publish 前保证处于登录 RTM 的状态。
+
+---
+# ID: 36850
+
+SDK Product: RTC
+
+SDK Platform: Electron
+
+SDK Version: 4.5.2
+
+Request Type: 集成问题咨询
+
+Request Description: joinChannel result === 0 没有 onJoinChannelSuccess 回调 但是有onNetworkQuality回调 和 onConnectionStateChanged回调
+
+Reply: 您好，没有 onJoinChannelSuccess 回调就表示加入频道没有成功，请问此时的onConnectionStateChanged 具体是什么样的打印？如果加入成功，state 应该是 ConnectionStateConnected，如果不是的话就表示没有加入成功，可以看下 reason 字段的具体解释。
+如果无法分析的话，可以获取下 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)提供过来，人工工程师稍后分析下具体原因。
+
+---
+# ID: 36851
+
+SDK Product: RTC
+
+SDK Platform: Electron
+
+SDK Version: 4.2.0
+
+Request Type: 集成问题咨询
+
+Request Description: 视频通话 (Legacy)
+需要一个用户可以监听多个的频道的视频流数据，是否有限制，该如何生成token, 可能需要监听几十个 频道的视频流数据，我们是用于监考的平台
+
+Reply: 您好，视频通话 (Legacy)是 3.x，3.x 我们已经停止更新维护很久了，不建议使用，建议使用最新的 4.x。
+
+而 RTC 需要加入频道以后才能看到频道内的画面，您这个场景理论可以用[加入多频道](https://doc.shengwang.cn/doc/rtc/electron/advanced-features/multiple-channel)的方式去做，但那样同时要渲染的画面会非常多，对于设备性能要求会很高。建议用 joinchannel 的方式做一个中台选择界面，让监考老师手动选择每次要进入的考场，单次只进入一个，这样性能消耗就没那么大了。
+
+而 token 是加入频道使用的，调用 join 之前使用脚本生成就行了，保证生成 token 时传入的频道名、uid 和最终加入频道时传入的一致就可以正常使用，没有限制。
+
+如果您对监考场景的技术实现细节还想再沟通，可以留下电话，稍后人工工程师为您解答。
+
+---
+# ID: 36852
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 4.6.0
+
+Request Type: 其他问题
+
+Request Description: 服务端用python sdk获取rtc视频yuv数据，怎么开启硬件加速?
+如何在网络状况不佳时如何设置只降帧率不降分辨率？
+
+Reply: 您好，请问您指的硬件加速具体是指什么？
+网络不佳的降级策略可以在[set_video_encoder_configuration](https://doc.shengwang.cn/api-ref/rtc-server-sdk/python/python-api/apidatatype#videoencoderconfig) 里配置degradation_preference，默认就是降帧率不降分辨率的。
+
+---
+# ID: 36853
+
+SDK Product: RTC
+
+SDK Platform: HarmonyOS
+
+SDK Version: 4.4.1
+
+Request Type: 集成问题咨询
+
+Request Description: 多人rtc，小程序延迟很严重，大概有2.5s左右
+
+Reply: 您好，延迟一般是双方网络环境不够稳定才会变大的，建议检查下双方的网络环境是否正常，可以尝试变更网络或者开启流量来对比测试下。
+如果自查无果，您可以提供具体的频道名、uid、时间点，说明哪个 uid 看哪个 uid 延迟高，人工工程师稍后为您排查。
+
+---
+# ID: 36854
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.5.2
+
+Request Type: 集成问题咨询
+
+Request Description: 版权音乐如何和RTC进行混音，现在播放版权音乐后观众无法听到音乐声音，应该没混音，如何进行混音
+
+Reply: 您好，请问您这边是要当背景音乐还是唱歌给远端听？
+
+参考 [Demo](https://github.com/AgoraIO-Extensions/Agora-Flutter-SDK/blob/main/example/lib/examples/advanced/music_player/music_player.dart)
+
+如果是唱歌给远端听，可以用[SDK 自带的播放器](https://github.com/AgoraIO-Extensions/Agora-Flutter-SDK/blob/main/example/lib/examples/advanced/media_player/media_player.dart)
+
+如果单纯只是放音乐，可以用[startAudioMixing](https://github.com/AgoraIO-Extensions/Agora-Flutter-SDK/blob/main/example/lib/examples/advanced/audio_effect_mixing/audio_effect_mixing.dart)
+
+---
+
+# ID: 36858
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.5.2
+
+Request Type: 集成问题咨询
+
+Request Description: flutter pubspec.yaml中集成这两个库
+agora_rtc_engine: ^6.5.2
+agora_rtm: ^2.2.2 
+
+iOS 工程中pod install 报错[!] The 'Pods-Runner' target has frameworks with conflicting names: aosl.xcframework.
+
+Reply: 您好，同时集成 RTC 和 RTM 出现 aosl 冲突可以参考这篇文档解决。
+[如何处理同时集成 RTM SDK 和 RTC SDK 遇到库冲突问题？](https://doc.shengwang.cn/faq/integration-issues/rtm2-rtc-integration-issue)
+
+---
+
 # ID: 36825
 
 SDK Product: RTC
