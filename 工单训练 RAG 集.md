@@ -1,4 +1,106 @@
 
+# ID: 36864
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.5.2
+
+Request Type: 其他问题
+
+Request Description: 1. 22 用户主播总开播时间1h8min  395观众时长是怎么达到3h33min的，以及395观众在线时长23min是怎么算到3h33min的
+
+Reply: 您好，商务计费问题可以电话咨询 400 6326626
+或者在水晶球上截图您疑惑的疑问点，等候人工工程师稍后为您解答。
+
+---
+
+# ID: 36867
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.23.x
+
+Request Type: 集成问题咨询
+
+Request Description: rtc 有统一处理错误回掉的地方吗？
+我现在想要处理 音视频发布失败的情况，是直接通过 try catch 捕获后处理，还是有更方便的方法
+使用 rtcClient?.publish 发布流
+
+Reply: 您好，就是通过 try catch 抛出的 error 来获取错误信息，可以参考我们的[Demo](https://github.com/AgoraIO/API-Examples-Web/blob/main/src/example/basic/basicVideoCall/index.js)
+以及[错误码文档](https://doc.shengwang.cn/doc/rtc/javascript/error-code)
+
+---
+# ID: 36868
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.5.2
+
+Request Type: 集成问题咨询
+
+Request Description: 1、AgoraRtcVideoCanvas的view不能直接作为画中画的源view吗？设置后画中画能开启但是黑屏
+2、有没有画中画集成的详细文档？文档中心搜索不到
+3、想要远端的流进入画中画，demo上自渲染，这是唯一的方式吗？AgoraRtcVideoCanvas的view是否有什么配置可以简单点配置
+
+
+Reply: 您好，IOS 的画中画我们推荐用自渲染的方式来实现，具体实现代码可以参考我们的[画中画 Demo](https://github.com/AgoraIO/API-Examples/blob/main/iOS/APIExample/APIExample/Examples/Advanced/PictureInPicture/CustomViewPIPViewController/CustomViewPIPViewController.swift)
+SDK 渲染的效果不如自渲染好，我们推荐自渲染来实现。
+
+---
+# ID: 36869
+
+SDK Product: CDN
+
+SDK Platform: CDN
+
+SDK Version: 当前版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 大疆无人机rtmp方式往融合cdn推流，静态放置且wifi连接情况下，延迟会高到十几二十几秒，有没有什么方法降低延迟。
+
+Reply: 您好，转推CDN 走的协议有物理延迟，这个现象本身是预期的，具体延迟大小还要看客户端网络情况。如果您有互动需求的话建议让观众端加入 RTC 频道，不走CDN。RTC 的延迟是可以控制在 400ms 以内的。
+
+---
+
+# ID: 36873
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 中国国内使用视频一切正常，但是在日本使用的时候，有时候发送不了信息（对面发了，这边收不到），有时候获取历史记录获取不到
+
+Reply: 您好，RTC 是音视频互通的 SDK，没有发消息的能力，请问您现在在用的是 RTC 还是 RTM？
+
+---
+
+# ID: 36875
+
+SDK Product: CDN
+
+SDK Platform: CDN
+
+SDK Version: 当前版本
+
+Request Type: 线上报错
+
+Request Description: CDN直播添加推流域名报域名没有备案，只能选择港澳台及海外加速
+
+Reply: 您好，麻烦提供具体的域名和推拉流地址，我们同步研发后台帮您修改回来。
+
+---
+
 # ID: 36840
 
 SDK Product: RTM
