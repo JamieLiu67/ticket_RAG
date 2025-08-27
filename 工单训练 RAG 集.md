@@ -1,4 +1,179 @@
 
+# ID: 36880
+
+SDK Product: IM
+
+SDK Platform: Web
+
+SDK Version: 1.3.2
+
+Request Type: 集成问题咨询
+
+Request Description: web调用和安卓app获取历史消息失败，提示功能没有开通， 还请帮忙开通
+
+Reply: 您好，这个是 IM 的消息漫游功能，需要我们后台帮您手动开通，请提供下需要开通能力的 appid，人工工程师稍微为您操作
+
+---
+# ID: 36882
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.5.1
+
+Request Type: 集成问题咨询
+
+Request Description: 调用扬声器功能不起作用 
+```
+if(isVoice){
+                engine?.setRouteInCommunicationMode(3)
+//               val status= engine?.setEnableSpeakerphone(true)
+//                Log.d(TAG, "已切换到扬声器 切换状态:$status")
+                Log.d(TAG, "扬声器状态变更：外放")
+            }else{
+                engine?.setRouteInCommunicationMode(-1)
+//                val status= engine?.setEnableSpeakerphone(false)
+//                Log.d(TAG, "扬声器状态变更：默认 切换状态:$status")
+            }
+```
+
+status 返回值也只是0
+```
+override fun onAudioRouteChanged(routing: Int) {
+            super.onAudioRouteChanged(routing)
+            println("当前通话路由：$routing")
+        }
+```
+
+回调也可以正常执行,但是一直都是听筒播放,无法切换到扬声器
+
+Reply: 您好，建议用[setAudioScenario](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_audio_basic#api_irtcengine_setaudioscenario)来控制音频路由，设置为 Gamestreaming 时强制走扬声器，Chatroom 强制走听筒。调用前保证 channelProfile 为直播模式，并且不要额外调用setRouteInCommunicationMode或者setEnableSpeakerphone之类会额外修改路由的接口。
+
+---
+
+# ID: 36885
+
+SDK Product: RTSA
+
+SDK Platform: Linux-C
+
+SDK Version: 1.9.5
+
+Request Type: 集成问题咨询
+
+Request Description: rtsa SDK启动时报如下的错误，
+[5.577][crt][trans] [udp_client] Failed to create socket, err: 23
+[5.590][err][trans] connect failed
+[6.516][crt][trans] [udp_client] Failed to create socket, err: 23
+[6.516][err][trans] connect failed
+[7.488][crt][trans] [udp_client] Failed to create socket, err: 23
+[7.488][err][trans] connect failed
+[7.516][crt][trans] [udp_client] Failed to create socket, err: 23
+[7.516][err][trans] connect failed
+[8.516][crt][trans] [udp_client] Failed to create socket, err: 23，
+但是又能够加入到频道，请问这种错误是否正常
+
+Reply: 您好，请问LWIP_MAX_SOCKETS 的配置是多少？配置的系统的socket个数太少会导致我们 SDK 创建 socket 失败，我们需要10+多个
+
+---
+
+# ID: 36891
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.23.x
+
+Request Type: 线上报错
+
+Request Description: 1. 视频答题，进入时报错
+2. 显示 AgoraRTCError CAN_NOT_GET_GATEWAY_SERVER: flag: 4096, message: AgoraRTCError CAN_NOT_GET_GATEWAY_SERVER: no active status
+3. 控制台输出
+14:41:26:383 Agora-SDK [WARNING]: AgoraRTCError CAN_NOT_GET_GATEWAY_SERVER: no active status
+data: {"desc":"no active status","retry":false,"csIp":"139.196.174.91"}
+index-BFxqu7au.js:45 14:41:26:387 Agora-SDK [WARNING]: [client-ca0d7] multi unilbs https://webrtc2-4.ap.sd-rtn.com/api/v2/transpond/webrtc?v=2 failed, flag: 4096, message: AgoraRTCError CAN_NOT_GET_GATEWAY_SERVER: no active status, retry: false
+index-BFxqu7au.js:45 14:41:26:467 Agora-SDK [WARNING]: AgoraRTCError CAN_NOT_GET_GATEWAY_SERVER: no active status
+data: {"desc":"no active status","retry":false,"csIp":"103.228.162.61"}
+index-BFxqu7au.js:45 14:41:26:469 Agora-SDK [WARNING]: [client-ca0d7] multi unilbs https://webrtc2-ap-web-3.agora.io/api/v2/transpond/webrtc?v=2 failed, flag: 4096, message: AgoraRTCError CAN_NOT_GET_GATEWAY_SERVER: no active status, retry: false
+index-BFxqu7au.js:45 14:41:26:470 Agora-SDK [ERROR]: [client-ca0d7] join number: 1, Joining channel failed, rollback AgoraRTCException: AgoraRTCError CAN_NOT_GET_GATEWAY_SERVER: flag: 4096, message: AgoraRTCError CAN_NOT_GET_GATEWAY_SERVER: no active status
+    at m_ (index-BFxqu7au.js:64:39023)
+    at Mu.E.gatewayInfo.q.joinChooseServer.role (index-BFxqu7au.js:64:36439)
+    at async index-BFxqu7au.js:44:24322
+
+
+Reply: 您好，AgoraRTCError CAN_NOT_GET_GATEWAY_SERVER: no active status 表示您的 appid 目前处于停用状态，建议登录声网 console 检查下您的账户情况。
+
+---
+# ID: 36892
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.3.0
+
+Request Type: 其他问题
+
+Request Description: 拨打接听后，用户调节免提无效，声音依旧从听筒播放
+
+Reply: 您好，切换输出音频路由为扬声器用 [setAudioScenario](https://doc.shengwang.cn/api-ref/rtc/ios/API/toc_audio_basic#api_irtcengine_setaudioscenario) 控制就可以了，setAudioScenario配置为GS强制走扬声器，chatroom 强制走听筒。保证channelprofile 为 1 直播模式、后续没有调用setEnableSpeakerphone 为 false 等手动修改输出路由的情况即可
+
+---
+# ID: 36893
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.23.x
+
+Request Type: 其他问题
+
+Request Description: 白板上传PPT报错，vue项目，4.23和4.24都报错了，但是nuxt项目没问题；标题也渲染成功了，解析出来的图片，图片地址放到浏览器也可以打开，但是白板上的ppt没有
+
+Reply: 您好，请问现在请求的 url 路径用的是/v5/projector吗?请保证在提交转换任务的时候传了 "type": "static", 否则可能因任务类型不匹配产生报错。
+麻烦提供下具体的 console 报错打印，白板房间号、任务转换 uuid、转换源文件、转换时的 region，人工工程师稍后为您解答。
+以及 vue 的常见错误有把白板对象存到了 vue 的 data 里面, 导致白板的方法都被套了一层proxy报错, 不要放到 vue 的 data里面可以解决。
+
+---
+
+# ID: 36896
+
+SDK Product: IM
+
+SDK Platform: Web
+
+SDK Version: 1.3.2
+
+Request Type: 集成问题咨询
+
+Request Description: IM WEB端 获取消息列表 ，会话列表，如何获取到用户头像， 相应文档中没有相关内容
+
+Reply: 您好，需要获取用户属性。[设置当前用户的属性](https://im.shengwang.cn/docs/sdk/web/userprofile.html#%E8%AE%BE%E7%BD%AE%E5%BD%93%E5%89%8D%E7%94%A8%E6%88%B7%E7%9A%84%E5%B1%9E%E6%80%A7)
+
+目前会话列表是不携带昵称头像等信息，比如获取完会话列表或者好友列表，拿对应的uid批量获取用户属性进行缓存然后进行展示。
+
+---
+# ID: 36897
+
+SDK Product: IM
+
+SDK Platform: Android
+
+SDK Version: 1.3.2
+
+Request Type: 集成问题咨询
+
+Request Description: IM 安卓端 获取消息列表 ，会话列表，如何获取到用户头像， 相应文档中没有相关内容
+
+Reply: 您好，需要获取用户属性。[设置当前用户的属性](https://im.shengwang.cn/docs/sdk/android/userprofile.html#%E8%AE%BE%E7%BD%AE%E5%BD%93%E5%89%8D%E7%94%A8%E6%88%B7%E7%9A%84%E5%B1%9E%E6%80%A7)
+
+目前会话列表是不携带昵称头像等信息，比如获取完会话列表或者好友列表，拿对应的uid批量获取用户属性进行缓存然后进行展示。
+
+---
+
 # ID: 36864
 
 SDK Product: RTC
