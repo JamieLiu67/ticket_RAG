@@ -1,4 +1,107 @@
 
+# ID: 36899
+
+SDK Product: RTM
+
+SDK Platform: Swift
+
+SDK Version: 2.2.5
+
+Request Type: 集成问题咨询
+
+Request Description: swift 的 RTM没有回调。
+按照demo的例子写的，RTM login成功，RTC加入成功 ，subscribe channel成功，但是无法收到didReceiveMessageEvent等任何回调。使用提供的ConversationAIApiImpl代码也是没有收到回调。
+token: 007eJxTYOiNUEpjYpx1UVer6EvF4Y/dtga3//ndNdBe2n1o+v1W81AFhtQ0S/O0VAOzlFTLZJMUAyNLA+Ok1LREEzMTs8SURCNzvyPrMhb0MDB8jXrLysTAyMACxCA+E5hkBpMsYJKHoSS1uCQ+OSMxLy81h5XB0AAIQFogGqACANiXK6M=
+chanelname:test_channel
+userid: 10000
+
+附件中是几个实现类文件，因为不能直接上传源码只能压缩包了
+
+Reply: 您好，didReceiveMessageEvent 需要频道里有远端在发消息才会触发，如果只有一个人的话是不触发的
+如果确认两个用户都订阅了频道发消息还收不到，可以拿一下双端 [SDK 日志](https://doc.shengwang.cn/doc/rtm2/swift/error-codes)过来人工工程师稍后分析。
+
+---
+# ID: 36900
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: Unity 如果要接入对话式AI，想要实现展示 用户/AI 的文字对话，点击能播放对应语音 的对话列表，需要接入什么SDK
+
+Reply: 您好，convoAI 目前还做不到保存消息语音，这一点可能需要您自行集成 tts SDK 在本地实现。convoAI 只能实现加入 RTC 频道和LLM 直接语音互动，有需要的话可以获取[实时字幕](https://doc.shengwang.cn/doc/convoai/restful/user-guides/realtime-sub)
+
+---
+
+# ID: 36906
+
+SDK Product: RTC
+
+SDK Platform: Unity
+
+SDK Version: 4.2.0
+
+Request Type: 其他问题
+
+Request Description: 如附件图片，问题如下：
+1、创建RtmClient以及IRtcEngine的第一个参数appID是否是同一个id即项目中的appid
+
+rtmClient = new RtmClient(RtmAppID, clientEventHandler);
+mRtcEngine = IRtcEngine.GetEngine(RtcAppID);
+
+2、这两个方法已经注册，为什么始终不能执行进去
+clientEventHandler.OnQueryPeersOnlineStatusResult = OnQueryPeersOnlineStatusResultHandler;
+clientEventHandler.OnMessageReceivedFromPeer = OnMessageReceivedFromPeerHandler;
+
+3、目前账号使用的套餐是 RTM免费版 和 RTC实时互动免费版
+
+
+Reply: 您好，
+1、appid 需要appid 需要时同一个，从声网 console 上复制，但是需要确保有[手动开通过 RTM 权限](https://doc.shengwang.cn/doc/rtm2/unity/get-started/enable-service)
+2、OnQueryPeersOnlineStatusResultHandler 是 1.x 的呼叫邀请回调。1.x 已经停止更新维护很久了，建议用 [2.x](https://doc.shengwang.cn/doc/rtm2/unity/landing-page)，自行实现呼叫邀请的业务。
+
+---
+# ID: 36907
+
+SDK Product: IM
+
+SDK Platform: Web
+
+SDK Version: 1.3.2
+
+Request Type: 集成问题咨询
+
+Request Description: web端发送图片消息，调用接口 onFileUploadComplete ，图片发送成功后， 显示 图片下载地址 http://c1.chat.realtimemesh.com/171385301/1590061/chatfiles/25e20640-83be-11f0-81ba-cf28edd987b9?em-redirect=true&share-secret=JeItUIO-EfC35m8qongAUkbg4fYvNl0OPKWUuxJGziqSSquG ，如何下载图片
+
+Reply: 您好，正常这个地址下载下来是应该为一个图片，您这个之所以下载下来不是图片文件应该上传的时候文件就不对 。
+
+---
+# ID: 36908
+
+SDK Product: RTC
+
+SDK Platform: Unreal
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 你好！
+
+我现在设备端这边用的是ARM LINUX的RTSA，现在想改为用RTC，对应有SDK吗？
+
+或者RTSA能走用流量的方式吗？因为目前数量不多，想先走流量方式跑起来。
+
+Reply: 您好，RTSA 的计费是 License 模式，RTC 是按用量付费，两者不一样，RTC 没有 License 计费模式,RTSA 可以选择切换成用量计费模式。
+要集成 RTC 参考 [RTC 文档](https://doc.shengwang.cn/doc/rtc/homepage)
+需要修改 RTSA 计费为按量的话可以联系下您的对接销售
+
+---
+
 # ID: 36880
 
 SDK Product: IM
