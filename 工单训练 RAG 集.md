@@ -1,4 +1,134 @@
 
+# ID: 36918
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 环境: 通过官方的Conversational-AI-Demo/Web/Scenes/VoiceAgent Demo 进行功能验证；
+在测试环境没有问题(能达到预期)，在正式环境出错
+1. 打开正式环境地址 :https://convoai-v2-182548-7-1300372946.sh.run.tcloudbase.com/
+2. 手机号授权。错误如下:
+网页显示:Invalid client: `redirect_uri` does not match client value  
+
+通过声网的 AI 助手 ，助手说需要设置什么redirect_uri，但是整体没有找到该部分，请协助尽快解决
+
+
+Reply: 您好，Conversational-AI-Demo 这里登录用的是我们官方SSO登陆认证的redirect_uri，需要在SSO的认证才能回跳的。
+SSO登陆仅限于我司的注册用户，不对外开放。
+
+---
+# ID: 36919
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 集成问题咨询
+
+Request Description: 我们在评估esp32集成webrtc、we b r t m的可行性，麻烦请问，esp32性能是否可以集成这个
+
+Reply: 您好，嵌入式设备有 RTSA SDK，是专用的 RTC SDK，参考[RTSA 文档](https://doc.shengwang.cn/doc/rtsa/c/landing-page)
+RTSA 设备可以和 Web 互通的，只不过 ESP32 的 SDK 我们音频编码只适配了 G722 
+
+---
+
+# ID: 36922
+
+SDK Product: RTM
+
+SDK Platform: Unity
+
+SDK Version: 2.1.9
+
+Request Type: 集成问题咨询
+
+Request Description: RTM有支持VisionPro的版本吗
+
+Reply: 您好，RTM Unity SDK 目前不支持 Vision Pro 设备，短期内也没有计划适配。
+
+---
+# ID: 36923
+
+SDK Product: RTC
+
+SDK Platform: mini-app
+
+SDK Version: 其他版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 小程序端在发起视频时候用户点击右上角或者主动退出小程序之后 视频还在录制 按道理应该结束的。 这个有什么解决方案吗 或者对应的api
+
+
+Reply: 您好，理论上小程序都退出了是不会继续占用摄像头的，您可以用我们[小程序最新版本的 Demo](https://doc.shengwang.cn/doc/rtc/mini-program/get-started/run-demo) 试试
+
+---
+
+# ID: 36925
+
+SDK Product: RTC
+
+SDK Platform: React Native
+
+SDK Version: 4.5.2
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 现象：在1920x1080分辨率的屏幕上，接收1512x982分辨率的mbp的屏幕共享画面时，显示效果不及预期，文档文字会出现明显的模糊
+
+问题：有什么合适的参数可以适配这个使用场景吗？
+
+Reply: 您好，请问您现在屏幕共享的平台是 Windows 还是 Mac？Mac 的 dpi 和 Windows 不同，所以直接用标准采集方式采集到的画面会糊一些，您可以升级当前 SDK 版本到最新，用我们最新版本的 SDK 试一下。如果还有问题，稍后人工工程师会为您提供几个调整采集方式的私参来解决。
+
+---
+
+# ID: 36932
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.5.2
+
+Request Type: 集成问题咨询
+
+Request Description: 问题一：采集帧率设置的10帧，选择的是质量优先，码率2000，分辨率是720*1280 。但是为啥回调监控到采集帧率15帧？
+问题二：720P@10帧，保证质量前提下。码率设置多少合适？
+
+Reply: 您好，码率不需要手动设置，SDK 会自动平衡的，您这边配置的是[setVideoEncoderConfiguration](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_video_basic#api_irtcengine_setvideoencoderconfiguration) 去修改帧率吗？一般来说摄像头本身需要支持 10fps 的采集才能设置成功，如果不支持的话是会回退到最近的支持配置的（比如 15fps）。一般推荐用setVideoEncoderConfiguration修改编码帧率，但如果您用了[startCameraCapture](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_camera_capture#startCameraCapture)，编码帧率是不可能大于采集帧率的，这一点需要注意。
+
+如果摄像头本身支持 10fps 的采集且您的配置正常，可以尝试复现下这个现象，提供下 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)过来，人工工程师稍后为您分析。
+
+---
+# ID: 36933
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.3.2
+
+Request Type: 其他问题
+
+Request Description: Upload Symbols Failed
+The archive did not include a dSYM for the AgoraAiEchoCancellationExtension.framework with the UUIDs [82628D75-1C99-3504-8770-58359A77C668]. Ensure that the archive's dSYM folder includes a DWARF file for AgoraAiEchoCancellationExtension.framework with the expected UUIDs.
+
+我在构建iOS包上传到App Store 时，报这种警告
+如何处理
+
+
+Reply: 您好，Upload Symbols Failed 是因为我们的符号表不对外，开放所以 xcode 找不到，这些 warning 本身不影响上传，可以忽略。
+后续如果有遇到崩溃问题可以收集原始堆栈+崩溃时的 SDK 日志，提交工单交由声网侧人工工程师解析。
+
+---
+
 # ID: 36899
 
 SDK Product: RTM
