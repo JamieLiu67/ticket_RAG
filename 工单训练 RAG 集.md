@@ -1,4 +1,238 @@
 
+# ID: 36937
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.6.0
+
+Request Type: 其他问题
+
+Request Description: ios 接入AgoraRtcEngineKit sdk，我想实现直推cdn功能，我有推流地址，想使用sdk，完成推流
+
+ AgoraDirectCdnStreamingMediaOptions *mediaOptions = [[AgoraDirectCdnStreamingMediaOptions alloc] init];
+        mediaOptions.publishCameraTrack = YES; // 是否发布摄像头采集的视频
+        mediaOptions.publishMicrophoneTrack = YES; // 是否发布麦克风采集的音频
+        mediaOptions.publishCustomVideoTrack = NO; // 是否发布自定义采集的视频
+        mediaOptions.publishCustomAudioTrack = NO; // 是否发布自定义采集的音频
+        [weakSelf.agoraKit startDirectCdnStreaming:weakSelf publishUrl:@"rtmp://xxx" mediaOptions:mediaOptions];
+但是没有反应，是哪里的问题，文档显示4.6.0 这个直推cdn的方法废弃了，是跟这个有关系吗，我应该怎么修改，谢谢。
+
+Reply: 您好，startDirectCdnStreaming 这个接口已经不更新维护了，有推流 CDN 需求请用服务端[旁路推流](https://doc.shengwang.cn/doc/media-push/restful/landing-page)
+
+---
+
+# ID: 36939
+
+SDK Product: RTC
+
+SDK Platform: mini-app
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 医生端uid：509692，患者端uid：900322
+医生和患者视频通过，可以正常运行，通过频道查询用户状态提示 "channel_exist": false。
+合流录制也只显示一端的画面：https://hlwyy-1317315181.cos.ap-guangzhou.myqcloud.com/724bfabfae467559d0cfcabbd14cf8c9_4bf0b4b410844689b57b081af9c8e64c_0.mp4
+
+
+Reply: 您好，长时间返回 "channel_exist": false大概率是接口传值有问题，比如调用接口时传入的 appid 和实际通话所用的 appid 不同，导致查不到数据上报。
+录制只有一方画面的问题请检查下有没有让录制端使用频道内重复的 uid 加频道，如果有的话会导致录制端把频道内用户踢出去的。如果没有，请提供下具体sid，人工工程师稍后看下情况
+
+---
+
+# ID: 36942
+
+SDK Product: RTM
+
+SDK Platform: JavaScript
+
+SDK Version: 2.2.2
+
+Request Type: 集成问题咨询
+
+Request Description: 
+RTM 是否支持 webhook， 想在服务端对每个消息进行二次处理 
+
+Reply: 您好，RTM 目前没有对外的 Webhook 文档，但您可以直接在声网 console 配置。具体路径：全部产品>RTM>功能配置>Webhook
+
+---
+
+# ID: 36945
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 商务问题
+
+Request Description: 声网是否有 基础的视频美颜服务提供 因为我之前使用zego是有的
+
+Reply: 您好，SDK 自带美颜能力，可以参考[高级美颜](https://doc.shengwang.cn/doc/rtc/android/advanced-features/advanced-beauty)
+推荐[跑通我们的最新 Demo](https://doc.shengwang.cn/doc/rtc/android/get-started/run-demo)，Demo 里有效果演示和最佳实践集成
+
+---
+# ID: 36946
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 一对一音频通话，iOS用户为主叫，呼出通话之后将应用切到后台，然后被叫接听。主叫加入频道成功，但是通话没有声音
+
+Reply: 您好，IOS 切后台会限制 SDK 采集，这个是系统行为，可以参考下[为什么部分 iOS 版本 App 锁屏或切后台后音视频采集无效？](https://doc.shengwang.cn/faq/quality-issues/ios-background) 修改 xcode 配置来保持切后台的音频采集播放
+
+---
+
+# ID: 36954
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: channel： 17567034626412077727292169115646
+sender: 1221641
+receiver: 1221638
+
+音频发送端在开启屏幕共享后，出现音频质量下降（声音短短续续）的问题。用户自述在不同网络环境下、不同外置麦克风设备下，均出现该问题，同时电脑上没有运行其他大型软件。
+
+Reply: 您好，请稍等。
+人工工程师稍后为您解答，不过您现在的 SDK 版本看起来不是最新的，可以尝试[升级 SDK 到最新版本](https://doc.shengwang.cn/doc/rtc/javascript/resources)看下问题是否还会复现。
+
+---
+# ID: 36955
+
+SDK Product: Whiteboard
+
+SDK Platform: Web
+
+SDK Version: 2.16.43
+
+Request Type: 集成问题咨询
+
+Request Description: 1.白板课件上传文件转换功能 https://api.netless.link/v5/projector/tasks，添加了webhookEndpoint参数 只返回了一次回调，没有转换完成就返回了，而且没有后续回调推送了。ConvertData(taskId=73979dd6b3784eb7bef8092afeb40914, taskType=static_conversion, prefixUrl=, pageCount=0, previews=null, note=, images={}, noticeTimestamp=1756710974682) 预期是finish/fail状态返回回调。
+
+Reply: 您好，webhook只有在任务成功或者失败的时候推送一次，麻烦提供下这次转换任务的原始请求、相应结果、原始文件，放在 txt 里用附件发来，人工工程师稍后为您解答
+
+---
+
+# ID: 36957
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 集成问题咨询
+
+Request Description: 我在php配置开启录制
+'transcodingConfig' => [
+                        'width' => 720.0,
+                        'height' => 1280.0,
+                        'fps' => 15,
+                        'bitrate' => 500,
+                        'mixedVideoLayout' => 1,
+                        "maxVideoDuration" => 3600,
+                        "layoutConfig" => [
+                            [
+                                'uid' => $uid,
+                                "x_axis" => 0.0,
+                                "y_axis" => 0.0,
+                                "width" => 720.0,
+                                "height" => 1280.0,
+                                "render_mode" => 1        // 关键：fit（不裁剪，必要时加黑边）
+                                // 也可以放多个 region，照样 renderMode:1
+                            ]
+                        ]
+                    ],
+
+
+一直报：'start: width type mismatch or missing under layoutConfig!'，这是什么原因
+
+Reply: 您好，width 和height 是 float 类型，但是取值范围的上限是 1.0；bitrate对于 720p 来说也有点低了，请参考[开始录制时自定义合流布局](https://doc.shengwang.cn/doc/cloud-recording/restful/user-guides/mix-mode/set-composite-layout#%E5%BC%80%E5%A7%8B%E5%BD%95%E5%88%B6%E6%97%B6%E8%87%AA%E5%AE%9A%E4%B9%89%E5%90%88%E6%B5%81%E5%B8%83%E5%B1%80)来进行调整
+
+---
+
+# ID: 36961
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.23.x
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 我在一个会议室中，有人分享屏幕。但是我没找到文档有说明：别的人在client.on('user-published',xxx)中怎么知道别人分享了屏幕（因为分享屏幕使监听到的也是video轨道，没有字段可以说明是摄像头视频还是屏幕分享视频）
+
+1. track.getTrackName()，没有getTrackName方法，直接报错。
+2.设置screenTrack.isScreenShare = true;代码中直接报错Property 'isScreenShare' does not exist on type。并且在client.on("user-published"中没有找到isScreenShare字段。
+3， 任何人都可以分享屏幕，所以没有特殊角色。
+
+
+到底怎么可以知道是谁在分享屏幕呢？
+
+Reply: 您好，SDK 不区分远端发的是屏幕共享还是摄像头视频流，没有办法识别。但是您可以业务上指定屏幕共享所用的 uid 前缀或者范围，从业务上区分发流的 uid 是不是屏幕共享范围的。
+
+---
+# ID: 36962
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.5.2
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 开启加入频道，2台手机都各自连接了一款蓝牙设备并且有设备有麦克风，然后其中1台ios加入频道的时候，麦克风说话蓝牙设备不起效，变到手机的麦克风通话去了，但是听筒的话还是在蓝牙设备上可以听到声音。   想要的效果是麦克风和听声音都要在蓝牙设备的麦克风设备上，而不是通过手机的麦克风说话。
+
+token是这个
+0066dbb5052bdb84e0fa761e63a20d8e364IAADWkpsu+XLw5Xk52H76ZHXCTAO5E+UQvThkzJXGV6l8cuKBlu6L9j1EAABAAAA2Ju+aAEAAQDYm75o
+频道id：580
+uid:194
+
+这是相关的日志可以参考
+flutter: 2025-09-01T17:03:20.999456 [Level.warning] [Agora] [onLocalAudioStateChanged] 本地音频变化：state:LocalAudioStreamState.localAudioStreamStateRecording;  reason:LocalAudioStreamReason.localAudioStreamReasonOk
+flutter: 2025-09-01T17:03:21.026670 [Level.warning] [Agora] [onLocalAudioStateChanged] 本地音频变化：state:LocalAudioStreamState.localAudioStreamStat
+flutter: 2025-09-01T17:03:22.222248 [Level.warning] [Agora] [onRemoteAudioStateChanged] connection: {channelId: Test580, localUid: 194} remoteUid: 202 state: RemoteAudioState.remoteAudioStateStopped reason: RemoteAudioStateReason.remoteAudioReasonRemoteMuted elapsed: 0
+[2025-09-01 17:03:22.223][12473609][I][iris_rtc_api_engine.cc:438] api name RtcEngine_enableAudioVolumeIndication_39794a0 params "{"interval":1000,"smooth":1,"reportVad":true}"
+[2025-09-01 17:03:22.224][12473609][I][iris_rtc_api_engine.cc:504] api name RtcEngine_enableAudioVolumeIndication_39794a0 result 0 outdata {"result":0}
+[2025-09-01 17:03:22.224][12473609][I][iris_rtc_api_engine.cc:438] api name RtcEngine_setParameters_3a2037f params "{"parameters":"{\"che.audio.enable_ai_noise_reduction\": true}"}"
+[2025-09-01 17:03:22.225][12473609][I][iris_rtc_api_engine.cc:504] api name RtcEngine_setParameters_3a2037f result 0 outdata {"result":0}
+
+Reply: 您好，听起来是蓝牙协议没走 a2dp 导致的，麻烦提供下复现问题时的 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)，人工工程师稍后为您解答。
+
+---
+# ID: 36963
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.5.1
+
+Request Type: 集成问题咨询
+
+Request Description: 连接蓝牙后，实测发现音频采集仍然是从手机麦克风采集，如何让从蓝牙采集音频流？
+
+Reply: 您好，听起来是蓝牙协议没走 a2dp 导致的，麻烦提供下复现问题时的 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)，人工工程师稍后为您解答。
+
+---
+
 # ID: 36918
 
 SDK Product: RTC
