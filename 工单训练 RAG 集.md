@@ -1,4 +1,166 @@
 
+# ID: 36965
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.5.2
+
+Request Type: 集成问题咨询
+
+Request Description: 声音美化相关的API是否可以独立使用？就是不需要开房间才能使用。
+因为我们现在项目情况是已经有了录音数据和伴奏数据。希望对声音进行美化
+
+Reply: 您好，美声 API 无法独立使用，这个功能是搭配我们 SDK 加频道发流使用的。如果只是本地美声的需求，可以考虑额外集成第三方美声 SDK 来实现。
+
+---
+
+# ID: 36969
+
+SDK Product: RTC
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description:   appid: IoINAHKUEfCaDQ3HgKuiSA/wkyvWTK0FZgDew
+  appCertificate: 16eeda15e7464cc387dbf9f961ea8d21
+channelName: 813e48ee-8bc8-11ef-ad67-e30a888a1ef6
+role: RtcTokenBuilder2.Role.ROLE_PUBLISHER
+
+
+RtcTokenBuilder2 token = new RtcTokenBuilder2();
+        return token.buildTokenWithUserAccount(appid, appCertificate, channelName, account,
+                RtcTokenBuilder2.Role.ROLE_PUBLISHER, tokenExpirationInSeconds,
+                privilegeExpirationInSeconds);
+
+生成的token为空
+
+Reply: 您好，生成 token 失败大概率是因为您的传值有问题，请检查下 appid、app证书等输入与声网控制台上的值相同。
+
+---
+
+# ID: 36972
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 我在unity平台用post请求创建了智能体，请求返回成功，但是我听不到智能体的声音。同样的参数在Playground是正常的
+
+Reply: 您好，playground 正常的话可以用界面右上角的 debug 按钮导出请求，对比一下您现在代码上的配置和 playground 里的请求有什么区别，参考下 playground 的请求写法。
+
+---
+# ID: 36973
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description:    // rtc
+    api 'io.agora.rtc:agora-special-full:4.1.1.26'
+    // rtm
+    api 'io.agora:agora-rtm:2.2.1'
+
+请问我使用的这个连个sdk,  应用市场说不支持16K Page Size,  请问那个版本的支持
+
+Reply: 您好，RTC 和 RTM 都升级到官网最新版本就可以了。
+
+---
+# ID: 36974
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 升级RTC版本4.6.0 初始化rtc报错 failed to load library agora-rtc-sdk from null msg: dlopen failed: cannot locate symbol "aosl_ref_magic" referenced by "/data/app/TQWJ5W_kGL4YWmhu7VGd6w/com.fyy.helmetdevices-xwR783h-QJ5U_y0Wh91DHw/base.apk!/lib/arm64-v8a/libagora-rtc-sdk.so"...
+
+Reply: 您好，请检查下集成SDK 的顺序，RTC 需要在 RTM 前，以及检查下集成的版本号是否都真实存在。
+
+---
+
+# ID: 36978
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 用户1如果开了视频和音频的话，20秒之内断线重连之后，其他用户没有走user-left监听到用户1离开，但是用户1没有开视频音频流，20秒之内断线重连之后，其他用户走了user-left监听到用户1离开，然后又走了user-join监听，监听到用户1加入，如何解决，其他用户在用户1短时间断线重连的时候不走user-left监听监听到用户1离开
+
+Reply: 您好，SDK 在 20s 内断开连接会有[重连机制](https://doc.shengwang.cn/doc/rtc/javascript/basic-features/channel-connection)，重连成功是不会触发user-left的，彻底断开连接才会触发。
+
+---
+
+# ID: 36980
+
+SDK Product: CDN
+
+SDK Platform: CDN
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 你好，咨询几个问题：
+1、融合CDN直播的延时大概是多少？
+2、大疆机场直播一般是使用哪种直播（要求低延时）？
+3、手机端极速直播有没有项目限制（会不会按照项目数量收费）？
+4、融合CDN和手机端极速直播如果要回放是要云端录制吗？如果不是应该怎么实现？
+
+Reply: 您好，针对您的几个提问，以下是回答：
+1、延迟 6s 左右，具体还要看网络情况。
+2、低延迟要走 [RTC](https://doc.shengwang.cn/doc/rtc/homepage)，RTC 的延迟在 400ms 左右，没有低延迟可以用[融合 CDN](https://doc.shengwang.cn/doc/fusion-cdn/restful/landing-page) 推拉流观看。
+3、声网是按用量收费的，欠费了就自动停机，参考[计费策略](https://doc.shengwang.cn/doc/rtc/javascript/billing/billing-strategy)，具体细节可以电话沟通：400 6326626
+4、声网不会主动保存用户通话信息，需要主动调用录制才能保存通话内容。融合 CDN 走的是 rtmp，有自己的[标准录制接口](https://doc.shengwang.cn/doc/fusion-cdn/restful/streaming/operations/patch-v1-projects-appid-fls-entry_points-entry_point-settings-record-standard-regions-region)。
+RTC 需要先使用[云录制](https://doc.shengwang.cn/doc/cloud-recording/restful/landing-page)才能看到回放内容。
+
+---
+
+# ID: 36985
+
+SDK Product: RTC
+
+SDK Platform: Electron
+
+SDK Version: 4.5.2
+
+Request Type: 集成问题咨询
+
+Request Description: 声网的同事，你好
+      我想实现在本地进行多个视频源采集、编排、并发布到频道的功能，大致流程是
+1. 选择视频源（窗口、屏幕、摄像头），并编排它们的尺寸与上下顺序
+2. 本地预览上述选择的视频效果
+3. 发布合成的视频流到频道中
+我阅读了文档，目前有几个问题想咨询确认，还望解答：
+4. 如何实现本地多窗口、摄像头的预览？ VideoSourceType的枚举类型有限，只看到screen、没看到window类型的值。
+5. macOS上如何录制本地播放的声音，例如qq音乐。 
+
+
+Reply: 您好，本地合图可以参考下这个[本地合图 Demo](https://github.com/AgoraIO-Extensions/Electron-SDK/blob/main/example/src/renderer/examples/advanced/LocalVideoTranscoder/LocalVideoTranscoder.tsx)
+
+录制做不到只录本地音乐，云录制或 SDK 客户端录制接口只能录发流的声音
+
+---
+
 # ID: 36937
 
 SDK Product: RTC
