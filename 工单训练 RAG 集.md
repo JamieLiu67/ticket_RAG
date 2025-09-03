@@ -1,4 +1,169 @@
 
+# ID: 36986
+
+SDK Product: RTC
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 生成rtc token时报错 Handler dispatch failed; nested exception is java.lang.NoSuchMethodError: java.nio.ByteBuffer.rewind()Ljava/nio/ByteBuffer;
+
+
+Reply: 您好，请参考 [token 文档](https://doc.shengwang.cn/doc/rtc/android/basic-features/token-authentication#token-code
+)，clone 这个仓库，然后跑里面的脚本来生成，这样我们定义的方法就都有了。
+以及注意 Java 版本要是用 1.8 及以上
+
+---
+# ID: 36987
+
+SDK Product: RTSA
+
+SDK Platform: Linux-C
+
+SDK Version: 1.9.6
+
+Request Type: 其他问题
+
+Request Description: 我想用hello_rtsa调试设备端的opus编解码； 想让hello_rtsa发送出opus编码音频，但是发现它送出的还是pcm(100)格式的数据, 这是为何？
+
+Reply: 您好，如果使用了 [SDK 编解码器](https://doc.shengwang.cn/doc/rtsa/c/basic-features/audio-codec)，那么接收远端音频数据的时候 SDK 回自动解码成 PCM，如果需要收到的回调就是编码格式，需要关闭 SDK 编码器，使用自编码。
+
+---
+# ID: 36988
+
+SDK Product: RTM
+
+SDK Platform: Java
+
+SDK Version: 2.2.5
+
+Request Type: 集成问题咨询
+
+Request Description: 我的服务端如果需要发送rtm消息 能否使用RTM RESTful API。还是需要服务端也继承 rtm sdk呢？
+
+Reply: 您好，两种方式都可以，RTM restful 接口目前只能做[发布消息](https://doc.shengwang.cn/api-ref/rtm2/restful/toc-message/publish)和[获取历史消息](https://doc.shengwang.cn/api-ref/rtm2/restful/toc-message/receive)，如果有其他需求的话建议用服务端 SDK。
+
+---
+
+# ID: 36990
+
+SDK Product: RTC
+
+SDK Platform: Electron
+
+SDK Version: 4.5.2
+
+Request Type: 其他问题
+
+Request Description: electron sdk 4.5.2是否支持electron 35.1.5版本？
+
+Reply: 您好，大于 25 的版本需要用一个特殊方案来解决，但不是长期解决方案，如果方便的话优先建议使用 25 及以下的版本。
+
+---
+# ID: 36991
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 集成问题咨询
+
+Request Description: 报错1: 
+useAgoraSimple.ts:132 09:24:18:462 Agora-SDK [ERROR]: [client-1c47f] can not subscribe 390, this user is not in the channel
+（匿名）	@	useAgoraSimple.ts:132
+
+框架使用nuxt4,nodeJs版本v22.18.0
+useAgoraSimple.ts.txt 是封装的声网函数,截图是浏览器的日志及报错
+
+
+
+Reply: 您好
+1、检查有没有多个 client，避免订阅错 client
+2、vue在data中用对象不能接收，检查下自己的项目里有没有双向绑定的行为，如果有，请避免。之前其他客户遇到过，当时是发现const client = AgoraRTC.createClient({ mode: "live", codec: "vp8" });这行代码的client放在js中就没问题，如果把client赋值给对象内的属性，使用属性 就会出现问题
+可以对比下我们[Web Demo](https://doc.shengwang.cn/doc/rtc/javascript/get-started/run-demo) 的处理
+
+---
+
+# ID: 36995
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.5.2
+
+Request Type: 其他问题
+
+Request Description: 你好，我们向咨询一个问题，不知道有无解决方案：
+我们的在开发一个APP业务功能，业务流程大致是这样：使用声网RTC建立语音通道，Server端把客户端采集的到的语音数据进行ASR（语音转文本），然后翻译、TTS（文本合成语音），最后TTS在频道中播放。ASR断句到TTS播放完成这段时间，客户端进行了静音（停止采集，调用了enableLocalAudio(false) ），TTS播放完成后客户端会再恢复麦克风采集，并不断重复这个过程。
+
+有这样的业务场景，当用户连接了蓝牙耳机时，我们希望是手机麦克风进行收音，不要使用耳机收音，当TTS合成语音播放时我们希望切换到耳机进行播放，不用使用手机听筒或外放。简单描述就是我们希望能够进行音频路由在手机、耳机之间任意切换。
+
+目前我们没有找到声网SDK有类似API，也没有找到其他方法。请问声网SDK有API或其他解决方法吗？或者有无解决思路？
+
+谢谢！
+
+Reply: 您好，请问您的需求是蓝牙耳机只接听，不采集对吗？SDK 默认使用 hfp 协议，稍后人工工程师会给您提供切换成 a2dp 协议的私参
+
+---
+
+# ID: 36997
+
+SDK Product: IM
+
+SDK Platform: Android
+
+SDK Version: 1.3.2
+
+Request Type: 其他问题
+
+Request Description: 声网IM是否可以自定义消息类型，比如收发卡片消息。从官网IM文档中心没有看到自定义消息的说明和方法，在github上下载的chat_uikit工程中，也没看到相关源码。请问，有自定义消息类型的方法和说明文档吗？
+
+Reply: 您好，声网 IM 支持[自定义消息](https://im.shengwang.cn/docs/sdk/android/message_send_receive.html#%E5%8F%91%E9%80%81%E5%92%8C%E6%8E%A5%E6%94%B6%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%9E%8B%E6%B6%88%E6%81%AF)
+
+---
+
+# ID: 36999
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 我在VoceChat里添加声网配置信息。但是找不到声网的Project ID
+，按照声网提供的信息也无法找到，怎么处理？
+
+Reply: 您好，如果是VoceChat 的配置问题建议咨询下VoceChat 侧，声网没有Project ID 这个字段，我们只有 appid，在声网控制台可以复制。
+
+---
+
+# ID: 37004
+
+SDK Product: RTC
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 您好 想问下，我们现在使用的方案：
+云播放器推流
+疑问：当一个用户进入频道之后，我们就推送一个mp4的streamUrl创建云端播放器，这个时候用户能看到这个mp4格式的视频。
+我们大部分的mp4格式的视频都是2-4MB左右大小，对于推送创建云端播放器，我们是直接推送mp4格式的streamUrl更好，还是转化成m3u8格式会更好呢？或者说有没有必要推送使用m3u8呢？
+
+Reply: 您好，直接用 mp4 的在线地址就行，[输入在线媒体流不支持 m3u8](https://doc.shengwang.cn/doc/media-pull/restful/overview/product-overview#%E5%8A%9F%E8%83%BD%E6%8F%8F%E8%BF%B0)
+
+---
+
 # ID: 36965
 
 SDK Product: RTC
@@ -55,7 +220,7 @@ Request Type: 集成问题咨询
 
 Request Description: 我在unity平台用post请求创建了智能体，请求返回成功，但是我听不到智能体的声音。同样的参数在Playground是正常的
 
-Reply: 您好，playground 正常的话可以用界面右上角的 debug 按钮导出请求，对比一下您现在代码上的配置和 playground 里的请求有什么区别，参考下 playground 的请求写法。
+Reply: 您好，playground 正常的话可以用界面右上角的 debug 按钮导出请求，对比一下您现在代码上的配置和 playground 里的请求有什么区别，参考下 playground 的请求写法。如果自查无法解决问题，您可以提供下出现问题的 agentID，人工工程师稍后为您排查。
 
 ---
 # ID: 36973
