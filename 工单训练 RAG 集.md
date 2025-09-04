@@ -1,4 +1,74 @@
 
+# ID: 37009
+
+SDK Product: RTC
+
+SDK Platform: Electron
+
+SDK Version: 4.5.2
+
+Request Type: 集成问题咨询
+
+Request Description: agora-electron-sdk 在渲染进程中直接使用时会报错Uncaught (in promise) ReferenceError: exports is not defined或者Uncaught (in promise) ReferenceError: require is not defined，好像是出现了 CommonJS/ESM 兼容性问题。
+
+Reply: 您好，SDK应该在渲染进程调用。Uncaught (in promise) ReferenceError: xxx is not defined 可能是是模块加载方式有问题，您可以自行检查一下。以及建议您先参考下我们的文档[跑通 Demo](https://doc.shengwang.cn/doc/rtc/electron/get-started/run-demo)
+
+---
+
+# ID: 37018
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 集成RTC    SDK3.7.2.1版本，如何关闭声网 SDK 默认开启 3A，即音频处理中的回声消除 (AEC)、降噪 (ANS) 和增益控制 (AGC)。
+
+Reply: 您好，3.x 已经停止更新维护了，建议使用 4.x，在 4.x 上[关闭 3A 处理](https://doc.shengwang.cn/doc/rtc/android/best-practice/optimal-audio-quality#%E5%85%B3%E9%97%AD-3a)
+
+---
+# ID: 37019
+
+SDK Product: CDN
+
+SDK Platform: CDN
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 请求url https://api.sd-rtn.com/cn/v1/projects/f892500af10e41869e4baeab5fdc8af1/rtmp-converters
+header ：Authorization  Basic MjczZmIyZDVhMjA1NDgwYzgwMjNlNjkzNTMyNTJiNzA6NmNkNDQyYjhjODNkNDE5ZWE3ZDQ0NjliNDlmOWFkOWI=
+
+body ：{"converter":{"name":"xunjian_1581F6Q8X254B00G07PS_1756969696878","transcodeOptions":{"rtcChannel":"xunjian_1581F6Q8X254B00G07PS","audioOptions":null,"videoOptions":null},"rtmpUrl":"rtmp://push-agora.xunjikejiai.site/live1581F6Q8X254B00G07PS","idleTimeout":300}}
+
+
+返回信息 {"reason": "No invalid permission to use this function. Contact us."}
+已经开通了cdn权限
+
+Reply: 您好，您现在调用的接口和收到的报错是旁路推流服务，并不是融合 CDN。请确保 appid 有开通服务端旁路推流功能，[开通方式](https://doc.shengwang.cn/doc/media-push/restful/get-started/enable-service)
+
+---
+# ID: 37020
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.5.2
+
+Request Type: 其他问题
+
+Request Description: 怎么能够让接通电话之后ios在后台依旧能够听到和说话呢，就是后台也能正常通话，现在接通电话进入后台立马没声音了
+
+Reply: 您好，请参考[为什么部分 iOS 版本 App 锁屏或切后台后音视频采集无效？](https://doc.shengwang.cn/faq/quality-issues/ios-background)
+在 xcode 里开启后台保活来避免被系统限制采集。
+
+---
+
 # ID: 36986
 
 SDK Product: RTC
@@ -12,8 +82,7 @@ Request Type: 集成问题咨询
 Request Description: 生成rtc token时报错 Handler dispatch failed; nested exception is java.lang.NoSuchMethodError: java.nio.ByteBuffer.rewind()Ljava/nio/ByteBuffer;
 
 
-Reply: 您好，请参考 [token 文档](https://doc.shengwang.cn/doc/rtc/android/basic-features/token-authentication#token-code
-)，clone 这个仓库，然后跑里面的脚本来生成，这样我们定义的方法就都有了。
+Reply: 您好，请参考 [token 文档](https://doc.shengwang.cn/doc/rtc/android/basic-features/token-authentication#token-code)，clone 这个仓库，然后跑里面的脚本来生成，这样我们定义的方法就都有了。
 以及注意 Java 版本要是用 1.8 及以上
 
 ---
