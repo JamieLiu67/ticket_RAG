@@ -1,4 +1,280 @@
 
+# ID: 37024
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 3.7.2.1版本迁移到4.6.0版本，         mRtcEngine.setCameraCapturerConfiguration(
+                    new CameraCapturerConfiguration(
+                            CameraCapturerConfiguration.CAPTURER_OUTPUT_PREFERENCE.CAPTURER_OUTPUT_PREFERENCE_PERFORMANCE,
+                            CameraCapturerConfiguration.CAMERA_DIRECTION.CAMERA_FRONT
+                    )
+            );设置摄像头策略这四个枚举：https://docportal.shengwang.cn/cn/video-legacy/API%20Reference/java/enumio_1_1agora_1_1rtc_1_1video_1_1_camera_capturer_configuration_1_1_c_a_p_t_u_r_e_r___o_u_t_p_u_t___p_r_e_f_e_r_e_n_c_e.html#aeebd07224559669e412eb34d6e9a4a53 在新版本用哪个API去设置：“预览质量接近于编码器的输出质量”
+
+Reply: 您好，4.x 上已经去掉了这个枚举，并把这个行为设置为默认了，无需在采集时额外配置。
+
+---
+# ID: 37025
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.5.2
+
+Request Type: 集成问题咨询
+
+Request Description: 声网服务器调用api禁用 publish_audio或者视频权限，客户端的sdk会有代理知道自己被禁用了吗？localAudioStateChanged测试是没有回调的
+
+Reply: 您好，封禁接口的发流封禁对于客户端是无法感知的，客户端改变采集或者发流状态都不会影响频道内的情况，因为我们服务端会自动丢弃这个 uid 发来的所有流直到封禁时间到期。如果需要同步客户端需要您在调用封禁接口时同步发送信令自行实现。
+
+---
+# ID: 37026
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.5.0
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 目前我rtm 2.2.5 rtc 4.5.0 都有so包没16kb对齐 目前是没开发 还是需要更新版本才能对齐 因为应用商店强制要求对齐了
+
+Reply: 您好，升级 RTC 和 RTM 到最新版本即可解决，如果升级后 Android  studio 还提示不支持 16KB，可以升级下 gradle 版本到 8.7+，升级后就没有问题了。
+
+---
+# ID: 37027
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 效果不佳、不达预期
+
+Request Description: app异常结束，服务端需要把直播间的观众全部移除，目前这个踢人规则是一个个踢出去的感觉不是很合理
+
+Reply: 您好，直接按 CNAME 封禁就是全频道的 uid 都踢了，不需要手动一个个踢出。
+参考[创建规则](https://doc.shengwang.cn/doc/rtc/restful/channel-management/operations/post-dev-v1-kicking-rule)。
+
+---
+# ID: 37028
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 调用司空2的开启直播接口，返回的参数该如何使用，"url_type":"agora"，返回的url该如何使用。
+{"code":0,"message":"","data":{"expire_ts":1756984980,"url":"http://192.168.103.161:30806/rtc/v1/whep/?app=live\u0026stream=1693F8HGX254M00A09SL_177-1-0\u0026token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0X2lkIjoiNzEzNTE5ZmIxYjRlNDRiYTlkMjdkMDJhOGRlZDk5NGQiLCJjaGFubmVsX25hbWUiOiIxNTgxRjhIR1gyNTRNMDBBMDlTTF8xNzYtMC0wIiwidWlkIjoxMDAwNTAsImFjdGlvbiI6InBsYXkiLCJleHAiOjE3ODg1MjA5MjIsIm5iZiI6MTc1Njk4NDkyMiwiaWF0IjoxNzU2OTg0OTIyfQ.clQRXgh4OVtoihMOH5WiHoIub-sCKWKVD2iQZIqoeu0","url_type":"agora"}}
+
+Reply: 您好，如果用的是司空平台可以咨询下大疆侧，我们不太清楚大疆封装的业务。
+如果您想自行集成 RTC 的话可以参考下[大疆用户的 RTC 说明书](https://i46hiqvame.feishu.cn/docx/LiWxdLMtUobkAmxmjuHc33mtnEd?from=from_copylink)
+
+---
+# ID: 37029
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.23.x
+
+Request Type: 集成问题咨询
+
+Request Description: 1.我是用web端rtcsdk，是从github上面拉下来的agora-demo的这个项目，我获取了token之后加入频道了，但是频道事件回调中参数的uid和我加入频道时的uid不是同一个这是什么情况：
+
+
+Reply: 您好，请检查下是否用到了joinChannelWithUserAccount 方法，这表示用 string 类型 uid 去加频道，string uid 会自动映射一个随机的 int uid，导致您收到的回调是这个 int uid 的，和 string 的对不上。建议全部使用joinChannel，直接用 int 类型 uid 去加入频道，这样回调就准确了。
+
+---
+# ID: 37031
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 调用：mRtcEngine.queryCodecCapability() 返回四个对象对应值：codecType：1 codecCapMask：12，hwDecodingLevel：-1， swDecodingLevel：-1       。codecType：2 codecCapMask：15，hwDecodingLevel：-1， swDecodingLevel：-1    。codecType：3 codecCapMask：5，hwDecodingLevel：-1， swDecodingLevel：-1       。codecType：12 codecCapMask：12，hwDecodingLevel：-1， swDecodingLevel：-1。查询文档没有相关说明，如何知道目前 SDK 支持的视频编解码能力。
+
+Reply: 您好，可以通过监听[onLocalVideoStats](https://doc.shengwang.cn/api-ref/rtc/android/API/class_localvideostats)来感知目前的编码协议和编码类型。
+
+---
+# ID: 37032
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 4.3.0
+
+Request Type: 崩溃（闪退、卡死）
+
+Request Description: ue5.4 蓝图sdk 初始化后 绑定event  没有返回 OnJoinChannelSuccess  回调 但是状态码返回的0
+定期伴随崩溃
+
+Reply: 您好，没有OnJoinChannelSuccess 表示加入频道没有成功，只是方法调用完成了，大概率是 token 不正确导致的
+
+请问您现在有跑通 Demo 吗？可以先看下这个文档跑通我们的 [UE Demo](https://doc.shengwang.cn/doc/rtc/unreal-blueprint/get-started/run-demo)，看下跑Demo 会不会崩溃
+
+---
+
+# ID: 37035
+
+SDK Product: RTC
+
+SDK Platform: Electron
+
+SDK Version: 4.5.2
+
+Request Type: 集成问题咨询
+
+Request Description: 接收端1615293091收不到发端293091888的视频流
+
+Reply: 您好，麻烦您按以下模版整理问题，以便我们能第一时间展开问题调查；
+1. 声网项目APPID、频道号(cname)：
+2. 出问题的时间点：
+3. 现象录屏:如果有的话尽量提供
+4. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+
+---
+
+# ID: 37037
+
+SDK Product: RTM
+
+SDK Platform: JavaScript
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: Ins#1 RTM:ERROR [UTC_Time: 09-05 07:17:50.10][uid: 123***789]login failed with args: {"tok**":"007eJxTYLib5Sf1pN5hnXHY5dO7DzMfn8i2lCldU1z5v93vQPsnc6YoMJgaGBsYpKammhhZWpgYAYnUJEtDU3MTk9QUE3NTE4OjHbs*********************************************"}. +0ms  报错这个不知道为什么
+
+Reply: 请问报错有出现过RtmInternalError: Cannot get illegal sid.的内容吗？
+如果在用 vue，请把 rtm instance 存在全局，先不用 ref 的方式。vue 底层是 proxy，这样会让 rtm 内部有问题，导致报错。
+
+---
+# ID: 37038
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 我通过setVideoEncoderConfiguration 设置了degradationPreference 。每次更新策略需要调用enableLocalVideo 开关一下吗？我去哪个回调方法里边监听看我设置的策略是否生效？
+
+Reply: 您好，setVideoEncoderConfiguration 的配置是即时生效的，编码分辨率和编码策略会实时改变。
+但setVideoEncoderConfiguration 配置的是编码，本地预览看的是编码前的画面，调用setVideoEncoderConfiguration无法修改本地预览看到的画面分辨率，需要手动重启摄像头采集去实现。
+
+---
+
+# ID: 37040
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.5.2
+
+Request Type: 集成问题咨询
+
+Request Description: 集成registerEventHandler方法时，提示ErrorCodeType.errInvalidToken
+生成的token也已经确认了证书和uid等信息。使用官方解析数据也一致
+
+服务端token使用python3 官方示例
+
+Reply: 您好，临时 token 不校验 uid 所以能进频道，自己生成的 token 是要校验 uid 的，您需要保证生成时的 uid 频道名和 join 时传入的完全一致才能加进频道
+
+控制台有自助检验工具，可以自行校验下token：控制台-辅助工具-Token生成/校验–Token校验
+将您的token粘贴进去，解析一下，看解析出来的结果和您join传入的参数是否一致
+
+如果您确定 token 本身没有问题，可以再检查下前端传值有没有地方被写死成固定值。
+
+---
+
+# ID: 37042
+
+SDK Product: RTC
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 我们的频道在线列表  因为同时自己服务器接口操作   又声网webhook回调  偶现的会引起用户卡频道内的问题  现在想通过调用声网在频道内的用户来过滤掉卡房间的用户   想了解一下这个接口是否有频次限制   限制是多少
+
+https://api.sd-rtn.com/dev/v1/channel/user/{appid}/{channelName}
+
+Reply: 您好，服务端有[调用限制](https://doc.shengwang.cn/doc/rtc/restful/quota)
+
+---
+
+# ID: 37044
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 是否支持“微信小程序”外的小程序，例如“支付宝小程序”等
+
+Reply: 您好，不支持微信小程序以外的其他小程序，目前其他小程序没有对应的 RTC SDK 可以使用。
+
+---
+# ID: 37045
+
+SDK Product: IM
+
+SDK Platform: Web
+
+SDK Version: 1.3.2
+
+Request Type: 商务问题
+
+Request Description: 你好 我们在做一个体育直播项目，直播间里有聊天室。
+我看咱们声网没有单独的聊天室api吗？只能买全量IM服务吗？为了直播间每月4000有点多。
+
+Reply: 您好 RTC 本身有 [datastream](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_datastream) 可以用来传递文本消息，如果要用功能全面的 IM，建议用[环信 IM](https://www.easemob.com/)
+
+---
+
+# ID: 37047
+
+SDK Product: RTC-Linux
+
+SDK Platform: Linux-Java
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: RTC服务端SDK的Java API中，通过io.agora.rtc.IVideoEncodedFrameObserver.onEncodedVideoFrame()得到了EncodedVideoFrameInfo，但其中的captureTimeMs视频采集时间戳、decodeTimeMs视频渲染时间戳、presentationMs时间戳一直是0，这是怎么回事？用户希望通过这两个时间戳得到详细的帧延迟。JAVA服务端SDK版本是4.4.32.101（最新版），已设置setEncodedFrameOnly(0)。Web JS客户端SDK版本是4.24.0，编码器用的是vp8。
+
+Reply: 您好，麻烦复现后提供下服务端 SDK 的日志，说明下出现问题的具体时间点，人工工程师稍后为您解答
+
+---
+
 # ID: 37009
 
 SDK Product: RTC
@@ -148,8 +424,6 @@ useAgoraSimple.ts:132 09:24:18:462 Agora-SDK [ERROR]: [client-1c47f] can not sub
 
 框架使用nuxt4,nodeJs版本v22.18.0
 useAgoraSimple.ts.txt 是封装的声网函数,截图是浏览器的日志及报错
-
-
 
 Reply: 您好
 1、检查有没有多个 client，避免订阅错 client
