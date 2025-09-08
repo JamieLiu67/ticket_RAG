@@ -1,4 +1,240 @@
 
+# ID: 37048
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.3.0
+
+Request Type: 集成问题咨询
+
+Request Description: APP需要对接RDT，但是在文档中心没有找到对应的文档，只有C语言的，请问app关于RDT的文档在哪里查卡
+
+Reply: 您好，RDT 功能包含在 SDK 内，参考[通过 RDT 通道收发消息](https://doc.shengwang.cn/doc/rtsa/c/advanced-features/send-message-through-rdt-channel)实现就行。
+
+---
+
+# ID: 37050
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 我们在web端开发的对话式ai, 现在是要实现实时字幕, 遇到问题, 无法获取到用户对话的文本
+通过昨天你们同事给的方法来获取文本 this.rtcClient.on("stream-message", (uid, message) => {
+ console.log('===>receice message')
+            //接收
+            console.log(`receice ${message} from ${uid}`);
+        });
+
+1. 无法获取到用户对话的文本,只能获取到智能体返回的文本
+2. 用户也加入了rtm频道
+
+Reply: 您好，实时字幕是有 Web 组件的，直接获取 datastream 以后不解析是拿不到原始数据的，建议看下[实时字幕](https://doc.shengwang.cn/doc/convoai/restful/user-guides/realtime-sub)，里面有实时字幕的 Demo ，演示了如何同时获取智能体和用户的转写字幕。
+
+---
+# ID: 37051
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 集成问题咨询
+
+Request Description: 云端录制时的文件路径能否提供查询接口？
+结束录制时可能因为网络请求和客户操作的各种问题导致结束录制失败，只能能自动结束。
+这个时候就无法获取视频文件的地址，能否提供一个视频文件列表的查询接口，以避免因意外情况获取不到视频文件的情况，谢谢。
+获取失败到视频链接的概率有25%
+
+Reply: 您好，录制结束以后上传是不会停的，上传完毕会有对应的 [31 uploaded](https://doc.shengwang.cn/doc/cloud-recording/restful/webhook/uploading#31-uploaded)NCS 事件，建议用 NCS 事件来判断上传的情况和文件路径。
+
+目前没有针对 sid 查询录制上传状态的接口，但是可以[查询录制状态](https://doc.shengwang.cn/doc/cloud-recording/restful/best-practices/recording-status)
+
+---
+
+# ID: 37055
+
+SDK Product: RTC
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 云播放器webhook回调中 eventType=3时销毁事件回调中的参数里 ：playTs为什么没有值
+
+Reply: 您好，请检查创建云播放器的时候playTs 有没有传值，destroy 需要看到的话需要保证在[创建云端播放器](https://doc.shengwang.cn/doc/media-pull/restful/media-pull/operations/get-region-v1-projects-appId-cloud-player-players)的时候传值。
+
+---
+# ID: 37056
+
+SDK Product: Media-push
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 通话 ID：68bbee39a0fed77f6397665c
+开启RTC直播UID 1670866524，在web页面可以正常播放UID 3159560875，画面有内容
+创建旁路推流 converterId: 9C748DB8F2419A4311C9C38B24CF494A,channelName: 1581F6Q8D241P00B0GR3_81-0-0_normal-0,UID:1925067267无法播放，没有画面内容
+
+Reply: 您好，请问目前是在用旁路推流转推大疆无人机发来的画面吗？如果是的话可以尝试让旁路推流开启转码，看下转码后是否正常，如果转码后正常，请联系大疆侧“加入防竞争协议”来解决此类问题。
+如果不是大疆无人机，请提供下出现问题的 converterId ，这是创建旁路推流成功后返回的字段。
+
+---
+# ID: 37058
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.3.0
+
+Request Type: 其他问题
+
+Request Description: 声网后台显示 9.5 消耗 24mins ，实际通过 webhook 返回给我们这边记录到只有 2mins ，请问如何排查消耗数量完全不一致的问题呢
+
+Reply: 您好，声网 SDK 是按照订阅时长来计费的，并非真实通话时间。可以参考[计费策略](https://doc.shengwang.cn/doc/rtc/ios/billing/billing-strategy)，具体细节解读您可以和商务沟通，电话：400 6326626
+
+---
+
+# ID: 37063
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 线上报错
+
+Request Description: 部署到服务器后出现图中异常.服务器目前未备案,因为安全问题,不开放443端口,故无法申请ssl证书使用https.
+目前项目中并未使用到麦克风等设备,项目中只需要实现客户端功能(即收看,直播源不包含音频),不涉及声音视频采集设备的调用,是否可以通过设置来规避方法enumerateDevices()的异常?
+
+Reply: 您好，WebSDK 依赖 WebRTC协议，WebRTC 协议只支持 https 和 localhost 环境，http是不支持的。
+
+---
+
+# ID: 37066
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 其他问题
+
+Request Description: 1、近几日视频直播数据很少但是音频直播很大，怀疑web页面观众没有正常退出。
+2、急需要销毁直播通道的接口，可以及时销毁冗余的直播通道。但在文档中未找到销毁 channel 的接口，通过和客服沟通需要技术支持。
+
+需求：需要对接服务端销毁channel的接口。
+
+
+Reply: 您好，可以参考这些文档：[踢人接口](https://doc.shengwang.cn/doc/rtc/restful/channel-management/operations/post-dev-v1-kicking-rule)
+可以配合[查询用户列表](https://doc.shengwang.cn/doc/rtc/restful/channel-management/operations/get-dev-v1-channel-user-appid-channelName)来使用
+
+---
+
+# ID: 37068
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.2.0
+
+Request Type: 集成问题咨询
+
+Request Description: flutter集成的语音通话，在iOS平台能否实现VoIP推送
+
+Reply: 您好，请问您指的 VOIP 是 callkit 一类的呼叫组件吗？这个能力是组件提供的，RTC 本身不支持，需要您自行集成来实现相关业务。
+
+---
+
+# ID: 37073
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 问题：
+1.这个是我的测试账号 为什么创建的项目被归档了。
+2.1@croissant.so 这个是公司账号内部测试阶段 也被归档了。
+
+诉求：
+调查原因及如何避免被归档。
+
+
+Reply: 您好，请提供具体 cid，人工工程师稍后为您解答
+
+---
+
+# ID: 37075
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 从官网下载的demo 在浙里办APP打开 ，安卓视频通话是正常的，苹果端  join 的时候没有反应,导致无法创建与加入视频房间  抓包看了下有multi unilbs network error, retry  这个警告，不知是否对加入和创建音视频房间有影响。希望协助排查无法加入音视频房间的原因。
+
+Reply: 您好，multi unilbs network error 代表您的网络现在有多出口 IP 问题，换一个没有多出口 IP 的网络就行了。
+以及在 app 内集成 Web SDK 需要保证所用的 Webview 本身支持 webrtc 协议，否则无法保证功能完整，参考[浏览器兼容性和已知问题](https://doc.shengwang.cn/doc/rtc/javascript/overview/browser-compatibility)
+
+---
+# ID: 37076
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 集成问题咨询
+
+Request Description: 
+现在我可以打印出远程批频道中的用户，但是调用client.value
+    .subscribe(user, mediaType)时会报错Uncaught (in promise) AgoraRTCException: AgoraRTCError INVALID_REMOTE_USER: user is not in the channel，怎么解决
+
+Reply: 您好，请问是在用 vue 吗？可以从以下两个方向去排查下
+1、检查有没有多个 client，避免订阅错 client
+2、vue在data中用对象不能接收，检查下自己的项目里有没有双向绑定的行为，如果有，请避免。 之前其他客户遇到过，当时是发现const client = AgoraRTC.createClient({ mode: "live", codec: "vp8" });这行代码的client放在js中就没问题，如果把client赋值给对象内的属性，使用属性 就会出现问题
+
+---
+# ID: 37077
+
+SDK Product: RTC-Linux
+
+SDK Platform: Linux-Java
+
+SDK Version: 4.4.31
+
+Request Type: 集成问题咨询
+
+Request Description: 1) 现在我通过安卓端收集声音, 但是在linux服务端获取不到数据, 接口中 onPlaybackAudioFrameBeforeMixing没有被调用了. 请确认下是否是账号或appId问题
+
+Reply: 您好，请确定本地已经加入频道成功，onPlaybackAudioFrameBeforeMixing 需要加入频道收到远端的音频才能触发。如果确认加入成功且远端正常发流还收不到，可以提供下 SDK 日志，人工工程师稍后为您解答
+
+---
+
 # ID: 37024
 
 SDK Product: RTC
