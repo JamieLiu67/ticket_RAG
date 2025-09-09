@@ -161,6 +161,7 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "bases:创建新数据库": false,
       "switcher:打开快速切换": false,
       "graph:查看关系图谱": false,
       "canvas:新建白板": false,
@@ -171,8 +172,9 @@
   },
   "active": "3b7230140c6a6599",
   "lastOpenFiles": [
-    "工单 AI 提示词.md",
+    "().md",
     "工单训练 RAG 集.md",
+    "工单 AI 提示词.md",
     "未命名.canvas"
   ]
 }

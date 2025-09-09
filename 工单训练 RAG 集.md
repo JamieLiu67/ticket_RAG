@@ -1,4 +1,97 @@
 
+# ID: 37081
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description:  .advancedFeatures(JoinConvoAIReq.AdvancedFeatures.builder()
+                                    .enableAIVad(false)
+                                    .build())
+
+我们创建智能体的时候, 设置enableAIVad为false, 还是会被语音输入打断, 怎么解决呢
+
+Reply: 您好，enableAIVad 是控制是否开启优雅打断，不控制普通打断的开关，请配置 turn_detection 字段来让智能体不受人声打断。
+
+---
+
+# ID: 37083
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.5.2
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 自渲染音频效果不佳
+
+Reply: 您好，请问自渲染效果不佳的具体表现是什么样的？有对齐渲染的播放率和原始音频的采样率一致吗？麻烦完整描述下问题表现
+以及自渲染的效果取决于您自己的业务，可能更多的需要您自行排查。
+
+---
+
+# ID: 37088
+
+SDK Product: RTC
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 可以根据频道Id查询到录制的sid吗？有没有相应的接口
+
+Reply: 您好，查不到。sid 是录制启动成功以后返回的唯一标识符，需要您自行保存，无法通过频道号找回。
+
+---
+
+# ID: 37090
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.4.0
+
+Request Type: 效果不佳、不达预期
+
+Request Description:     AgoraAudioRecordingConfiguration *config = [[AgoraAudioRecordingConfiguration alloc] init];
+    config.filePath = tempPath;
+    config.fileRecordOption = AgoraAudioFileRecordingTypeMic;
+    config.sampleRate = self.samplingRate;
+    config.recordingChannel = 1;
+    int result = [self.agoraKit startAudioRecordingWithConfig:config];
+您好，我使用上面的代码录制的wav格式音频，偶现没有头文件的问题。导致音频无法播放。请问这个是什么原因导致。
+有问题的wav文件我上传到附件中了。
+
+Reply: 您好，可以确认下被指定录制的用户有没有在发流，如果确认远端正常发流但是录制到的内容无法播放，可以提供下录制端复现问题时的 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)，人工工程师稍后解答。
+
+---
+
+# ID: 37092
+
+SDK Product: Cloud-recording
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 线上报错
+
+Request Description: 2025-09-09 18:35:15 [ pool-13-thread-1:1704546 ] - [ INFO ] 开始语音审核流程，频道：256，随机UID：757
+2025-09-09 18:35:15 [ pool-13-thread-1:1704834 ] - [ ERROR ] 运行语音审核任务出错：HTTP 400: {"message":"appid is invalid"}
+
+Reply: 您好，请问现在使用的是云市场语音审核插件吗？如果是的话麻烦提供下具体的云录制 sid，人工工程师稍后为您解答。
+
+---
+
 # ID: 37048
 
 SDK Product: RTC
@@ -3615,7 +3708,7 @@ Reply:  您好，需要您这边确认以下几点：
 
 2、UI侧提示连麦回调失败 是根据声音那个回调实现的？
 
-3、您这边也可以提供下出现问题的声网频道号，问题时间点以及声网的sdk日志: [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+3、您这边也可以提供下出现问题的声网频道号，问题时间点以及声网的[sdk日志]([https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file))
 
 ---
 
@@ -3633,7 +3726,7 @@ Request Description: 怎么单对单发送图片消息。
 
 回答思维链：客户用的是 RTM，现在需要发送图片消息，但是 RTM 本身不支持传输图片消息，客户有需要的话可以建议他用环信 IM 这类即时聊天 SDK 来实现更好。
 
-Reply:  您好，RTM 是信令 SDK，不支持直接传输图片，有图片传输需求的话可以考虑环信 IM：[https://www.easemob.com/](https://www.easemob.com/)
+Reply:  您好，RTM 是信令 SDK，不支持直接传输图片，有图片传输需求的话可以考虑[环信 IM](https://www.easemob.com/)
 
 ---
 
@@ -3653,7 +3746,7 @@ Request Description: 当设备有双网卡时 会偶现不停地断线重连断�
 Reply:  您好，建议您先确认下设备在双网卡下对外网络连接是否正常，如果确认没有问题，需要您这边提供以下信息进一步排查定位：
 1. 声网项目APPID、频道号(cname)：
    2.问题时间点:
-   3.需要您拿下rtsa sdk的日志，参考文档 [https://doc.shengwang.cn/api-ref/rtsa/c/structlog__config__t#log_path](https://doc.shengwang.cn/api-ref/rtsa/c/structlog__config__t#log_path)
+   3.需要您拿下rtsa sdk的日志，在初始化的时候可以配置日志等级和路径。
 
 ---
 
@@ -3680,9 +3773,9 @@ Reply:  1、您好，看您的描述视频帧率下降可能是因为室外网�
    (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
    (2) uid=123 听/看 uid=456卡顿
 4. 现象录屏:如果有的话尽量提供
-5. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
-   2、我们是有api 是调整sdk 编码降级偏好的，setVideoEncoderConfiguration方法，参考文档如下:
-   [https://doc.shengwang.cn/api-ref/rtc/android/API/class_videoencoderconfiguration](https://doc.shengwang.cn/api-ref/rtc/android/API/class_videoencoderconfiguration)
+5. sdklog：如果有的话尽量提供 [如何设置日志文件？](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+   2、我们是有api 是调整sdk 编码降级偏好的，调用[setVideoEncoderConfiguration](https://doc.shengwang.cn/api-ref/rtc/android/API/class_videoencoderconfiguration)
+   
 
 ---
 
@@ -3730,7 +3823,7 @@ Reply:  您好，视频黑屏的可能因素有很多，比如摄像头异常，
    (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
    (2) uid=123 听/看 uid=456卡顿
 4. 现象录屏:如果有的话尽量提供
-5. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+5. sdklog：如果有的话尽量提供 [如何获取 SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
 
 ---
 
@@ -3815,7 +3908,7 @@ Request Description: 我想在iOS中实现 关闭视频或摄像头后 显示头
 
 回答思维链：客户需要在实现本端设备发流状态改变以后修改远端用户的 UI 显示改用自定义图片，这个需求需要能够感知远端用户的发流情况来做对应处理，可以让客户监听我们 SDK 的remoteVideoStateChangedOfUid 来感知远端设备的发流情况，然后在感知到远端不发流的时候自定义图片展示
 
-Reply:  您好，可以监听remoteVideoStateChangedOfUid，在远端不发流的时候前端上写个业务来展示指定图片：[https://doc.shengwang.cn/api-ref/rtc/ios/API/toc_video_basic#callback_irtcengineeventhandler_onremotevideostatechanged](https://doc.shengwang.cn/api-ref/rtc/ios/API/toc_video_basic#callback_irtcengineeventhandler_onremotevideostatechanged)
+Reply:  您好，可以监听 [remoteVideoStateChangedOfUid](https://doc.shengwang.cn/api-ref/rtc/ios/API/toc_video_basic#callback_irtcengineeventhandler_onremotevideostatechanged)，在远端不发流的时候前端上写个业务来展示指定图片。
 
 ---
 
@@ -3835,8 +3928,7 @@ Request Description: 我想在iOS中实现多个视图显示本地视频预览,�
 回答思维链：看客户描述应该是想把本地画面渲染多次，这是需要在canvas 里配置setupMode  为 AgoraVideoViewSetupAdd 才能实现的，否则无法达到效果，可以让客户检查下有没有实现相关操作
 
 Reply:  您好，请问是想把本地画面渲染多次吗？如果是的，需要在对应的 canvas 配置里设置 setupMode  为 AgoraVideoViewSetupAdd
-
-[https://doc.shengwang.cn/api-ref/rtc/ios/API/toc_video_rendering#setupLocalVideo:](https://doc.shengwang.cn/api-ref/rtc/ios/API/toc_video_rendering#setupLocalVideo:)
+参考文档：[setupLocalVideo](https://doc.shengwang.cn/api-ref/rtc/ios/API/toc_video_rendering#setupLocalVideo:)
 
 ---
 
@@ -3910,7 +4002,7 @@ Reply:  您好，麻烦您按以下模版整理问题，以便我们能第一时
    (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
    (2) uid=123 听/看 uid=456卡顿
 4. 现象录屏:如果有的话尽量提供
-5. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+5. sdklog：如果有的话尽量提供 [如何获取 SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
    另外也麻烦您看下本身设备侧采集是否正常，比如使用其他语聊类app（微信）通话是否正常；或者使用自带的录音机录制看下是否正常
 
 ---
@@ -3936,7 +4028,7 @@ Reply:  您好，麻烦您按以下模版整理问题，以便我们能第一时
    (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
    (2) uid=123 听/看 uid=456卡顿
 4. 现象录屏:如果有的话尽量提供
-5. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+5. sdklog：如果有的话尽量提供 [如何获取 SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
    另外也麻烦您看下本身设备侧采集是否正常，比如使用其他语聊类app（微信）通话是否正常；或者使用自带的录音机录制看下是否正常
 
 ---
@@ -4003,8 +4095,7 @@ Request Description: 您好 我们这用的环信的uikit做了一个IM系统，
 回答思维链：客户需要知道如何生成 RTC 的 token 来加入频道，直接推荐客户 clone 我们的 token 示例代码仓库本地运行去生成就可以了
 
 Reply:  您好，clone 这个仓库下来，用示例代码去生成 token 即可
-
-[https://doc.shengwang.cn/doc/rtc/android/basic-features/token-authentication#token-code](https://doc.shengwang.cn/doc/rtc/android/basic-features/token-authentication#token-code)
+[生成 Token](https://doc.shengwang.cn/doc/rtc/android/basic-features/token-authentication#token-code)
 
 ---
 
@@ -4022,7 +4113,7 @@ Request Description: 你好，集成了屏幕共享功能，如何停止屏幕�
 
 回答思维链：客户反馈的现象是调用leave()后屏幕共享依旧没有停止，应该是屏幕共享的 track 被创建以后没有释放导致的，可以让客户释放对应的 track 来解决
 
-Reply:  您好，可以尝试下调用对应 track 的 close 方法去释放来解决这个问题：[https://doc.shengwang.cn/api-ref/rtc/javascript/interfaces/ilocaltrack#close](https://doc.shengwang.cn/api-ref/rtc/javascript/interfaces/ilocaltrack#close)
+Reply:  您好，可以尝试下调用对应 track 的 [close](https://doc.shengwang.cn/api-ref/rtc/javascript/interfaces/ilocaltrack#close) 方法去释放来解决这个问题。
 
 ---
 
@@ -4046,14 +4137,12 @@ override fun onUserJoined(uid: Int, elapsed: Int)
 
 回答思维链：onUserJoined回调被触发是有条件的，比如远端用户是否是主播身份，需要先提供相关频道和uid信息来佐证
 
-Reply:  您好，onUserJoined回调在如下情况下被触发：
+Reply:  您好，[onUserJoined](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_channel#callback_irtcengineeventhandler_onuserjoined) 回调在如下情况下被触发：
 远端用户/主播加入频道。
 远端用户加入频道后将用户角色改变为主播。
 远端用户/主播网络中断后重新加入频道。
 
 需要您这边提供下频道号，时间点，以及uid，我们查下远端用户是否是主播身份
-
-[https://doc.shengwang.cn/api-ref/rtc/android/API/toc_channel#callback_irtcengineeventhandler_onuserjoined](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_channel#callback_irtcengineeventhandler_onuserjoined)
 
 ---
 
@@ -4074,9 +4163,7 @@ app 端 调用获取房间列表的接口为啥显示不出来？
 
 回答思维链：客户提交的 SDK Platform 写的是Android，但是问题描述提到的是PC用OBS，需要和客户再确认下现在在用哪个产品，以及用的是什么方式来加入频道的
 
-Reply:  请问现在 PC 是如何实现推流的？是用的 OBS 插件还是 RTMPG 服务？
-
-[https://doc.shengwang.cn/doc/rtmp-gateway/restful/landing-page](https://doc.shengwang.cn/doc/rtmp-gateway/restful/landing-page)
+Reply:  请问现在 PC 是如何实现推流的？是用的 OBS 插件还是 [RTMP网关](https://doc.shengwang.cn/doc/rtmp-gateway/restful/landing-page) 服务？
 
 ---
 
@@ -4094,8 +4181,7 @@ Request Description: 2个手机进入同一个频道，但是画面很暗，基�
 
 回答思维链：这个现象应该不是必现的，推测和客户的设备或者集成有关，可以先让客户运行我们的Demo看下是否能复现，来排查到底是SDK问题还是客户自己的设备问题
 
-Reply:  您好，可以用我们 Demo 尝试复现下：[https://github.com/AgoraIO/API-Examples/tree/main](https://github.com/AgoraIO/API-Examples/tree/main)
-
+Reply:  您好，可以用我们 [api-example](https://github.com/AgoraIO/API-Examples/tree/main) 尝试复现下。
 一般不会有这个问题，可以确认下摄像头本身是否正常工作
 
 ---
@@ -4138,7 +4224,7 @@ Request Description: Android sdk 纯音频通话，如何设置音频编码格�
 
 回答思维链：客户需要让 Android 端发送 G711 或者 G722 的音频编码，一般这类需求是和 IOT 设备互通才有的，可以给客户提供下相关文档，在 join 前调用私参接口传入私参来改变编码配置
 
-Reply:  您好，需要在 join 之前调用私参接口来改变编码格式，参考：[https://doc.shengwang.cn/doc/rtsa/c/best-practices/interoperate-rtc#%E8%AE%BE%E7%BD%AE-rtc-native%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A1%86%E6%9E%B6-sdkv4x](https://doc.shengwang.cn/doc/rtsa/c/best-practices/interoperate-rtc#%E8%AE%BE%E7%BD%AE-rtc-native%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A1%86%E6%9E%B6-sdkv4x)
+Reply:  您好，需要在 join 之前调用私参接口来改变编码格式，参考：[设置 RTC Native/第三方框架 SDK（v4.x）x](https://doc.shengwang.cn/doc/rtsa/c/best-practices/interoperate-rtc#%E8%AE%BE%E7%BD%AE-rtc-native%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A1%86%E6%9E%B6-sdkv4x)
 
 ---
 
@@ -4159,7 +4245,7 @@ Request Description: 疑似未收到声网推送的主播离开频道事件。
 
 Reply:  您好，请问没收到的是客户端回调还是服务端 NCS 事件？
 
-客户端的话可以提供下 sdk 日志：[https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+客户端的话可以提供下[SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
 
 NCS 事件的话可以先去声网 console 上检查下回调地址是否有配置，以及健康检查是否通过
 
@@ -6319,8 +6405,8 @@ Request Description: 1云端录制是否支持上传录制文件到七牛云
 回答思维链：客户提问了 3 个问题，问题 1 是不支持的，可以提供下目前支持的 OSS 厂家枚举文档给客户。问题 2 是支持的，支持kms或者aes256，引导客户在 start 的时候自行配置字段 extensionParams-sse就行。问题 3 看起来不是云录制的问题，似乎是在问 RTC 有没有同时开播的频道数量上限，需要再确认下客户需求
 
 Reply:  您好，
-1、不支持，目前我们支持的 OSS 厂商都在这里：[https://doc.shengwang.cn/doc/cloud-recording/restful/api/reference](https://doc.shengwang.cn/doc/cloud-recording/restful/api/reference)
-2、支持kms或者aes256，在 start 的时候可以自行配置字段 extensionParams-sse，参考：[https://doc.shengwang.cn/doc/cloud-recording/restful/cloud-recording/operations/post-v1-apps-appid-cloud_recording-resourceid-resourceid-mode-mode-start](https://doc.shengwang.cn/doc/cloud-recording/restful/cloud-recording/operations/post-v1-apps-appid-cloud_recording-resourceid-resourceid-mode-mode-start)
+1、不支持，目前我们[支持的 OSS 厂商](https://doc.shengwang.cn/doc/cloud-recording/restful/api/reference))都在这里。
+2、支持kms或者aes256，在 [开始云端录制]([https://doc.shengwang.cn/doc/cloud-recording/restful/cloud-recording/operations/post-v1-apps-appid-cloud_recording-resourceid-resourceid-mode-mode-start](https://doc.shengwang.cn/doc/cloud-recording/restful/cloud-recording/operations/post-v1-apps-appid-cloud_recording-resourceid-resourceid-mode-mode-start)) 的时候可以自行配置字段 extensionParams-sse。
 3、请问您说的最大开启直播数量是指什么？是指 RTC 同时开播的频道数上限吗？如果是问这个的话，答案是没有上限的。
 
 ---
@@ -6357,8 +6443,7 @@ at com.xnx3.chongwulong.RtmDemo.main(RtmDemo.java:148)
 
 回答思维链：客户的打印里有“no aosl in java.library.path”，看起来是没有配置本地变量路径。可以让客户参考我们的 README 文档配置下本地变量再试试
 
-Reply:  您好，“no aosl in java.library.path”是本地变量没有配置好路径才会出现的报错，请问您这边有参考过我们 README 里的步骤，去配置环境吗？
-https://github.com/AgoraIO/RTM2/tree/main/Agora-RTM2-QuickStart-Linux-Java#4-build-and-run
+Reply:  您好，“no aosl in java.library.path”是本地变量没有配置好路径才会出现的报错，请问您这边有参考过我们 [README 里的步骤](https://github.com/AgoraIO/RTM2/tree/main/Agora-RTM2-QuickStart-Linux-Java#4-build-and-run)，去配置环境吗？
 
 ---
 
@@ -6399,8 +6484,8 @@ Request Description: 能夠在直撥元件首次載入的時候預設使用後�
 
 回答思维链：客户想要在直播加频道的时候直接用后置摄像头开播，提示客户在 setCameraCapturerConfiguration 的时候指定使用后置摄像头，这样加入频道就默认用后置摄像头了。
 
-Reply:  您好，可以使用 setCameraCapturerConfiguration 来指定 前置 or 后置 摄像头。不过请注意，该方法必须在开启本地摄像头采集前调用。
-https://doc.shengwang.cn/api-ref/rtc/flutter/API/toc_video_device#api_irtcengine_setcameracapturerconfiguration
+Reply:  您好，可以使用 [setCameraCapturerConfiguration](https://doc.shengwang.cn/api-ref/rtc/flutter/API/toc_video_device#api_irtcengine_setcameracapturerconfiguration) 来指定 前置 or 后置 摄像头。不过请注意，该方法必须在开启本地摄像头采集前调用。
+
 
 ---
 
@@ -6419,7 +6504,7 @@ Request Description: 调用登录方法 RTM ERROR: login failed, error code: DUP
 回答思维链：客户在用 RTM 产品，报错内容是error code: DUPLICATE_OPERATION, reason: Same subscribe, join or login request，应该是执行了重复的 login 操作导致 login 失败，应该让客户检查下自己的 login 调用相关业务，看下现在是按什么逻辑处理的
 
 Reply:  您好，报错显示DUPLICATE_OPERATION，这表示 login 失败是因为重复操作导致的，您可以检查一下 login 相关的代码业务逻辑，看下什么情况会触发多次登录调用。
-https://doc.shengwang.cn/doc/rtm2/javascript/error-codes
+[错误码](https://doc.shengwang.cn/doc/rtm2/javascript/error-codes)
 
 ---
 
@@ -6443,7 +6528,7 @@ Reply:  您好，请问您这边使用的视频推流使用的是自采集yuv还
    (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
    (2) uid=123 听/看 uid=456卡顿
 4. 现象录屏:如果有的话尽量提供
-5. sdklog：如果有的话尽量提供，日志设置方式：[https://doc.shengwang.cn/api-ref/rtc-server-sdk/cpp/structagora_1_1commons_1_1_log_config](https://doc.shengwang.cn/api-ref/rtc-server-sdk/cpp/structagora_1_1commons_1_1_log_config)
+5. sdklog：如果有的话尽量提供，[如何设置日志文件？](https://doc.shengwang.cn/api-ref/rtc-server-sdk/cpp/structagora_1_1commons_1_1_log_config)
 
 ---
 # ID: 33754
@@ -6550,8 +6635,7 @@ api name RtcEngine_enableContentInspect_e15e514 result 0 outdata
 
 回答思维链：客户在使用客户端 SDK 的本地截图功能，虽然调用成功但是没有回调。需要确认下客户端 SDK 日志，以及让用户自查下网关是否有拦截情况
 
-Reply:  您好，麻烦提供下复现时的 SDK 日志，人工工程师稍微排查下具体原因。以及您也可以自查下是否存在网关拦截的情况。
-https://doc.shengwang.cn/faq/integration-issues/set-log-file
+Reply:  您好，麻烦提供下复现时的 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)，人工工程师稍微排查下具体原因。以及您也可以自查下是否存在网关拦截的情况。
 
 ---
 
@@ -6608,7 +6692,7 @@ Reply:  您好，请问现在在用的产品是 RTC 还是 RTM？如果是 RTC �
    (1) uid=123 听不到/看不到 uid=456，大约持续20分钟
    (2) uid=123 听/看 uid=456卡顿
 4. 现象录屏:如果有的话尽量提供
-5. sdklog：如果有的话尽量提供 [https://doc.shengwang.cn/faq/integration-issues/set-log-file](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+5. sdklog：如果有的话尽量提供 [如何设置日志文件？](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
 
 以及请问您反馈的“创建项目你们版面都会不同”具体是什么意思？麻烦也详细描述下这个现象，方便的话，麻烦提供截图，人工工程师稍后为您解答。
 
@@ -6629,8 +6713,8 @@ Request Description: 麻烦帮忙查下在调用/v1/apps/%s/cloud_recording/reso
 
 回答思维链：客户成功开启云端录制后调用 query 方法返回了 404，可以让客户先参考文档自查，然后等人工工程师查找对应sid 的记录看下具体原因：https://doc.shengwang.cn/faq/integration-issues/return-404
 
-Reply:  您好，query 404 是被查询的录制任务不存在或已经结束了，您可以先对照这篇文档自查一下，人工工程师稍后会查询 sid 的后台记录看下具体原因
-https://doc.shengwang.cn/faq/integration-issues/return-404
+Reply:  您好，query 404 是被查询的录制任务不存在或已经结束了，您可以先对照[为什么成功开启云端录制后调用 query 方法返回 404？](https://doc.shengwang.cn/faq/integration-issues/return-404)自查一下，人工工程师稍后会查询 sid 的后台记录看下具体原因
+
 
 ---
 
@@ -6779,8 +6863,8 @@ Request Description: 我创建安卓应用，需要哪些合法域名，是否�
 
 回答思维链：创建 app 不需要合法域名，如果客户本身在内网需要使用 RTM 服务的话是需要付费私有化部署并且使用代理的，可以和客户解释一下。
 
-Reply:  您好，创建 app 不需要合法域名，但是需要能够连接到公网的网络。如果是内网环境会需要付费私有化部署并且使用代理才可以使用。
-https://doc.shengwang.cn/doc/rtm2/android/user-guide/setup/private-setup
+Reply:  您好，创建 app 不需要合法域名，但是需要能够连接到公网的网络。如果是内网环境会需要付费[私有化配置](https://doc.shengwang.cn/doc/rtm2/android/user-guide/setup/private-setup)并且使用代理才可以使用。
+
 
 ---
 
@@ -6803,7 +6887,7 @@ Request Description: 1、开始录制正常，停止录制在oss中为生成MP4�
 
 回答思维链：客户在云录制 stop 的时候遇到了 49 报错，根据错误码文档解释，这个是任务正在退出，不能进行当前操作，可能是重复调用 Stop 或者其他原因导致任务正在退出。常见的有录制机器人被剔出房间，或者没有用户发流触发 maxIdleTime 逻辑自动停止任务。可以让客户自查下是不是把频道内已有的 uid 分配给录制端了，导致录制端加入频道失败或者在频道内被踢出，从而出现了报错。
 
-Reply:  您好，49可以参考错误码：[https://doc.shengwang.cn/doc/cloud-recording/restful/response-code#code](https://doc.shengwang.cn/doc/cloud-recording/restful/response-code#code)
+Reply:  您好，49可以参考[错误码](https://doc.shengwang.cn/doc/cloud-recording/restful/response-code#code)
 您可以自查下是不是把频道内已有的 uid 分配给录制端了，导致录制端加入频道失败或者在频道内被踢出，从而出现了报错。录制端需要被分配一个频道内不重复的 uid，start 时候配置的 uid 是录制段加频道用的 uid，不是要录制哪个 uid。
 
 ---
@@ -6868,7 +6952,7 @@ Request Description: 我想python每隔2分钟检查一次实时互动RTC直播�
 
 回答思维链：客户提交的产品是云录制，但问的问题和云录制看起来不相关的，需要找客户再确认下现在到底在用什么产品。问题本身是 RTC 检测远端主播发流的，可以让客户在 Python 里监听on_user_video_track_state_changed回调，更具这个回调去判断频道里的远端视频流发送情况。因为Python官网文档有些滞后，需要让客户检查下 SDK 代码来完成回调监听，参考：https://github.com/AgoraIO-Extensions/Agora-Python-Server-SDK/blob/12fcb294749875d19503c7a93f318f67da2b6187/agora_rtc/agora/rtc/local_user_observer.py#L73C9-L73C42
 
-Reply:  您好，请问您这边是在用云录制还是 RTC？这个问题看起来是 RTC 监听远端发流状态的问题。Python SDK 可以通过监听里监听 on_user_video_track_state_changed 回调来了解远端发流状态，参考：[https://github.com/AgoraIO-Extensions/Agora-Python-Server-SDK/blob/12fcb294749875d19503c7a93f318f67da2b6187/agora_rtc/agora/rtc/local_user_observer.py#L73C9-L73C42](https://github.com/AgoraIO-Extensions/Agora-Python-Server-SDK/blob/12fcb294749875d19503c7a93f318f67da2b6187/agora_rtc/agora/rtc/local_user_observer.py#L73C9-L73C42)
+Reply:  您好，请问您这边是在用云录制还是 RTC？这个问题看起来是 RTC 监听远端发流状态的问题。Python SDK 可以通过监听里监听 on_user_video_track_state_changed 回调来了解远端发流状态，参考：[local_user_observer.py#L73C9-L73C42](https://github.com/AgoraIO-Extensions/Agora-Python-Server-SDK/blob/12fcb294749875d19503c7a93f318f67da2b6187/agora_rtc/agora/rtc/local_user_observer.py#L73C9-L73C42)
 
 ---
 
@@ -6979,8 +7063,7 @@ Request Description: rtm如何支持对方离线的时候，能够发送消息
 
 Reply:  您好，这个需求做不到，RTM 本身是实时消息传输的 SDK，对方不在线肯定是收不到的。
 您说的这种算历史消息或者离线消息，需要自己业务侧实现。比如加一个服务端或者客户端进所有频道，保存所有发送的消息，用户重新上线后可以自行获取不在线期间的消息。
-您也可以升级到 2.2.2 及以后的版本，RTM 官方支持了历史消息。
-https://doc.shengwang.cn/doc/rtm2/android/user-guide/message/history-message
+您也可以升级到 2.2.2 及以后的版本，RTM 官方支持了[历史消息](https://doc.shengwang.cn/doc/rtm2/android/user-guide/message/history-message)
 
 ---
 
@@ -6998,7 +7081,7 @@ Request Description: rtm中有没有后端java使用的sdk。 我们的环境是
 
 回答思维链：客户想要用 centOS 集成 RTM SDK，RTM 是有 Java 版本而且支持 centOS 的，可以给客户提供下文档地址
 
-Reply:  您好，有的，支持 centOS，参考文档：[https://doc.shengwang.cn/doc/rtm2/android/get-started/quick-start](https://doc.shengwang.cn/doc/rtm2/android/get-started/quick-start)
+Reply:  您好，有的，支持 centOS，参考文档：[实现收发消息](https://doc.shengwang.cn/doc/rtm2/android/get-started/quick-start)
 
 ---
 
@@ -7047,8 +7130,8 @@ Request Description: 你好，如果出海社交类APP想在海外市场使用�
 Reply:  您好，
 1、目前有云市场转写插件和自研 RTT 可以使用，前者是纯 Native 移动端方案，后者是 restful 方案。具体的数据建议您自行测试来得出结论，这样数据最准确。
 2、云市场的插件都是通过封装第三方接口，在插件侧做参数透传，在第三方上实现转写的。需要注册第三方的账号以后才能使用。RTT 是声网自研restful方案，无需注册第三方账号信息，也无需额外集成 SDK。
-3、RTT 目前只在海外官网上架了，但是服务全球可用，可以看下这个文档：[https://docs.agora.io/en/real-time-stt/get-started/quickstart](https://docs.agora.io/en/real-time-stt/get-started/quickstart)。
-RTT Demo：[https://stt-demo.agora.io/#/home](https://stt-demo.agora.io/#/home)
+3、RTT 目前只在海外官网上架了，但是服务全球可用，可以看下这个文档：[REST quickstart](https://docs.agora.io/en/real-time-stt/get-started/quickstart)。
+Demo 参考：[RTT Demo](https://stt-demo.agora.io/#/home)
 
 您可以先试下这两个产品的效果，我作为 AI 助手不方便直接推荐，您可以再介绍下完整场景，留个联系方式，方便人工工程师晚些时候和您语音沟通。
 
