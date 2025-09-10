@@ -1,4 +1,206 @@
 
+# ID: 37093
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 集成问题咨询
+
+Request Description: 问题表现：
+使用trc直播功能 ，暂时不推流只进行本地预览。开启预览后，添加第三方美颜特效，在onCaptureVideoFrame回调中，先将TextureBuffer相关数据传给第三方美颜，美颜生效后，画面不卡顿，美颜效果也正常，但是取消美颜后（和加美颜使用的纹理id是同一个），画面出现卡断。
+
+通过打印第三方美颜的耗时看，取消美颜后（继续走第三方美颜渲染接口），耗时大概在5ms左右，所以理论上应该不是引起画面卡顿的原因。附件为声网日志和相关代码。
+
+使用声网版本：  implementation 'io.agora.rtc:full-sdk:4.3.0'
+
+Reply: 您好，可以尝试下取消美颜以后[onCaptureVideoFrame](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_video_raw#onCaptureVideoFrame)直接不接任何代码就 return true，看下不走三方美颜 SDK 处理的话是否还会有卡顿问题。
+
+---
+# ID: 37094
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 视频质量评分RemoteVideoStats.mosValue字段一直返回0
+
+Reply: 您好，RemoteVideoStats.mosValue 这个字段已经废弃了，没有实际意义，可以忽略。
+
+---
+
+# ID: 37096
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 其他问题
+
+Request Description: 我们的主播端推流的视频中有自定义的SEI信息，如何在WebSDK中解析该SEI信息，通过getRTCRtpTransceiver获取到的实例无法对视频流进行解析，提示： InvalidStateError: Failed to execute 'createEncodedStreams' on 'RTCRtpReceiver': Too late to create encoded streams
+
+Reply: 您好，Web 监听要用的回调没有对外公开，参考：
+```javascript
+this.client.on("receive-metadata", (uid: UID, metadata: Uint8Array) => { });
+```
+
+发送 metadata 的话用
+```javascript
+public sendMetadata(metadata: Uint8Array): Promise<void>
+```
+
+---
+
+# ID: 37100
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.5.1
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 1. flutter 项目打开app，首次初始化引擎 加入房间 延迟很明显，需要等待5-6秒左右才会加入房间， 后续进入无明显延迟，有什么优化方案，目前使用是每次进入房间户初始化引擎，离开房间 销毁，
+
+Reply: 建议参考下我们 [flutter Demo](https://doc.shengwang.cn/doc/rtc/flutter/get-started/run-demo) 的处理，正常流程不需要这么久的，怀疑是集成问题，请避免在回调内初始化或销毁。
+
+
+---
+
+# ID: 37102
+
+SDK Product: IM
+
+SDK Platform: Web
+
+SDK Version: 1.3.2
+
+Request Type: 集成问题咨询
+
+Request Description: 我想咨询一个关于 用户在线状态 检测的需求
+我注意到console里有一个 用户在线状态 的开关
+我问了AI，如何检测用户的在线状态，它的回答似乎是在引导我使用rtm，并利用Presence检测，即在加入频道时通过调用 .join({ withPresence: true })这种方式来检测用户在线。
+但我现在使用的是IM服务，不是RTM，似乎IM里并没有Presence相关的内容，请问在IM服务下，如何实现用户在线检测的功能。
+另外，console中的那个 用户在线检测 开关 打开了，然后有什么用？AI没有给出一个比较靠谱的答案
+
+Reply: 您好，IM 可以通过 [在线状态（Presence）订阅](https://im.shengwang.cn/docs/sdk/server-side/presence.html) restful 接口查询。
+
+---
+
+# ID: 37104
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 您好：
+
+我这边目前使用的是4.18.1, 现需要开通域名和端口的白名单，信通侧需要提供端口具体的用途：
+80；443；3433；4700 - 5000；5668；5669；6080；6443；8667；9667；30011 - 30013（用于旁路推流）
+ 3478；4700 - 5000（2.9.0 及以后版本）；10000 - 65535 （2.9.0 以前版本）
+请帮忙提供
+
+Reply: 您好，我们需要链接公网的网络环境才能使用，要是内网或者防火墙使用的话只开放端口域名是不够的，需要额外购买[云代理](https://doc.shengwang.cn/doc/rtc/javascript/basic-features/firewall)服务，然后再开放这些才能正常使用。
+
+---
+# ID: 37105
+
+SDK Product: Console
+
+SDK Platform: All
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 我需要统计声网资源每天的用量，无法获取到对应的数据，需要提供对应的能力提供api接口。
+
+Reply: 您好，没有提供统计分钟数的接口，如果您需要做计量计费，可以根据您自己的业务场景来计费，不依赖我们的计费去计算。
+
+---
+# ID: 37106
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 使用版本是4.18.1。现象是手机端发起通话，pc端能接到呼入。但接通后屏幕是黑的，所以需要知道通话过程中通话的交互流程以及需要开通白名单的域名。目前环境里，出网没有限制，但是不能入网，是否有影响。
+
+Reply: 您好，Web SDK 需要能够连接到公网才可以使用，防火墙、内网都无法保证最终效果。您可以提供下黑屏时的浏览器 console 打印，看下有没有报错信息。
+
+---
+# ID: 37107
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.3.0
+
+Request Type: 其他问题
+
+Request Description: 你好，我们想抽查一些通话记录，看他们的音频文件或者视频文件，这哪里可以看？
+
+Reply: 您好，RTC SDK 本身不会在终端设备本地存储通话的音视频原始文件，需要您开启[云录制](https://doc.shengwang.cn/doc/cloud-recording/restful/landing-page)后才会保存到您指定的第三方 OSS 上。
+
+---
+
+# ID: 37109
+
+SDK Product: RTC
+
+SDK Platform: HarmonyOS
+
+SDK Version: 4.4.2
+
+Request Type: 其他问题
+
+Request Description: 我需要获取RtcEngineImpl中的方法，如pauseEffect等，但是用RtcEngine.create(config);创建的对象又没有该api，使用RtcEngineImpl.createEngineImpl(config)创建对象时RtcEngineImpl又无法导包，请问RtcEngineImpl是无法使用吗，如果我需要用到RtcEngineImpl的方法需要怎么处理？
+
+Reply: 您好，需要使用特定版本的 SDK 才行，有需要的话可以留言，稍后人工工程师会给您提供对应的版本。
+
+---
+
+# ID: 37112
+
+SDK Product: Console
+
+SDK Platform: All
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 声网会给我们发送安全、帐单、到期提醒等邮件。但由于我们总公司邮箱反垃圾策略，声网给我们发的邮件已经好久没收到过了。
+您知道声网会以哪些域名来发送这些邮件吗？
+
+Reply: 您好，主要是这些：
+```
+Agora Support<agora@support.agora.io>
+Agora Finance<agora@billing.agora.io>
+Agora<no-reply@account.agora.io>
+
+```
+
+---
+
 # ID: 37081
 
 SDK Product: ConvoAI
