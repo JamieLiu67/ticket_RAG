@@ -1,4 +1,119 @@
 
+# ID: 37113
+
+SDK Product: Console
+
+SDK Platform: All
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 需要解绑账号对应的手机号与邮箱
+
+Reply: 您好，可以在声网 console 右上角个人中心自行更换手机号和邮箱。但更换手机号需要绑定新的号码才行，如果您只是不想用这个账号了，可以在 声网 console 左侧边栏设置-安全设置 自行注销。
+
+---
+
+# ID: 37116
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.5.2
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 2台手机，一台IOS一台安卓，都进入频道对讲，对讲正常， 2台手机禁音的时候都会收到onLocalAudioStateChanged的监听state:LocalAudioStreamState.localAudioStreamStateStopped;  reason:LocalAudioStreamReason.localAudioStreamReasonOk，但是2台手机都在打电话的时候iOS的可以收到localAudioStreamReasonInterrupted的监听，安卓的收不到监听。
+
+Reply: 您好，理论上系统来电时两个端都会触发的，您可以在我们 [Demo](https://github.com/AgoraIO-Extensions/Agora-Flutter-SDK/tree/main) 的基础上尝试复现下看看。如果能够复现，麻烦提供复现时的 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)。
+
+---
+# ID: 37117
+
+SDK Product: RTC
+
+SDK Platform: HarmonyOS
+
+SDK Version: 4.4.2
+
+Request Type: 集成问题咨询
+
+Request Description: 通过getNativeHandle去调用C++接口对外暴露的方法,
+registerAudioFrameObserver注册的观测位置不同，触发的不同回调，拿到的音频来源也不同，这个是可以了解的,但是这个拿到的音频我能否暴露给HarmonyOS端然后使用ArkTs语言去处理这些音频流呢,这样的话要如何操作,我看到C++中原始数据数据这个方法里边只做了打印,其他处理没有,我要做些什么处理才能将音频流去传递给鸿蒙端呢,我想在鸿蒙端进行处理,下面附件是安卓端的一个处理
+bool OriginAudioData::onRecordAudioFrame(const char *channelId, AudioFrame &audioFrame) { 
+    AG_INFO("OriginAudioData::onRecordAudioFrame called");
+    return false; 
+}
+
+Reply: 您好，这个需求无法实现，裸数据的处理只能在 C++层完成，arkts 是单线程，从 C++拿数据给到 arkts 层容易出现跨线程卡死问题，建议在 C++层完成处理后再把处理完的数据传到 arkts 层。
+
+---
+
+# ID: 37119
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 4.3.0
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 根据您当时说的webhook，现在视频录制的错误率更高了，改完之后没有一个视频能获取到了
+为什么所有录制文件已经全部上传完成，但至少有一片上传到声网备份云（值：32）这个事件没有，
+而且录制的很多视频只有很少一部分能真正得到回调的事件
+
+公司现在已经配置过的appid有
+['89914a46c7974decba22969061c9c182',
+ 'e4173b79870149168904058ebd408adc',
+ '692bfd43435d4a86854519ae69663954',
+ '8e74f1a88c384f1fba921e7aca094b45',
+ 'edc40ba0c18a44d98d640c93a3053def',
+ '6eed980d580241e3ab489f160c4242e4']
+
+能不能帮忙看一下，问诊视频上面会检查，不能总是这样老出问题啊
+
+Reply: 您好，[32 事件](https://doc.shengwang.cn/doc/cloud-recording/restful/webhook/uploading#32-backuped)是上传失败备份到我们存储里的事件，如果录制正常完成上传或者一开始就启动失败是不会触发的。31 是上传完的回调，如果需要在上传完成时获得文件路径，可以监听 [31](https://doc.shengwang.cn/doc/cloud-recording/restful/webhook/uploading#31-uploaded)。
+请问现在有哪些 sid 找不到录制文件？
+
+---
+
+# ID: 37123
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.6.0
+
+Request Type: 其他问题
+
+Request Description:  IOS 关麦后，微信发送语音消息没有声音
+
+Reply: 您好，请问发送语音的时候 SDK 还在占用麦克风吗？闭麦要关闭采集才能释放资源，mute 只是不发出去，采集还是占用的，请保证[enableLocalAudio](https://doc.shengwang.cn/api-ref/rtc/ios/API/toc_audio_capture#api_irtcengine_enablelocalaudio) 为 false。
+
+---
+# ID: 37124
+
+SDK Product: RTC
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 主播开播后，产生意外关掉了客户端。服务端通过什么接口去判断当前直播已经被关闭
+
+Reply: 您好，IOS 杀后台是可以被感知到的，SDK 会认为用户主动退出了。Android 感知不到，SDK 会尝试重连 20s，20s 连不上就认为超时连接，判定这个 uid 离线，不在频道内了。频道里没有人在，频道就会变成不存在的状态
+
+这些都可以用 [查询用户列表](https://doc.shengwang.cn/doc/rtc/restful/channel-management/operations/get-dev-v1-channel-user-appid-channelName) 接口查询。
+
+
+---
+
 # ID: 37093
 
 SDK Product: RTC
