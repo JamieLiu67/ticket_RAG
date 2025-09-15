@@ -1,4 +1,148 @@
 
+# ID: 37152
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.5.0
+
+Request Type: 集成问题咨询
+
+Request Description: Android 客户端在升级声网sdk的时候，发现旁路推流有问题， 原来版本3.5.0  正常可以推流，升级3.7.2 之后不开vpn，推失败，开启vpn可以推流，升级到4.5.0后，怎样都不行，同一个手机，同一个网络环境，这个是什么原因呀
+
+Reply: 您好，客户端旁路推流的接口已经废弃了，请用[服务端旁路推流](https://doc.shengwang.cn/doc/media-push/restful/landing-page
+)实现。
+SDK 不推荐使用 VPN 来通话，会影响连接的节点选择导致延迟变大。
+
+---
+
+# ID: 37164
+
+SDK Product: RTC
+
+SDK Platform: mini-app
+
+SDK Version: 2.6.5
+
+Request Type: 集成问题咨询
+
+Request Description: web推流，uniapp微信小程序使用代码获取到rtmp://175.6.189.140:27722/live/9TgjMmYU5GlHb9FdsRQoZyMxSUmJFNgI，经ffmpeg工具集分析不存在视频track，  libpostproc    58.  3.100 / 58.  3.100
+Input #0, flv, from 'rtmp://175.6.189.140:27722/live/9TgjMmYU5GlHb9FdsRQoZyMxSUmJFNgI':
+  Metadata:
+    |RtmpSampleAccess: true
+  Duration: N/A, start: 1205963.280000, bitrate: N/A
+  Stream #0:0: Data: none
+  Stream #0:1: Audio: aac (LC), 48000 Hz, mono, fltp
+Unsupported codec with id 0 for input stream 0
+。。但是如果拉流的是web或者其他客户端就没有问题
+
+Reply: 您好，小程序的链路和我们 RTC 的链路是不通的，需要使用[小程序 SDK](https://doc.shengwang.cn/doc/rtc/mini-program/get-started/run-demo) 加入 RTC 频道才能互通。
+但是我们的小程序 SDK 只支持原生小程序开发，不支持 uni-app。
+
+---
+# ID: 37165
+
+SDK Product: RTM
+
+SDK Platform: Java
+
+SDK Version: 2.2.5
+
+Request Type: 集成问题咨询
+
+Request Description: ThreadLocalRandom.current().nextInt(0, Integer.MAX_VALUE) 每次使用该方法生成的随机id，
+使用官网提供的方法生成的token，每次expire值设置的是86400
+```Java
+public String buildToken(String appId, String appCertificate, String userId, int expire) {
+        AccessToken2 accessToken = new AccessToken2(appId, appCertificate, expire);
+        AccessToken2.Service serviceRtm = new AccessToken2.ServiceRtm(userId);
+
+        serviceRtm.addPrivilegeRtm(AccessToken2.PrivilegeRtm.PRIVILEGE_LOGIN, expire);
+        accessToken.addService(serviceRtm);
+        try {
+            return accessToken.build();
+        } catch (Exception e) {
+            LogUtils.i("buildToken error=" + e.getMessage());
+            return "";
+        }
+    }
+```
+
+首次开启APP，先调用的rtmClient.logout退出登录方法，然后再调用rtmClient.login方法，可以正常登录成功，如果通过androidstudio再重新安装APP，又执行了退出登录，登录等操作，就会一直提示这个异常
+{currentState: CONNECTING, previousState: IDLE, serviceType: MESSAGE, operation: LOGIN, reasonCode: LOGIN, reason: Perform login operation, affectedChannels: [], unrestoredChannels: [], isResumed: false, timestamp: 0}
+ {currentState: FAILED, previousState: CONNECTING, serviceType: MESSAGE, operation: LOGIN, reasonCode: INVALID_TOKEN, reason: Invalid token, affectedChannels: [], unrestoredChannels: [], isResumed: false, timestamp: 0}  
+说是token无效，如果机器重启在开启app的话，就又可以登录成功了，请问这是什么原因导致的呢，怎么解决
+
+Reply: 您好，RTM 初始化的时候需要传入 appid 和 userid，login 的时候需要传入 token。其中 token 是和 userid 绑定的，如果您更换了 token，但是 token 对应的userid 不是初始化时传入的那个，那么登录大概率会失败，需要您先 release，再重新用新的 userid 去初始化 RTM，再 login 来解决。
+
+---
+
+# ID: 37167
+
+SDK Product: IM
+
+SDK Platform: Web
+
+SDK Version: 1.3.2
+
+Request Type: 集成问题咨询
+
+Request Description: 现在两个用户在同一个chatroom里，当一个用户直接关闭浏览器后，在另一个用户那边，似乎没有直接发出onChatroomEvent，然后memberAbsence这种类型的消息被发出。如何能够有效的判断这种直接关闭浏览器的用户离开的情况。
+
+Reply: 您好，SDK 无法感知远端用户关闭浏览器的行为，只会在断开长连接2分钟后视为踢出聊天室来处理。
+
+---
+# ID: 37169
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 其他问题
+
+Request Description: 倒入的是jar,so 文件，打包模拟器运行包这个提示语，如何解决 
+
+apk is not compatible with 16 KB devices. Some libraries have LOAD segments not aligned at 16 KB boundaries: lib/arm64-v8a/libmmkv.so lib/arm64-v8a/librtmp-jni.so Starting November 1st, 2025, all new apps and updates to existing apps submitted to Google Play and targeting Android 15+ devices must support 16 KB page sizes. For more information about compatibility with 16 KB devices, visit developer.android.com/16kb-page-size.
+
+Reply: 您好，最新的 SDK 已经都支持 16kb 了，但是 SDK 不支持模拟器，请用真机运行。
+如果已经在用最新版本但Android studio 还在提示不支持，可以升级下 gradle 版本来解决。
+
+---
+# ID: 37170
+
+SDK Product: RTM
+
+SDK Platform: Flutter
+
+SDK Version: 2.2.2
+
+Request Type: 其他问题
+
+Request Description: 声网RTM的频道消息，如何控制消息的时效性，如：某几条消息，我想在1分钟内显示时间过后，撤回或移除掉，有的可能是2分钟内撤回或移除掉，有什么方法做到
+
+Reply: 您好，撤回是您自己的业务，需要您自行实现。可以根据收到消息的本地事件进行计时和在 UI 上删除这条消息的显示。
+
+---
+
+# ID: 37178
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 想咨询一下，咱们 sdk 请求云端服务器的域名或者固定的 ip 地址等这些是啥。
+
+Reply: 您好，我们没有固定 IP，只有固定域名，可以参考下[保障 REST 服务高可用](https://doc.shengwang.cn/doc/cloud-recording/restful/best-practices/rest-availability)。
+
+---
+
 # ID: 37128
 
 SDK Product: RTC
