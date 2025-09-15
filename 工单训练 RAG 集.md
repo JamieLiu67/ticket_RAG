@@ -1,4 +1,260 @@
 
+# ID: 37128
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.5.2
+
+Request Type: 集成问题咨询
+
+Request Description: 结束视频聊天后，在重新进入频道，蓝牙耳机没有声音？请问什么原因，第一次进入频道后蓝牙耳机有声音，第二次在进入就没声音了
+
+Reply: 您好，麻烦提供下具体的现象视频+[SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)，以及也可以尝试用我们 [Demo](https://github.com/AgoraIO/API-Examples/tree/main) 来复现下，看看 Demo 会不会有同样的问题。
+
+---
+
+# ID: 37134
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 4.3.0
+
+Request Type: 集成问题咨询
+
+Request Description: 在一个同事的电脑上，测试，发现其他人开启视频推流，在这个电脑的同事的电脑上（12185用户），Observer那个类没有接收到视频帧，就无法渲染出图像。但我是接收到了远程视频打开的事件回调的。查看后台，发现12185这个用户的视频接收端的视角没有任何曲线图像显示。如图所示。但是在其他同事电脑上，就能接正常收到视频帧。
+
+Reply: 您好，可以先确认下收不到视频的一方有没有开启 enableVideo，如果确认开启并且监听回调注册正确，可以提供下 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)，人工工程师稍后看下具体原因。
+
+---
+
+# ID: 37137
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 这边集成的sdk 版本是'cn.shengwang.rtc:voice-sdk:4.6.0'，已经是纯粹的语言包了，但是打包之后，整个apk 体积增加了100多M大小，查看下是下面图片1上面各个cpu下的so 文件增加的，按照官网上面说应该是每个cpu 都只增加7m，但是现在确实30多m，导致整个项目很大。而且按照文档里面减少app体积的办法，我把sdk 下载下来里面多了两个high_level_api，和low_level_api文件夹下，这里面都是.h文件，我不知道应该放在android 项目哪里。
+
+Reply: 您好，离线集成参考[集成 SDK](https://doc.shengwang.cn/doc/rtc/android/get-started/quick-start#%E9%9B%86%E6%88%90-sdk)
+只看so体积不代表实际集成到app里打包出来以后增加的体积。
+
+---
+
+# ID: 37140
+
+SDK Product: RTM
+
+SDK Platform: Java
+
+SDK Version: 2.1.7
+
+Request Type: 其他问题
+
+Request Description: 在调用/cloud_recording/acquire时出现{"message":"appid is invalid"}   appid正确的
+
+Reply: 您好，云录制报错 appid is invalid 只可能是在用的 appid 没有开通云录制功能或者目前在用的 ak sk 和 appid 不匹配，您可以自查一下。
+
+---
+# ID: 37141
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 我们当前需要多频道连线的功能，我看文档是使用的这一套方法
+```swift
+        AgoraRtcConnection *connection = [[AgoraRtcConnection alloc] init];
+        connection.channelId = model.roomId.stringValue;
+        connection.localUid = arc4random_uniform(99999) + 10000; // 随机副频道 UID
+        
+        AgoraRtcChannelMediaOptions *options = [[AgoraRtcChannelMediaOptions alloc] init];
+        options.channelProfile = AgoraChannelProfileLiveBroadcasting;
+        options.clientRoleType = AgoraClientRoleBroadcaster;
+        options.autoSubscribeAudio = YES;
+        options.autoSubscribeVideo = YES;
+        options.publishMicrophoneTrack = YES;
+        options.publishCameraTrack = YES;
+        
+        [manager.agoraEngine joinChannelExByToken:model.signaure
+                                        connection:connection
+                                          delegate:nil
+                                      mediaOptions:options
+                                      joinSuccess:^(NSString * _Nonnull channel, NSUInteger uid, NSInteger elapsed) {
+            successCount++;
+            [manager.pkConnections addObject:connection];
+            [manager.pkRoomModels addObject:model];
+            
+            if (successCount == pkRooms.count && !hasFailed) {
+                DAgoraLog(@"✅ 所有副频道加入成功");
+                if (success) success();
+            }
+        }];
+```
+
+这里我有一些疑问
+1.我的localUid是随机Uid还是说直接给当前用户的Id
+2.我加入的时候channelId我理解的应该是个副频道的id但是这个Token是什么的Token呢是当前用户在当前频道的token还是说我需要生成一个我在需要加入的频道的新的token或者是频道的房主的token
+
+Reply: 您好，请问您看的是[加入多频道](https://doc.shengwang.cn/doc/rtc/ios/advanced-features/multiple-channel)吗？
+
+这里面只是为了方便区分把第一个频道的 uid 写成localUid了，uid 本身就是自定义的字段，所以示例代码里先随机了，只要是 join 就需要保证 token 和 uid 匹配，不然校验会失败，加不进去
+
+可以参考下[主播 PK 连麦](https://doc.shengwang.cn/doc/showroom/ios/basic-features/integrate-showroom#5-%E4%B8%BB%E6%92%AD-pk-%E8%BF%9E%E9%BA%A6)，参考下这篇文档里的 PK 实现业务逻辑。
+
+---
+
+# ID: 37143
+
+SDK Product: RTC
+
+SDK Platform: Unity
+
+SDK Version: 4.4.0
+
+Request Type: 集成问题咨询
+
+Request Description: 你好，我们的unity项目出现了下面错误，后面还有一长串类似的。这是什么原因引起的，是不是需要更新SDK版本才能解决？
+[AgoraEngine] Init agora rtc engine
+objc[94591]: Class RTEDispatcher is implemented in both /Users/louie/Desktop/Attachments/Build/MacNUI4f20436/Sinespace.app/Contents/PlugIns/AgoraRtcWrapperUnity.bundle/Contents/Frameworks/AgoraScreenCaptureExtension.framework/Versions/A/AgoraScreenCaptureExtension (0x3bae51148) and /Users/louie/Desktop/Attachments/Build/MacNUI4f20436/Sinespace.app/Contents/PlugIns/AgoraRtcWrapperUnity.bundle/Contents/Frameworks/AgoraRtcKit.framework/Versions/A/AgoraRtcKit (0x3d63a58a0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+
+Reply: 您好，打包的时候有一个假包始终指向最新的版本，现在假包和真包都变成真实文件了，删掉其中一个就行了。
+
+---
+# ID: 37144
+
+SDK Product: RTC
+
+SDK Platform: HarmonyOS
+
+SDK Version: 4.4.2
+
+Request Type: 其他问题
+
+Request Description: 在进行rtc多人会议的时候，怎么做到双击某个的窗口，让这个窗口变大，其他窗口都缩小然后位于屏幕的右上方依次排列
+我现在写的if判断来分别展示三种UI,分别是：都不放大，本地放大，远程放大。如果双击时，如果双击的是本地窗口，就没有问题。如果双击的是远程窗口，则远程窗口白屏了
+
+Reply: 您好，这个是您 UI 上本地的业务，和 SDK 没有关系。
+如果涉及到视图切换绑定的 uid，需要先传 null 置空，然后再绑定新的 uid
+
+---
+# ID: 37145
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.23.x
+
+Request Type: 集成问题咨询
+
+Request Description: 如何用Vue3实现对视频流的截图，只需要截首帧
+
+Reply: 您好，可以考虑用浏览器原生的截图接口实现，不一定需要依赖 SDK 接口。
+
+---
+# ID: 37146
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 我想结合声网的RTC服务以及微软的ASR+TTS以及自己搭建的Agent来实现一个端到端的AI实时语音助手
+在实现打断功能的时候遇到一个问题：
+如果服务端音频生成并推送的速度非常快回导致客户端的音频缓冲区积累长时间的音频，SDK无法清空客户端的音频缓冲区，会导致当我执行手动打断AI音频再提问时客户端回播放上一个AI回复的音频，能否给客户端的sdk提供一个清空音频缓冲区的API？
+
+Reply: 您好，您这边是在用服务端 SDK 吗？工单问题分类提交的是 Android，但这个问题看起来是服务端的。服务端 SDK 有专门的清空音频发送缓存的接口[ClearSenderBuffer](https://doc.shengwang.cn/api-ref/rtc-server-sdk/cpp/classagora_1_1rtc_1_1_i_local_audio_track#ClearSenderBuffer())。
+以及您的场景也适合我们的 convoAI，可以考虑直接用我们的 [对话式 AI 引擎](https://doc.shengwang.cn/doc/convoai/restful/landing-page) 来集成，中间的链路已经封装搭建完毕了，调用接口就可以获得效果.
+
+---
+# ID: 37147
+
+SDK Product: CDN
+
+SDK Platform: CDN
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 大疆无人机的rtmp推流，推到声网，实现电脑上看到直播画面，如何购买和设置呢
+
+Reply: 您好，大疆用户可以参考下[大疆用户的 RTC 说明书](https://i46hiqvame.feishu.cn/docx/LiWxdLMtUobkAmxmjuHc33mtnEd?from=from_copylink)
+
+---
+# ID: 37148
+
+SDK Product: RTM
+
+SDK Platform: Java
+
+SDK Version: 2.2.5
+
+Request Type: 集成问题咨询
+
+Request Description: 我们App在接入声网RTC实现视频通话功能是，使用了老版本RTM-1.4.9用于拉起通话对方进入同一个RTC频道。
+现在因为业务需要想将RTM升级到最新版RTM-2.2.5，但发现RTM2相对于RTM1似乎变化很大。
+原来RTM1中我们通过RtmCallManager方法，将视频通话的另一方邀请进频道，但RTM2已经找不到这个方法。
+另外其他多个方法在RTM2中也都废弃了，但我看官网文档中有关于迁移的部分没有找到一一对应的替换方法的说明文档，请问有相关迁移的说明文档吗？
+
+以下是我们app老版本邀请视频通话另一方进入频道的方式，现在更新RTM2，同时需要兼容老版本，应该如何兼容？
+```Java
+public final boolean answerTheCall(final RemoteInvitation invitation) {
+        RtmCallManager callMgr = mRtmClient.getRtmCallManager();
+        final boolean[] callSuccess = {true};
+        callMgr.acceptRemoteInvitation(invitation, new ResultCallback<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                // TODO: 接通成功
+            }
+
+            @Override
+            public void onFailure(ErrorInfo errorInfo) {
+                callSuccess[0] = false; 
+                // TODO: 接通失败
+            }
+        });
+        return callSuccess[0];
+    }
+```
+
+
+Reply: 您好，升级 RTM 可以参考[迁移指南](https://doc.shengwang.cn/doc/rtm2/android/overview/migration-guide)，RTM2 和 RTM1 有明显差异，建议升级到 RTM2 后用 RTM2 的能力去实现呼叫邀请业务，RTM2 已经不再提供封装好的呼叫邀请接口了。
+
+---
+# ID: 37149
+
+SDK Product: Cloud-recording
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 端录制中 延时混音，通过设置 appsCollection 和 transcodeOptions 字段开启延时混音功能。
+开启后，录制服务会在录制结束后 24 小时内将指定频道内所有 UID 的录制文件合并且转码生成一个 MP3/M4A/AAC 文件，并将录制文件上传至你指定的第三方云存储。
+这个在现在的文档中怎么没有了？
+
+Reply: 您好，目前不支持了，这个功能下架了，建议用所有 uid 的 m3u8 文件自行本地混音来实现。
+
+---
+
 # ID: 37113
 
 SDK Product: Console
