@@ -1,3 +1,109 @@
+# ID: 37182
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.3.0
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 群语音通话过程中有两个体验问题：
+1. 用户说话有回音。
+2. 噪音比较大。
+
+iOS 有啥API 能降低噪音和回音，AgoraRtcEngineKit 默认会开启降噪和回声消除吗？
+
+Reply: 您好，SDK 自带回声和降噪消除，如果觉得效果不好可以设置 audioScenario 位 chatroom 试下，走硬件消除效果会更好一些。
+调用[setAudioScenario](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_audio_basic#api_irtcengine_setaudioscenario)来修改枚举。
+
+---
+
+# ID: 37185
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.6.0
+
+Request Type: 商务问题
+
+Request Description: 主播通过  createMediaPlayer 推送本地视频，并同时进行音频麦？
+如何收费？
+
+1 是按照 音频麦 + 视频推流收费？
+2 仅仅收视频推流费用？
+
+Reply: 您好，我们的计费是按照订阅收费的，没有视频订阅一律收取音频时长费用，产生视频订阅以后音频就不收了，只收视屏订阅的费用。具体细节可以电话咨询 400 6326626
+
+---
+
+# ID: 37187
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 如何解决
+在不带耳机下，主播端能实现 音频自采集(伴奏外放 + 人声采集) + 人声不外放 同时 远端能听到清晰的 人声+伴奏，实现不带耳机进行K歌。
+
+我们的核心问题是，需要解决不带耳机下，用户K歌的回声消除问题，伴奏需要外放(伴奏外放时麦克风会把这个伴奏再采集到，此时需要回声消除)，K歌的对方，需要能清晰的听到人声+伴奏。 我们是音频自采集，就是我们的音频模块，会负责伴奏 + 人声录制等，现在我们希望解决App一直无法在音频自采集下，用户无法不带耳机K歌的问题。
+
+我们目前的思路是创建两路track
+一路是 人声 agoraKit.createCustomAudioTrack(.direct, config: voiceConfig) (实际的音频内容是 人声 + 伴奏外放又重新被麦克风采集到的伴奏) 我们希望此路 开启 AI AEC
+一路是 agoraKit.createCustomAudioTrack(.mixable, config: musicConfig) 纯伴奏通过mixable方式，作为AI AEC的消融信号，这路外放并推流
+
+这样远端就能听到 人声+伴奏 （外放的伴奏被AI AEC消融）
+
+但是这个方案一直无法调通
+
+请问，如何实现我们上面的需求，音频自采集下，用户不带耳机，伴奏外放的K歌。
+
+Reply: 您好，SDK 本身是支持采集外接麦克风设备的，不一定需要用自采集方式做，用 SDK 采集也行。可以用 SDK 采集的情况下 audioScenario 选择 default 试下效果，这样 SDK 会走硬件消除把外放的伴奏消除掉。
+以及您这边是独唱还是合唱场景呢？我们有一些现成的[在线 K 歌房解决方案](https://doc.shengwang.cn/doc/online-ktv/ios/ktv-scenario/landing-page)，可以参考下。
+
+---
+
+# ID: 37192
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 我们公司之前是集成的环信，内置的声网版本是io.agora.rtc:full-sdk:3.3.0，使用的声网ID是环信的demo里面的。
+问题一，我重新申请声网ID，那么设备势必要全部更新程序，请问新申请的ID和原环信demo的声网ID能否通话？
+问题二，重新申请声网ID，我们准备放弃环信，我们的需求只是1V1音频通话，那么我们集成时，请问选择语音通话还是1v1私密房？哪个好一点？
+
+Reply: 您好，不同 appid 之间无法互通，建议全部用新的 appid。
+语音通话还是 1v1 私密房本质都是再 RTC 频道内通话，只是业务上会有不同的限制。具体选择取决于您的场景，请完整描述下您现在的场景和需求，稍后人工工程师为您推荐。
+
+---
+# ID: 37193
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.5.2
+
+Request Type: 集成问题咨询
+
+Request Description: android 16kb问题
+agora_rtc_engine: 6.5.2
+flutter我使用这个版本 使用libchecker 检测还是显示NON 16 KB STORED
+
+Reply: 您好，flutter 在 6.5.2 版本上已经支持了 16kb 适配，如果还是会有这个问题请检查下 gradle 版本有没有升级到 8.7 以后。
+
+---
 
 # ID: 37152
 
@@ -1927,8 +2033,6 @@ flutter: 2025-09-01T17:03:21.026670 [Level.warning] [Agora] [onLocalAudioStateCh
 flutter: 2025-09-01T17:03:22.222248 [Level.warning] [Agora] [onRemoteAudioStateChanged] connection: {channelId: Test580, localUid: 194} remoteUid: 202 state: RemoteAudioState.remoteAudioStateStopped reason: RemoteAudioStateReason.remoteAudioReasonRemoteMuted elapsed: 0
 [2025-09-01 17:03:22.223][12473609][I][iris_rtc_api_engine.cc:438] api name RtcEngine_enableAudioVolumeIndication_39794a0 params "{"interval":1000,"smooth":1,"reportVad":true}"
 [2025-09-01 17:03:22.224][12473609][I][iris_rtc_api_engine.cc:504] api name RtcEngine_enableAudioVolumeIndication_39794a0 result 0 outdata {"result":0}
-[2025-09-01 17:03:22.224][12473609][I][iris_rtc_api_engine.cc:438] api name RtcEngine_setParameters_3a2037f params "{"parameters":"{\"che.audio.enable_ai_noise_reduction\": true}"}"
-[2025-09-01 17:03:22.225][12473609][I][iris_rtc_api_engine.cc:504] api name RtcEngine_setParameters_3a2037f result 0 outdata {"result":0}
 
 Reply: 您好，听起来是蓝牙协议没走 a2dp 导致的，麻烦提供下复现问题时的 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)，人工工程师稍后为您解答。
 
@@ -4914,12 +5018,6 @@ SDK Platform: Android
 Request type: 集成问题咨询
 
 Request Description: Android sdk中，设置音频编码格式为g711后，能否设置采样率为8k和16k，需要用哪个接口呢？
-
-engine.setParameters("
-
-{\"che.audio.custom_payload_type\":8}
-
-");
 
 回答思维链：客户调用了私参接口来让android设备发送G711音频编码，但是G711编码只有8K采样率，无法切换到16K，G722才是16K的，所以这个需求无法实现
 
