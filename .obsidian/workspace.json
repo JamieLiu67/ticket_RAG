@@ -8,7 +8,7 @@
         "type": "tabs",
         "children": [
           {
-            "id": "3b7230140c6a6599",
+            "id": "f5b5ed0e4a37fa57",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -171,10 +171,11 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "3b7230140c6a6599",
+  "active": "f5b5ed0e4a37fa57",
   "lastOpenFiles": [
-    "().md",
+    "未命名.base",
     "工单训练 RAG 集.md",
+    "().md",
     "工单 AI 提示词.md",
     "未命名.canvas"
   ]

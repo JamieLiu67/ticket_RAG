@@ -1,3 +1,216 @@
+
+# ID: 37194
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 咨询Windows下的RTC 服务端 SDK的Python版本集成问题：
+1、文档兼容性描述操作系统是Linux的，架构是X86-64的，想请问下，我在Windows软件下集成RTC服务端的Python版本SDK可行吗？
+
+Reply: 您好，Python SDK 不支持 Windows 环境，必须是 Linux 系统。
+
+---
+
+# ID: 37198
+
+SDK Product: RTC-Linux
+
+SDK Platform: Linux-Python
+
+SDK Version: 2.2.4
+
+Request Type: 其他问题
+
+Request Description: agora_token_builder  v1.0.0版本RtcTokenBuilder生成的token用于linux 服务端python sdk ：agora_python_server_sdk v2.2.4 加入频道失败，UID一致，是不是两个sdk不兼容，或者RtcTokenBuilder生成的token不能用于服务端的sdk加入频道？
+
+
+Reply: 您好，理论上是都能用的，但我们更推荐用新版本 token，把[实现 token 鉴权](https://doc.shengwang.cn/doc/rtc/android/basic-features/token-authentication#basic-token)文章里的仓库 clone 下来跑里面的生成脚本来生成就好。
+
+---
+
+# ID: 37200
+
+SDK Product: RTC
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 直播连麦，用户切换成主播身份。用户违规后，服务端调用创建规则接口，把用户的音视频流权限都限制了。用户还是能连麦说话
+
+Reply: 您好，封禁接口只能让服务端不接受被封禁用户发来的流，被封禁用户本地的采集还是正常的，请先确定下现象和概念。
+以及常见的封禁后依旧能收到用户发流的常见原因是 uid 频道名不匹配、封禁时间过短导致的，您可以自查下是否有类似情况。
+
+---
+# ID: 37201
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 
+```Java
+// 点击开始录制按钮
+private void start_recording_Click(object sender, EventArgs e)
+{
+    RecorderStreamInfo recorderStreamInfo = new RecorderStreamInfo();
+    recorderStreamInfo.uid = 0;
+    recorderStreamInfo.channelId = channelName;
+
+    // 创建音视频录制对象
+    mediaRecorder = engine.CreateMediaRecorder(recorderStreamInfo);
+    // 获取 MediaRecorderObserver 的单例实例
+    var observer = new MediaRecorderObserver();
+
+    // 注册 OnRecorderStateChanged 事件
+    observer.EventOnRecorderStateChanged += (channelId, uid, state, error) =>
+    {
+        Console.WriteLine($"Recorder state changed to {state}, error: {error}");
+    };
+
+    // 注册 OnRecorderInfoUpdated 事件
+    observer.EventOnRecorderInfoUpdated += (channelId, uid, info) =>
+    {
+        Console.WriteLine($"Recorder info updated: {info}");
+    };
+
+    // 注册录制对象观测器
+    mediaRecorder.SetMediaRecorderObserver(observer);
+
+    // 开始录制
+    // 创建 MediaRecorderConfiguration 对象
+    var config = new MediaRecorderConfiguration
+        {
+            // 设置录制配置
+            // 例如，设置录制文件路径和格式
+            storagePath = "D:\\PICC\\example.mp4"
+        };
+    mediaRecorder.StartRecording(config);
+} 
+```
+这是我屏幕录制的触发写法，哪里没写对，为啥没有录下来呢？
+[2025-09-17 14:26:00.979] [32628] [info] [iris_rtc_media_recorder_impl.cc:41] api name MediaRecorder_startRecording ret 0 result {"result":-1}
+
+Reply: 您好，可以参考下我们 [api-example](https://github.com/Shengwang-Community/API-Examples/tree/main/windows/APIExample/APIExample/Advanced/MediaRecorder)里的相关示例来实现。
+
+---
+# ID: 37202
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 屏幕共享：按照文档，调用RtcEngine的startScreenCapture方法，返回错误码 -157
+
+Reply: 您好，157 是模块没有找到的报错，请检查下有没有裁剪调屏幕共享的 aar 或者 so，以及音频包也是无法使用屏幕共享的，请确保使用了完整的 full 包。
+
+---
+
+# ID: 37204
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.5.1
+
+Request Type: 集成问题咨询
+
+Request Description: 在直播间，有用户需要专属连麦，专属连麦就是不能让其他用户听到主播和用户的音频。使用频道的分组功能来实现，问下文档在哪里
+
+Reply: 您好，这个属于业务需求，您业务上自行保证频道只有 2 个人加入就行了，可以自行限制 1v1 房间的频道名命名方式，以及当频道内人数为 2 以后就不再让其他用户加入。
+也可以参考下[1v1 私密房](https://doc.shengwang.cn/doc/one-to-one-live/android/custom-signaling/landing-page)文档，搭配第三方SDK 来实现。
+
+---
+# ID: 37205
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.5.2
+
+Request Type: 集成问题咨询
+
+
+Request Description: 
+```dart
+Future<void> joinChannelEx(
+    {required String token,
+    required RtcConnection connection,
+    required ChannelMediaOptions options});
+```
+
+文档描述中说可以加入多个频道，但是在集成的sdk中没有看到 joinChannelEx 方法呢
+
+Reply: 您好，可以直接参考 [flutter 加入多频道的 Demo](https://github.com/AgoraIO-Extensions/Agora-Flutter-SDK/blob/main/example/lib/examples/advanced/join_multiple_channel/join_multiple_channel.dart)。
+底层原理和 Native 是一样的，可以参考 Native 的文档。
+
+---
+# ID: 37206
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 在我们业务平台需要进行计费，使用声网的RTC服务，如何来精确的计算用户观看视频的真实时长？ 声网是否有提供成熟的方案？
+
+Reply: 您好，声网的计费虽然是按照订阅时长和集合分辨率计算的，但没有办法直接获取每个用户的观看时长。可以参考下我们的[计费策略](https://doc.shengwang.cn/doc/rtc/flutter/billing/billing-strategy)，建议您不要依赖我们的计费逻辑，自行实现属于自己的业务计费规则，这样最准确。
+
+---
+# ID: 37207
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.4.0
+
+Request Type: 其他问题
+
+Request Description: 上架时提示声网超范围获取手机信息
+APP在运行时，存在以下违规行为: 1、未见向用户告知且未经用户同意，在后台状态下，APP存在收集“DHCP”等信息的行为，非服务所必需且无合理应用场景，超出与收集个人信息时所声称 的目的具有直接或合理关联范围 
+2、未见向用户告知且未经用户同意，在静默状态下，APP存在收集“DHCP”等信息的行为，非服务所必需且无合理应用场景，超出与收集个人信息时所声称 的目的具有直接或合理关联范围
+这个要怎么处理
+
+Reply: 您好，请问目前在用的是什么版本 SDK？DHCP 问题我们再最新的 4.6.0 上已经做过修复了，可以尝试用新版本 SDK 来上架。
+
+---
+# ID: 37208
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.5.2
+
+Request Type: 其他问题
+
+Request Description: 安卓手机连接蓝牙设备，会出现识别不到蓝牙设备的麦克风，然后去使用手机麦克风的问题。 这边有办法可以一直使用设备的麦克风而不是手机的麦克风吗？
+
+Reply: 您好，听起来是蓝牙协议没走 hfp 导致的，麻烦提供下复现问题时的 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)，人工工程师稍后为您解答。
+
+---
+
 # ID: 37182
 
 SDK Product: RTC
@@ -2049,7 +2262,7 @@ Request Type: 集成问题咨询
 
 Request Description: 连接蓝牙后，实测发现音频采集仍然是从手机麦克风采集，如何让从蓝牙采集音频流？
 
-Reply: 您好，听起来是蓝牙协议没走 a2dp 导致的，麻烦提供下复现问题时的 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)，人工工程师稍后为您解答。
+Reply: 您好，听起来是蓝牙协议没走 hfp 导致的，麻烦提供下复现问题时的 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)，人工工程师稍后为您解答。
 
 ---
 
