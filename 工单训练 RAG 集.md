@@ -1,4 +1,165 @@
 
+# ID: 37215
+
+SDK Product: RTC
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 昨天使用了声网的云端录制，这是相关日志，为什么在一个程序里，会出现这种情况呢？前面生成了sid，后面结束录制的时候，给了日志，未找到sid。可以帮忙看下吗？
+```log
+2025-09-17 16:22:30,912 - agora_rtc_access.agora_recoder.acquire_resource - INFO - 资源获取成功！resourceId: xxx
+2025-09-17 16:22:31,354 - agora_rtc_access.agora_recoder.start_recording - INFO - 录制启动成功！sid: 993ba05b7a4318557e17288b067884df
+2025-09-17 16:22:31,354 - agora_rtc_access.agora_recoder.cloud_recorder - INFO - 云录制启动成功，resource_id: xxx, sid: 993ba05b7a4318557e17288b067884df
+XXXXXXXXXXXXX（中间省略一些业务日志）
+2025-09-17 16:41:08,391 - agora_rtc_access.agora_recoder.stop_recording - INFO - 录制停止成功
+2025-09-17 16:41:08,392 - agora_rtc_access.agora_recoder.get_record_file_url - WARNING - 未找到sid
+2025-09-17 16:41:08,393 - agora_rtc_access.agora_recoder.cloud_recorder - WARNING - 未能获取到录制文件URL
+```
+
+
+Reply: 您好，可以关注下 NCS 事件 31,31 事件上传完毕以后会直接给文件地址。
+停止录制没有返回 sid 的原因大概率是 stop 请求的结果不是 200，sid 等响应字段只有 200 的时候才会返回，可以参考[停止云端录制](https://doc.shengwang.cn/doc/cloud-recording/restful/cloud-recording/operations/post-v1-apps-appid-cloud_recording-resourceid-resourceid-sid-sid-mode-mode-stop)。
+
+---
+
+# ID: 37217
+
+SDK Product: RTC
+
+SDK Platform: Unity
+
+SDK Version: 4.5.1
+
+Request Type: 其他问题
+
+Request Description:         
+```c#
+public override bool OnRecordAudioFrame(string channelId, AudioFrame audioFrame)
+        {
+            Debug.Log("OnRecordAudioFrame-----------");
+            // 获取经过3A处理的float[]数据
+            // 复制原始音频数据
+            byte[] rawBufferCopy = new byte[audioFrame.RawBuffer.Length];
+            System.Buffer.BlockCopy(audioFrame.RawBuffer, 0, rawBufferCopy, 0, audioFrame.RawBuffer.Length);
+            var floatArray = AudioRecordingManager.ConvertByteToFloat16(rawBufferCopy);
+
+            lock (_AudioRecordingData._audioBuffer)
+            {
+                _AudioRecordingData._audioBuffer.Put(floatArray);
+                _AudioRecordingData._writeCount += floatArray.Length;
+                _AudioRecordingData._count++;
+            }
+            
+            return true;
+        }
+```
+
+通过获取麦克风声音，然后手机扬声器播放，麦克录制声音时会持续录制到扬声器的声音，都启用功能，还是会有
+
+
+Reply: 您好，请问您是想获取麦克风采集的裸数据，但实际会获得扬声器外放的声音是吗？裸数据在 3A 处理前，拿到的就是没有经过处理的信号，有其他声音也是预期内的。请问您这边是什么场景什么需求呢？
+
+---
+
+# ID: 37219
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 我想问一下， 怎么集成到sip里面去做外呼机器人，我现在集成后没有声音，是哪里出现的问题，需要怎么对接进来这个音频。
+
+Reply: 您好，convoAI 的 Restful 接口调用以后是往指定 RTC 频道里加一个智能体来互通，如果要和智能体说话，就需要先加入 RTC 频道发流。请问您这个 SIP 是什么平台？可以集成我们的客户端 SDK 吗？
+
+---
+# ID: 37220
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 其他问题
+
+Request Description: 屏幕共享目前写死了一个固定的ID，容易出现ID冲突的现象，想问下这个ID值最大限制的多大呢
+
+Reply: 您好，您是问这个屏幕共享用的 UID 有什么限制吗？这里的 uid 和频道里其他用户的限制一样，参考 [join](https://doc.shengwang.cn/api-ref/rtc/javascript/interfaces/iagorartcclient#join)里对于 uid 的定义，保证用 int 范围内的数字就行。
+
+---
+
+# ID: 37223
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 医生给患者端打视频电话，现象如下，附件是微信小程序打印收到的视频流参数
+1、医生端是原生APP，患者端使用微信小程序接通后，视频方向上下颠倒
+2、医生端和患者端都使用原生APP，视频方向正常
+
+需要帮忙解决小程序接通音视频，视频方向上下颠倒问题。
+
+Reply: 请问小程序是看别人画面颠倒还是看自己画面颠倒？用我们[小程序 Demo](https://doc.shengwang.cn/doc/rtc/mini-program/get-started/run-demo) 加频道的话看到的画面是正常的吗？
+
+---
+
+# ID: 37226
+
+SDK Product: RTM
+
+SDK Platform: Java
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 使用SDK生成的Token验证为已过期，使用Maven引入 ， 
+      <dependency>
+            <groupId>io.agora</groupId>
+            <artifactId>authentication</artifactId>
+            <version>2.1.3</version>
+        </dependency>
+生成的方法如下：
+```java
+   public static String generateRtmToken(ShengWangConfig config, String account) {
+        return new RtmTokenBuilder2().buildToken(config.getAppId(), config.getAppCertificate(), account, 7200);
+    } 
+```
+生成的Token在辅助工具-Token验证显示已过期，相差时间大概为6个小时。
+
+Reply: 您好，不建议用 maven 生成了，请用我们文档里给的仓库，clone 下来用里面的[AccessToken2 生成器](https://doc.shengwang.cn/doc/rtm2/javascript/user-guide/token/token-generation#accesstoken2-%E7%94%9F%E6%88%90%E5%99%A8%E4%BB%A3%E7%A0%81)代码脚本去生成即可。
+
+---
+# ID: 37227
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 我自己的音频不是麦克风的音频怎么做实时降噪 只要降噪功能 
+  输入 我自己的wav文件   输出AINS降噪后的wav文件
+
+Reply: 您好，我们的降噪不单独对外开放使用，请使用专门降噪的工具来实现这个需求。SDK 的降噪是通过识别采集参考信号进行降噪处理发到 RTC 频道内的，设计之初没有考虑过单独用来降噪输出文件过。
+
+---
+
 # ID: 37194
 
 SDK Product: RTC
