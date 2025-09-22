@@ -1,4 +1,178 @@
 
+---
+
+# ID: 37231
+
+SDK Product: RTC-Linux
+
+SDK Platform: Linux-C
+
+SDK Version: 4.4.30
+
+Request Type: 集成问题咨询
+
+Request Description: 1. 希望在linux(ubuntu)平台下实现相机画面到web端的实时传输
+2. web端demo已跑通
+3. c++端demo可以运行但无任何画面 收发有数据但无法传输正确的视频数据(通过h264文件读写的方式)
+问题: c++端应使用何种方式实现摄像头画面的正确推送，目前没有一个demo可以正常跑通
+
+Reply: 您好，
+1、[C++的 Demo](https://doc.shengwang.cn/doc/rtc-server-sdk/cpp/resources)里没有放视频文件供测试，可以从这里下载[测试文件](https://download.agora.io/demo/test/test_data_202408221437.zip)。确定 Demo 里脚本引用的文件存在可以被找到，这样读取以后就能发送到频道里去了。
+
+2、Linux 没有采集的说法，所以需要您自行获取视频音频原始数据，然后调用 SDK 里的发送接口发出去。Demo 只是演示如何从文件里拿到这些数据发出去，仅供参考。
+
+---
+# ID: 37232
+
+SDK Product: IM
+
+SDK Platform: Android
+
+SDK Version: 1.3.2
+
+Request Type: 集成问题咨询
+
+Request Description: 请教下，如果我要基于声网IM实现互联网问诊功能，一个IM用户(如userId为u123)可能创建2个问诊订单（分别为自己和家人），且指向同一个医生(userId为d456)。我想以订单编号作为IM会话标识，这样，即使两个问诊会话是独立，互不影响。现在IM收发消息时，是指向对方userId，那就会导致两个问诊的对话是在一个会话中。是否有解决方案？
+
+Reply: 您好，是不是发成群组或者聊天室消息了？应该用[私聊消息](https://im.shengwang.cn/docs/sdk/android/message_send_receive.html)传接收方的用户 ID，可以对照文档再检查下，如果还有问题，麻烦提供发送端、接收端的 [IM SDK 日志](https://im.shengwang.cn/docs/sdk/android/log.html)过来 。
+
+---
+
+# ID: 37234
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 4.3.2
+
+Request Type: 集成问题咨询
+
+Request Description: 之前发的sdk4.2.0，调用录制后分辨率需要调整成宽屏，不知道传参是什么，之前录制出来的视频宽度不够
+
+Reply: 您好，目前希望视频是 16:9 的横屏吗？如果频道里原始发出来的画面就是 9:16 的，那肯定会有黑边。
+
+---
+# ID: 37236
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 1.双方可以进行音频通话，一开始渲染视频页面可以，双方处在接听页面时，自己得屏幕不显示，可以看见对方的屏幕
+需要开通什么不
+
+Reply: 您好，如果要实现画中画的效果，建议用 Native 来实现，[Demo](https://doc.shengwang.cn/doc/rtc/android/get-started/run-demo) 里有画中画的示例，可以参考下。
+
+不过Web 的画中画需要您用浏览器原生接口自行实现，我们没有示例
+
+---
+
+# ID: 37244
+
+SDK Product: RTC
+
+SDK Platform: HarmonyOS
+
+SDK Version: 4.4.2
+
+Request Type: 集成问题咨询
+
+Request Description: 老师您好，想拿原始音频数据给后端生成实时字幕。但后端接收的音频采样格式是SAMPLE_FORMAT_S16LE	带符号的16位整数，小尾数。音频编码格式是pcm。现在拿到原始音频数据arraybuffer有点问题，没办法准确的识别出来，我看你们文档只能设置采样率。请问应该怎么解决
+
+Reply: 您好，音频裸数据拿出来默认就是 PCM，请问您这边需要什么格式？
+
+---
+
+# ID: 37250
+
+SDK Product: RTC
+
+SDK Platform: mini-app
+
+SDK Version: 2.6.5
+
+Request Type: 集成问题咨询
+
+Request Description: 小程序客户端如何监听用户是否已经离开频道
+
+Reply: 您好，小程序 clienton 事件里的 [stream-removed](https://doc.shengwang.cn/api-ref/rtc/mini-program/classes/client#on) 可以感知。
+
+---
+
+# ID: 37254
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.5.2
+
+Request Type: 效果不佳、不达预期
+
+Request Description:     
+```java
+RtcEngineConfig config = new RtcEngineConfig();
+            config.mContext = this;
+            config.mAppId = ConfigInfor.APPID;
+            config.mEventHandler = mRtcEventHandler;
+// 创建并初始化 RtcEngine
+            mRtcEngine = RtcEngine.create(config);
+            mRtcEngine.enableVideo();//视频
+            VideoEncoderConfiguration videoEncoderConfiguration = new VideoEncoderConfiguration();
+            videoEncoderConfiguration.codecType = VideoEncoderConfiguration.VIDEO_CODEC_TYPE.VIDEO_CODEC_H264;
+            videoEncoderConfiguration.orientationMode = VideoEncoderConfiguration.ORIENTATION_MODE.ORIENTATION_MODE_FIXED_PORTRAIT;
+            videoEncoderConfiguration.dimensions = VideoEncoderConfiguration.VD_840x480; // 降低分辨率
+            videoEncoderConfiguration.frameRate = 24; // 降低帧率
+            videoEncoderConfiguration.bitrate = 2500;  // 降低码率(单位kbps)
+            videoEncoderConfiguration.degradationPrefer = VideoEncoderConfiguration.DEGRADATION_PREFERENCE.MAINTAIN_FRAMERATE;  // 降低码率(单位kbps)
+            mRtcEngine.setVideoEncoderConfiguration(videoEncoderConfiguration);
+            // 设置音频配置文件
+            mRtcEngine.setAudioProfile(Constants.AUDIO_PROFILE_DEFAULT, Constants.AUDIO_SCENARIO_DEFAULT);
+            // 启用音量指示
+            mRtcEngine.enableAudioVolumeIndication(300, 100, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        JSONObject params = new JSONObject();
+        try {
+            // 设置 camera_rotation 参数
+            params.put("rtc.camera_rotation", 180);//旋转 到正常角度
+        } catch (JSONException e) {
+            e.fillInStackTrace();
+        }
+        mRtcEngine.setupLocalVideo(new VideoCanvas(svrLocal, VideoCanvas.RENDER_MODE_FIT, ConfigInfor.UID));
+// 开启本地预览
+        mRtcEngine.startPreview();
+        // 创建 ChannelMediaOptions 对象，并进行配置
+        ChannelMediaOptions options = new ChannelMediaOptions();
+// 设置用户角色为 BROADCASTER (主播) 或 AUDIENCE (观众)
+        options.clientRoleType = Constants.CLIENT_ROLE_AUDIENCE;
+// 设置频道场景为 BROADCASTING (直播场景)
+        options.channelProfile = Constants.CHANNEL_PROFILE_COMMUNICATION;
+
+// 发布麦克风采集的音频
+        options.publishMicrophoneTrack = true;
+// 发布摄像头采集的视频
+        options.publishCameraTrack = true;
+// 自动订阅所有音频流
+        options.autoSubscribeAudio = true;
+// 自动订阅所有视频流
+        options.autoSubscribeVideo = false;
+
+```
+
+看一下代码 有没有什么问题    一对一通话的时候没有问题  多人通话的时候就没有声音了 
+
+Reply: 您好，不推荐使用CHANNEL_PROFILE_COMMUNICATION 以及在CHANNEL_PROFILE_COMMUNICATION 下配置身份为观众，建议修改 channelProfile 用 live，clientRoleType 用 broadcaster再试下。
+最佳实践可以参考我们 [Demo](https://doc.shengwang.cn/doc/rtc/android/get-started/run-demo)
+
+---
+
 # ID: 37215
 
 SDK Product: RTC
