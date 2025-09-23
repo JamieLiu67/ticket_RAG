@@ -1,4 +1,195 @@
 
+# ID: 37284
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 集成问题咨询
+
+Request Description: 问题概述
+类型: Python Server SDK + Web SDK 双工通信异常
+频道名: solidchannel ✅ (确认双方均在同一频道)
+
+核心现象:
+Python Bot (UID: 12345) 与 Web 用户能进入同一频道，但 Web 无法检测到 Bot，导致无法建立双向音频通信。
+
+Python Server 配置
+```python
+conn_config = RTCConnConfig(
+    client_role_type=ClientRoleType.CLIENT_ROLE_BROADCASTER,
+    channel_profile=ChannelProfileType.CHANNEL_PROFILE_LIVE_BROADCASTING,
+    auto_subscribe_audio=1,
+    auto_subscribe_video=1,
+    audio_subs_options=AudioSubscriptionOptions(
+        pcm_data_only=1, sample_rate_hz=16000, number_of_channels=1
+    )
+)
+
+publish_config = RtcConnectionPublishConfig(
+    audio_profile=AudioProfileType.AUDIO_PROFILE_DEFAULT,
+    audio_scenario=AudioScenarioType.AUDIO_SCENARIO_AI_SERVER,
+    is_publish_audio=True,
+    is_publish_video=False,
+    audio_publish_type=AudioPublishType.AUDIO_PUBLISH_TYPE_PCM
+)
+
+connection.connect(app_id, channel_name, "12345")  # Bot UID
+connection.publish_audio()
+```
+
+Web 前端配置
+```javascript
+const client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
+await client.join(appId, "solidchannel", null, "user_1758546836734");
+
+client.on("user-published", handleUserPublished);
+client.on("user-joined", handleUserJoined);
+```
+
+Reply: 您好，[初始化服务端 SDK](https://doc.shengwang.cn/api-ref/rtc-server-sdk/python/python-api/agoraservice#initialize) 的时候不要配置用 stringuid，然后在conenctio里面传入的是对应 int 类型的字符串去加频道，需要先保证 RTC 频道内都是 int 类型 uid。
+
+---
+
+# ID: 37287
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description:  当我手机使用观众进入频道. 设备使用主播进入频道,  当我业务上, 把手机端的角色切成主播的时候, 看文档SDK 会自动调用 muteLocalAudioStream 和 muteLocalVideoStream 修改发布音视频流的状态。 我也设置了  setupLocalVideo  enableVideo ,日志显示 角色也切换成功了,   但是本地的视频视图始终不显示
+
+如果是观众,切换到主播身份需要哪些配置, 当前我的设置如下:
+```java
+        flLocalVideo.removeAllViews()
+        flLocalVideo.addView(
+            localSurfaceView,
+            ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+        )
+        rtcEngine?.setupLocalVideo(VideoCanvas(localSurfaceView, Constants.RENDER_MODE_HIDDEN, getIntUserId()))
+        rtcEngine?.setDefaultAudioRoutetoSpeakerphone(true)
+       var result= rtcEngine?.setClientRole(Constants.CLIENT_ROLE_BROADCASTER)
+        rtcEngine?.enableVideo()
+        rtcEngine?.enableLocalAudio(true)
+        rtcEngine?.enableLocalVideo(true)
+```
+
+Reply: 您好，要看自己画面需要 enableLocalVideo+setupLocalVideo+startpreview，请问您有执行吗？
+建议参考下我们的 [Demo](https://doc.shengwang.cn/doc/rtc/android/get-started/run-demo)。
+
+---
+
+# ID: 37289
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.6.0
+
+Request Type: 其他问题
+
+Request Description: 你好，我们在声网Channel 收发消息是遇到一个问题想咨询下。
+我们的使用方式大体如下，Server创建Channel后客户端角色和Server角色分别进入Channel，Server会往客户端推送StreamMessage消息。我们实际测试发现，偶然会出现这样的情况：某一条消息Server只发送一次，但是客户端会在几毫秒内多次重复收到这个消息。我们排查了Server log，Server缺少只推送了一次。
+
+不知道跟客户端设置`agoraKit.createDataStream(&streamId, reliable: true, ordered: true)`有无关系？
+
+我们想咨询下发生这种情况可能的原因？有无解决方案？
+
+Reply: 您好。推测是发送的时候有业务没写好导致了重复发送的情况，您可以用我们 [datastream Demo](https://github.com/Shengwang-Community/API-Examples/tree/main/iOS/APIExample/APIExample/Examples/Advanced/CreateDataStream) 尝试复现下，看看会不会有同样的情况。
+
+---
+# ID: 37290
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 这里有声网提供的SDK libagora-rtc-sdk.so是glibc编译的，但是我们用的SDK是musl,不匹配导致不能编译，需要声网用海思的工具链编译SDK出一个包。
+
+Reply: 您好，可以参考下我们[下载页面](https://doc.shengwang.cn/doc/rtsa/c/resources)的命名规则，挑选 musl 的 SDK 来用。
+
+---
+
+# ID: 37292
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 视频通话回音很大 自己能听到自己发出的声音 如何解决 官网的demo就不会有回音 
+
+Reply: 您好，现在用的 SDK是最新的吗？可以升级到 4.24 再试试。以及您这边具体是什么场景和用法？最后通话用的浏览器是什么浏览器呢？
+
+---
+
+# ID: 37295
+
+SDK Product: Flexible-classroom
+
+SDK Platform: Web
+
+SDK Version: 2.9.40
+
+Request Type: 集成问题咨询
+
+Request Description: 由于想问灵动会议相关文档，但是选项只能选择灵动课程；
+我需要知道灵动会议web端的集成文档，以及试例
+
+Reply: 您好，灵动会议不提供自服务集成，有集成需求可以电话联系销售开始对接 400 6326626
+
+---
+
+# ID: 37303
+
+SDK Product: RTM
+
+SDK Platform: JavaScript
+
+SDK Version: 2.1.5
+
+Request Type: 线上报错
+
+Request Description: 提示RtmInvalidArgumentError: Error Code -15005 - History service is not available 历史消息不可用，之前没正式付费之前好的，
+
+Reply: 您好，麻烦提供下出现问题的 [RTM日志](https://doc.shengwang.cn/doc/rtm2/javascript/error-codes)。
+如果是 Web 端，可以提供下出现问题的 appid、userid、问题复现时间点，人工工程师稍后看下数据上报，同时也麻烦自查下目前在在用的 appid，在声网 console 里是否开启了历史消息功能的开关，新 appid 需要手动开通的。
+
+---
+# ID: 37304
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.5.2
+
+Request Type: 集成问题咨询
+
+Request Description: 想问一下flutter平台中的鸿蒙example如何成功运行，我这里遇到了AgoraRtcSdk.har包找不到的问题，把三个rar压缩后的har包也是损坏的，或者给我提供一个完整的har包，项目路径：https://gitcode.com/xilei123456/flutter/tree/main/agora_rtc_engine
+
+Reply: 您好，目前我们的 flutter SDK 没有完全适配鸿蒙 SDK，鸿蒙官方已经停止了适配 flutter，所以暂无计划上线正式版。
+如果您考虑鸿蒙原始 SDK 开发的话，可以用我们的[鸿蒙原生 SDK](https://doc.shengwang.cn/doc/rtc/harmonyos/landing-page)
+
+---
+
 # ID: 37259
 
 SDK Product: RTC
