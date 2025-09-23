@@ -1,4 +1,95 @@
 
+# ID: 37259
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 其他版本
+
+Request Type: 商务问题
+
+Request Description: 声网的插件中有一条数美的视频审核 请问这个怎么开通 我们已经买了数美的相关服务。
+
+Reply: 您好，云市场插件使用需要先联系商务来对接，您可以先联系您的专属对接商务，如果没有的话可以电话沟通：400 632 6626
+
+---
+
+# ID: 37264
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 用量是否可以设置提醒？比如用到100000分钟 给我短信提醒？
+
+Reply: 您好，我们会在用量到达特定百分比的时候发送短信服务。
+
+如果您有更多的RTE用量需求，您可以选择购买预付费包月套餐和加油包，有12万分钟、40万分钟以及150万分钟三档供你选择，最高可享受8折优惠。
+您可以前往声网控制台左侧边栏的“套餐包”下的“预付费套餐包”页面进行购买。具体路径为：控制台 > 套餐包 > 预付费套餐包。
+
+如果您需要更多关于预付费套餐包的信息，请参考我们的[计费文档](https://doc.shengwang.cn/doc/rtc/android/billing/billing-strategy )或者电话咨询400 6326626。
+
+---
+
+# ID: 37270
+
+SDK Product: RTC
+
+SDK Platform: mini-app
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 加入渠道失败，token和UID都没有问题：
+```json
+{"action":"join","role":"broadcaster","appId":"xxx","customAudioCodec":null,"key_vocs":"007eJxTYDj/WPJq6KSiPEneqn0fw787z7ukekFVacddFfHzPsI+okoKDIZJRmnmSSkmJiZJqSZGSWmJpibGhgZGyUlppolJZuYpzLsvZHCwMzCsZF/4i5GBkYEFiEF8JjDJDCZZwKQCg6mpuZllqoWZUbJBoolJmkmSpYWlgYmlpYFlqnFSkrElG4OpgaWZpREApNwmEQ","key_vos":"007eJxTYDj/WPJq6KSiPEneqn0fw787z7ukekFVacddFfHzPsI+okoKDIZJRmnmSSkmJiZJqSZGSWmJpibGhgZGyUlppolJZuYpzLsvZHCwMzCsZF/4i5GBkYEFiEF8JjDJDCZZwKQCg6mpuZllqoWZUbJBoolJmkmSpYWlgYmlpYFlqnFSkrElG4OpgaWZpREApNwmEQ","channel_name":"55769e862c0a44f4b989049909e3bb39","uid":"509692","vid":"xxx","device":"iPhone 12/13 (Pro)","os":"iOS 10.0.1","version":"2.6.1","clientType":"wechat","audio_only":false,"uidType":0}}
+```
+
+
+Reply: 您好，token 本身没问题的话，大概率是本地传值有地方被写死了或者类型不对导致的，可以自行检查下。
+
+---
+
+# ID: 37277
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 我这边直播开播后，但是观众和后台看不到直播内容，官方有看到直播后推流吗
+
+Reply: 您好，请问您现在用的是 RTC SDK 吗？RTC 需要双方用相同的 appid ，不同的 uid 加入相同频道才能互通，请确认频道信息匹配。
+以及关注下各自的[频道连接状况](https://doc.shengwang.cn/doc/rtc/android/basic-features/channel-connection)，确保真的加入了频道。
+可以检查下有没有错误码打印，如果自查无果，请提供双方 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)。
+
+---
+
+# ID: 37279
+
+SDK Product: RTC
+
+SDK Platform: HarmonyOS
+
+SDK Version: 4.4.0
+
+Request Type: 集成问题咨询
+
+Request Description: 云录制超过一个小时，停止时找不到资源，查看api说是要更细stsToken，参见图1
+后台使用javasdk进行开始录制，并打算使用java后台更新这个stsToken，但是java api中没有找到如何更新的方法，见图二图三
+麻烦提供一下更新stsToken的java样例
+
+Reply: 您好，云录制没有办法中途 renew token，建议在 start 的时候直接分配有效时间长一点的 token。
+
 ---
 
 # ID: 37231
@@ -11,7 +102,8 @@ SDK Version: 4.4.30
 
 Request Type: 集成问题咨询
 
-Request Description: 1. 希望在linux(ubuntu)平台下实现相机画面到web端的实时传输
+Request Description: 
+1. 希望在linux(ubuntu)平台下实现相机画面到web端的实时传输
 2. web端demo已跑通
 3. c++端demo可以运行但无任何画面 收发有数据但无法传输正确的视频数据(通过h264文件读写的方式)
 问题: c++端应使用何种方式实现摄像头画面的正确推送，目前没有一个demo可以正常跑通
