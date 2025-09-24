@@ -1,4 +1,120 @@
 
+# ID: 37319
+
+SDK Product: RTM
+
+SDK Platform: Java
+
+SDK Version: 其他版本
+
+Request Type: 线上报错
+
+Request Description: 使用JavaSDK ，发送文本消息。  public native int sendStreamMessage(int stream_id, String data, int length);
+连续多次返回错误码  -12  。
+
+Reply: 您好，错误码 12 代表接口调用太过频繁，可以降低调用接口的频率再试试。
+
+---
+# ID: 37320
+
+SDK Product: RTM
+
+SDK Platform: Java
+
+SDK Version: 2.1.10
+
+Request Type: 集成问题咨询
+
+Request Description: 怎么接入sdk，maven地址下载不到东西了
+
+Reply: 您好，maven 的引用应该是implementation 'io.agora:agora-rtm:2.2.5' 这样写的，可以参考[构建项目](https://doc.shengwang.cn/doc/rtm2/android/get-started/quick-start#%E6%9E%84%E5%BB%BA%E9%A1%B9%E7%9B%AE)
+如果是服务端集成 SDK，可以参考[Agora-RTM2-QuickStart-Linux-Java](https://github.com/AgoraIO/RTM2/blob/main/Agora-RTM2-QuickStart-Linux-Java/pom.xml#L21)，写成
+```xml
+<groupId>io.agora</groupId>
+<artifactId>rtm-java</artifactId>
+<version>2.2.5</version>
+```
+
+---
+# ID: 37321
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.5.0
+
+Request Type: 线上报错
+
+Request Description: 音量键控制音量大小没有效果，其他机型暂未发现问题。
+手机型号 iPhone 16 pro ， iOS26
+
+Reply: 您好，可以尝试重启设备再看下是否会复现，如果能够稳定复现，麻烦提供对应设备的 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)，并说明复现的具体时间点，人工工程师稍后跟进为您解答。
+
+---
+# ID: 37322
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 4.4.0
+
+Request Type: 其他问题
+
+Request Description: 我用本地的X86demo加频道，无论我token 写对还是写错 打印日志一样 完全看不出是推流是否成功
+
+Reply: 您好，看您工单分类选的是 Windows，但实际描述像是 Linux SDK，请确认下现在在用的平台。
+判断是否加入频道的状况可以参考[频道连接状态管理](https://doc.shengwang.cn/doc/rtc/windows/basic-features/channel-connection)，需要确保在频道内才能推流.
+要确认本端发流状态的话可以监听[onVideoPublishStateChanged](https://doc.shengwang.cn/api-ref/rtc/windows/API/toc_video_basic#onVideoPublishStateChanged)回调。
+
+---
+
+# ID: 37325
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 想问下你们延迟最低的ASR+LLM+TTS 比如阿里云的ASR minimax的TTS  具体是使用对应厂商的什么服务啊 能给出他们官方定义的链接和服务名吗
+
+Reply: 您好，我们没有阿里云的 ASR ，这些服务名称您直接找第三方厂商沟通就行了，比如找腾讯咨询 ASR 如何使用，找 minimax 咨询 TTS 如何使用。这些第三方服务的 ak sk 都需要在第三方平台注册以后获得。
+评测延迟可以在[AI 模型评测平台](https://www.shengwang.cn/duihua/benchmark/overview?region=Shanghai)里查看。
+
+---
+
+# ID: 37328
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 换成微软的asr之后没反应。
+agentid: A42AJ52RJ26EA36NN63HT44VK46VF55J
+
+微软参数：
+```json
+		Asr: &req.JoinPropertiesAsrBody{
+			Language: "zh-CN",
+			Vendor:   req.ASRVendorMicrosoft,
+			Params: req.ASRMicrosoftVendorParam{
+				Key:    "b7b004024432464d96efac30fb6d0a40",
+				Region: "eastus2",
+			},
+		},
+```
+
+Reply: 您好，可以先自查下有没有让 convoAI 订阅错远端 uid 的情况，如果自查无果可以等候人工工程师稍后跟进解答。
+
+---
 # ID: 37284
 
 SDK Product: RTC
@@ -2792,6 +2908,7 @@ SDK Version: 4.3.0
 Request Type: 集成问题咨询
 
 Request Description: 我在php配置开启录制
+```php
 'transcodingConfig' => [
                         'width' => 720.0,
                         'height' => 1280.0,
@@ -2811,7 +2928,7 @@ Request Description: 我在php配置开启录制
                             ]
                         ]
                     ],
-
+```
 
 一直报：'start: width type mismatch or missing under layoutConfig!'，这是什么原因
 
@@ -2859,11 +2976,14 @@ token是这个
 uid:194
 
 这是相关的日志可以参考
+```log
 flutter: 2025-09-01T17:03:20.999456 [Level.warning] [Agora] [onLocalAudioStateChanged] 本地音频变化：state:LocalAudioStreamState.localAudioStreamStateRecording;  reason:LocalAudioStreamReason.localAudioStreamReasonOk
 flutter: 2025-09-01T17:03:21.026670 [Level.warning] [Agora] [onLocalAudioStateChanged] 本地音频变化：state:LocalAudioStreamState.localAudioStreamStat
 flutter: 2025-09-01T17:03:22.222248 [Level.warning] [Agora] [onRemoteAudioStateChanged] connection: {channelId: Test580, localUid: 194} remoteUid: 202 state: RemoteAudioState.remoteAudioStateStopped reason: RemoteAudioStateReason.remoteAudioReasonRemoteMuted elapsed: 0
 [2025-09-01 17:03:22.223][12473609][I][iris_rtc_api_engine.cc:438] api name RtcEngine_enableAudioVolumeIndication_39794a0 params "{"interval":1000,"smooth":1,"reportVad":true}"
 [2025-09-01 17:03:22.224][12473609][I][iris_rtc_api_engine.cc:504] api name RtcEngine_enableAudioVolumeIndication_39794a0 result 0 outdata {"result":0}
+```
+
 
 Reply: 您好，听起来是蓝牙协议没走 a2dp 导致的，麻烦提供下复现问题时的 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)，人工工程师稍后为您解答。
 
@@ -2917,7 +3037,7 @@ SDK Version: 4.24.x
 
 Request Type: 集成问题咨询
 
-Request Description: 我们在评估esp32集成webrtc、we b r t m的可行性，麻烦请问，esp32性能是否可以集成这个
+Request Description: 我们在评估esp32集成webrtc、webrtm的可行性，麻烦请问，esp32性能是否可以集成这个
 
 Reply: 您好，嵌入式设备有 RTSA SDK，是专用的 RTC SDK，参考[RTSA 文档](https://doc.shengwang.cn/doc/rtsa/c/landing-page)
 RTSA 设备可以和 Web 互通的，只不过 ESP32 的 SDK 我们音频编码只适配了 G722 
@@ -3026,11 +3146,6 @@ Request Type: 集成问题咨询
 
 Request Description: swift 的 RTM没有回调。
 按照demo的例子写的，RTM login成功，RTC加入成功 ，subscribe channel成功，但是无法收到didReceiveMessageEvent等任何回调。使用提供的ConversationAIApiImpl代码也是没有收到回调。
-token: 007eJxTYOiNUEpjYpx1UVer6EvF4Y/dtga3//ndNdBe2n1o+v1W81AFhtQ0S/O0VAOzlFTLZJMUAyNLA+Ok1LREEzMTs8SURCNzvyPrMhb0MDB8jXrLysTAyMACxCA+E5hkBpMsYJKHoSS1uCQ+OSMxLy81h5XB0AAIQFogGqACANiXK6M=
-chanelname:test_channel
-userid: 10000
-
-附件中是几个实现类文件，因为不能直接上传源码只能压缩包了
 
 Reply: 您好，didReceiveMessageEvent 需要频道里有远端在发消息才会触发，如果只有一个人的话是不触发的
 如果确认两个用户都订阅了频道发消息还收不到，可以拿一下双端 [SDK 日志](https://doc.shengwang.cn/doc/rtm2/swift/error-codes)过来人工工程师稍后分析。
@@ -3143,7 +3258,7 @@ SDK Version: 4.5.1
 Request Type: 集成问题咨询
 
 Request Description: 调用扬声器功能不起作用 
-```
+```java
 if(isVoice){
                 engine?.setRouteInCommunicationMode(3)
 //               val status= engine?.setEnableSpeakerphone(true)
@@ -3157,7 +3272,7 @@ if(isVoice){
 ```
 
 status 返回值也只是0
-```
+```java
 override fun onAudioRouteChanged(routing: Int) {
             super.onAudioRouteChanged(routing)
             println("当前通话路由：$routing")
@@ -3209,17 +3324,11 @@ Request Type: 线上报错
 Request Description: 1. 视频答题，进入时报错
 2. 显示 AgoraRTCError CAN_NOT_GET_GATEWAY_SERVER: flag: 4096, message: AgoraRTCError CAN_NOT_GET_GATEWAY_SERVER: no active status
 3. 控制台输出
+```log
 14:41:26:383 Agora-SDK [WARNING]: AgoraRTCError CAN_NOT_GET_GATEWAY_SERVER: no active status
 data: {"desc":"no active status","retry":false,"csIp":"139.196.174.91"}
 index-BFxqu7au.js:45 14:41:26:387 Agora-SDK [WARNING]: [client-ca0d7] multi unilbs https://webrtc2-4.ap.sd-rtn.com/api/v2/transpond/webrtc?v=2 failed, flag: 4096, message: AgoraRTCError CAN_NOT_GET_GATEWAY_SERVER: no active status, retry: false
-index-BFxqu7au.js:45 14:41:26:467 Agora-SDK [WARNING]: AgoraRTCError CAN_NOT_GET_GATEWAY_SERVER: no active status
-data: {"desc":"no active status","retry":false,"csIp":"103.228.162.61"}
-index-BFxqu7au.js:45 14:41:26:469 Agora-SDK [WARNING]: [client-ca0d7] multi unilbs https://webrtc2-ap-web-3.agora.io/api/v2/transpond/webrtc?v=2 failed, flag: 4096, message: AgoraRTCError CAN_NOT_GET_GATEWAY_SERVER: no active status, retry: false
-index-BFxqu7au.js:45 14:41:26:470 Agora-SDK [ERROR]: [client-ca0d7] join number: 1, Joining channel failed, rollback AgoraRTCException: AgoraRTCError CAN_NOT_GET_GATEWAY_SERVER: flag: 4096, message: AgoraRTCError CAN_NOT_GET_GATEWAY_SERVER: no active status
-    at m_ (index-BFxqu7au.js:64:39023)
-    at Mu.E.gatewayInfo.q.joinChooseServer.role (index-BFxqu7au.js:64:36439)
-    at async index-BFxqu7au.js:44:24322
-
+```
 
 Reply: 您好，AgoraRTCError CAN_NOT_GET_GATEWAY_SERVER: no active status 表示您的 appid 目前处于停用状态，建议登录声网 console 检查下您的账户情况。
 
@@ -3530,24 +3639,9 @@ SDK Version: 2.1.12
 Request Type: 线上报错
 
 Request Description: 8月6日之后发送消息之前一直正常，8月6日开始就一直报下面这个错误。
+```log
 java.lang.RuntimeException: send message to channel failure: RTM ERROR: publish failed, error code: NOT_LOGIN, reason: Preform operation without login RTM service.
-	at com.eastedu.rtm.service.impl.AgoraImpl$6.onFailure(AgoraImpl.java:259)
-	at io.agora.rtm.internal.RtmClientImpl.processFailureCallback(RtmClientImpl.java:459)
-	at io.agora.rtm.internal.RtmClientImpl.publish(RtmClientImpl.java:325)
-	at com.eastedu.rtm.service.impl.AgoraImpl.sendChannelMessage(AgoraImpl.java:246)
-	at com.eastedu.balance.live.infrastructure.config.rtm.RtmClient.sendMessage(RtmClient.java:100)
-	at com.eastedu.balance.live.domain.service.impl.RtmServiceImpl.sendMessage(RtmServiceImpl.java:33)
-	at jdk.internal.reflect.GeneratedMethodAccessor40.invoke(Unknown Source)
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
-	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:355)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
-	at org.springframework.aop.interceptor.AsyncExecutionInterceptor.lambda$invoke$0(AsyncExecutionInterceptor.java:113)
-	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
-	at java.base/java.lang.Thread.run(Thread.java:833)
+```
 
 Reply: 您好，日志打印显示 NOT_LOGIN 这表示您在调用 publish 接口的时候处于登出 RTM 系统的状态，可能是 token 过期（token 最大有效期 24 小时，具体有效时长取决于生成 token 时的有效时间字段）或者网络波动之类的原因导致了这个情况。
 建议参考[连接管理基础](https://doc.shengwang.cn/doc/rtm2/android/user-guide/link/link-basic)，监听客户端连接状态的回调，确保在调用 publish 前保证处于登录 RTM 的状态。
@@ -3660,7 +3754,11 @@ Request Description: flutter pubspec.yaml中集成这两个库
 agora_rtc_engine: ^6.5.2
 agora_rtm: ^2.2.2 
 
-iOS 工程中pod install 报错[!] The 'Pods-Runner' target has frameworks with conflicting names: aosl.xcframework.
+iOS 工程中pod install 报错
+```
+[!] The 'Pods-Runner' target has frameworks with conflicting names: aosl.xcframework.
+```
+
 
 Reply: 您好，同时集成 RTC 和 RTM 出现 aosl 冲突可以参考这篇文档解决。
 [如何处理同时集成 RTM SDK 和 RTC SDK 遇到库冲突问题？](https://doc.shengwang.cn/faq/integration-issues/rtm2-rtc-integration-issue)
@@ -3717,27 +3815,16 @@ SDK Version: 4.4.150.5
 
 Request Type: 崩溃（闪退、卡死）
 
-Request Description: 集成调用本地服务端录制，代码执行到agoraMediaRtcRecorder.joinChannel(token, channelName, userId);服务直接崩了，
-打印日志如下：2025-08-22 11:06:54.595 [http-nio-7005-exec-1] INFO  c.d.c.c.SWController - [start,302] - 收到开始录制请求 -> 频道: 张恒-李四-邻里纠纷-2025-08-22 08:57:12, 用户ID: 1, Token前缀: 007eJxTY
+Request Description: 集成调用本地服务端录制，代码执行到`agoraMediaRtcRecorder.joinChannel(token, channelName, userId);`服务直接崩了，
+打印日志如下：
+```log
+2025-08-22 11:06:54.595 [http-nio-7005-exec-1] INFO  c.d.c.c.SWController - [start,302] - 收到开始录制请求 -> 频道: 张恒-李四-邻里纠纷-2025-08-22 08:57:12, 用户ID: 1, Token前缀: 007eJxTY
 2025-08-22 11:06:54.676 [http-nio-7005-exec-1] INFO  c.d.c.c.SWController - [start,321] - AgoraRecorderManager 初始化成功，录制路径: /home/yingzhen/dispute/uploadPath/video
 2025-08-22 11:06:54.676 [http-nio-7005-exec-1] INFO  c.d.c.d.v.AgoraRecorderManager - [startRecording,95] - 开始订阅音频流
 2025-08-22 11:06:54.677 [http-nio-7005-exec-1] INFO  c.d.c.d.v.AgoraRecorderManager - [startRecording,98] - 开始订阅视频流
 2025-08-22 11:06:54.678 [http-nio-7005-exec-1] INFO  c.d.c.d.v.AgoraRecorderManager - [startRecording,104] - 配置录制参数，存储路径: /home/yingzhen/dispute/uploadPath/video
 2025-08-22 11:06:54.680 [http-nio-7005-exec-1] INFO  c.d.c.d.v.AgoraRecorderManager - [startRecording,109] - 即将加入频道 -> 频道名: 张恒-李四-邻里纠纷-2025-08-22 08:57:12, 用户ID: 1
-
-A fatal error has been detected by the Java Runtime Environment:
-
- SIGSEGV (0xb) at pc=0x00007f2f7e0912ec, pid=22303, tid=0x00007f2f7c8bd700
-
-JRE version: Java(TM) SE Runtime Environment (8.0_161-b12) (build 1.8.0_161-b12)
-Java VM: Java HotSpot(TM) 64-Bit Server VM (25.161-b12 mixed mode linux-amd64 compressed oops)
-Problematic frame:
-C  libagora_rtc_sdk.so+0xeb42ec
-
-Core dump written. Default location: /home/yingzhen/dispute/server/core or core.22303
-
-An error report file with more information is saved as:
-/home/yingzhen/dispute/server/hs_err_pid22303.log
+```
 
 ，房间已经创建，token有效，请帮忙排查是哪里的问题，如何解决，崩溃日志见附件
 
@@ -3870,8 +3957,7 @@ Request Type: 效果不佳、不达预期
 
 Request Description: SurfaceView 只能设置一次远程视频流   再次设置就不显示  
 按照ai 机器人回复的  需要重新设置   mRtcEngine.setupRemoteVideo(new VideoCanvas(null, VideoCanvas.RENDER_MODE_FIT, cuurentuid));
-然后在设置 
- mRtcEngine.setupRemoteVideo(new VideoCanvas(sView1, VideoCanvas.RENDER_MODE_FIT, newuid));
+然后在设置 ` mRtcEngine.setupRemoteVideo(new VideoCanvas(sView1, VideoCanvas.RENDER_MODE_FIT, newuid));`
 还是没有用  是怎么回事呢  
 
 Reply: 您好，在第二次 setupRemoteVideo之前有先把之前在用的 view 解除绑定或者置空吗？以及需要确认下新绑定的 uid 本身是否在频道里发流。
@@ -4055,7 +4141,11 @@ SDK Version: 4.3.0
 
 Request Type: 集成问题咨询
 
-Request Description: 我调用start接口返回了sid，但之后我stop返回{"cname":"24080002","code":404,"reason":"failed to find worker","uid":"1"}}，请问这是什么原因
+Request Description: 我调用start接口返回了sid，但之后我stop返回
+```json
+{"cname":"24080002","code":404,"reason":"failed to find worker","uid":"1"}
+```
+，请问这是什么原因
 
 Reply: 您好，stop接口返回404错误（"code":404,"reason":"failed to find worker"）是典型的云端录制任务已结束的标识。
 录制任务自己结束或者 start 的时候实际启动失败，后续再调用接口进行操作就会有这种问题。建议您自查下 start 里配置的 token 和 uid、频道名是否匹配，以及录制端被分配的 uid 和频道里在发流的用户是否重复，相同 uid 会导致录制端被踢出频道从而提前结束录制的。
@@ -4114,7 +4204,7 @@ Request Description: 开发板(esp32s3, ESP32-S3-Korvo-2）
 adf ver:v2.7-0-g9cf556de500019bb79f3bb84c821fda37668c052; 
 idf ver:v5.2.3-0-gc9763f62dd00c887a1a8fafe388db868a7e44069)
 rtsa sdk ver:agora-iot-sdk-1.9.5-esp32s3-idf5.x-20250626
-设备已启动并且已加入频道，然后网页端（https://webdemo.agora.io/example/quickStart/videoAndVoiceCalling/index.html），加入频道后，设备端报错 Invalid payload type 100
+设备已启动并且已加入频道，然后网页端，加入频道后，设备端报错 Invalid payload type 100
 
 并且音频流回调(__on_audio_data)一直没有调用到，这是什么原因
 
@@ -4131,7 +4221,10 @@ SDK Version: 当前版本
 
 Request Type: 线上报错
 
-Request Description: 云端录制报错：{"notifyMs":1755765617377,"productId":3,"payload":{"serviceType":0,"uid":"999","serviceScene":"mix_record","sendts":1755765617340,"sequence":3,"cname":"show","details":{"stat":0,"errorLevel":5,"errorMsg":"","module":0,"errorCode":110,"msgName":"cloud_recording_error"},"sid":"fb9549dbc24a76aefa00739c7172a41b"},"eventType":1,"noticeId":"eb63b9b4304ba87769f708800ffc35b3","sid":"fb9549dbc24a76aefa00739c7172a41b"}
+Request Description: 云端录制报错：
+```json
+{"notifyMs":1755765617377,"productId":3,"payload":{"serviceType":0,"uid":"999","serviceScene":"mix_record","sendts":1755765617340,"sequence":3,"cname":"show","details":{"stat":0,"errorLevel":5,"errorMsg":"","module":0,"errorCode":110,"msgName":"cloud_recording_error"},"sid":"fb9549dbc24a76aefa00739c7172a41b"},"eventType":1,"noticeId":"eb63b9b4304ba87769f708800ffc35b3","sid":"fb9549dbc24a76aefa00739c7172a41b"}
+```
 如何定位错误原因？
 
 Reply: 您好，云录制收到errorCode:110 的事件表示 start 任务因为 token 不正确导致加频道、启动录制失败了，需要您检查下 start 的 body，保证 token 和 cname、uid 匹配，并且 uid 和频道内不冲突。
@@ -4279,8 +4372,9 @@ Request Description: 配置webhook后，为什么每个事件都要回调四次�
 
 
 回调案例内容：
-
+```json
 {"sid":"185D526B7A9340298EBB55CAF9BDE93D","noticeId":"1217926940:819614:102","productId":1,"eventType":102,"notifyMs":1755675705500,"payload"{"channelName":"test#video_live_room#544886#1755668941","lastUid":539647,"ts":1755675704}}
+```
 
 Reply: 您好，这是防止消息丢失的机制，我们会重复投递同一个事件 3-4 次，消息通知服务去重可以按照以下方式处理：
 1.ncs通知的事件，通过noticeId和eventType一起来做去重。
@@ -4317,7 +4411,7 @@ SDK Version: 当前版本
 
 Request Type: 集成问题咨询
 
-Request Description: 云录播生成的地址无法播放：https://img.slowvers.com/cloud/consultant/20250818/c25081814368505348/cb1e074e6b41065cbe056abdd95c35b7_c25081814368505348.m3u8
+Request Description: 云录播生成的地址无法播放：`https://img.slowvers.com/cloud/consultant/20250818/c25081814368505348/cb1e074e6b41065cbe056abdd95c35b7_c25081814368505348.m3u8`
 
 Reply: 您好，请问有尝试过用 VLC 或者 IINA 之类支持播放 m3u8 文件的播放器去播放吗？可以先尝试下不同的播放器。如果都放不出来可以检查下 OSS 是不是对 ts 进行鉴权了导致无法直接外部播放。如果也没有进行鉴权，可以等候人工工程师稍后跟进为您解答。
 
@@ -4333,10 +4427,10 @@ SDK Version: 6.5.2
 Request Type: 集成问题咨询
 
 Request Description: 在Android 16kb 排查过程中检测出了：
+```
 /var/folders/6w/fx8cm7lj7q75yb3tchdsv_1r0000gn/T/app-testenv-release_out_XXXXX.ZrwrRj5hRP/lib/armeabi-v7a/libagora-fdkaac.so: \e31mUNALIGNED\e0m (212)
 /var/folders/6w/fx8cm7lj7q75yb3tchdsv_1r0000gn/T/app-testenv-release_out_XXXXX.ZrwrRj5hRP/lib/armeabi-v7a/librongcloud_xcrash.so: \e31mUNALIGNED\e0m (212)
-
-
+```
 这种UNALIGNED现象，后续会出新的版本支持吗
 
 Reply: 您好，只有 64 位设备需要支持 16kb，v7 是不需要支持的，可以忽略 v7 上的UNALIGNED 现象。
@@ -4356,6 +4450,7 @@ Request Type: 集成问题咨询
 Request Description: 
 1. windows SDK中是在怎样接收视频，我想在接收每一帧视频的地方加一个时间戳打印，请问怎样添加；
 2. 我看示例是直接调用setupRemoteVideo设置远端视频，没有找到相关接收的地方：
+```C++
 LRESULT CJoinChannelVideoByTokenDlg::OnEIDUserJoined(WPARAM wParam, LPARAM lParam)
 {
     if (m_lstUids.size() == m_maxVideoCount)
@@ -4380,6 +4475,8 @@ LRESULT CJoinChannelVideoByTokenDlg::OnEIDUserJoined(WPARAM wParam, LPARAM lPara
     }
     return 0;
 }
+```
+
 
 Reply: 您好，要获取到远端发来的每一帧进行处理需要用裸数据方案，注册观测位置在POSITION_PRE_RENDERER，监听onRenderVideoFrame 在回调触发时获取帧信息。其中包含了时间戳信息。但还想请问下您这边具体是什么场景和需求呢？
 
@@ -4418,7 +4515,7 @@ SDK Version: 1.9.5
 
 Request Type: 线上报错
 
-Request Description: 我已经联系了 CAT1运营商(中国移动) 并添加了共三个域名的白名单. 通过测试, 可以在嵌入式设备上成功加入RTC CHANNEL并双向语音聊天. 但有发现, 在设备侧有较大概率连接失败, 从串口日志中大概看是以下出错: Join the channel xxxxx successfully, uid xxxxxx elapsed xxx ms Remote user "xxxxx" has joined the channel, elapsed xx ms connection timeout, reconnecting 然后会自动重连, 有时是可以成功的: Rejoin the channel successfully, uid xxxxxx elapsed xxxx ms video: uid=xxxxxx muted=1
+Request Description: 我已经联系了 CAT1运营商(中国移动) 并添加了共三个域名的白名单. 通过测试, 可以在嵌入式设备上成功加入RTC CHANNEL并双向语音聊天. 但有发现, 在设备侧有较大概率连接失败, 从串口日志中大概看是以下出错: `Join the channel xxxxx successfully, uid xxxxxx elapsed xxx ms Remote user "xxxxx" has joined the channel, elapsed xx ms connection timeout, reconnecting `然后会自动重连, 有时是可以成功的: `Rejoin the channel successfully, uid xxxxxx elapsed xxxx ms video: uid=xxxxxx muted=1`
 
 详细请看附件日志
 
@@ -4516,7 +4613,9 @@ SDK Version: 当前版本
 Request Type: 其他问题
 
 Request Description: 调用了启动内容审核(依图)之后，接口返回成功，并调用查询审核状态接口返回:
+```json
 {"cname":"33569888","resourceId":"mwwME88RCsfOLdLU7jz_vv96oQaavE6DxZUokGPrRqQzTTNMe_LwWQQVul8ZdLmre8FCHavQKtQwiKbIh_CCiDgA8cNaBA4KkJQ8SnyDkdIRwE2RbtaByJfRp1kkU3-achv2jhDgJU-h4cXE4anHOpHuAvoAG5HaByEKHYcAywCw3zx_74308gvXIHWwYyZZBSPFIQydW-MWhYzR7OO3Qw","serverResponse":{"extensionServiceState":{"serviceName":"yitu_voice_async_scan","streamState":{"status":"inProgress","streamType":"audio","uid":"0"}},"subServiceStatus":{"mediaDistributeService":"serviceReady","recordingService":"serviceInProgress"}},"sid":"90366c486949ec5bfef24cb787f113c6","uid":"999"}
+```
 
 1.在客户端一对一保持视频通话的情况下，隔个几分钟再次调用查询审核状态接口返回{"cname":"33569888","code":404,"reason":"failed to find worker","uid":"999"},在测试过程中，有说一些违规内容，"加我微信，xxx"，但是好像并没有触发违规，并且在依图后台查询不到使用记录和内容记录
 帮我查询下，是否是参数的问题，还是有什么服务没有打开
@@ -4541,6 +4640,7 @@ Request Description: 1, 问题表现
 启动开发板，调用agora_rtc_init就崩， 主要是这个日志有点奇怪
 “ahpl_malloc 1070238160 byte failed”
 3，日志
+```log
 vlog_func_p ...
 ahpl_malloc 1070238160 byte failed
 
@@ -4566,6 +4666,7 @@ Backtrace: 0x40375a99:0x3fca8940 0x4037c309:0x3fca8960 0x40383a6a:0x3fca8980 0x4
 --- 0x4200aa93: app_main at E:/work/esp32/src/esp-adf/examples/recorder/pipeline_raw_http.test/main/record_raw_http.c:156
 --- 0x42115e5f: main_task at E:/work/esp32/src/esp-adf/esp-idf/components/freertos/app_startup.c:208
 --- 0x403759dd: esp_restart_noos at E:/work/esp32/src/esp-adf/esp-idf/components/esp_system/port/soc/esp32s3/system_internal.c:16
+```
 
 Reply: 您好，请确认下您现在在用的是 esp32 的什么套件？（比如 IDF 是否用的是 5.0 以上版本？）
 可以完整描述下目前的系统信息，推测是包不匹配导致的崩溃
@@ -5065,9 +5166,7 @@ Request Type: 集成问题咨询
 Request Description: 请Request Description: sendStreamMessage() called error: -12
 是什么原因
 
-Reply:  您好，sendStreamMessage()  接口返回-12 ，由于官网文档没有明确说明，需要人工工程师内部核实后给您答复，另外也麻烦您这边描述下接口的使用场景以及提供下声网的sdk日志，便于我们去进一步排查定位问题
-[日志设置](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
-感谢您的理解与配合
+Reply:  您好，错误码 12 表示接口调用太频繁，您可以调整下接口调用的频率再试试。
 
 ---
 # ID: 36426
