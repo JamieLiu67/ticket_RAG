@@ -1,4 +1,193 @@
 
+# ID: 37329
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.5.1
+
+Request Type: 崩溃（闪退、卡死）
+
+Request Description: 显示闪退，libc 崩溃，最终堆栈指向了io.agora.rtc2.internal.RtcEngineImpl.nativeObjectInit(Native method)
+
+Reply: 您好，麻烦提供 bugly 或者 bugreport 之类的原始堆栈和对应时间的 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)并说明崩溃发送的具体时间和复现频率，人工工程师稍后为您解答
+
+---
+
+# ID: 37331
+
+SDK Product: Cloud-recording
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 商务问题
+
+Request Description: 云录制为什么这么贵，跟文档里标注差很多
+
+Reply: 您好，云录制分两种录制方式，页面录制的单价是比单流合流要贵的。[页面录制](https://doc.shengwang.cn/doc/cloud-recording/restful/overview/billing-strategy/webpage-billing)是 90 元/千分钟。
+具体计费细节可以咨询您的对接商务，如果没有商务的话可以电话联系：400 6326626
+
+---
+
+# ID: 37333
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 安卓端和web端，安卓端麦克风，喇叭，摄像头设备三种都是单独的usb插在设备上，web端只能收到播放视频，音频无效，但是安卓端使用哪种圆孔的麦克风喇叭一体的就正常
+
+Reply: 您好，请问Android 用 usb 麦克风的时候使用微信可以正常收发语音消息吗？可以测试下微信或者系统录音功能，确认下系统本身是否能正常识别+工作。
+如果正常工作的话，可以尝试在 join 之前配置`audioScenaio`的枚举为`Gamestreaming`或`Chatroom`来对比看下效果是否有改善。
+相关接口[setAudioScenario](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_audio_basic#setAudioScenario)。
+
+---
+# ID: 37334
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 咨询一下，海外版本是无法使用minimax的tts吗，我司海外业务同时在使用minimax和11labs，该如何接入
+
+Reply: 您好，minimax 可以在海外使用，可以支持海外业务，具体可以咨询 minimax 侧。
+
+---
+# ID: 37335
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: tts使用minimax没反应，agentID: A42AC66XH28RD64FL83VC24LC86NW44D
+
+Reply: 您好，可以确认下 tts 账户目前是否有欠费，以及如果您在用海外 minimax 服务的话需要更换域名 为 io 后缀，国内是.chat
+```json
+"vendor": "minimax",
+"params": {
+"url": "wss://api.minimax.io/ws/v1/t2a_v2"
+}
+```
+
+---
+# ID: 37336
+
+SDK Product: Fastboard
+
+SDK Platform: iOS
+
+SDK Version: 1.4.2
+
+Request Type: 效果不佳、不达预期
+
+Request Description: iOS端怎么加入房间，不能操作白板，我没找到方法。 我在web端操作code edited那些，IOS端不显示
+
+Reply: 您好，创建白班房间后调用[joinRoom](https://doc.shengwang.cn/api-ref/fastboard/ios/fastboard-api#joinroom)来加入白板房间。
+Demo里自带的组件只是示例，不一定能全平台都看见，统一效果。有上线需求建议自定义组件来满足。
+
+---
+
+# ID: 37339
+
+SDK Product: Cloud-recording
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 如附件所示，我现在想要录制一种环绕布局（中间一个人，边上很多人围绕着），现在有个问题，比如说现在只有两个人，那么其他人的区域（画红线的区域）显示的是默认背景色很丑，有什么好的办法吗？比如整体能设置成一个图片吗？（backgroundImage我设置了但是从效果看没有起效）
+
+Reply: 您好，这类需求需要用自定义布局自行实现，可以参考下类似效果的示例 body：
+```json
+"transcodingConfig": {
+            "width": 1920,
+            "height": 1080,
+            "fps": 15,
+            "bitrate": 5000,
+            "backgroundImage": "xxx,
+            "mixedVideoLayout": 3,
+            "layoutConfig": [
+               {
+                  "uid": "12345",
+                  "x_axis": 0.0,
+                  "y_axis": 0.0,
+                  "width": 0.5,
+                  "height": 0.5
+               }
+            ]
+         }
+```
+
+---
+
+# ID: 37342
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.5.2
+
+Request Type: 集成问题咨询
+
+Request Description: 你好, 我的应用是在android采集声音, 但是是采集嘉宾的声音, 允许有一定时间的没有声音, 例如上一个嘉宾上台加上下一个嘉宾下台的过程, 但是现在RTC好像在30s左右没有声音就停止了, 无法接收声音了, 请问可以自定义这个时间么或者彻底关闭这个超时的设置. 
+
+Reply: 您好，听起来是业务问题导致，RTC SDK 本身没有自动限制的处理。可以提供下出现问题的用户 [SDK日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)，人工工程师稍后看下具体原因。
+您也可以先对比下我们 Demo 的处理，参考 [Demo](https://doc.shengwang.cn/doc/rtc/android/get-started/run-demo)。
+
+---
+# ID: 37343
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.5.2
+
+Request Type: 集成问题咨询
+
+Request Description: 如何获取可输出的音频设备，并切换到具体的音频设备
+
+Reply: 您好，移动设备的音频输出设备选择是系统决定的，SDK 侧无法调整。
+如果您需要在桌面端调整，可以使用[setPlaybackDevice](https://doc.shengwang.cn/api-ref/rtc/flutter/API/toc_audio_device#api_iaudiodevicemanager_setplaybackdevice)
+
+---
+# ID: 37344
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 结束通话时，如何获取通话时长？
+
+Reply: 您好，有三种方案推荐：
+1、可以用客户端回调[onRtcStats](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_channel#callback_irtcengineeventhandler_onrtcstats) 里的`totalDuration `来判断。
+2、可以订阅 NCS 回调，从对应的 NCS 事件里判断，例如 [104 事件](https://doc.shengwang.cn/doc/rtc/restful/webhook/events#104-broadcaster-leave-channel)的`duration `。
+3、集成第三方 IM SDK，用长链接来自行计算加频道时长，这样不依赖我们的业务，更推荐一些。
+
+---
+
 # ID: 37319
 
 SDK Product: RTM
