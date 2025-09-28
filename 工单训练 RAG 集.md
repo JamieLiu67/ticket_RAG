@@ -1,4 +1,98 @@
 
+# ID: 37372
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 
+1. `NEXT_PUBLIC_APP_ID`  这个就是项目中的APP ID
+2. `NEXT_PUBLIC_CLIENT_ID`
+3. `NEXT_PUBLIC_CLIENT_SECRET`
+4. `NEXT_PUBLIC_API_KEY`
+
+你们的这些东西真是太难区分了，我找了半天了，也找不到,还有项目中的那些都对应的哪些值？你们至少弄个其它字母开头区分吧？
+或者直接用这些变量名标识出来。。。。。。特别是 `NEXT_PUBLIC_CLIENT_ID` 和 `NEXT_PUBLIC_API_KEY` ，还有项目中对应的APP主要证书指的是什么？RESTful API中的客户ID/key对应的是什么？
+
+Reply: 您好，请问 `NEXT_PUBLIC_APP_ID` 是在哪里看到的命名方式？我们的[术语库](https://doc.shengwang.cn/basics/glossary)只有 appid app证书，restful 的 ak sk就叫 API KEY 和 SECRET ，没有 NEXT 的前缀。
+
+---
+
+# ID: 37375
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 麻烦看一下这个bot为啥加不进去，token验证可以使用：
+```json
+{
+	"name": "461a6e5e6b204b52a887e5f42cd84b6a:111",
+	"properties": {
+		"channel": "111",
+		"token": "007eJxSYEh+vcJjasb0Ods7rXZWlQqutOy8HRWnJ/9gugzX5a6/K74oMJiYGSaapZqmmiUZGZgkmRolWliYp5qmmRglp1iYJJklnp15I0OAj4Eh5Zw+AyMDIwMLAyMDiM8EJpnBJAuUbWhoCCYAAQAA///d4x9b",
+		"agent_rtc_uid": "196009864237980615",
+		"remote_rtc_uids": ["111"],
+		"enable_string_uid": true,
+		"idle_timeout": 60,
+		"advanced_features": {
+			"enable_aivad": true
+		}
+	}
+}
+```
+
+Reply: 您好，可以检查下目前在用的 token 本身是否匹配 agent 被分配的 uid 和要加入的频道号，通常是 token 错误导致智能体无法加入频道。
+
+---
+
+# ID: 37381
+
+SDK Product: Media-pull
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: NCS 健康检查结果: Test Failed
+
+Reply: 您好，健康检查不通过说明域名无法直接被我们访问，请检查回调地址本身状态，以及确保使用域名，不要用裸 IP 的 url。
+
+---
+
+# ID: 37385
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 其他版本
+
+Request Type: 崩溃（闪退、卡死）
+
+Request Description: git clone https://github.com/Shengwang-Community/API-Examples.git 下载example这是里面的windows example，点开sln，报错里面的Agora引擎不存在，搜遍文件夹，确实也没找到。
+1. 请问下stdafx.h是干嘛的？做配置的？
+2. 请问我是否需要自己再链什么东西进去？
+
+```log
+1>E:\PluginSDK\API-Examples\windows\APIExample\APIExample\stdafx.h(49,10): error C1083: Cannot open include file: 'IAgoraRtcEngine.h': No such file or directory
+```
+stdafx.h里说我两个引擎的头文件没找到
+
+Reply: 您好，请参考文档[跑通 Demo](https://doc.shengwang.cn/doc/rtc/windows/get-started/run-demo)，stdafx.h 需要填写对应的 appid 信息来启动 Demo。
+
+---
+
 # ID: 37346
 
 SDK Product: ConvoAI
@@ -9,7 +103,7 @@ SDK Version: 当前版本
 
 Request Type: 集成问题咨询
 
-Request Description: domain选us，tts用elevenLabs时报错：Unknown service tts_service vendor elevenLabs
+Request Description: domain选us，tts用elevenLabs时报错：`Unknown service tts_service vendor elevenLabs`
 
 Reply: 您好，elevenLabs 是海外才支持的 tts，您需要调用[海外版本 convoAI](https://docs.agora.io/en/conversational-ai/rest-api/join)的接口。
 
