@@ -1,4 +1,130 @@
 
+# ID: 37346
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: domain选us，tts用elevenLabs时报错：Unknown service tts_service vendor elevenLabs
+
+Reply: 您好，elevenLabs 是海外才支持的 tts，您需要调用[海外版本 convoAI](https://docs.agora.io/en/conversational-ai/rest-api/join)的接口。
+
+---
+
+# ID: 37348
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 观众端加入直播间   在主播端的日志没有任何反应
+
+Reply: 您好，因为观众人数较多，所以 SDK 设计时就设定观众加入频道就是无法感知的。如果需要感知观众进出频道的事件，可以用 [NCS 事件](https://doc.shengwang.cn/doc/rtc/restful/webhook/events#105-audience-join-channel)去做，不过人多的时候回调就会非常频繁,还请注意。
+
+---
+
+# ID: 37353
+
+SDK Product: RTC
+
+SDK Platform: Electron
+
+SDK Version: 4.4.0
+
+Request Type: 线上报错
+
+Request Description: 应用场景：pc的electron端使用electron-sdk@4.4.0，投屏至会议中；
+
+问题：其他用户（1231793）从会议中获取到的视频流是黑屏状态，从投屏端获取到的localStat日志显示推流的分辨率为0x0；
+
+Reply: 您好，听起来是本地采集启动失败了，可以检查下是否有授予屏幕采集的相关权限，如果没给权限的话，`startScreenCaptureByWindowId `是会报错 `ERR_SCREEN_CAPTURE_PERMISSION_DENIED(16) `的，可以在 console 里或者 SDK 日志里查看到。
+
+---
+# ID: 37354
+
+SDK Product: CDN
+
+SDK Platform: CDN
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 1、怎么查看拉流地址；
+2、OBS 推流 → RTMP → 观众播放（网络错误），这问题怎么解决？
+3、RTMP 播放需要转换：OBS → RTMP 推流 → 流媒体服务（声网） → 服务端转成 HLS (m3u8) → 浏览器端再播放。这个怎么实现 服务端转成 HLS (m3u8) ？
+
+Reply: 您好，请问您现在用的是 CDN 还是 RTMP 网关？RTMP 网关是把流推进 RTC 频道里的，观众端需要加入 RTC 频道才能看见画面。CDN 才是直接让观众拉流观看的，这是两套不同的技术方案。
+
+---
+# ID: 37355
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.3.0
+
+Request Type: 其他问题
+
+Request Description: 65474407 与 320524722 连麦 到10:52正常
+10:52:32 加入 385926281，这个 385926281 在10:52:33时候没有画面合进来，而SEI对应的布局是包括的，也就是已经发出合流指令了
+```log
+2025-09-26 10:59:32.922000 +0800 - level 6 tag = sofa_video_decoder_manager msg = get_sei_info pts 192.666667,{"app_data":"{\"t\":1}","canvas":{"bgnd":"#36363d","h":1280,"w":720},"regions":[{"alpha":255,"h":643,"uid":320524722,"volume":0,"w":360,"x":360,"y":540,"zorder":50},{"alpha":255,"h":643,"uid":65474407,"volume":0,"w":360,"x":0,"y":540,"zorder":50},{"alpha":255,"h":540,"uid":385926281,"volume":0,"w":720,"x":0,"y":0,"zorder":80}],"ts":1758855153793,"ver":"20190611"}
+
+"ts":1758855153793：转换 2025-9-26 10:52:33
+```
+但是直播画面还是只有 65474407 与 320524722，直到 10:52:42后才出现 385926281 画面
+
+问题在于：同时间点 sei 给的 合视频画面不对应，及给了布局到实际没有画面，等到10s后才出现画面，具体如视频
+
+Reply: 请问您现在合图是怎么实现的？调用我们服务端接口做的吗？
+客户端旁路推流接口已经不再更新维护了，如果使用客户端接口去更新旁路推流合流布局的话请早日迁移到[服务端旁路推流](https://doc.shengwang.cn/doc/media-push/restful/landing-page)去实现。
+
+---
+
+# ID: 37360
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.5.2
+
+Request Type: 其他问题
+
+Request Description: 加入频道失败返回错误： CONNECTION_CHANGED_REJECTED_BY_SERVER   此用户被服务器禁止 。前段时间可以正常使用， 最近加入就会返回这个错误。
+
+Reply: 您好，CONNECTION_CHANGED_REJECTED_BY_SERVER 表示您调用了我们的[踢人接口](https://doc.shengwang.cn/doc/rtc/restful/channel-management/operations/post-dev-v1-kicking-rule)把指定用户踢出频道了，可以检查下业务上哪里在执行踢人的操作。
+
+---
+# ID: 37361
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 1、使用声网Android SDK，加入语音群聊后，因为被占用了音频焦点。无法播放音乐。
+2、发生时间点在`09-26 15:50:52.986 D 1292     3494     NotificationService:                                                                Show pkg=com.gwm.app.media.qqmusic text=`
+音频被占用，无法播放 
+
+Reply: 您好，可以把 scenario 切 GS 试下，走媒体音量不会有压制问题，[setAudioScenario](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_audio_basic#api_irtcengine_setaudioscenario)。
+
+
+---
+
 # ID: 37329
 
 SDK Product: RTC
