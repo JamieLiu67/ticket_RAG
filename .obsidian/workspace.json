@@ -172,9 +172,10 @@
   },
   "active": "2ec02664b622828a",
   "lastOpenFiles": [
+    "().md",
+    "工单训练 RAG 集.md",
     "工单 AI 提示词.md",
     "服务线知识库结果整理助手提示词.md",
-    "工单训练 RAG 集.md",
     "RTC_SDK_错误码_RAG优化版.md",
     "RTC SDK 错误码.md",
     "RAG切片策略指南.md",
@@ -183,7 +184,6 @@
     "RTC_SDK_错误码_JSON版本.md",
     "未命名.base",
     "未命名 1.base",
-    "().md",
     "未命名.canvas"
   ]
 }
