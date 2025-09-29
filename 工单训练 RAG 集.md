@@ -1,4 +1,148 @@
 
+# ID: 37389
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 对话式AI引擎sdk如何获取当前链路的延迟情况，包括端到端延迟、级联各个流程的延时，没有找到sdk哪里可以回调这些数据，希望帮忙解答一下，谢谢。
+
+Reply: 您好，我们暂未对外开放 convoAI 各个环节延迟数据的展示，但如果您有需求的话，可以提供下 agentID，我们有内部界面可以看到，人工工程师稍后跟进可以给您截图
+
+---
+# ID: 37390
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 从人说话到bot回复最快也要2.几秒，看下改怎么调优才能达到官网的650ms效果
+
+Reply: 您好，人工工程师稍后查询 agentID 来判断耗时点在哪里，您可以先自行尝试更换下 ASR、TTS 等厂商，对比看下不同厂商之间的效果是否有差异。
+
+---
+# ID: 37391
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 集成问题咨询
+
+Request Description: 我想使用单聊和群聊功能，集成了下面2个依赖
+```
+    implementation 'cn.shengwang.rtc:full-sdk:4.6.0'
+    implementation 'cn.shengwang:chat-sdk:1.3.2'
+```
+
+运行时后，RtcEngine初始化失败，但是单独集成rtc就不会为null
+
+Reply: 您好，请问单聊和群聊是文字聊天场景吗？rtc:full-sdk:4.6.0 是音视频通讯的 SDK，没有文字聊天的能力。
+chat-sdk:1.3.2 是 IM，只能文字聊天，本身自带单聊+群聊，但不支持音视频聊天。
+请先确认下场景和需求
+
+---
+
+# ID: 37394
+
+SDK Product: Marketplace
+
+SDK Platform: Android
+
+SDK Version: 自然语言处理
+
+Request Type: 开通权限、提供配额
+
+Request Description: 没有权限。
+
+Reply: 您好，云市场插件需要联系商务后才能申请证书使用，请先联系：400 6326626
+
+---
+
+# ID: 37396
+
+SDK Product: IM
+
+SDK Platform: Flutter
+
+SDK Version: 1.3.2
+
+Request Type: 崩溃（闪退、卡死）
+
+Request Description: 引入了 `shengwang_chat_uikit: ^2.0.1`
+安卓ios正确的配置权限
+```dart
+ChatUIKit.instance.init(options: Options.withAppId(ShengWangConstant.appId, autoLogin: false)).then((res) {
+    runApp(const Page());
+  });
+```
+
+启动项目报错：No implementation found for method init on channel
+什么情况？
+
+Reply: 您好，请先检查本地是否有下载 SDK，并先参考我们的文档来[跑通 Demo](https://im.shengwang.cn/docs/uikit/chatuikit/flutter/chatuikit_run.html)。
+
+---
+
+# ID: 37398
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 在Unity插件中，安卓平台下，切换到后台依然在正常语音通话。想问一下有没有相关配置或者接口，让在切到后台的时候自动关闭
+
+Reply: 您好，您可以在 Native 侧自行监听切后台事件，然后调用`leaveChannel`来结束通话
+
+---
+# ID: 37399
+
+SDK Product: IM
+
+SDK Platform: iOS
+
+SDK Version: 1.3.2
+
+Request Type: 集成问题咨询
+
+Request Description: 用户退回到后台，收到新消息会有推送通知吗
+
+Reply: PermalinkEditDelete
+您好，IM不会，切到后台 差不多20s到40s 的时间就会断开，目前 IM SDK 无法实现保活效果。
+
+---
+# ID: 37400
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 在服务端API中有一个创建对话式智能体的接口，我看文档中对此接口进行了更新，可以添加avatar字段，实现数字人。
+我想知道avatar中的vendor字段，数字人供应商支持哪几家。
+avatar下的params有没有具体的格式。
+
+Reply: 您好，请参考[接口文档](https://doc.shengwang.cn/doc/convoai/restful/convoai/operations/start-agent)来了解数字人信息。
+
+---
+
 # ID: 37372
 
 SDK Product: RTC
