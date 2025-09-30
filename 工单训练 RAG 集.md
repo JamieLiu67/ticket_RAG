@@ -1,4 +1,114 @@
 
+
+# ID: 37407
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 其他问题
+
+Request Description: 你好我想使用灵隼物联网平台二次开发，有问题求助
+我在开发文档里看到设备端支持linux等，没有提及支持windows，这里的Linux支持你们是会提供什么给我们吗
+开发文档里的创建实例视频，我跟着操作感觉不一样，创建不了，是我还没有申请lisense的原因吗，可以给我更清晰的指引吗
+最后我需要申请lisense，除了官网的开发文档还有什么相关的资料可以给我参考吗？
+感想您的查看及提供的帮助！
+
+Reply: 您好，灵隼后续会下架，不建议使用了。
+有 IOT 设备建议使用 [RTSA SDK](https://doc.shengwang.cn/doc/rtsa/c/get-started/run-example)
+涉及 License 需要联系商务对接，可以电话沟通：400 6326626
+
+---
+# ID: 37408
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 问一下到底支持string类型的uid和rtcbotuid吗，以及user token和bot token需要分别生成还是用同一个就行
+
+Reply: 您好，enable_string_uid建议关掉，用 int 类型的 uid，SDK 对于 string uid 的优化不如 int
+以及 token 是一个 uid 一个 token 的，频道里 uid 不能重复，所以频道里用户的 token 和智能体的 token 不能混用
+临时 token 不校验 uid 所以能进频道，自己生成的 token 是要校验 uid 的，需要保证生成时的 uid 频道名和 join 时传入的完全一致才能加进频道
+控制台有自助检验工具，可以自行校验下token：控制台-辅助工具-Token生成/校验–Token校验
+将您的token粘贴进去，解析一下，看解析出来的结果和您join传入的参数是否一致
+
+---
+# ID: 37409
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 我当前在集成多频道连线的功能，我加入副频道的时候调用的推测是调用`joinChannelExByToken`这个方法
+我调用之后呢joinRet的值是0，但是我的joinSuccess不会调用，我看文档说会调用,我也是不会调用的这是为什么？
+
+Reply: 您好，推测是调用`joinChannelExByToken` 的时候所用的 token 并不匹配 uid 导致的。建议检查下 token。
+
+临时 token 不校验 uid 所以能进频道，自己生成的 token 是要校验 uid 的，需要保证生成时的 uid 频道名和 join 时传入的完全一致才能加进频道
+控制台有自助检验工具，可以自行校验下token：控制台-辅助工具-Token生成/校验–Token校验
+将您的token粘贴进去，解析一下，看解析出来的结果和您join传入的参数是否一致
+
+因为`joinChannelExByToken`用到的 uid 不同，所以 token 是不能通用其他 uid 的
+
+---
+# ID: 37410
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 4.3.0
+
+Request Type: 开通权限、提供配额
+
+Request Description: 请把这三个项目的频道人数上线调整到 32人
+
+Reply: 您好，现在每个 appid 默认支持 32 人同时发音频流，17 人同时发视频流，请问是需要上调视频流发流上限吗？
+
+---
+# ID: 37411
+
+SDK Product: RTC
+
+SDK Platform: Unity
+
+SDK Version: 4.5.1
+
+Request Type: 其他问题
+
+Request Description: 我想咨询一下，客户端本地采集的声音经过3A处理后本地能拿到音频流吗，我们是想实现阿里实时语音识别时（识别时能不识别电脑正在播放的声音），只识别人的说话。谢谢
+
+Reply: 您好，可以用[音频裸数据](https://doc.shengwang.cn/doc/rtc/unity/advanced-features/raw-audio-data)，不过拿到的是 3A 处理前的原始采集数据。
+
+---
+
+# ID: 37417
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 请问现在bot是等llm全部回复完了再生成语音吗，还是llm产生第一个单词就开始生成？
+
+Reply: 您好，是第一个单词就开始，LLM 是流式输出，TTS 是进来多少内容读多少内容的
+
+---
+
 # ID: 37389
 
 SDK Product: ConvoAI
