@@ -1,4 +1,355 @@
 
+# ID: 37421
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.5.1
+
+Request Type: 其他问题
+
+Request Description: app还在测试开发中怎么就人工被限停了。上架都没上架呢。
+
+Reply: 您好，可以优先电话联系您的对接销售或者登录声网 console，查看站内信了解下目前账号的状态，以及了解如何恢复账号至可用状态。
+
+---
+
+# ID: 37423
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.4.0
+
+Request Type: 崩溃（闪退、卡死）
+
+Request Description: 你好，视频中经常遇到自动关断的问题
+
+Reply: 您好，请问这个关断具体的现象是什么？是在rtc直播的过程中app突然闪退吗？
+如果是崩溃或者是闪退的话麻烦您提供下agora的sdk log、堆栈、时间点，我们解析下看看
+
+---
+
+# ID: 37424
+
+SDK Product: Flexible-classroom
+
+SDK Platform: Web
+
+SDK Version: 2.9.40
+
+Request Type: 集成问题咨询
+
+Request Description: 第一次共享屏幕一切正常，但是第二次共享，接收端就没声音和画面了。
+第二次共享，接收端接收到了新的streamUuid，也订阅了，但是没用。
+这个时候发布端如果重新进一下教室，就又可以了。
+
+发布端Uid 71
+接收端Uid 166
+
+共享StreamUuid 有很多，可以用1391045657查看数据。
+
+Reply: 您好，请问第二次屏幕共享远端看不见的时候，发送端浏览器 console 有没有什么报错打印？麻烦提供具体的报错信息或者复现问题时 console 输出的录像。
+
+---
+# ID: 37425
+
+SDK Product: RTC
+
+SDK Platform: React
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 我想在我的expo框架开发的移动app中，集成一个实时语音通话功能，我看到很多文档，我是初学者，看不懂啊，该如何使用，不是集成一个api就可以了吗，怎么文档这么多分类，我也集成过api的其他功能，但你们这个好像很多，看不懂，请问我的这个技术框架，有合适的api吗
+
+Reply: 您好，SDK 支持Expo 框架，可以参考下我们的 [RN Demo](https://github.com/AgoraIO-Extensions/react-native-agora/tree/dev/expo/examples/expo)。
+SDK 用的就是 [RN SDK](https://doc.shengwang.cn/doc/rtc/rn/landing-page)。
+
+---
+# ID: 37426
+
+SDK Product: CDN
+
+SDK Platform: CDN
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 调用接口：创建 converter
+url `https://api.sd-rtn.com/cn/v1/projects/0f633a491a8d447694bfde9ff9ac843a/rtmp-converters`
+
+body
+```json
+{
+	"idleTimeout": 3600,
+	"name": "LBR-761891034582458368",
+	"rawOptions": {
+		"rtcChannel": "LR-762215856890925056",
+		"rtcStreamUid": 94224640
+	},
+	"rtmpUrl": "rtmp://push-agora.commands.top/live/LR-762215856890925056"
+}
+```
+
+一直响应 400 bad request
+麻烦帮忙看下哪里有问题，很急！感谢！
+
+Reply: 您好，400 错误可能表示您的 AppID 未开通声网的服务端旁路推流功能。请登录声网控制台，确认该 AppID 是否已开通此功能。
+如果确认开通了，请对照我们的[接口文档](https://doc.shengwang.cn/doc/media-push/restful/media-push/operations/post-region-v1-projects-appId-rtmp-converters)检查 body 里是否有字段缺失
+
+---
+
+# ID: 37428
+
+SDK Product: CDN
+
+SDK Platform: CDN
+
+SDK Version: 当前版本
+
+Request Type: 开通权限、提供配额
+
+Request Description: 无法添加域名
+域名已备案，大于10天，换了多个备案域名均提示未备案
+
+Reply: 您好，如果您的域名本身已经备案过，但是在 console 配置提示没有备案，可以先修改地区为大陆以外地区，然后提供下域名、推拉流地址，人工工程师稍微为您手动修改回大陆区域来解决。
+
+---
+# ID: 37429
+
+SDK Product: IM
+
+SDK Platform: Web
+
+SDK Version: 1.3.2
+
+Request Type: 线上报错
+
+Request Description: 线上聊天室，在线聊天可以收到聊天信息。刷新页面后，聊天室消息就全部不见了，拉取不到历史消息是什么原因？
+
+Reply: 您好，麻烦提供下具体出现问题的 appid，我们先查询下是否有开通 IM 的消息漫游权限，只有开通后产生的消息会存储。
+
+---
+
+# ID: 37431
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 其他问题
+
+Request Description: 我需要注销声网账号，但是账户内有余额需要提现才能注销，现在提现有提示仅限365天内的交易。导致我无法注销，我自愿放弃账户内的余额和相关权益，帮我注销账号！谢谢
+
+Reply: 您好，注销账号有固定流程，如果您有对接销售请优先联系对接销售。如果没有对接销售可以在声网 console 左侧边栏-设置-安全设置里自行完成注销流程。但如果有余额是需要先提现完毕的。
+
+---
+
+# ID: 37433
+
+SDK Product: RTM
+
+SDK Platform: Object-C
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: pod 'AgoraRtcEngine_iOS', '4.5.0' # 去重版本
+  pod 'AgoraRtm_iOS',        '2.1.7'
+
+我用的是这两个版本  为什么找不到AgoraRtmClient的对象来发信令
+按文档 按AI的意思都拿不到client相关发信令 只有AgoraRtmClientConfig类 但是它发不了信令
+
+rtm + rtc 推荐如何集成最新 且不会冲突  
+以上两个版本是我查到的最新不会冲突的 但是用起来拿不到类去发信令
+
+请给出具体解决方案
+
+Reply: 您好，RTM 2.x 发送消息需要先创建 `AgoraRtmClientKit `实例，然后调用`publish `方法。可以参考文档[实现收发消息](https://doc.shengwang.cn/doc/rtm2/ios/get-started/quick-start)
+
+---
+
+# ID: 37442
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 为啥微信充值了20，界面余额还是零呢？
+
+Reply: 您好，到账可能会有延迟，可以稍作等待。如果长时间等待后依旧没有确认到账可以先电话联系 400 6326626，会有人工跟进为您内部确认。
+
+---
+
+# ID: 37444
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 我想要 下载     implementation 'io.agora.rtc:full-sdk:4.1.1'  版本的SDK，原因：直接使用 使APK体积增大
+
+Reply: 您好，优先推荐使用最新版本，最新版本下载地址为[下载 SDK](https://doc.shengwang.cn/doc/rtc/android/resources)
+如果要下载历史版本，可以访问[海外下载页](https://docs.agora.io/en/sdks?platform=android)
+
+---
+# ID: 37445
+
+SDK Product: RTM
+
+SDK Platform: Java
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: RTM消息数9月份达到1.9亿条，是去年9月的2.5倍，2025年最高是5000万条，请排查一下消费在哪些地方
+
+Reply: 您好，可以提供下目前需要核实的 appid，人工工程师稍后为您查询
+
+---
+
+# ID: 37447
+
+SDK Product: Console
+
+SDK Platform: All
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 在和你们的商业对接，叫我技术问题发工单，以下是所有问题。
+
+收费规则我有些疑惑:
+1. 这个分钟的消耗方式，是只要频道里记录有人就会触发，还是按实际的pcm音频包时长触发？
+2. 是只有音频产生者按产生音频消耗，还是所接收这个行为也会消耗？
+
+
+对于功能
+1. （convoAI）我看你们的大语言模型和语言生成模型是第三方接入的方式，放你们的后端运行的。大语言模型这部分，需要做一些逻辑处理，出于安全性和隐私性考虑，可不可以从你们的后端独立出来，在我们的后端运行。也就是：你们音频处理完给我们，我们大语言模型处理完，再回给语音生成。这样的计费是否和语音房一样？
+2. （视频推流）你们是否支持UE的pixel streaming？这个计费是按视频推流的逻辑，还是要就图形算力额外计费？
+3. （视频优化）我看你们有超分，这个超分是跑在后端还是客户端的？视频推流是否可以通过这个减少流量从而减少费用消耗？还是这算是通过超分加强流畅度？
+
+Reply: 您好，关于计费：
+1、收费是按连接来收费的，只要加入了我们的 RTC 频道和我们的节点保持连接就收费，不管是否发流。
+2、如果产生了视频订阅，就会收取视频费用，详见[计费策略](https://doc.shengwang.cn/doc/rtc/android/billing/billing-strategy)
+
+关于功能：
+1、convoAI 本身不保存用户信息，所以不需要担心隐私问题，我们只做传参到第三方的通道，本身不会保存和擅自使用的。如果要完全独立的话，可以考虑下 [TEN](https://github.com/TEN-framework/ten-framework)
+2、我们是按照订阅分辨率收费的，参考[计费策略](https://doc.shengwang.cn/doc/rtc/android/billing/billing-strategy)，发送到频道里是什么分辨率，被订阅时我们就按照什么分辨率计算，无论视频流是从哪里来的。
+3、超分在客户端上启用，4.3.x 以后默认开启，让用户在 720 p 的分辨率下得到 1080p 的观感（举例，实际就是低分辨率上体验高分辨率视觉感受）
+
+---
+
+# ID: 37451
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.5.2
+
+Request Type: 集成问题咨询
+
+Request Description: 我们需要在频道里英文输出音频(国内用汉语然后翻译成英文,用的是科大讯飞在线翻译),汉语转成英语音频，如何实现？
+
+Reply: 您好，需要用到第三方 TTS SDK 来把文本读出来，然后在用自采集把音频流发送到 RTC 频道里来实现
+
+---
+
+# ID: 37454
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: sid:da49c18ba04e7b531cee518434265193
+视频在录制9分钟之后，没有音视频流，只有屏幕共享流
+
+Reply: 您好，可以检查下当时给录制段使用的 token 是否只有 10 分钟权限，如果确认 token 时长正常，可以稍等一下，人工工程师稍后为您解答
+
+---
+# ID: 37455
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 其他问题
+
+Request Description: import AgoraRTC from 'agora-rtc-sdk-ng'
+```javascript
+	// ⚠️ 这些参数需要你们后台生成并传给 H5
+	// const appId = '7e95dc00461c42de90449416359b5a9a'
+	const appId = 'd92ed3db692c43f587d1d1157ba9baa9'
+	// const channel = '666'
+	const channel = '10040'
+	// const token =
+	// 	'007eJxTYAh9/zfCaf6pjPqSNxOXHahab2hoHsP5qZC7TIldq/OJU5ECQ4qlUWqKcUqSmaVRsolxmqmFeYphiqGhqXlSomVSYqJlUdjzjIZARoZ7CdcYGKEQxGdmMDMzY2AAADepHuA=' // 如果开了安全认证必须要
+
+	const token = '006d92ed3db692c43f587d1d1157ba9baa9IAB2Ukb0jN0hRMCe6wDHaGHnzSigl0Tio+keZmn13pmqyEG40BOSfKAZIgAfuO3L5MToaAQAAQDkxOhoAgDkxOhoAwDkxOhoBADkxOho'
+	const uid = 10011 // 让声网自动分配
+
+```
+我这边 appid token uid 都能拿到也不报错就是  黑屏
+
+Reply: 您好，建议优先检查目前所用的 token 和加入频道时传入的频道号、uid 是否匹配
+
+---
+
+# ID: 37458
+
+SDK Product: Cloud-recording
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 没有回调 serviceType 等于 2的，只有等于1的
+
+Reply: 您好，看描述是录制上传出现了一些问题。可以提供下具体的 sid，人工工程师为您检查下任务情况。
+
+---
+# ID: 37459
+
+SDK Product: IM
+
+SDK Platform: Unity
+
+SDK Version: 1.3.2
+
+Request Type: 商务问题
+
+Request Description: 即时通讯IM产品 Unity的SDK 下载链接显示无内容呢，请问哪里可以下载到IM产品 Unity平台的SDK 
+
+Reply: 您好，首页最下方是下载地址，可以下载到 IM 的 SDK
+
+---
 
 # ID: 37407
 

@@ -78,7 +78,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 228.5
+    "width": 228.5,
+    "collapsed": true
   },
   "right": {
     "id": "dc3fbeaf18d23798",
@@ -172,6 +173,7 @@
   },
   "active": "2ec02664b622828a",
   "lastOpenFiles": [
+    "未命名",
     "().md",
     "工单训练 RAG 集.md",
     "工单 AI 提示词.md",
