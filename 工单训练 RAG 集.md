@@ -1,4 +1,168 @@
 
+# ID: 37462
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.4.0
+
+Request Type: 其他问题
+
+Request Description: 音视频房间的代理回调是不是偶尔会延迟，用信令的实时性会更好吗 是否有必要用消息信念通知，比如离开房间，加入房间，尤其是离开房间，明明我这边挂断了 对方跟着挂断感觉偶尔会延迟一下
+
+Reply: 您好，客户端回调一般不会有延迟，可以[收集日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)看下回调触发的具体时间。
+
+---
+# ID: 37463
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.6.0
+
+Request Type: 其他问题
+
+Request Description: 1.进入频道后，打开微信发不了语音消息，影响微信其他第三方应用的麦克风声音
+
+Reply: 您好，微信使用的是通话音量，您可以尝试切换 SDK 的 scenario 为`AUDIO_SCENARIO_GAME_STREAMING `，走媒体音量试下，看看还会不会有问题。
+使用[setAudioScenario](https://doc.shengwang.cn/api-ref/rtc/ios/API/toc_audio_basic#setAudioScenario:)来切换。
+
+---
+
+# ID: 37467
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 我现在集成完rtm + rtc sdk 大约为520M了  我想减少体积，不需要扩展功能，只要音视频+rtm消息能力就行，如何集成，尤其是rtm  
+
+Reply: 您好，需要裁剪 RTC SDK 体积的话可以参考[减小 app 体积](https://doc.shengwang.cn/doc/rtc/ios/best-practice/reduce-app-size)
+
+---
+
+# ID: 37470
+
+SDK Product: RTC
+
+SDK Platform: Unity
+
+SDK Version: 4.5.1
+
+Request Type: 其他问题
+
+Request Description: 提审google play
+libs/arm64下 检测到 libAgoraRtcWrapper.so 文件不支持16kb
+
+Reply: 您好，官网的版本确实没有适配，您可以去 github 获取最新版本 main 分支的 SDK 使用，或者等候人工工程师提供离线下载版本。
+
+---
+# ID: 37471
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.3.0
+
+Request Type: 其他问题
+
+Request Description: 我们的业务场景是主播通过手机apk开直播，同时玩电脑游戏，需要将电脑画面也推送到直播间
+
+Reply: 您好，电脑端需要屏幕共享的话需要集成 [Windows 客户端 SDK](https://doc.shengwang.cn/doc/rtc/windows/get-started/run-demo) 或者使用 [RTMP 网关](https://doc.shengwang.cn/doc/rtmp-gateway/restful/landing-page)来解决。
+
+---
+
+# ID: 37477
+
+SDK Product: Flexible-classroom
+
+SDK Platform: Web
+
+SDK Version: 2.9.40
+
+Request Type: 线上报错
+
+Request Description:
+```log
+edu_sdk@2.9.40.bundle.js:2 2025-10-10 15:08:58 ERROR Ins#2 RTM:ERROR  Error Code 2 - Login is rejected by the server. The response code is 2010026. +0ms
+edu_sdk@2.9.40.bundle.js:2 2025-10-10 15:08:58 INFO [AGRtmManager] ConnectionStateChanged DISCONNECTED LOGIN_FAILURE
+edu_sdk@2.9.40.bundle.js:2 2025-10-10 15:08:58 ERROR Ins#2 RTM:ERROR Error Code 2: login failed with args: {"uid":"z*"}. +1ms
+edu_sdk@2.9.40.bundle.js:2 2025-10-10 15:08:58 ERROR Ins#2 RTM:ERROR Already in logout state. +1ms
+edu_sdk@2.9.40.bundle.js:2 2025-10-10 15:08:58 ERROR [RteErrorCenter] error 200004: RtmUnavailableError:  Error Code 2 - Login is rejected by the server. The response code is 2010026. 
+```
+
+Reply: 您好，请检查下当前 appid 是否是灵动课堂专用 appid，如果是通用项目的话需要手动开启 RTM 和灵动课堂开关才能使用，建议直接新建一个灵动课堂专用的 appid。
+
+---
+
+# ID: 37481
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 崩溃（闪退、卡死）
+
+Request Description: 我的设备总是报错，发生Segmentation fault，AI提醒我可能SDK版本不对，SDK的浮点功能是 VFPv3-D16，但是我的系统是 VFPv4，sdk是Agora-RTSALite-RmRdRcAcAjCF-arm-linux-musleabi-v1.9.6-20250807_174733-826766。如果版本不兼容，能提供兼容的版本吗？
+
+Reply: 您好，请稍等，人工工程师稍后为您处理
+
+---
+
+# ID: 37488
+
+SDK Product: IM
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description:     <dependency>
+                <groupId>io.agora</groupId>
+                <artifactId>authentication</artifactId>
+                <version>2.0.0</version>
+            </dependency> 
+jdk1.8版本报错
+```log
+Exception in thread "main" java.lang.NoSuchMethodError: java.nio.ByteBuffer.rewind()Ljava/nio/ByteBuffer;
+	at io.agora.media.ByteBuf.asBytes(ByteBuf.java:23)
+	at io.agora.media.AccessToken2.getSign(AccessToken2.java:143)
+	at io.agora.media.AccessToken2.build(AccessToken2.java:105)
+	at io.agora.chat.ChatTokenBuilder2.buildUserToken(ChatTokenBuilder2.java:28)
+```
+
+
+Reply: 您好，直接 clone 仓库到本地去运行脚本[生成 token](https://doc.shengwang.cn/doc/rtc/android/basic-features/token-authentication#token-code)就行。Maven 对于 JDK 的版本要求较高，不支持 JDK 1.8。
+
+---
+
+# ID: 37490
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 4.3.0
+
+Request Type: 其他问题
+
+Request Description: obs加载插件异常
+
+Reply: 您好，要用 OBS 推流到 RTC 频道的话不建议用插件了，可以用 [RTMP 网关](https://doc.shengwang.cn/doc/rtmp-gateway/restful/landing-page)
+
+---
+
 # ID: 37421
 
 SDK Product: RTC
