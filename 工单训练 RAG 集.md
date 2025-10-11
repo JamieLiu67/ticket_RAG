@@ -1,4 +1,74 @@
 
+# ID: 37502
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 4.5.1
+
+Request Type: 集成问题咨询
+
+Request Description: 1，uid  5先加入test-1001频道，
+2，uid  7  后加入test-1001频道，
+3，加入频道后程序切换了视频渲染画布的对象，
+4，uid 7退出了test-1001频道
+5，uid 5的视频画面出现了卡顿，画面无反应。
+
+Reply: 您好，可以提供下出现问题的具体 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)，方便的话可以提供下现象视频，人工工程师稍后为您分析具体原因。
+您也可以先用我们的 [UE 官方 Demo](https://doc.shengwang.cn/doc/rtc/unreal-cpp/get-started/run-demo) 来测试看下是否会复现同样的问题。
+
+---
+
+# ID: 37511
+
+SDK Product: RTC
+
+SDK Platform: Unity
+
+SDK Version: 4.3.2
+
+Request Type: 集成问题咨询
+
+Request Description: 我实时互动打开 视频后聊天  游戏里的击打音效听不到了  背景音乐也听不到了 我那个地方没配好呢
+
+Reply: 您好，请问现在是 Unity 导出到哪个平台上使用呢？可以尝试把 audioScenario 切换为`AUDIO_SCENARIO_GAME_STREAMING`试下。
+可以使用[SetAudioScenario](https://doc.shengwang.cn/api-ref/rtc/unity/API/toc_audio_basic#api_irtcengine_setaudioscenario)来实现。
+
+---
+# ID: 37512
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 我使用安卓平板和微信h5网站进行视频通话，通话可以正常建立，安卓端一切正常，能打开自己的摄像头，也能收音，但是手机微信里没用打开摄像头，也不能收音，使用的是rtc.4.2.1.js,也不显示拨号者姓名，就显示未知，但是画面是正常接通的画面，时间也在走，就是看不到画面也不能收音
+
+Reply: 您好，请开启[日志上传](https://doc.shengwang.cn/faq/integration-issues/set-log-file)后提供下具体的频道号、uid、时间点，说明哪个 uid 看不见哪个 uid，人工工程师稍后看下数据上报。
+以及可以留意下是否符合[已知问题](https://doc.shengwang.cn/doc/rtc/javascript/overview/browser-compatibility)的特征。
+
+---
+# ID: 37513
+
+SDK Product: Fastboard
+
+SDK Platform: Web
+
+SDK Version: 1.0
+
+Request Type: 集成问题咨询
+
+Request Description: 新建了一个html文件，并通过cdn的方式集成了Fastboard白板功能，在浏览器打开后报错显示【Uncaught ReferenceError: require is not defined】。问题应该是cdn引入的js文件中使用了require方式引入了其他文件，我解决了require引入方式的问题后再次测试，又出现有关【@netless/fastboard-ui】的报错。
+而且我看到有三种继承方式，分别是npm、cdn、直接下载sdk，目前项目原因不支持npm方式，sdk的链接是一个github地址，里面代码好像也是npm方式引入，现在cdn引入又报错
+
+Reply: 您好，cdn 依赖需要 `fastboard-core window-mananger` 及 `white-web-sdk` 这些,而且需要`script type="module"`，可以自查下是否符合。
+
+---
+
 # ID: 37462
 
 SDK Product: RTC
