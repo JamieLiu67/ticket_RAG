@@ -1,4 +1,174 @@
 
+# ID: 37521
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.6.0
+
+Request Type: 其他问题
+
+Request Description: 获取pcm文件后，用第三方翻译回调失败 not authed streamId如何解决
+
+Reply: 您好，这个报错和我们 SDK 无关，属于第三方 SDK 的问题，可以检查下第三方 SDK 的错误码文档寻求解决方法。
+
+---
+
+# ID: 37526
+
+SDK Product: RTC
+
+SDK Platform: mini-app
+
+SDK Version: 2.6.5
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 问题现象：微信小程序发出的音频格式不固定，有时是aac 有时是opus，微信小程序中初始化时调用了client.setAudioCodec(9)，没有aac、opus相关设置调用，请问这是什么原因造成的
+
+Reply: 您好，小程序默认发送 opus，当频道里远端只有一个 Native 的时候会自动转为 aac。[setAudioCodec](https://doc.shengwang.cn/api-ref/rtc/mini-program/classes/client#setaudiocodec)需要appid配置IOT环境后调用才会生效，如果没有配置过的话是不会修改音频编码格式的。
+其中枚举为：
+* 0: PCMU/G711u 格式。
+* 8: PCMA/G711a 格式。
+* 9: G722 格式。
+
+---
+# ID: 37527
+
+SDK Product: RTM
+
+SDK Platform: Flutter
+
+SDK Version: 2.2.2
+
+Request Type: 其他问题
+
+Request Description: 你好，我现在在做harmonyos的rtm功能，现在有一个问题，就是调用this.storage?.setChannelMetadata方法时，返回值一直是{"errorCode":-12019,"requestId":"0"}，beta版本提供的demo也是返回这个错误，请问是什么原因？应该如何修改
+
+Reply: 您好，您好，您的错误都可以在[错误码](https://doc.shengwang.cn/doc/rtm2/cpp/error-codes)列表中找到对应解决方案和原因，可以参考下。
+-12019 RTM_ERROR_STORAGE_NOT_AVAILABLE Storage 服务不可用。
+-11007 RTM_ERROR_CHANNEL_JOIN_FAILED 表示加入该频道失败：
+检查已加入频道数量是否超限。
+检查频道名是否非法。
+检查网络是否断开连接。
+
+---
+# ID: 37528
+
+SDK Product: IM
+
+SDK Platform: Flutter
+
+SDK Version: 1.3.2
+
+Request Type: 其他问题
+
+Request Description: 就是 第一次登录的时候 进入ConversationsView 是有会话记录的 但是 我退出App 在重新进入ConversationsView  页面就没有会话记录了 日志 D/ONE SDK (12552): [2025/10/11 05:38:00:392]: Java_io_agora_chat_adapter_EMAChatManager_nativeGetAllConversationsBySort 
+
+Reply: 您好，IM 会话记录是从本地读取的，您可以卸载 app 重新编译再看下还会不会复现，如果会的话，请检查下有没有开启 [自动登录](https://im.shengwang.cn/docs/sdk/android/login.html#自动登录)
+如果还有问题，麻烦提供具体的SDK日志过来看下。
+
+---
+
+# ID: 37530
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.6.0
+
+Request Type: 其他问题
+
+Request Description: - (BOOL)onPlaybackAudioFrame:(AgoraAudioFrame* _Nonnull)frame channelId:(NSString * _Nonnull)channelId  NS_SWIFT_NAME(onPlaybackAudioFrame(_:channelId:));
+是获取对方的音频数据吗，为什么不回调，而onRecordAudioFrame方法都回调了
+
+Reply: 您好，请问音频观测位置是POSITION_PLAYBACK 位置吗？[getObservedAudioFramePosition](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_audio_raw#getObservedAudioFramePosition)，onPlaybackAudioFrame只有在观测位置是POSITION_PLAYBACK且远端用户确实在发流的时候才会触发。
+
+---
+
+# ID: 37539
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 线上报错
+
+Request Description: 曹操三摄设备集成
+声网版本4.1.1
+appId='8b125330726a4bd79fac3e402f8ecc3b', uid=0, enableVideo=true, token='', channelId='01001015CVPAU10024112100040', license='null', authType=1}
+10月13日上午测试期间出现一次远程展示摄像头画面卡住不动的情况，情况持续很久，查看日志是有角色主动离开，预期是没有离开，需要麻烦排查离开的具体原因
+
+Reply: 您好，频道内用户离开的原因可以在声网 console-左侧边栏-全部产品-水晶球 里自行查询，如果无法判断的话，您可以提供完整频道号、uid、时间点、[客户端 SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)过来看下
+
+---
+
+# ID: 37542
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 我们是Java-linux-sdk，想请教下3A模块怎么集成。模型文件如何获取
+
+Reply: 您好，3A 模块只能服务端SDK，搭配 RTC 通话使用，3A 和 BGHVS 的集成可以参考 [Java Linux SDK 的 README](https://github.com/AgoraIO-Extensions/Agora-Java-Server-SDK/tree/main)
+
+---
+# ID: 37543
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.23.x
+
+Request Type: 线上报错
+
+Request Description: 25154频道中7697在频道中显示为正常退出对话, 但是经过勘察推测7697因为另外一个用户被挤下去了, 能不能帮忙查看一下7697是否是正常退出对话, 之后就没有再加入频道了?
+
+Reply: 您好，需要确认下通话发送的具体时间点，以及有[客户端 SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)的话能够更好的了解[频道链接状态](https://doc.shengwang.cn/doc/rtc/javascript/basic-features/channel-connection)
+
+---
+# ID: 37544
+
+SDK Product: Fastboard
+
+SDK Platform: Web
+
+SDK Version: 1.1.0
+
+Request Type: 集成问题咨询
+
+Request Description: web端是否支持vue2，经测试，vue3没问题，vue2在引入阶段出现许多报错
+
+Reply: 您好，支持，但是vue2 不能把 fastboard 实例放到vue的data中,需要挂载到全局变量上使用
+
+---
+
+# ID: 37546
+
+SDK Product: RTC
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 集成服务端JAVA SDK后，通过 buildTokenWithUserAccount 生成RTC token，但用这个token建立连接时，返回-121
+
+Reply: 您好，121 表示用户ID无效，这表示您加入频道时传入的 uid 有问题，可以对照[错误码](https://doc.shengwang.cn/api-ref/rtc-server-sdk/java/error-code)文档自查一下
+
+---
+
 # ID: 37502
 
 SDK Product: RTC
