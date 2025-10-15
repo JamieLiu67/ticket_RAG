@@ -1,4 +1,153 @@
 
+# ID: 37570
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 问下我们在使用elevenLabs作为tts厂商时时延为啥这么长，跟榜单别的测试数据不在一个级别上，是参数有问题么：
+性能指标详情:
+轮次: 1 | asr_ttlw:0ms | llm_ttfb:0ms | llm_ttfs:0ms | tts_ttfb:194ms
+轮次: 2 | asr_ttlw:0ms | llm_ttfb:536ms | llm_ttfs:753ms | tts_ttfb:708ms
+轮次: 3 | asr_ttlw:0ms | llm_ttfb:951ms | llm_ttfs:1234ms | tts_ttfb:1487ms
+
+Reply: 您好，就是elevenLabs 本身耗时长较长导致的，这一点可以在模型评测平台体现
+
+---
+# ID: 37571
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 我使用rsta进行推流，使用rtc进行拉流播放，可以在不使用服务器的情况下让rtsa推流方检测到rtc方的加入与退出吗？我将rtc方的身份改成host后，rtsa方可以检测到rtc的进入和退出，但是rtsa方显示连接失败，日志[2025-10-11 09:09:58.319] [ERROR] [QtAgoraClient] SDK错误回调 - 连接ID: 1 错误码: 300 消息: "pacer-timeout"
+
+Reply: 您好，错误码: 300 消息: "pacer-timeout"表示视频数据发送太快，且超出了宽带限制。当前发送速度下很可能发生丢包。
+如果咱们[码率](https://doc.shengwang.cn/doc/rtsa/c/basic-features/bitrate-adaption)高于这个，就会有可能产生卡顿，咱们也可以基于这个回调在设备上做一定提示
+
+如果发送的码率大于带宽探测的大小，就会报错：ERR_VIDEO_SEND_OVER_BANDWIDTH_LIMIT 或者 Bandwidth change detected
+
+这里面涉及到三个概念：
+1. 是我们sdk内部的算法做的带宽探测
+2. 是sdk上bwe预设的最大最小码率值
+3. 是视频编码本身的码率
+
+声网不对网络中最大带宽做确定，但是不管实际有多大，发送的最大码率都不会超过bwe api设置的最大码率；
+如果算法中探测到的带宽，低于我们当前的编码码率，我们会发一个回调`on_target_bitrate_changed`来通知编码器调整码率；
+
+这个回调是我们检测到带宽大小有变化的时候就会回调，然后咱们调整码率的策略可以参考[实时调整发送码率](https://doc.shengwang.cn/doc/rtsa/c/basic-features/bitrate-adaption)
+
+---
+# ID: 37572
+
+SDK Product: Fastboard
+
+SDK Platform: Android
+
+SDK Version: 1.7.2
+
+Request Type: 集成问题咨询
+
+Request Description: 请发我android的demo  java版本的，我看你们网站只有kotlin版本
+
+Reply: 您好，请问有看过这个 Demo 吗？这个是 Java 版本的 [fastboard-android](https://github.com/netless-io/fastboard-android/tree/main)
+
+---
+
+# ID: 37586
+
+SDK Product: RTC-Linux
+
+SDK Platform: Linux-Java
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 在Linux上跑官方给示例时：
+报错： service.agoraRtcConnCreate(null)返回为null，导致后续错误
+报错日志：
+```
+spdlog fatal error: Cannot use size() on closed file /root/.agora/agorasdk.log
+spdlog fatal error: Cannot use size() on closed file /root/.agora/agoraapi.log
+spdlog fatal error: Cannot use size() on closed file /root/.agora/agorasdk.log
+spdlog fatal error: Cannot use size() on closed file /root/.agora/agoraapi.log
+spdlog fatal error: Cannot use size() on closed file /root/.agora/agoraapi.log
+```
+其中agoraapi.log日志为：
+```
+[10/15/25 14:18:56:205][1735][A]:(00000000): AgoraService::initializeInternal(this:0x7fc44c003840, configEx:(engineType:0, enableAudioProcessor:0, enableAudioDevice:0, enableVideo:0, context:0x7fc4dc427948, bitrateConstraints:(min_bitrate_bps:0, start_bitrate_bps:300000, min_bitrate_bps:0), logDir: (null), domainLimit:0))
+[10/15/25 14:18:56:222][1735][A]:(00000001):   AgoraService::setLogFilter(this:0x7fc44c003840, filters:15)
+```
+
+Reply: 您好，建议拉我们仓库最新的 main 分支代码按照 README 运行一下：[下载](https://doc.shengwang.cn/doc/rtc-server-sdk/java/resources)
+
+---
+
+# ID: 37589
+
+SDK Product: RTC
+
+SDK Platform: Unity
+
+SDK Version: 4.5.1
+
+Request Type: 集成问题咨询
+
+Request Description: 参考SDK Sample 做本地录音的功能，Unity Window及Mac环境使用正常，在Ios和Android设备时，无法开启录制功能
+1.使用的临时Token(在有效期内)
+2.初始化及加入频道已经成功
+3.调用 LocalRecorder.StartRecording 时 Ios和Android设备 返回 -2  但在Mac上运行正常返回0
+
+Reply: 可以参考下接口文档，-2 就是参数无效，移动端和桌面端的参数不一定能通用：[StartRecording](https://doc.shengwang.cn/api-ref/rtc/unity/API/toc_recording#StartRecording)
+
+---
+# ID: 37590
+
+SDK Product: RTC
+
+SDK Platform: HarmonyOS
+
+SDK Version: 4.4.2
+
+Request Type: 集成问题咨询
+
+Request Description: 我看源码仓库开启了  以下配置，这个配置好像有污染性，是否上层应用也需要开启      
+```
+ "strictMode": {
+            "useNormalizedOHMUrl": true
+          }
+```
+
+Reply: 您好，要开启。
+这个设置是鸿蒙的推荐设置，上架鸿蒙的sdk都要打开这个选项
+
+---
+
+# ID: 37593
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.23.x
+
+Request Type: 其他问题
+
+Request Description: 问一下，现在的SST就是实时翻译的服务只支持RTC这种聊天室的形式吗？
+
+Reply: 您好，是的，只能翻译 RTC 频道里的内容
+
+---
+
 # ID: 37550
 
 SDK Product: RTC
