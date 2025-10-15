@@ -1,4 +1,125 @@
 
+# ID: 37550
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.2.0
+
+Request Type: 集成问题咨询
+
+Request Description: 在直播过程中 想实现一个评论/弹幕功能 该如何实现
+
+Reply: 您好，RTC SDK 内有 datastream 可以实现简单的弹幕功能，但是发送 datastream 的身份必须是主播。
+如果您希望实现功能全面一些的弹幕，可以考虑集成额外的信令 SDK，例如 RTM。
+
+---
+
+# ID: 37552
+
+SDK Product: IM
+
+SDK Platform: Flutter
+
+SDK Version: 1.3.2
+
+Request Type: 其他问题
+
+Request Description: 就是 群聊是有名称的 但是显示的是群id modal.showName 是有其他的配置吗？
+
+Reply: 您好，IM 建完群组以后需要先获取群组详情，才能拿到群名
+或者通过这个进行修改 [根据群相关回调更新信息](https://im.shengwang.cn/docs/uikit/chatuikit/flutter/chatuikit_userinfo.html#%E6%9B%B4%E5%A4%9A)
+
+---
+
+
+# ID: 37557
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 其他问题
+
+Request Description: 在RTC 视频通话时，我的设备存在3个麦克风，我想3个麦克风 根据使用场景 进行随意切换。是否可行
+
+Reply: 您好，这个需求无法实现，麦克风的选择是系统行为，系统在没有外接的时候优先选内置，有外接的时候优先选外接。
+
+---
+
+# ID: 37560
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: android 前台服务使用 需不需要添加媒体播放权限？
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+   android:foregroundServiceType="mediaPlayback|microphone" mediaPlayback
+
+看demo service中并没有播放媒体文件  提审谷歌会需要提交 以及录屏幕
+
+
+我们已上线版本没有加这个权限，新版本加了这个权限，请给给建议？是否需要带上
+
+Reply: 您好，这个权限是给屏幕共享用的，您这边没有屏幕共享场景的话可以参考文档移除：[How to resolve FOREGROUND_SERVICE_MEDIA_PROJECTION when not using screen sharing](https://agoraio.zendesk.com/hc/en-us/articles/33544055408788-How-to-resolve-FOREGROUND-SERVICE-MEDIA-PROJECTION-when-not-using-screen-sharing)
+
+---
+
+# ID: 37564
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.5.2
+
+Request Type: 集成问题咨询
+
+Request Description: 在安卓设备上收音很小，ios好一点，能不能帮忙看下是不是集成有问题
+
+Reply: 您好，麻烦提供具体的频道名、uid、时间点，说明下具体现象，人工工程师稍后确认具体原因。
+您可以同时尝试切换`setAudioScenario`的枚举在 Gamestreaming 和 Chatroom 之间切换，对比下效果是否有改善。
+
+---
+# ID: 37565
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.2.0
+
+Request Type: 崩溃（闪退、卡死）
+
+Request Description: 就是 ios版本 agora_rtc_engine 引入了这个 AgoraInfra_ios库的版本(1.2.13.1) 然后 shengwang_chat_uikit也引入了 AgoraInfra_ios库版本是(1.2.13) 导致依赖冲突问题 怎么解决？在线急！！！！
+
+Reply: 您好，IM 的话把podfile文件中的`pod 'ShengwangChat_iOS' `改为`pod 'ShengwangChat_iOS', :podspec => 'https://downloads.easemob.com/downloads/SDK/Podspecs/ShengwangChat_iOS.podspec' `就可以了
+
+---
+# ID: 37566
+
+SDK Product: RTM
+
+SDK Platform: Java
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 15:19:52 观众23002加入频道，并向主题【air_to_gnd】发送了消息，观众30484316订阅了该主题，但是没有收到消息，服务器是否能够查到15:19:52后的时间端观众23002有没有发送消息到达服务器？
+
+Reply: 您好，请问您说的“主题”具体是什么功能？是频道消息吗？麻烦完整描述下场景
+
+---
+
 # ID: 37521
 
 SDK Product: RTC
