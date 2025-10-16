@@ -1,3 +1,66 @@
+# ID: 37595
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 后端返回的uid是3081074661，后端说的声网文档是uint32,但是Android 客户端加入频道要的uid却是int32，这是api  public abstract int joinChannel(String token, String channelId, int uid, ChannelMediaOptions options); 这个怎么解决
+
+Reply: 您好，保持UID用 int32 类型再试试，不要超过这个范围上限
+
+---
+
+# ID: 37605
+
+SDK Product: Fastboard
+
+SDK Platform: Android
+
+SDK Version: 1.7.2
+
+Request Type: 集成问题咨询
+
+Request Description: 我在加入房间的时候调用的是
+```java
+fastRoom.join(new OnRoomReadyCallback() {
+@Override
+    public void onRoomReady(@NonNull FastRoom room) {
+        Log.i("WhiteBord", "房间加入成功，uuid=" + uuid);
+        isWhiteboardJoined = true;
+        isJoining = false;
+    }
+});
+```
+
+是可以走到回调里面的。但是执行过退出房间方法（fastRoom.destroy();）之后重新加入与之前相同uuid的房间的时候无法加入成功，并且也不会走到onRoomReady这个回调。麻烦提供一下 加入房间 退出房间 重新加入房间的小例子。或者我的代码错误
+
+Reply: 您好，destroy之后就是无法加入的，需要重新 join
+```java
+fastRoom = fastboard.createFastRoom(roomOptions)
+fastRoom.join()
+```
+
+---
+
+# ID: 37608
+
+SDK Product: Media-push
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 拉流黑屏，拉不到流
+
+Reply: 您好，请提供具体的`converterId`和问题时间点，并且尝试开关 转码配置 来验证下是否能够解决
+
+---
 
 # ID: 37570
 
