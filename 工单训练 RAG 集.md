@@ -1,3 +1,70 @@
+
+# ID: 37615
+
+SDK Product: RTC
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 问题咨询：
+https://doc.shengwang.cn/doc/rtc/restful/channel-management/operations/get-dev-v1-channel-user-appid-channelName 
+请问查询用户列表的服务端Restful API，在返回的用户ID列表中，是否包含录制、审核这类声网内部机器人的UserID ？
+
+Reply: 您好，会包含的，这些服务需要用 UID 加入频道才能正常工作，会被查询到在频道内的。
+
+---
+# ID: 37616
+
+SDK Product: Fastboard
+
+SDK Platform: iOS
+
+SDK Version: 1.4.2
+
+Request Type: 集成问题咨询
+
+Request Description: 我是 OC 项目，运行后发现白板上没有内容，请帮我看下是哪里出了问题？因为你们并未提供OC版的demo，请帮我解决一下非常感谢
+
+Reply: 您好，我们有 [OC 版本的 Fastboard Demo](https://github.com/netless-io/fastboard-iOS/tree/master/Example/OCExample)，可以参考。
+
+---
+
+# ID: 37625
+
+SDK Product: RTC
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: rtc房间启动后，服务端通过api发起云端录制功能。该api耗时超10s。而且大面积出现；
+
+Reply: 您好，耗时和请求发起的位置与被请求的域名相关，请参考我们的[最佳实践](https://doc.shengwang.cn/doc/cloud-recording/restful/best-practices/rest-availability)，在对应的区域使用对应区域的域名去请求，不然跨域容易出现耗时长和请求失败的问题。
+如果您确定请求地区是匹配的，可以提供具体的sid，我们看下后台响应的情况。
+
+---
+
+# ID: 37631
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 安卓和pc web互联，安卓能听到pc的声音，pc听不到安卓的。而且pc的user-joined在安卓加入频道的时候收不到事件
+
+Reply: 您好，可以检查下 Web 端加频道用的 uid 类型是不是 int，频道内不能 int 和 string 类型混用，建议全部用 int 加频道互通
+
+---
+
 # ID: 37595
 
 SDK Product: ConvoAI
