@@ -1,4 +1,41 @@
 
+# ID: 37642
+
+SDK Product: CDN
+
+SDK Platform: CDN
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 1对1语音聊天
+1对1视频聊天
+语音多人聊天，视频多人聊天
+请问语音流如何捕捉，想识别这些语音，将语音转为文字，进行鉴黄，谢谢！
+
+Reply: 您好，
+1、您这边选的是融合 CDN，融合 CDN 的物理延迟很高，不适合1v1 互通，建议用客户端 SDK 走 RTC 协议，延迟可以控制在 400ms 以内
+2、鉴黄无需转写，可以直接集成网易、数美等审核厂商的 SDK 来实现
+
+---
+# ID: 37643
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 客户端rtm收不到agent的状态变更事件，比如这个文档上展示的[StateChangeEvent](https://doc.shengwang.cn/api-ref/convoai/android/android-component/struct#statechangeevent)
+
+Reply: 您好，请问有监听对应事件吗？可以参考 [监听智能体事件](https://doc.shengwang.cn/doc/convoai/restful/user-guides/listen-agent-events)
+如果监听都正常，可以截图提供下相关代码并提供对应的客户端日志和 agentID。
+
+---
+
 # ID: 37615
 
 SDK Product: RTC
