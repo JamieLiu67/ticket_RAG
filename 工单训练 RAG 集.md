@@ -47,12 +47,12 @@ SDK Version: 当前版本
 Request Type: 集成问题咨询
 
 Request Description: 问题咨询：
-https://doc.shengwang.cn/doc/rtc/restful/channel-management/operations/get-dev-v1-channel-user-appid-channelName 
 请问查询用户列表的服务端Restful API，在返回的用户ID列表中，是否包含录制、审核这类声网内部机器人的UserID ？
 
 Reply: 您好，会包含的，这些服务需要用 UID 加入频道才能正常工作，会被查询到在频道内的。
 
 ---
+
 # ID: 37616
 
 SDK Product: Fastboard
