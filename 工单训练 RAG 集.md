@@ -1,4 +1,138 @@
 
+# ID: 37651
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 集成问题咨询
+
+Request Description: 4.6.0 的 sdk 怎么在控制台打印sdk日志，目前设置成 debug 日志也还是不打印sdk日志
+
+Reply: 您好，我们 SDK 自从 4.3.0 开始就不再输出明文日志了，您可以自行在接口内添加 log 打印，而不是直接看我们 SDK 的输出打印
+
+---
+
+# ID: 37653
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.23.x
+
+Request Type: 集成问题咨询
+
+Request Description: https://doc.shengwang.cn/api-ref/rtc/javascript/interfaces/iagorartc, 我在这里个文档里没有找到datachannel或者叫数据流的说明。web项目中node_model找到声网的目录，里面有 data-stream 。我需要用数据流给安卓多发指令，请问web怎么使用数据流？
+
+Reply: 您好，Web datastream 接口没有对外展示，但是可以用，参考
+```javascript
+//监听回调 
+onStreamMessage?: (message: DataStreamMessage) => void;
+ 
+client.on("stream-message", (uid, message) => { console.log(`receice ${message} from ${uid}`); });
+ 
+//发送
+client.sendStreamMessage(new Uint8Array(), false)
+```
+
+---
+
+# ID: 37663
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.5.2
+
+Request Type: 其他问题
+
+Request Description: startRecording();本地保存返回-4
+
+Reply: 您好，startRecording 返回 -4 表示 RtcEngine 当前状态不支持该操作。可能因为录制正在进行中或录制出错停止。
+建议参考我们的官方 Demo[MediaRecorder](https://github.com/AgoraIO/API-Examples/blob/main/Android/APIExample/app/src/main/java/io/agora/api/example/examples/advanced/MediaRecorder.java)，以及有录制需求我们优先推荐[云录制](https://doc.shengwang.cn/doc/cloud-recording/restful/landing-page)，比客户端录制方便的多
+
+---
+
+# ID: 37665
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 按官网提供的demo集成rtc sdk 4.6.0版本，集成后已可以正常视频通话。但是当通话中某一方将app退到后台之后，app会卡死无法继续视频通话。需求是：
+
+1.希望app退到后台之后，rtc视频通话仍能够继续。
+
+2.app退到后台之后，并可能进入另外的app的情况下，视频窗口以悬浮窗的方式继续通话。
+
+请问rtc 4.6.0是否有支持后台保活持续通话和悬浮窗播放的接口方法？能否提供一个类似功能的demo？谢谢！
+
+Reply: 您好，
+1、这个需要做保活，Android 的保活可以参考[为什么部分 Android 版本 App 锁屏或切后台音视频采集或播放（渲染）无效？](https://doc.shengwang.cn/faq/quality-issues/android-background)
+2、画中画的需求可以参考我们的官方 Demo[PictureInPicture](https://github.com/AgoraIO/API-Examples/blob/main/Android/APIExample/app/src/main/java/io/agora/api/example/examples/advanced/PictureInPicture.java)
+
+---
+
+# ID: 37667
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.5.2
+
+Request Type: 效果不佳、不达预期
+
+Request Description: onLocalAudioStateChanged监听音频变化的时候。
+操作步骤
+app在后台中 手机来电 会监听到localAudioStreamReasonInterrupted.手机挂断会监听到localAudioStreamReasonOk.
+app在后台 微信来电时会监听到localAudioStreamReasonInterrupted 微信挂断时不会收到监听.
+
+Reply: 您好，SDK 无法感知音频占用的源是什么，不同手机 型号/系统 的表现不一样，有的会回调被占用 有的可能就是采集状态不变，系统给 sdk 都是空数据
+
+---
+# ID: 37668
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 集成问题咨询
+
+Request Description: 声网哪个 API 能让我通过声网的接口或者 API临时获取动态 token 的，后台集成 token 生成出现了问题，老板又催的急。
+
+Reply: 我们的 token 是用脚本生成的，您 clone 这个仓库到本地运行就可以：[token-authentication](https://doc.shengwang.cn/doc/rtc/android/basic-features/token-authentication#token-code)
+
+---
+# ID: 37669
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.3.0
+
+Request Type: 集成问题咨询
+
+Request Description: https://juejin.cn/post/6844903570639192078#heading-9
+
+这个文档里提到的仓库地址无法访问了
+https://github.com/AgoraIO/Agora-RTC-With-CallKit
+
+Reply: 您好，这个仓库已经停止更新维护了，您可以再探索下其他集成 callkit 到项目里的方式，callkit 和 RTC SDK 是两套独立的 SDK，接受 callkit 通话邀请以后调用 SDK 的 join 方法加入频道就能实现了
+
+---
+
 # ID: 37642
 
 SDK Product: CDN
