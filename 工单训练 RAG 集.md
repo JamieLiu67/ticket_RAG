@@ -1,4 +1,101 @@
 
+# ID: 37682
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: Caused by: org.gradle.internal.resolve.ModuleVersionNotFoundException: Could not find io.agora.rtc:agora-rtc-sdk-media-player:3.6.0.
+有没有3.6.0的demo
+
+Reply: 您好，Android SDK 的老版本已经不再更新维护了，推荐您优先升级 SDK 到最新的 4.x。如果无法升级的话，可以访问我们的 [api-example](https://github.com/AgoraIO/API-Examples/tree/main)，切换仓库的 tag 到指定的老版本。
+
+---
+# ID: 37683
+
+SDK Product: RTM
+
+SDK Platform: Flutter
+
+SDK Version: 2.2.2
+
+Request Type: 集成问题咨询
+
+Request Description: 我们需要接入RTM消息服务。我们是全球数据互通。如果我们开通多个服务区域，可以保证数据的跨区域互通么
+
+Reply: 您好，RTM 是全球都有节点可以互通的，但是消息数据的保存位置，是在 console 控制台上开启 RTM 功能时选择的，这个开通以后就不能改了
+
+---
+
+# ID: 37686
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 其他问题
+
+Request Description: 我不知道这属于哪一类问题。有没有安卓扬声器语音与人声分离的解决方案？
+
+Reply: 您好，SDK 本身自带回声消除模块，默认就是开启的，但是不单独对外提供和使用，只有在加入 RTC 频道通话的时候才会工作，请问您现在是有回声现象需要解决吗？
+默认就是开启的，所以您可以用我们 [Demo](https://doc.shengwang.cn/doc/rtc/android/get-started/run-demo) 体验，如果效果不好，可以把 [scenario](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_audio_basic#api_irtcengine_setaudioscenario) 设置为 chatroom 走通话音量试下
+
+---
+# ID: 37687
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 语音通话过程中，熄屏后没有声音
+
+Reply: 您好，app 没做保活的话，进入后台会被限制采集，可以参考文档进行保活：[为什么部分 Android 版本 App 锁屏或切后台音视频采集或播放（渲染）无效？](https://doc.shengwang.cn/faq/quality-issues/android-background)
+
+---
+
+# ID: 37689
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 有没有主播邀请观众连麦的 demo，或者 java 版本的相关代码？
+
+Reply: 您好，建议优先跑通我们的 [api-example](https://doc.shengwang.cn/doc/rtc/android/get-started/run-demo)
+然后再参考下我们的解决方案 Demo [秀场直播](https://doc.shengwang.cn/doc/showroom/android/get-started/run-example)
+
+---
+
+# ID: 37694
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 加入智能体成功后，无法对话
+
+Reply: 请问您这边有加入频道开麦发流吗？声网 console 里的 playground 有跑通吗？可以提供下具体的 agentID 
+
+---
+
 # ID: 37651
 
 SDK Product: RTC
