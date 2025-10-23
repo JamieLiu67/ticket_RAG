@@ -1,4 +1,202 @@
 
+# ID: 37698
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 我们在开发一款机器人应用，当机器人开启对话时，同时调用声网音视频互动SDK，开启音视频监控，记录当时与访客对话的场景。
+现在的问题是：
+1、当我们不设置时，mRtcEngine.setDefaultAudioRoutetoSpeakerphone(true);只要一进入声网音视频频道，机器人对话的音量会直接变成一个固定的音量（估计是最大音量的50%），并且调整设备音量也无效。
+2、当我设置了时，mRtcEngine.setDefaultAudioRoutetoSpeakerphone(true);只要有其他主播（我们web后台可能有座席查看当前机器人情况）进入频道，也会出现问题一的情况。
+代码如下：
+```java
+    mRtcEngine = RtcEngine.create(context, appId, mRtcEventHandler);
+    mRtcEngine.enableVideo();
+
+    mRtcEngine.setDefaultAudioRoutetoSpeakerphone(true);
+    mRtcEngine.setRouteInCommunicationMode(3);
+
+    ChannelMediaOptions options = new ChannelMediaOptions();
+    // 视频通话场景下，设置频道场景为 BROADCASTING。
+    options.channelProfile = Constants.CHANNEL_PROFILE_COMMUNICATION;
+    // 将用户角色设置为 BROADCASTER。
+    options.clientRoleType = Constants.CLIENT_ROLE_BROADCASTER;
+    mRtcEngine.joinChannel(token, channelName,  Integer.parseInt(uid),options);
+```
+
+
+Reply: 您好，不推荐用`Constants.CHANNEL_PROFILE_COMMUNICATION`，请改用 Live 模式，role 保持不变
+以及不需要s`etDefaultAudioRoutetoSpeakerphone`、`setRouteInCommunicationMode`，可以用[setAudioScenario](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_audio_basic#api_irtcengine_setaudioscenario) 设置为`AUDIO_SCENARIO_GAME_STREAMING`，走媒体音量，如果需要走通话音量改成 chatroom 就行
+如果有高音质需求，可以再参考下文档[实现高音质](https://doc.shengwang.cn/doc/rtc/android/best-practice/optimal-audio-quality)
+
+---
+
+# ID: 37702
+
+SDK Product: Cloud-recording
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 线上报错
+
+Request Description: 我们想要做一个录音功能，我们这边服务端使用的是这个 使用 Go SDK 开始云端录制，当前的流程：
+1. 客户端请求服务端，服务端下发 agoraToken，cname，agoraUid
+2. 客户端加入声网频道
+3. 服务端监听声网加入频道回调
+4. 服务端调用声网开启start，此时传的 uid 和上面agoraUid不一样(我看文档上需要不一样)
+5. 开始录音
+6. 监听声网退出频道回调
+7. 服务端调用 stop
+问题：
+8. 帮忙看下流程是否正确。我们正常流程是客户端录音，录完后上传oss。上面的方案是在客户端突然掉线(手机没电等)，防止录音丢失，这种场景使用的。会报错
+```json
+		"details": {
+			"errorCode": 110,
+			"errorLevel": 5,
+			"errorMsg": "",
+			"module": 0,
+			"msgName": "cloud_recording_error",
+			"stat": 0
+```
+2. 上面流程4中，如果服务端传递的uid和流程1中的agoraUid一致，则不报错，但是存储桶中一直没有录音文件以及文件夹
+
+Reply: 您好，
+1、错误码 110 表示 token 错误，临时 token 不校验 uid 所以能进频道，自己生成的 token 是要校验 uid 的，需要保证生成时的 uid 频道名和 join 时传入的完全一致才能加进频道。控制台有自助检验工具，可以自行校验下token：控制台-辅助工具-Token生成/校验–Token校验，将您的token粘贴进去，解析一下，看解析出来的结果和您join传入的参数是否一致
+2、您现在的流程没问题，但是云录制只能录制 RTC 频道里发的流，如果客户端掉线、断网的话，云录制是录不到用户画面的，因为用户发不出来
+
+---
+
+# ID: 37704
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.5.2
+
+Request Type: 效果不佳、不达预期
+
+Request Description: agora_rtc_engine: 6.5.0
+iOS 26 调用enableLocalAudio(false) 系统音量调节功能无法使用了。
+
+Reply: 您好，目前这个问题需要尝试：
+1、使用 Gamestreaming 的 scenario 来解决
+2、或者 避免使用`enableLocalAudio `来解决，可以尝试用 `setClientRole`来解决，需要开麦设置为主播，不需要了设置为观众。或者用 `muteLocalAudio` 来实现，不过 mute 方法不会停止采集，行为上会有些许差异。
+
+---
+
+# ID: 37706
+
+SDK Product: SDK-extension
+
+SDK Platform: iOS
+
+SDK Version: Metakit
+
+Request Type: 集成问题咨询
+
+Request Description: 想咨询：
+1.是否能支持视频通话中，人物头像卡通化/虚拟形象，跟随人脸动。
+2.如果支持，需要其他框架/SDK支持吗？
+
+Reply: 您好，声网有 metakit 可以支持，但是 metakit 插件已经没有更新维护一段时间了，不推荐使用。建议您通过集成第三方 SDK 来实现这种需求，我们的 SDK 支持提供[视频裸数据](https://doc.shengwang.cn/doc/rtc/ios/advanced-features/video-processing)用于处理。
+
+---
+
+# ID: 37708
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 版本号4.20.1
+关麦再开麦有时会没有声音
+
+Reply: 您好，因为老版本已经不更新维护了，所以优先建议升级到最新版本，如果新版本还有问题，可以开启[日志上传](https://doc.shengwang.cn/faq/integration-issues/set-log-file)以后复现问题，提供具体的频道、uid、时间点，说明谁听不见谁，我们看下具体原因。
+
+---
+
+# ID: 37710
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: `api.agora.io/cn/v1.0/projects/xxx/ktv-service/api/serv/songs?requestId=lzTZsruXVL3VUi2UVHHDTPE0PRvF8P4V&pageType=0&pageCode=6246262727281830&size=2&option={"tag":"1"}`
+token的请求是 Authorization = `007eJxTYIg4lVXBx/lx9v9pqsf45X3vLDmQ/GxT8o+pmdfk19Ts/leuwJCWbGycnGZkYZCclGxilmaUaG5pamBhkpiYmmhiYWhqJP74Z0ZDICNDZs9bZkYGCATxmRkMDQwYGADSXyEq`
+这个是临时token
+
+返回：KongError, Unauthorized
+
+用postman跑的，还是报错
+
+Reply: 您好，认证里不是填我们的 token，是填声网 console 里获取的 ak sk 计算出的 basic auth 值，参考云录制的实现再试下[实现 HTTP 基本认证](https://doc.shengwang.cn/doc/cloud-recording/restful/user-guides/http-basic-auth)
+
+---
+# ID: 37711
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 4.3.0
+
+Request Type: 集成问题咨询
+
+Request Description: 问题背景：一个房间内有多个主播在直播，假设主播A直播时，正在使用声网语音聊天，此时主播B、C、D也在直播且在主播A旁边坐着，由于他3个人直播时吼叫声音较大，会把声音传入主播A的麦克风内；
+1. 是否有类似环境音屏蔽的功能api
+2. 此问题有声网是否有最佳实践解决方案？
+
+Reply: 您好，这种情况是物理现象，外放声音大+麦克风重新拾取就会导致回音，移动端上可以修改 audioScenario 为 chatroom 走通话音量用硬件回声消除解决，Windows 或 Mac 这类桌面端只能考虑带耳机或者调小外放音量解决了。
+
+---
+
+# ID: 37713
+
+SDK Product: RTM
+
+SDK Platform: Java
+
+SDK Version: 2.1.7
+
+Request Type: 线上报错
+
+Request Description: 实时消息restful接口报错 "https://api.sd-rtn.com/rtm/v2/history/1879b5cf51af4d91a848350caa13adaa/userId/100000/channelType/message/channel/live_1978412974843232257start=&end=&messageCount=100": "{"data":null,"error":true,"errorCode":500,"operation":"history","reason":"Sync Server Error","requestId":"7966661_18114543996554487573"}"
+
+Reply: 您好，请先检查下您目前在用的 appid 是否有开通[历史消息](https://doc.shengwang.cn/doc/rtm2/javascript/user-guide/message/history-message)服务？如果有的话，麻烦提供下具体 appid ，人工工程师稍后跟进。
+
+---
+# ID: 37714
+
+SDK Product: IM
+
+SDK Platform: iOS
+
+SDK Version: 1.3.2
+
+Request Type: 集成问题咨询
+
+Request Description: 离线推送，通知栏，显示标题和内容，目前收到显示的是默认的你有一条消息，点击查看，我想设置成显示谁发的，发送的具体内容，如何设置，在哪里设置，我看了下文档没太明白
+
+Reply: 您好，请参考[设置推送通知的显示内容](https://im.shengwang.cn/docs/sdk/ios/push/push_display.html)，修改`DisplayStyle`和`displayName `来实现
+
+---
+
 # ID: 37682
 
 SDK Product: RTC
