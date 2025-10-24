@@ -1,4 +1,102 @@
 
+
+# ID: 37715
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 我现在设备端使用rtsa推流，手机端使用rtc拉流，我在rtc端用观众身份去加入频道时，rtsa端回调显示的可用带宽有6.5mbps，可是把rtc端的身份改成host后，rtsa端回调显示的可用带宽只有50kbps了，这是怎么回事？rtc端只拉流观看，身份改成host后已经显式订阅。
+
+Reply: 您好，`on_target_bitrate_changed` 回调用于报告当前探测到的可用最大带宽。
+如果发送码率高于该带宽，可能会出现卡顿或丢帧，可根据此回调在设备上做提示。
+
+当发送码率超过带宽时，可能出现以下报错：
+`ERR_VIDEO_SEND_OVER_BANDWIDTH_LIMIT`
+`Bandwidth change detected`
+
+涉及三个概念：
+1、SDK 内部算法进行的带宽探测
+2、BWE 设定的最小/最大码率范围
+3、编码器当前发送码率
+
+SDK 不限定网络最大带宽，但发送码率不会超过 BWE 设置的上限。
+当探测到带宽低于当前码率时，会触发 `on_target_bitrate_changed` 通知编码器调整码率。
+该回调在检测到带宽变化时触发，码率调整策略可参考[实时调整发送码率](https://doc.shengwang.cn/doc/rtsa/c/basic-features/bitrate-adaption)。
+
+---
+
+# ID: 37717
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 其他问题
+
+Request Description: 现在的播放器在直播过程中支持小窗播放吗
+
+Reply: 请问您说的播放器是什么？是指视频通话切后台时整个 app 进入悬浮窗类似微信那样，还是 SDK 内的 mpk 播放器需要单独小窗播放东西？
+悬浮窗是支持的，参考我们的[画中画 Demo](https://github.com/AgoraIO/API-Examples/blob/main/Android/APIExample/app/src/main/java/io/agora/api/example/examples/advanced/PictureInPicture.java)
+
+---
+
+# ID: 37719
+
+SDK Product: Cloud-recording
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 云端录制在录制过程中能不能拿到实时画面的m3u8地址，我们想要实现边录制边播放录制画面
+
+Reply: 您好，m3u8 是录制完成以后才会生成的索引文件，在录制过程中只有一份份 ts 文件会上传到 OSS 里没有办法从头到尾一直看，所以不支持您的需求。
+如果您要看频道内画面，客户端上加入 RTC 频道收流就行了
+
+---
+
+# ID: 37725
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 
+```json
+"properties": {
+    "channel": "xxx",
+    "agent_rtc_uid": "xxx",
+    "remote_rtc_uids": [
+      "*"
+    ],
+    "enable_string_uid": true,
+    "idle_timeout": 120,
+    }
+  }
+}'
+```
+  
+房间 ID： convaiconsole20988972_196860
+Agent ID：xxx
+无法语音交流
+
+Reply: 您好，看您配置了使用 string uid，请确保频道内远端也使用了相同的类型，否则 int 和 string 混用会有互通问题。
+
+---
+
 # ID: 37698
 
 SDK Product: RTC
