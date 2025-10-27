@@ -1,4 +1,177 @@
 
+# ID: 37728
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 集成问题咨询
+
+Request Description: 你好，我要在web端获取远端推送过来的视频分辨率。ai给推荐个几种写法都没拿到,还有别的办法么？
+
+Reply: 您好，可以用 client 方法 [getRemoteVideoStats](https://doc.shengwang.cn/api-ref/rtc/javascript/interfaces/iagorartcclient#getRemoteVideoStats)
+
+---
+
+# ID: 37745
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: Flutter 开发为了支持谷歌16k,咱们的Rtc 升级到:sdk 6.52,但是里边的相芯美颜插件 如果使用：版本 8.1.4报错，无法使用
+
+Reply: 您好，相芯的 8.1.4 本身不支持 16kb，所以需要换到支持 16kb 的插件版本，请问您这边接受升级到 8.14.0 吗？接受的话可以参考下这个仓库里 Readme 的插件下载地址[AgoraMarketPlace_FU_Flutter](https://github.com/JamieLiu67/AgoraMarketPlace_FU_Flutter)
+
+---
+# ID: 37746
+
+SDK Product: Cloud-recording
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 多人会议，开启云录制，输出结果：是否可以按照每条声道单独输出一条音频结果。现在是在oss上产生一个mp4文件。
+我们需求是：语音会议，需要识别哪句话是哪个用户说的，类似如下：
+发言人1：
+你好
+发言人2：
+我很好
+
+现在如果直接把云录制生成的mp4给大模型，大模型会返回如上发言内容，现在想要将真实用户名称传递给大模型，也就是需要知道在 几分几秒是哪个用户说的话，期望返回 如下结果：
+小明：
+你好
+小红：
+我很好
+
+声网这边有什么方案，可以让我们知道 几分几秒是哪个用户发言么？
+
+
+Reply: 您好，单用云录制是实现不了的，您可以考虑使用我们的试试转写字幕功能来实现，这个产品没有上架国内文档但是可以正常使用，您可以先看飞书文档以及评论区的海外文档：[RTT restful 文档（7.x）](https://i46hiqvame.feishu.cn/docx/NTAQdKufEoswPqxbrLFcfQy7nvb)
+
+---
+# ID: 37747
+
+SDK Product: IM
+
+SDK Platform: Android
+
+SDK Version: 1.3.2
+
+Request Type: 其他问题
+
+Request Description: 语音通话降噪功能
+
+老师我们今天测试了下，只要手在手机上摩擦一下，或者手指敲打手机，对方就能听到摩擦声音和敲打音，但是试了下微信 怎么摩擦怎么敲打就不会有声音，声网能做到么，是需要打开什么开关么
+
+Reply: 您好，如果觉得降噪效果不明显，可以尝试切换 `scenario` 到 `chatroom`，走通话音量用硬件降噪试试[setAudioScenario](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_audio_basic#setAudioScenario)
+如果还是不行，可以考虑开启 AINS 接口，[setAINSMode](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_audio_effect#api_irtcengine_setainsmode)
+
+---
+# ID: 37748
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 目前在通话时遇到声音较小问题，咱们有对应的3A算法或者SDK使用时相关配置可以解决此问题吗？
+
+Reply: 您好，请问目前在用哪个版本的 SDK？声音小的话需要提供具体频道号、uid、时间点，说明哪个 uid 听哪个 uid 声音小
+也可以优先考虑切换 `scenario` 到 `GameSteaming` 来试下效果，参考[实现高音质](https://doc.shengwang.cn/doc/rtc/android/best-practice/optimal-audio-quality)
+
+---
+
+# ID: 37756
+
+SDK Product: IM
+
+SDK Platform: Flutter
+
+SDK Version: 1.3.2
+
+Request Type: 集成问题咨询
+
+Request Description: im的ui你们也是集成好的吗
+
+Reply: 您好，IM 有 UI kit，自带一套现成 UI，参考：[UI Kit](https://im.shengwang.cn/docs/uikit/chatuikit/flutter/chatuikit_overview.html)
+
+---
+
+# ID: 37758
+
+SDK Product: RTC
+
+SDK Platform: HarmonyOS
+
+SDK Version: 4.4.2
+
+Request Type: 集成问题咨询
+
+Request Description: 如何监听屏幕隐私保护是否开启？
+
+Reply: 您好，屏幕隐私保护这个功能不影响录屏，而且这个状态鸿蒙系统也不会给到app
+
+---
+
+# ID: 37767
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 创建token的时候，不同角色创建的token，在功能上有什么区别？
+
+Reply: 您好，因为 RTC 频道内是有主播和观众的身份区别的，所以需要 token 的身份也对齐，方便用 token 控制发流权限
+
+---
+# ID: 37768
+
+SDK Product: RTMP
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 开头RTMP 网关服务后，使用 FFmpeg 推送本地码流到 网关，使用SRT协议，请问srt协议的默认端口是多少？ 你们家的大模型说是2088，但是telnet rtls-ingress-prod-cn.agoramdn.com 2088 不通畅
+
+Reply: 您好，使用 SRT 协议推流的话，域名和端口需要额外调整，请参考文档[RTMPG 使用 SRT 协议推流](https://i46hiqvame.feishu.cn/wiki/UuFSwyI8ziApTUkr2mFcB4dXn3f?from=from_copylink)
+
+---
+
+# ID: 37771
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.23.x
+
+Request Type: 集成问题咨询
+
+Request Description: 微信公众号，通过h5实现语音通话，是否需要微信审核权限？
+
+Reply: 您好，直接在微信公众号的微信浏览器内使用 Web SDK 是不需要微信审核资质的。
+
+---
 
 # ID: 37715
 
