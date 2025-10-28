@@ -1,4 +1,124 @@
 
+# ID: 37773
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 目前我已经集成好了go sdk和linux server rtc sdk了，并打通了与VOIP的功能，目前有个问题，因为是商业化，所以务必要走知识库，但是我目前未找到可以对接譬如maxkb，dify，fastgpt这种的，请问有什么办法可以实现呢？
+因为我目前是语音直接到你们rtc sdk推流出去了，所以我这边获取不到文字信息或者其他什么内容，所有的都在llm那进行推理了，如果是个性化的知识库方式，这个就无法实现了，请问贵公司是否有相应的解决方案呢？
+
+Reply: 您好，可以参考下这篇文档来实现：[实现检索增强生成](https://doc.shengwang.cn/doc/convoai/restful/user-guides/custom-llm#%E5%AE%9E%E7%8E%B0%E6%A3%80%E7%B4%A2%E5%A2%9E%E5%BC%BA%E7%94%9F%E6%88%90)
+
+---
+
+# ID: 37782
+
+SDK Product: RTC
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 我们准备做一个多人rtc语音互动，然后里面成员都为主播角色，然后当其中一个主播离开频道，我们服务端收到了所有主播的离开回调（event_type:104）,然后导致所有主播离开频道，并且房间销毁了。上面的频道名是我们测试环境的频道
+需求：
+1、想知道产生这个问题的原因，
+2、然后我们需要的效果：是房间只剩一个人时才销毁房间，只有有2人及其以上可以正常聊天
+
+Reply: 您好，
+1、104 时间内有离开原因的字段，可以通过这个了解离开频道的具体原因。
+2、RTC 频道销毁是后台服务自动实现的，用户侧无需关心，我们销毁的条件是频道内最后一个用户离开，这个条件无法修改。如果您业务上有需求，可以考虑用[踢人接口](https://doc.shengwang.cn/doc/rtc/restful/channel-management/operations/post-dev-v1-kicking-rule)把用户踢出去
+
+---
+# ID: 37783
+
+SDK Product: RTC
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 我们现在需要使用 腾讯云 提供的 音频内容安全 进行 语音直播审核,
+但是腾讯那边不支持agora协议,我们现在需要怎么做才能对接呢
+
+Reply: 您好，我们的音视频数据都是放在 RTC 频道内传输的，审核要看到内容只能加频道进来才行，如果腾讯不支持的话我们也没办法，可以考虑下换其他厂商，比如[网易易盾](https://support.dun.163.com/documents/2018082201?docId=499759506556469248)
+
+---
+
+# ID: 37786
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: vue项目打包为electron，想使用屏幕共享功能，sdk应该用web还是electron
+
+Reply: 您好，两个都可以，一般用 Web 的多一些，用web的sdk需要记得处理`DESKTOP_CAPTURER_GET_SOURCES`
+
+---
+
+# ID: 37790
+
+SDK Product: RTMP
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: RTMP创建流成功后，拉取流的接口是这个吗
+POST https://api.sd-rtn.com/{region}/v1/projects/{appid}/rtls/ingress/streamkeys
+
+Reply: 您好，不是这个，RTMP 网关是负责把流推进 RTC 频道里，要看到的话需要集成[客户端 SDK](https://doc.shengwang.cn/doc/rtc/homepage)
+
+---
+# ID: 37791
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 集成问题咨询
+
+Request Description: 有没有办法判断是否欠费？
+我司平台下有多个客户都使用声网作为视频基础，但是有的客户欠费后前端捕获异常后会报很多错误，我直接做弹窗会误导用户。
+所以，前端的sdk有没有办法判断是否欠费，或者有没有做后端的欠费查询功能。
+
+Reply: 您好，账号的欠费情况只能登录声网 console 主动查询，没有对外的接口开放
+欠费的话 appid 会停用，初始化的时候就会报错 appid 不可用 `NO_ACTIVE_STATUS`,参考[错误码](https://doc.shengwang.cn/doc/rtc/javascript/error-code)
+
+---
+# ID: 37792
+
+SDK Product: RTC
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 在线会议，会议结束后想要获得会议录音文件，除了云端录制外，声网那边有提供获取录音/视频的接口么？
+
+Reply: 您好，只有云录制或者本地服务端录制或者客户端录制这几种录制方式，如果不调用录制接口是不会有录制产生的，RTC 不主动保存用户通话数据
+
+---
+
 # ID: 37728
 
 SDK Product: RTC
@@ -4251,7 +4371,7 @@ Request Type: 其他问题
 
 Request Description: 我需要统计声网资源每天的用量，无法获取到对应的数据，需要提供对应的能力提供api接口。
 
-Reply: 您好，没有提供统计分钟数的接口，如果您需要做计量计费，可以根据您自己的业务场景来计费，不依赖我们的计费去计算。
+Reply: 您好，可以用[查询时序用量指标](https://doc.shengwang.cn/doc/analytics/general/restful-aa/operations/get-beta-insight-usage-by_time)，但如果您需要做计量计费，建议根据您自己的业务场景来计费，不依赖我们的计费去计算。
 
 ---
 # ID: 37106
