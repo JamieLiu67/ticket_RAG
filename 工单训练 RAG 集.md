@@ -1,4 +1,134 @@
 
+# ID: 37793
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 我本地部署了 [web版本 demo](https://github.com/Shengwang-Community/Conversational-AI-Demo/tree/main/Web/Scenes/VoiceAgent)
+但是让必须登录，点登录报错 `http://localhost:3000/undefined/v1/convoai/sso/login?redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F`
+
+Reply: 您好，Conversational-AI-Demo 这里登录用的是我们官方SSO登陆认证的redirect_uri，需要在SSO的认证才能回跳的。
+SSO登陆仅限于我司的注册用户，不对外开放。请业务上自行去除相关代码。
+
+---
+
+# ID: 37803
+
+SDK Product: Cloud-recording
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 我们录的是两个人的视频通话，但是每次进去的前几秒都没录上，或者卡顿，或者丢字，就比如第一句“嗨 小景 你好呀”的“小”和“你”就没声儿，并且没录进去，所有的视频全部都是这样的问题，丢字严重～
+
+Reply: 您好，请问实际通话时双方互通正常吗？可以提供下录制对应的 sid、录像文件，我们看下具体情况
+
+---
+# ID: 37804
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 问下有计划能够在agent回复的时候同时提供口型数据吗，例如azure的viseme
+
+Reply: 您好，这个口型可以考虑两种方式解决
+1、直接让数字人厂商在云端渲染后提供现成的画面，发到 RTC 频道里让观众观看。这样您基本没什么需要操作的地方，数字人厂商已经都搞定了，但是成本会有点高
+2、利用 [使用音频模态输出](https://doc.shengwang.cn/doc/convoai/restful/user-guides/audio-modality) 自行定义输出的时候多带一组口型数据，然后在本地收到这些口型数据以后自行渲染。我们是提供自定义数据传输通道的，但是里面的具体业务需要您自行定制+改写 LLM 提示词，我们没有现成的封装接口
+
+---
+# ID: 37805
+
+SDK Product: RTSA
+
+SDK Platform: Linux-C
+
+SDK Version: 1.9.2
+
+Request Type: 其他问题
+
+Request Description: 我们在智能硬件上即成了rtsa框架，我们使用你们的iOS demo，以及我们的安卓端去进入频道，结果没有收到来自rtsa sdk设备上的推送，而是iOS设备和安卓设备的互通了
+
+Reply: 您好，请问有在声网 console 左侧边栏-全部产品-水晶球里检查过 RTSA 端的实际加频道情况吗？可以先检查下 RTSA 是否加入频道成功，并且确保 RTSA 和 其他端互通的时候有参考过[与 RTC SDK 互通音视频数据](https://doc.shengwang.cn/doc/rtsa/c/best-practices/interoperate-rtc)的编码格式建议，双方使用了相同的编码进行互通。
+
+---
+
+# ID: 37814
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.5.1
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 请问安卓的SDK视频编码支持SVC吗？
+
+Reply: 您好，Android SDK 不支持 SVC 编码
+
+---
+
+# ID: 37818
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 集成问题咨询
+
+Request Description: 
+```java
+ktvApi.switchSingerRole(mKTVSingRole, new ISwitchRoleStateListener() {
+            @Override
+            public void onSwitchRoleSuccess() {
+                Log.d(TAG, "onSwitchRoleSuccess1111: ok");
+            }
+
+            @Override
+            public void onSwitchRoleFail(@NonNull SwitchRoleFailReason switchRoleFailReason) {
+                Log.d(TAG, "onSwitchRoleFail1111: ok");
+            }
+        });
+
+```
+切换角色没有任何返回，只有SoloSinger的时候是有返回的，其他的都没有返回
+
+Reply: 您好，可以在复现的时候拿一下 SDK 日志并说明复现时间点，人工工程师稍后看下[日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)打印
+您也可以自查下，常见的原因可能是 joinChannelEx 没有成功导致的，建议检查 joinChannelEx 有没有加频道成功，检查下token 和 uid 是否匹配
+
+---
+# ID: 37819
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.1
+
+Request Type: 集成问题咨询
+
+Request Description: `muteLocalAudioStream` 、`setClientRole` 麻烦问下这两种方式停止和恢复发送音频流 有什么区别 
+
+Reply: `muteLocalAudioStream` 会保持采集状态，不释放资源
+`setClientRole` 为 Audience 时要看目前用的是什么音量，媒体音量的话会停止采集释放设备资源，通话音量的话采集会继续保持，不受影响。
+
+---
+
 # ID: 37773
 
 SDK Product: ConvoAI
