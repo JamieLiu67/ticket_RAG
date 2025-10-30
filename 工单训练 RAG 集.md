@@ -1,4 +1,93 @@
 
+
+# ID: 37821
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 集成问题咨询
+
+Request Description: 你好我要在客户端显示rtc套餐的时长，爬虫方式可以获取。但是太麻烦，有api可以查询么？
+
+Reply: 您好，我们没有直接返回剩余时长的接口，最多提供目前已经消耗用量的接口
+
+---
+
+# ID: 37827
+
+SDK Product: RTC
+
+SDK Platform: Unity
+
+SDK Version: 4.5.1
+
+Request Type: 其他问题
+
+Request Description: 问题1
+背景&现象
+1 接入的unity 音频SDK ，产品是发布到iOS手机端的app
+2 业务场景中未启动声网engine时，有其他播音频（tts bgm）类业务
+3 当启用声网engine完成一轮对话（join & leave channel），结束时我们会dispose 声网的engine
+   对话使用的communication的1v1模式
+4 这时手机上的其他的播音频（tts bgm）的业务，放音出现异常
+   在没有手动调整手机自身音量的情况下，明显放音变弱了，即音频系统dispose没有正确被恢复
+   即在#2阶段原本能清晰听到的bgm，在#4阶段已经音量小到快听不见了
+
+根据综合收集的信息，初步判断是：声网引擎启动后，切换过通话模式，而dispose时模式未实际回退；导致后续再播放音频的时候，依旧认为自己还是在通话模式的状态，而不是媒体状态
+希望知道这个问题是不是一种已知问题。
+
+问题2
+当启用声网engine完成一轮对话（join & leave channel），如果用的不是communication，而是在线直播的的多人模式时，
+将进入房间的两个人都setClientRole为广播者，这时的2个用户收音状态在手机端表现异常：90%+的时间里说话无法被收音，且在不触碰改变mic收音类的按键前提下，过10s后又会有1秒多收音状态（iphone手机证明录音的提示点会变成黄点），如此交替往复。
+
+相关的基础参数，排查与官网基础example无大差异，不确定是否此前有人遇到过类似的issue
+网上也没有收集到与此有关的问题
+
+
+Reply: 您好 ，
+1、请避免使用`communication`模式，改用 live 再试下，`communication` 会强制走通话音量
+2、请问用我们 Demo 能复现吗？这个现象听起来是业务问题，建议加一些打印先自行排查下，如果无果，再提供 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)、现象录像过来，我们再看下情况。
+
+---
+
+# ID: 37834
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 声网RTC播放本地或远端MP4支持带alpha通道的礼物特效吗？最多可以同时解析并显示多少个mp4，有视频帧数据的解析回调吗
+
+
+Reply: 您好，本地渲染支持，但是SDK 自带的播放器不支持解码 alpha 透明特效
+同时打开的 mp4 资源没有上限
+播放视频没有解析回调这一说，只有播放状态变更的回调 [onPlayerStateChanged](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_mediaplayer_observer#onPlayerStateChanged)
+
+---
+
+# ID: 37843
+
+SDK Product: RTC
+
+SDK Platform: mini-app
+
+SDK Version: 2.6.5
+
+Request Type: 集成问题咨询
+
+Request Description: 在微信小程序中直播多人连麦 怎么混流 
+
+Reply: 您好，请问您需要什么效果？直接加频道订阅以后自然听到的就是频道里所有声音混流在一起的效果了
+
+---
+
 # ID: 37793
 
 SDK Product: RTC
