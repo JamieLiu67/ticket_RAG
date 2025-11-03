@@ -1,4 +1,170 @@
 
+# ID: 37862
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.5.0
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 安卓手机通话超过20分钟之后发烫非常严重，有时候还会造成崩溃，哪些方面可以改善的？
+
+Reply: 您好，请问是音频通话还是视频通话？采集编码配置的分辨率是多少？一般发热就是分辨率和帧率太高了，一直开就会这样，对于低性能设备来说就会引起发热，可以尝试降低分辨率和帧率再试试
+您可以用我们 Demo 尝试下，看看 Demo 会不会发热、崩溃，如果还有崩溃问题，可以抓取下原始崩溃堆栈+ SDK 日志发来看下
+
+---
+
+# ID: 37866
+
+SDK Product: CDN
+
+SDK Platform: CDN
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 状态一直显示：配置中，还需要多久可以好？
+
+Reply: 您好，请耐心等待，一般 48 小时内肯定可以完成融合 CDN 的推拉流地址配置，如果您的等待时间超过了 48 小时，可以备注下，人工工程师稍候为您检查。
+
+---
+# ID: 37867
+
+SDK Product: RTC
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 目前的问题主要是：
+- 我们硬件端是一个博通集成的开发板，如果要用AI降噪的插件，有现成适配的SDK嘛？
+- 我看现在提供的SDK有安卓、ios、macOS这些。这是不是意味着，AI降噪算法是跑在手机本地的CPU上？如果我们的开发板没有足够算力，是不是我们应该要在云端起一个服务跑降噪算法？这种情况下，应该用哪个SDK呀？
+
+Reply: 您好，
+1、您的开发板是什么系统？Android 可以集成 [Android RTC  SDK](https://doc.shengwang.cn/doc/rtc/android/landing-page)
+IOT 系统可以集成 [RTSA SDK](https://doc.shengwang.cn/doc/rtsa/c/resources)
+2、AI 降噪都是在本地处理的，且只有 Native SDK 可以，RTSA 没有内置 AI 降噪处理，也没有放到云端处理的说法。
+
+---
+
+# ID: 37876
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 当A和B进行1对1语音、1对1视频时，他们A和B等于在一个频道中进行语音和视频聊天。
+想实现：
+1.当A有视频违规行为时，如何禁止A用户的视频传递到B
+2.当A有语音违规行为时，如何禁止A用户的语音传递到B
+谢谢！
+
+Reply: 您好，可以搭配第三方审核用[封禁接口](https://doc.shengwang.cn/doc/rtc/restful/channel-management/operations/post-dev-v1-kicking-rule)控制指定用户的发流权限。
+
+---
+
+# ID: 37879
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 本地环境下拨打视频功能正常，部署到服务器上拨打视频对方没有反应，这个是什么情况？服务器的防火墙时关闭的；
+
+Reply: 您好，我们的服务需要连接公网环境才能使用，有内部防火墙的话会连不上我们节点，可以再检查下整体的网络环境
+
+---
+
+# ID: 37881
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 这里有几个 2025-11-02 16:38 至 2025-11-02 17:50 的视频通话,主播一进入1秒就退出了。
+主播ID： xxx
+麻烦帮忙确认一下是否是连接策略的问题。
+
+Reply: 您好，uid 退出频道的原因可以在 声网 console 左侧边栏-全部产品-水晶球 内查看，常见的原因是业务上 leave 的业务有问题导致用户直接主动退出频道了。
+
+---
+
+# ID: 37882
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.5.2
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 问题描述：主播视频画面是黑的， 这种在个别机型上会出现这种问题
+视频画面我们开启了人脸检测、内置美颜，主播视频画面是黑的，亮度调到最大也没用
+
+附件是agora的日志，帮忙看下，是什么原因
+
+Reply: 您好，请问在出现问题时关闭美颜还会有画面过黑的问题吗？可以先关闭美颜试下，以及确认下是不是原始画面就有暗光问题。
+
+---
+
+# ID: 37883
+
+SDK Product: Cloud-recording
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 流量卡开启直播失败，WIFI可以，目前放行了`*.agora.io`, `*.sd-rtn.com`，还有其他需要放行的吗
+
+Reply: 您好，请问目前在用什么版本、平台的 SDK？4.6.0 及以上 的话用的域名不同，要报备不同的域名
+
+4.6.0 及以上区分国内和海外两个版本的 SDK，分别为：
+
+海外版本 SDK ：
+`*.rtesvc.com, *.sdrtnsvc.com`
+国内版本 SDK：
+`*.rtnsvc.com，*.realtimemesh.com`
+
+460 以下版本向运营商报备`*.agora.io, *.sd-rtn.com`两个通配域名（至少需要`*.agora.io`，最好是也加上`*.sd-rtn.com`以满足高可用需求）。如需区域限制功能，需要增加`*.agoraio.cn`这个通配域名。
+
+---
+
+# ID: 37884
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.2.0
+
+Request Type: 集成问题咨询
+
+Request Description: 音视频通话场景，当出现卡顿时，需要提示通话双方 当前网络环境差，并且需要判断当前是哪方的原因导致的，应该基于什么判断呢
+
+Reply: 您好，可以监听 [onNetworkQuality](https://doc.shengwang.cn/api-ref/rtc/flutter/API/toc_network#onNetworkQuality) 回调来获得双方实时通话的网络上下行数据，用来判断双方的通话网络质量。
+
+---
 
 # ID: 37821
 
@@ -42,9 +208,6 @@ Request Description: 问题1
 问题2
 当启用声网engine完成一轮对话（join & leave channel），如果用的不是communication，而是在线直播的的多人模式时，
 将进入房间的两个人都setClientRole为广播者，这时的2个用户收音状态在手机端表现异常：90%+的时间里说话无法被收音，且在不触碰改变mic收音类的按键前提下，过10s后又会有1秒多收音状态（iphone手机证明录音的提示点会变成黄点），如此交替往复。
-
-相关的基础参数，排查与官网基础example无大差异，不确定是否此前有人遇到过类似的issue
-网上也没有收集到与此有关的问题
 
 
 Reply: 您好 ，
