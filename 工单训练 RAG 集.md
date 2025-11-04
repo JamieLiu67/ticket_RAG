@@ -1,4 +1,848 @@
 
+
+
+# ID: 37889
+
+SDK Product: RTC-Linux
+
+SDK Platform: Linux-C
+
+SDK Version: 其他版本
+
+Request Type: 线上报错
+
+Request Description: linux服务端会报错：
+```log
+[SessionID: d5ce43************************029c07 RoomID: OCIC_d5ce4382-110f-40fb-8658-72e7ae029c07 UserID: 101] onConnectionFailure: id 24499, channelId OCIC_d5ce4382-110f-40fb-8658-72e7ae029c07, localUserId 101, reason 9
+```
+
+Reply: 您好，onConnectionFailure reason 9 的原因是 token 错误，可以参考文档 [CONNECTION_CHANGED_REASON_TYPE](https://doc.shengwang.cn/api-ref/rtc-server-sdk/cpp/namespaceagora_1_1rtc#a329573b5363b2065b4069e5bf6013144)
+
+以及如果您这边用的是 006 开头的 token，建议换新版本的，clone 我们的仓库，用新的脚本生成 007 开头的 token，这样还可以用控制台的自助检验工具，可以自行校验下token：控制台-辅助工具-Token生成/校验–Token校验
+将您的token粘贴进去，解析一下，看解析出来的结果和您join传入的参数是否一致，临时 token 不校验 uid 所以能进频道，自己生成的 token 是要校验 uid 的，需要保证生成时的 uid 频道名和 join 时传入的完全一致才能加进频道
+
+参考：[生成 token](https://doc.shengwang.cn/doc/rtc/android/basic-features/token-authentication#token-code)
+
+---
+
+# ID: 37902
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 想咨询如果想要实现AI 一对一对话。AI的输出音色只能通过固定的几个TTS厂商来定制吗？（web playground中的那几个）如果我们通过其他形式提取到了声纹，可以通过一些方式传输给模型来作为语音输出的音色吗？
+
+Reply: 您好，目前 convoAI 只支持我们提供的几个 tts 厂商，不支持自定义 tts 或其他不在[创建对话式智能体](https://doc.shengwang.cn/doc/convoai/restful/convoai/operations/start-agent)文档中提到的厂商。
+如果有 tts 特调参数，可以在 tts 的 `params` 字段里传参来实现。
+
+---
+
+# ID: 37905
+
+SDK Product: RTC-Linux
+
+SDK Platform: Linux-Java
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: RTC服务端SDK的Java API中，通过io.agora.rtc.IVideoEncodedFrameObserver.onEncodedVideoFrame()得到了EncodedVideoFrameInfo，但其中的captureTimeMs视频采集时间戳、decodeTimeMs视频渲染时间戳一直是0，这是怎么回事？用户希望通过这两个时间戳得到详细的帧延迟。
+
+JAVA服务端SDK版本是4.4.32.101（最新版），已设置setEncodedFrameOnly(0)。Web JS客户端SDK版本是4.24.0，编码器用的是vp8。是否因为客户端SDK版本没跟上？另外，客户端是默认创建的视频轨道，会自动记录采集时间戳吗，还是只有自定义采集的视频可以写入时间戳呢？感谢
+
+附件中是服务端SDK的日志文件，复现了此问题。
+
+Reply: 您好，因为 4.4.32.101 这个版本的服务端本地录制 SDK 目前还没有启用这两个字段，目前只有一个工程板可以体验到，如果有需要的话可以留言，稍后人工工程师为您提供地址和接口文档。
+
+---
+
+# ID: 37625
+
+SDK Product: RTC
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: rtc房间启动后，服务端通过api发起云端录制功能。该api耗时超10s。而且大面积出现；
+
+Reply: 您好，耗时和请求发起的位置与被请求的域名相关，请参考我们的[最佳实践](https://doc.shengwang.cn/doc/cloud-recording/restful/best-practices/rest-availability)，在对应的区域使用对应区域的域名去请求，不然跨域容易出现耗时长和请求失败的问题。
+如果您确定请求地区是匹配的，可以提供具体的sid，我们看下后台响应的情况。
+
+---
+
+# ID: 32354
+
+SDK Product: Cloud-transcoder
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 开通权限、提供配额
+
+Request Description: 需要开通云端转码服务
+
+Reply: 提供 AppID由人工工程师处理开通，无法自助开通
+
+---
+# ID: 32355
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 4.4.0
+
+Request Type: 集成问题咨询
+
+Request Description: 1、我在采集窗口分享的时候，希望最终的视频保持在1280720 这个分辨率，但是窗口的大小是随机的，所以我希望是自适应宽高完全铺满1280 720这个大小，可以接受画面变形，但是不能截取或者有黑边。请问应该怎么设置？
+2、分享的窗口可能会在分享的过程中，变换窗口大小，这个需要重新设置caption screen的参数吗？
+
+Reply: 1.  SDK 不支持拉伸的渲染方式，只有RENDER_MODE_HIDDEN（视频尺寸等比缩放。优先保证视窗被填满。因视频尺寸与显示视窗尺寸不一致而多出的视频将被截掉）或者 RENDER_MODE_FIT（视频尺寸等比缩放。优先保证视频内容全部显示。因视频尺寸与显示视窗尺寸不一致造成的视窗未被填满的区域填充黑色）。如果你需要拉伸，可以考虑自渲染；
+2.  无需改变，SDK 会自动处理
+
+---
+# ID: 32358
+
+SDK Product: Media-push
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 开通权限、提供配额
+
+Request Description: 你好，我们的项目正打算接入声网，场景是需要将频道内的所有人员的混流音频推流到CDN平台，只有音频，不用视频。一般情况下，混流人数不会超过3，但特殊情况会到5人，甚至更多，想调研请问以下两个问题
+1）原频道人数为3，开启多个推流任务到不同的CDN平台，是否可以？
+2）若提升混流人数最大配额，是否可以快速提升，最大可以提升到多少
+
+Reply: 请提供appid，并描述业务场景我们后台配置开通
+
+---
+# ID: 32373
+
+SDK Product: RTM
+
+SDK Platform: Java
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 我们iOS端升级到最新版本了 ，需要使用到 RtmTokenBuilder2  RtcTokenBuilder2  
+之前引入的依赖为       
+ <dependency>
+                <groupId>io.agora</groupId>
+                <artifactId>authentication</artifactId>
+                <version>1.6.1</version>
+  </dependency>
+现在需要升级到最新匹配的版本是多少
+
+Reply: maven 已经不更新这个版本了，请用[TokenBuilder2](https://github.com/AgoraIO/Tools/tree/master/DynamicKey/AgoraDynamicKey/java/src/main/java/io/agora/sample)，把生成器代码放到服务端运行就行
+
+---
+
+# ID: 32376
+
+SDK Product: RTC
+
+SDK Platform: Electron
+
+SDK Version: 4.3.2
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 视频转码异常，
+只有m3u8格式的，没有mp4的
+
+Reply: 如果是单例问题，有可能是转码生成的MP4文件上传失败了，需要提供云端录制SID排查
+
+---
+# ID: 32378
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.19.0
+
+Request Type: 集成问题咨询
+
+Request Description: 频道：
+ 7CTDM1600B6US2
+appid:
+xxx
+
+请问这段时间内你们那边能看到有uid=40000的用户以主播的身份加入到这个频道嘛？
+1、通过大疆api发送的指令推流，uid=40000，大疆api反馈推流成功.
+2、在web端用uid=10000以观众身份拉流
+3、我从水晶球上看到只有uid=10000用户的记录，40000用户根本推流
+4、请问你们那边能看到40000用户是否有过推流的记录，成功或失败？
+
+Reply: 根据时间点、频道号，可以在 声网 console 左侧边栏-全部产品-水晶球 上查看对应UID的在线情况和推流情况
+
+---
+# ID: 32671
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.2.0
+
+Request Type: 其他问题
+
+Request Description: 苹果手机使用WeChat进入视频，出现滋滋滋电流声音
+
+Reply: 您好，如果您使用wechat通话有杂音，说明是音频设备本身出现了问题，建议您检查下；该问题和声网侧无关
+
+---
+# ID: 32672
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.0.0
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 1.首先我们的项目已经集成的声网一对一音视频聊天
+2.问题：用户APP杀掉后就收到离线消息了，
+3.有没有对应的呼叫唤醒产品，或者解决方案， 环信的推送只能走离线推送，还得对接厂商，厂商还不能自定义铃声，
+ 诉求：看能不能有个呼叫唤醒功能， （A给B打语音， B不在线，也能收到语音铃声提醒）
+
+Reply: 您好，RTM SDK 只能在应用正常运行时实现呼叫邀请通知功能，集成原生呼叫 API 可以保证当应用进程处于后台或者被关闭时，用户仍可以收到呼叫邀请通知，例如 Android 平台的 ConnectionService、iOS 平台的 CallKit、Flutter 和 React Native 平台的 CallKeep
+[如何在通话应用中实现呼叫邀请通知功能？](https://docportal.shengwang.cn/cn/Real-time-Messaging/faq/call_invite_notification?platform=Android)
+
+
+---
+# ID: 32677
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 在H5进行音视频通讯时，如何做到过程中来电之后，接完电话自动再获取摄像头继续音视频通讯，现在是会黑屏
+
+Reply: 您好，H5的兼容性本身依赖于系统的webview能力支持；需要确认下这个现象是否是必现的；参考文档
+[浏览器兼容性和已知问题](https://doc.shengwang.cn/doc/rtc/javascript/overview/browser-compatibility#%E7%A7%BB%E5%8A%A8%E7%AB%AF)
+
+---
+# ID: 32680
+
+SDK Product: RTM
+
+SDK Platform: Java
+
+SDK Version: 2.2.1
+
+Request Type: 集成问题咨询
+
+Request Description: 请问下如果用户A调用publish方法发送一个User类型的消息给用户B，如果用户B当时不在线，会发送失败，那么我想咨询一下，你们可以实现用户之间一对一发送User类型的消息的时候可以让对方不在线也能发送成功吗？等用户B上线后会接收到这条信息，请问有实现案例吗？或者推荐使用的api或者方式
+
+
+Reply: 您好，rtmsdk2.2.2版本开始支持历史消息；该版本在 PublishOptions 中新增了 storeInHistory 属性，支持在频道中发送消息的同时，将消息存储到云端，后续用户可以通过历史消息接口获取；参考文档如下：
+[历史消息 (Beta)](https://doc.shengwang.cn/doc/rtm2/android/user-guide/message/history-message)
+
+---
+# ID: 32688
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.4.0
+
+Request Type: 集成问题咨询
+
+Request Description: oc版本的SDK在哪里下载
+
+Reply: 您好，声网的IOS sdk是没有oc的；这边发一下OC的demo，您可以参考下
+[API-EXAMPLE](https://github.com/Shengwang-Community/API-Examples/tree/main/iOS/APIExample-OC)
+
+---
+
+# ID: 32709
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.0.0
+
+Request Type: 其他问题
+
+Request Description: 目前我们的这个应用没有开通证书模式的模但是已正式使用了
+现在我们想使用去端录制功能,需要开通证书模式 
+问题是 如果开通会不会影响 之前包视频通话功能
+
+Reply: 您好，项目开通证书安全模式，是需要传入token的，会影响到你现在的通话；token部署参考如下：
+[使用 Token 鉴权](https://doc.shengwang.cn/doc/rtc/android/basic-features/token-authentication)
+
+---
+
+# ID: 32711
+
+SDK Product: RTC
+
+SDK Platform: mini-app
+
+SDK Version: 2.5.4
+
+Request Type: 集成问题咨询
+
+Request Description: 小程序里是否可以像web里这样去获取 uid
+
+Reply: 您好，小程序sdk并不支持获取用户uid。
+
+---
+# ID: 32714
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.4.1
+
+Request Type: 集成问题咨询
+
+Request Description: 项目中需要使用RTM、RTC的屏幕共享两个服务，gradle 远程依赖的方式添加哪几个库的依赖能最大程度的减少库的体积
+
+Reply: 您好，推荐您使用rtc-basic 和rtm-lite sdk 以及对应的屏幕共享库
+rtc引入如下：
+`implementation 'io.agora.rtc:agora-special-full:4.5.2.3.BASIC'`
+rtm引入如下：
+ `implementation 'io.agora:agora-rtm-lite:2.2.5'`
+屏幕共享插件引入如下：
+`implementation 'io.agora.rtc:agora-screensharing:x.y.z'`
+
+---
+# ID: 32720
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.0.0
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 视频被叫页面中，要显示本地摄像头的画面。
+但是要做一下判断，如果已经获取到了相机和麦克风权限，则初始化rtc。
+如果还没有获取到相机和麦克风权限，则使用XXPermission获取权限，授权完成后返回页面，然后再初始化rtc。
+
+但是这样处理并不完美，我发现如果这样判断已经获取到了相机和麦克风权限，直接初始化rtc。画面并没有显示，而是黑屏。
+
+请问是逻辑有问题么？
+
+Reply: 您好，您在初始化RtcEngine后仍需调用 enableLocalVideo(true)、setupLocalVideo() 和 startPreview() 才能显示本地画面；
+如果还有问题，麻烦提供下黑屏时间点的频道号、uid以及对应的声网sdk日志，我们分析下
+[LogConfig](https://doc.shengwang.cn/api-ref/rtc/android/API/class_logconfig#filePath)
+
+---
+# ID: 32726
+
+SDK Product: RTC
+
+SDK Platform: Unity
+
+SDK Version: 4.4.0
+
+Request Type: 其他问题
+
+Request Description: 我在Unity中开始视频渲染后发现视频有被挤压的状态(接收的image是竖屏，所以画面看起来是横屏被挤压成竖屏的样子)，我询问ai助手它让我改变分辨率和RenderMode，但我将分辨率改为180138后并没有发生改变，请问这块功能在声网中有API提供吗？以下是使用AI助手的代码，并没作用
+
+Reply: 您好，视频旋转方向，需要关注采集端和播放端的行为，您可以参考以下文档类调整编码策略：
+[设置视频编码属性](https://doc.shengwang.cn/doc/rtc/android/basic-features/video-profile#%E8%A7%86%E9%A2%91%E6%A8%A1%E5%BC%8F)
+
+---
+# ID: 32734
+
+SDK Product: SDK-extension
+
+SDK Platform: iOS
+
+SDK Version: Metakit
+
+Request Type: 集成问题咨询
+
+Request Description: 有没有OC版本media::base::AudioPcmFrame转成AVAudioPCMBuffer 的Demo ，我转换的pcm有很大噪音，
+
+Reply: 您好，可以参考我们的OC的音频原始数据demo，本身我们的裸数据接口返回的就是buffer
+[API-EXAMPLE](https://github.com/Shengwang-Community/API-Examples/blob/main/iOS/APIExample-OC/APIExample-OC/Examples/Advanced/RawAudioData/RawAudioData.m)
+
+---
+# ID: 32740
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.4.0
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 有两个品类的Android设备端，一个是音箱，一个是带话柄的话机，话机这边说话者的音频传到音箱端，音箱端外放出话机的音频，但外放的声音又被音箱的麦克风采集到了，就造成了话机侧听到了自己的回声，这种问题有什么办法可以优化不。
+
+Reply: 您好，通过您的描述来看，比较像是两个设备离得很近产生了近场回声，建议您将两个设备隔开在测试看下。
+
+---
+# ID: 32750
+
+SDK Product: RTC
+
+SDK Platform: Unity
+
+SDK Version: 4.4.0
+
+Request Type: 集成问题咨询
+
+Request Description: 我们这边是小游戏的研发使用的引擎是Unity，目前有个需求是各种平台能够加入同一个语音房间聊天，目前平台微信小游戏、抖音小游戏、安卓、IOS、H5。请问下使用当前的技术能够实现需求吗？能实现的话是直接下载Unity的Package开始还是需要别的操作？有无直接可以使用的Demo？
+
+Reply: 您好，声网的unity sdk 当前只支持android、ios、window、macos平台；并不支持微信小游戏、抖音小游戏以及H5；
+参考文档如下：
+[实现音视频互动](https://doc.shengwang.cn/doc/rtc/unity/get-started/quick-start)
+demo示例：
+[跑通 API 示例项目](https://doc.shengwang.cn/doc/rtc/unity/get-started/run-demo)
+
+
+---
+# ID: 32753
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.4.1
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 屏幕共享时，应用内的页面会出现画中画中画 等无限嵌套的页面情况，见附件，你们的demo也有这个问题
+
+Reply: 您好，开启屏幕共享的同时又预览采集到的画面，就会被再次采集然后出现这种无限嵌套的场景；这个是符合预期的，想要规避的话可以再加入频道时设置不订阅远端的画面。
+
+---
+# ID: 32757
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.19.0
+
+Request Type: 集成问题咨询
+
+Request Description: 你好 项目需要看到直播的实时延迟ms数据 但是从文档中 getRemoteVideoStats 拿到的都是0延迟 但是有时候就是很卡 有其他实现的方法吗
+
+Reply: 您好，直播中很卡很可能是观众端下行网络不好引发的，主播侧的数据很可能是正常的，getRemoteVideoStats 接口是只能判断主播侧是否正常；针对观众端，建议您这边在观众端监听on("network-quality")，当观众端网络不好时提示观众切换网络
+
+---
+
+# ID: 33120
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.22.2
+
+Request Type: 其他问题
+
+Request Description: 客户端加入声望频道后,封装的sdk会自动播放远端的视频流,我想知道作为客户端,能否获取远端的视频流对象,我需要对视频流进行抽帧截图等等操作
+
+Reply: 可以通过getCurrentFrameData接口[获取当前渲染的视频帧数据](https://doc.shengwang.cn/api-ref/rtc/javascript/interfaces/iremotevideotrack#getCurrentFrameData)
+
+---
+
+# ID: 33138
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.22.0
+
+Request Type: 集成问题咨询
+
+Request Description: 想咨询一下关于web端的rtc sdk在纯血鸿蒙内置的浏览器是否能够支持
+
+Reply: 暂时不支持。请参考[浏览器兼容性和已知问题](https://doc.shengwang.cn/doc/rtc/javascript/overview/browser-compatibility#%E7%A7%BB%E5%8A%A8%E7%AB%AF)
+
+---
+# ID: 33143
+
+SDK Product: Flexible-classroom
+
+SDK Platform: Web
+
+SDK Version: 2.9.40
+
+Request Type: 集成问题咨询
+
+Request Description: 我想问一下灵动课堂的录制流程是什么样子的，文档中只告诉我了“设置录制状态”，没有看到需要设置储存位置的参数，我看到“最佳实践”的“录制基本流程”中有说到“客户端通知灵动课堂服务端录制开启”这个应该是通知了你们，如果是让你们服务器进行录制，录制成功后文件上传到哪里了？我希望告诉我一下完整的录制流程，第一步干什么，第二部干什么，谢谢
+
+Reply: 灵动课堂的录制需要先自行在控制台指定录制地址[灵动课堂-配置录制功能](https://doc.shengwang.cn/doc/flexible-classroom/android/get-started/configure#%E9%85%8D%E7%BD%AE%E5%BD%95%E5%88%B6%E5%8A%9F%E8%83%BD)  客户端点击录制按钮之后开启录制，录制下来的文件会存储在开发者配置的路径下
+
+---
+# ID: 33146
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.2.6
+
+Request Type: 其他问题
+
+Request Description: 应用放置在后台，如果弹出视频提醒？
+
+Reply: Android系统在后台可能回收资源，导致视频中断。需先实现[后台保活](https://doc.shengwang.cn/faq/quality-issues/android-background)，确保SDK持续运行。
+保活后，通过系统级通知（如Notification）弹出视频提醒，需业务层自主实现（SDK不直接提供弹窗功能）。
+
+---
+# ID: 33158
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.22.2
+
+Request Type: 集成问题咨询
+
+Request Description: 在WebSDK集成中，如何禁用本地的麦克风？但要求声音播放正常。
+
+Reply: 1. 创建本地音频轨道后可以调用setMuted：true暂停发送该轨道的媒体数据
+[setMuted(muted: boolean)](https://doc.shengwang.cn/api-ref/rtc/javascript/interfaces/ilocalaudiotrack#setMuted)
+2. 创建本地音频轨道后可以调用setVolume设置本地音频轨道的音量
+[setVolume(volume: number)](https://doc.shengwang.cn/api-ref/rtc/javascript/interfaces/ilocalaudiotrack#setVolume)
+
+
+---
+# ID: 33159
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.4.1
+
+Request Type: 其他问题
+
+Request Description: 每月免费通话分钟刷新了还是用不了
+
+Reply: 对于未主动购买套餐包的用户，声网会给予每个声网开发者账号每个月一万分钟的免费时长。订购任意套餐包后，将不再享受[一万分钟免费时长](https://doc.shengwang.cn/faq/account-and-billing/billing-free)
+如果实际使用分钟数未超过 10000 分钟，则本月免费；如果 10000 分钟的免费额度扣完，则对剩余的分钟数扣取相应服务费用。
+如仍有疑问请联系您的专属商务或者拨打400 6326626
+
+
+
+---
+# ID: 33169
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: uid 294833052
+uid 294834050
+
+双方语音通话时，在该时间段频繁断线，每次通话不足2分钟，请协助排查一下是什么原因。
+
+附件是双方sdk log。
+期间后端收到了声网108回调事件。
+
+Reply: eventType 为 108 表示通信场景下用户离开频道,排查建议：查看108事件中返回的reason确认离开频道的原因 [108 user leave channel with communication mode](https://doc.shengwang.cn/doc/rtc/restful/webhook/events#108-user-leave-channel-with-communication-mode)
+
+---
+# ID: 33175
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.4.0
+
+Request Type: 集成问题咨询
+
+Request Description: 通过demo的流程，进入直播间出现画面太慢了，有没方法可以加快进入直播画面
+
+Reply: 
+1. 提前加入频道并订阅流
+在用户点击直播间入口时，提前调用 `joinChannelEx` 加入频道并订阅主播音视频流（音频设为静音），使用通配 Token 加速加入过程。
+2. 预创建视频视图
+订阅视频流后立即调用 `setupRemoteVideoEx` 创建视图，避免错过首个视频 I 帧解码，确保首帧快速渲染。
+
+---
+# ID: 33177
+
+SDK Product: RTM
+
+SDK Platform: C++
+
+SDK Version: 2.2.2
+
+Request Type: 集成问题咨询
+
+Request Description: 当前C++版本是否支持arm linux？
+我们当前客户端是arm版本的linux，所以想看下是否可以集成。
+
+Reply: 支持。目前是内部版本需要等候工程师稍后处理提供。若需其他特殊架构支持（如 arm32），需联系 sales@shengwang.cn 定制化解决。
+
+---
+# ID: 33488
+
+SDK Product: RTC-Linux
+
+SDK Platform: Linux-Java
+
+SDK Version: 4.4.30
+
+Request Type: 线上报错
+
+Request Description: 这个方法写的.h264视频，用播放器播放不了，是什么原因？还需要怎么操作才可以播放吗？
+
+Reply: 您好，如果保存到本地的 h264 文件无法正常播放可以检查下频道里原始发来的流是否能够被正常收看，如果本身就无法收看，说明一开始发送端发出来的编码画面就是有问题的，保存下来自然无法观看。
+
+---
+# ID: 33491
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 主要是java及前端 代码集成问题，目前卡在了获取不到永久的声网token，需要找到在哪里可以获取？
+
+Reply: 您好，声网没有永久 token 这一说，每个 token 有效期最大 24 小时。如果你们不需要 token 鉴权，可以考虑使用一个不带主要证书的 appid（在 console 新建项目时可以选择不开启鉴权）
+如果需要用鉴权，那就需要参考下方文档去自行生成 token，每次 token 即将过期时客户端 SDK 会有回调提示，重新生成一个 token 用 `renew` 方法传进去就行。
+[token 生成](https://doc.shengwang.cn/doc/rtc/javascript/basic-features/token-authentication)
+[token 过期回调](https://doc.shengwang.cn/api-ref/rtc/javascript/interfaces/iagorartcclient#token-privilege-will-expire)
+
+---
+# ID: 33492
+
+SDK Product: CDN
+
+SDK Platform: CDN
+
+SDK Version: 当前版本
+
+Request Type: 线上报错
+
+Request Description: 配置了 HTTPS 证书，但是未生效。三个月前也是这样，你们这服务靠不靠谱啊？
+
+Reply: 您好，请问现在 console 上给融合 CDN 传的什么证书？用 Apache 格式的试试，有多份就用体积较大的那个证书
+
+---
+# ID: 33494
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 提交到appstore上报错
+
+Reply: 您好，请问目前在用什么版本的 SDK？老版本会有 bitcode 问题，需要升级 SDK 到最新版本来解决。
+
+---
+# ID: 33496
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 其他版本
+
+Request Type: 开通权限、提供配额
+
+Request Description: 我们现在用个客户想要实现单频道用户10000人，除了我们自己的服务外，声网相关的服务要做什么处理吗
+
+Reply: 您好，声网 RTC 单频道支持最多 128 人同时发流，观众不发流没有上限，这类场景都需要提前报备。
+您这边的场景看起来有些不太合理，相当于每个人要收 999 条音视频流，看不过来也听不过来，终端设备渲染的负载也非常大，请问你们这边具体是什么场景需要万人同时发流互通？
+
+---
+# ID: 33512
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.5.0
+
+Request Type: 其他问题
+
+Request Description: 我项目中有个推送服务，使用下面的方法，iOS中有的手机就控制不住手机显示选择的录屏App了，有的可以有的不行。你们的demo 我试着增加了一个推送的，一样的问题有解决方案没
+
+Reply: 您好，IOS 屏幕共享时展示的 app 列表没有办法隐藏 app，这个是系统行为控制的，SDK 侧无法操作。
+
+---
+# ID: 33516
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.2.6
+
+Request Type: 集成问题咨询
+
+Request Description: 问题：Flutter端能实现秒开秒切效果吗？
+如果能实现，有没有demo呢？或者要实现秒开秒切Flutter版本文档在哪？
+
+Reply: 您好，目前秒开秒切功能已经不再更新维护了，这个需求无法直接用我们 SDK 接口实现，您可以考虑自行业务侧组合实现。
+
+---
+# ID: 33531
+
+SDK Product: RTM
+
+SDK Platform: Java
+
+SDK Version: 其他版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 我们使用此处的文档发送频道消息，发现接口用时在1s作用，感觉这个用时有点长，是因为后面的逻辑比较复杂吗？还是我们的使用有点问题
+channelName：xxxx
+userId:xxx
+出现时间2024-12-15 10:39左右
+
+Reply: 您好，1s 这个连接时长本身就是属于预期内的。一般来说客户端本身的网络上下行质量也会影响这个时长，但 1s 左右的波动范围都是可以接受的，不算质量问题。
+
+---
+# ID: 33536
+
+SDK Product: Cloud-recording
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 线上报错
+
+Request Description: 调用开始录制接口  一直返回code:53   但是我已经不知道之前sid是多少了  怎么结束掉这个录制资源啊
+
+Reply: 您好，53 表示 重复启动，已经存在相同的 cname + uid 的任务。
+如果您不记得已经在启动的录制 sid 了，可以用[踢人接口](https://doc.shengwang.cn/doc/rtc/restful/channel-management/operations/post-dev-v1-kicking-rule)把录制端从频道里踢出去。或者等录制的频道里每人发流了，录制端也会自己退出的。
+
+---
+# ID: 33543
+
+SDK Product: RTC
+
+SDK Platform: React Native
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 21:30:23.522 正在编译中...
+21:30:28.201 ​../../../Backup/Documents/HBuilderProjects/Agora音视频插件示例/components/Agora-RTC-JS/RtcSurfaceView.nvue (3:2): Error when using sourcemap for reporting an error: Can't resolve original location of error.​
+21:30:28.214 ../../../Backup/Documents/HBuilderProjects/Agora音视频插件示例/components/Agora-RTC-JS/RtcSurfaceView.nvue (3:2): "VideoRenderMode" is not exported by "../../../Backup/Documents/HBuilderProjects/Agora音视频插件示例/components/Agora-RTC-JS/common/Enums.js", imported by "../../../Backup/Documents/HBuilderProjects/Agora音视频插件示例/components/Agora-RTC-JS/RtcSurfaceView.nvue".
+21:30:28.236 at components/Agora-RTC-JS/RtcSurfaceView.nvue:3:2
+21:30:28.245   1: 
+21:30:28.259   2:   import {
+21:30:28.278   3:     VideoRenderMode,
+21:30:28.292          ^
+21:30:28.303   4:     VideoMirrorMode
+21:30:28.326   5:   } from './common/Enums.js';
+
+Reply: 您好，看起来您在使用 uni-app SDK，我们的uni-app SDK 已经停止更新和维护了，目前只有老版本SDK对外开放，可以先参考文档跑通Demo，或者直接使用目前我们还在支持的平台来开发
+[SDK](https://github.com/AgoraIO-Community/Agora-Uniapp-SDK/tree/master)
+Demo文档：https://shimo.im/docs/sng09z58Jo4FWtoB/ "副本 uniapp 跑通-REALL"
+Access Password axucpk
+
+---
+# ID: 33545
+
+SDK Product: CDN
+
+SDK Platform: CDN
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 点击开启融合cdn服务没反应
+
+Reply: 您好，请确认下是否有到console上开启融合CDN服务，浏览器需要开启允许第三方cookie，您可以检查下，如果还是您所说的无反应，麻烦提供一下操作录屏，谢谢。
+
+---
+# ID: 33556
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.0.0
+
+Request Type: 集成问题咨询
+
+Request Description:  iOS房间内再使用AVAudioPlayer播放音频 没有声音 是跟声网冲突?
+我的音频素材是本地mp3的
+
+Reply: 您好，音频路由会有冲突，如果有播放需求，可以考虑用我们 SDK 自带的[播放器](https://doc.shengwang.cn/doc/rtc/ios/advanced-features/media-player)或者[startaudiomixing](https://doc.shengwang.cn/api-ref/rtc/ios/API/toc_audio_mixing#api_irtcengine_startaudiomixing2)。
+
+---
+# ID: 33572
+
+SDK Product: IOT-apaas
+
+SDK Platform: All
+
+SDK Version: 1.5.0
+
+Request Type: 集成问题咨询
+
+Request Description: 我们自己开发了基于ESP32S3的硬件，支持音频采集和播放，现在我们需要完成通过自研的小程序实现呼叫设备并实现双向对讲，不知道灵隼物联网平台是否可以实现？另外参考教程，没有完成示例程序的测试，主要是没要找到如何选择开发模板，请指教
+
+Reply: 您好，灵榫平台后期会下架，不推荐新集成了
+ESP32 的可以看[下载页面](https://doc.shengwang.cn/doc/rtsa/c/resources)，确认下下的包架构是否对齐，然后再去跑 Demo，看是否能正常运行
+
+---
+# ID: 33576
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.2.2
+
+Request Type: 效果不佳、不达预期
+
+Request Description: func call(remoteUserId: UInt, orderId:[String: Any], completion: ((NSError?)->())?)   声网 发起视频邀请时，我把这个方法增加了一个字典扩展参数。但是为什么不起作用。接受方收不到这个扩展参数的内容
+
+Reply: 您好，请使用第二个 call 接口：`func call(remoteUserId: UInt, callType: CallType, callExtension: [String: Any],  completion: ((NSError?)->())?)`
+参考文档：[call[2/2]](https://doc.shengwang.cn/doc/one-to-one-live/ios/rtm/api/call-api#call2)
+
+---
+
 # ID: 37862
 
 SDK Product: RTC
