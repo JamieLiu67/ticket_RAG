@@ -1,5 +1,425 @@
 
+# ID: 32350
 
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 极速直播在非大陆地区无法推流出去，结束录制视频时返回 435 错误码没有视频流信息
+
+Reply: 435错误码原因：
+该错误码表示频道内无有效推流内容可上传（参考[云录制错误码](https://doc.shengwang.cn/doc/cloud-recording/restful/response-code)435说明）。
+结束录制时触发此错误，说明录制服务未检测到视频流数据，可能由推流未成功引起。
+麻烦提供出现问题的频道号、uid、时间点，以及相关发送端SDK 日志
+
+---
+# ID: 32367
+
+SDK Product: RTC
+
+SDK Platform: Unity
+
+SDK Version: 4.2.6
+
+Request Type: 线上报错
+
+Request Description: 
+```log
+Unable to find an entry point named 'CreateIrisRtcRendering' in 'AgoraRtcWrapper'. Tried the following entry points: Unable to get function 'CreateIrisRtcRendering' because of 'The requested function was not found (0x06000001) dlerror() = undefined symbol: CreateIrisRtcRendering this: Boolean bUseSpacePenMode = HotFix_Project.VoiceController, Boolean bEnableAINSMode = null, Local Variables: RtcEngineContext context = null, RtcEngineEventHandler evhandle = null at HotFix_Project.AgoraVoiceAdapter.CreateVoiceEngine() at HotFix_Project.VoiceAdapterBase.OnEventInitVoice(VRVoiceInitConfig vrconf) at HotFix_Project.VoiceController/<>c.<RegisterEvent>b__10_1(com.ootii.Messages.IMessage msg) System.EntryPointNotFoundException: Unable to find an entry point named 'CreateIrisRtcRendering' in 'AgoraRtcWrapper'. Tried the following entry points: Unable to get function 'CreateIrisRtcRendering' because of 'The requested function was not found (0x06000001) dlerror() = undefined symbol: CreateIrisRtcRendering at Agora.Rtc.AgoraRtcNative.CreateIrisRtcRendering (System.IntPtr iris_api_engine_handle) [0x00000] in <00000000000000000000000000000000>:0 at Agora.Rtc.RtcEngineImpl..ctor (System.IntPtr nativePtr) [0x00000] in <00000000000000000000000000000000>:0 at Agora.Rtc.RtcEngineImpl.GetInstance (System.IntPtr nativePtr) [0x00000] in <00000000000000000000000000000000>:0 at Agora.Rtc.RtcEngine..ctor (System.IntPtr nativePtr) [0x00000] in <00000000000000000000000000000000>:0 at Agora.Rtc.RtcEngine.CreateAgoraRtcEngineEx () [0x00000] in <00000000000000000000000000000000>:0
+```
+
+Reply: 建议engine全局单例使用；参考demo 测试能否复现；提供sdk log我们看下当前调用逻辑
+
+---
+
+# ID: 32670
+
+SDK Product: RTM
+
+SDK Platform: Java
+
+SDK Version: 2.2.1
+
+Request Type: 集成问题咨询
+
+Request Description: 你好，我们之前用的rtm是1.4.2版本的，目前打算迁移到2.2.1版本，但是现在在迁移的时候，在1.4.2版本中发送消息后，2.2.1的onMessageEvent方法并没有进行回调。（第一张是1.4.2的发送调用）
+
+Reply: 您好，RTM2相对于RTM1有较大变化，建议参考迁移指南并使用RTM2的新能力实现业务功能；rtm1.x并不能和rtm2.x互通，建议您尽快升级
+
+---
+# ID: 32679
+
+SDK Product: RTM
+
+SDK Platform: Java
+
+SDK Version: 2.2.1
+
+Request Type: 集成问题咨询
+
+Request Description: 在实际测试过程中，我调用publish方法发送一个消息给另一个用户的时候，在监听方法中的RtmEventListener下的onMessageEvent会重复上次的消息，比如第一次发送了一条消息“在吗？”，第二次发送了消息“吃了吗？”在第二次监听的时候，他会通知也接收到第一次的消息内容，请问下你们有Api提供去重的方法吗？
+
+Reply: 您好，正常消息回调是不会出现重复的情况；需要您这边发下集成代码，我们先看下；另外建议看下是否注册了多个eventLinster。
+
+---
+# ID: 32684
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.4.0
+
+Request Type: 集成问题咨询
+
+Request Description: 同时添加`io.agora.rtc:chat-sdk:1.1.0`和环信的`io.hyphenate:hyphenate-chat:4.10.1`两个依赖，会出现冲突`Caused by: Cause 1: java.util.concurrent.ExecutionException: java.lang.RuntimeException: java.lang.RuntimeException: Duplicate class internal.com.getkeepsafe.relinker.ApkLibraryInstaller found in modules jetified-chat-sdk-1.1.0-runtime.jar (io.agora.rtc:chat-sdk:1.1.0) and jetified-hyphenate-chat-4.10.1-runtime.jar (io.hyphenate:hyphenate-chat:4.10.1)。`使用排除也是无法解决问题，所以求助一下
+
+Reply: 您好，chatsdk 本身是包含rtc 和环信im的，主要是用于出海客户使用的，计费单价是偏高的；如果咱们得是国内场景，建议咱们单独集成声网SDK 和环信IM。
+[下载](https://doc.shengwang.cn/doc/rtc/android/resources)
+
+---
+
+# ID: 32696
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.22.1
+
+Request Type: 集成问题咨询
+
+Request Description: 如何将一个rtsp/rtmp流发布到服务器中
+
+Reply: 您好，针对rtsp协议的流，您可以通过客户端的媒体播放器来实现，参考文档如下：
+[媒体播放器](https://doc.shengwang.cn/doc/rtc/android/advanced-features/media-player#%E6%94%AF%E6%8C%81%E7%9A%84%E6%A0%BC%E5%BC%8F)
+
+rtmp、rtmps的流的您可以通过云端播放器拉流来实现，参考文档如下：
+[服务概述](https://doc.shengwang.cn/doc/media-pull/restful/overview/product-overview)
+
+---
+
+# ID: 32715
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.4.0
+
+Request Type: 其他问题
+
+Request Description: ios视频通话图像不显示可能是哪些原因
+
+Reply: 您好，ios端视频通话黑屏可能是摄像头异常，或者是摄像头被其他app占用；建议您通过`onlocalvideostatechange`回调监听视频采集状态
+[视频基础功能](https://doc.shengwang.cn/api-ref/rtc/ios/API/toc_video_basic#callback_irtcengineeventhandler_onlocalvideostatechanged)
+另外您也可以提供以下信息，我们进一步排查定位：
+频道号、发生时间点、用户UID
+SDK完整日志，[AgoraLogConfig](https://doc.shengwang.cn/api-ref/rtc/ios/API/class_logconfig)
+
+---
+# ID: 32733
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.22.1
+
+Request Type: 其他问题
+
+Request Description: 现在用的webtrc  渲染的视频不是透明的 
+
+想通过获取yuv格式使用第三方库来去除背景
+第三方库是 https://github.com/bvibber/yuv-canvas 
+
+请问怎么获取yuv格式的数据
+
+Reply: 您好，web端提供了获取本地和远端视频的裸数据接口，参考如下：
+本地：
+[Interface ILocalVideoTrack](https://doc.shengwang.cn/api-ref/rtc/javascript/interfaces/ilocalvideotrack#getCurrentFrameData)
+远端：
+[Interface IRemoteVideoTrack](https://doc.shengwang.cn/api-ref/rtc/javascript/interfaces/iremotevideotrack#getCurrentFrameData)
+
+---
+# ID: 32737
+
+SDK Product: Console
+
+SDK Platform: All
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 你好，我们公司之前对接了贵司的1v1视频通话sdk。后对接人员离职，现在我们有新业务需要进行拓展，即在视频通话结束后，需要获取到视频通话中的语音文本或音频文件，请问贵司产品是否支持最终获取语音文本或者音频文件，又获取实时获取音频流的类似功能呢？感谢
+
+Reply: 您好，音频录制是有两种方式的：
+1、客户端音频录制，录制文件存在客户端本地：参考[音视频录制](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_recording#startAudioRecording%20[1/2])
+2、云端录制，录制文件存在第三方OSS：参考[实现单流转码录制](https://doc.shengwang.cn/doc/cloud-recording/restful/user-guides/individual-mode/set-individual)
+对于实时获取音频流，声网侧提供音频裸数据接口，您这边注册接口后即可，参考：
+[原始音频数据](https://doc.shengwang.cn/doc/rtc/android/advanced-features/raw-audio-data)
+
+---
+# ID: 32739
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.22.1
+
+Request Type: 集成问题咨询
+
+Request Description: web端如何自渲染
+
+Reply: 您好，web端实现自渲染，声网这边提供了获取远端videotrack的视频裸数据接口，您再拿到后可以自行处理
+[Interface IRemoteVideoTrack](https://doc.shengwang.cn/api-ref/rtc/javascript/interfaces/iremotevideotrack#getCurrentFrameData)
+
+---
+# ID: 32747
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 1.按照文档运行RTSA SDK v1.9.2 demo报错`[2024-11-04 15:12:18.036][ERR] Failed to join channel "demo_channel", reason: RTC_ERR_INVALID_AUDIO_CODEC_PARAM`
+2.查看日志：`[2024-11-04 14:42:13.039][err][api][agora_rtc_join_channel:2719] check audio codec option failed! codec=1 sample_rate=16000 channel_num=1 duration=20`
+3.运行参数未修改 只修改了app_id,token,channel
+
+Reply: 您好，rtsa 和web互通，web 音频编码默认使用opus，采样率为48k，但是您这里rtsa 加入时指定的采样率16k，需要修改为48k，参考[与 RTC SDK 互通音视频数据](https://doc.shengwang.cn/doc/rtsa/c/best-practices/interoperate-rtc)
+
+---
+# ID: 32770
+
+SDK Product: RTC
+
+SDK Platform: Unity
+
+SDK Version: 4.4.0
+
+Request Type: 集成问题咨询
+
+Request Description: sdk案例BasicVideoCallScene场景，修改AdjustVideoEncodedConfiguration480()方法调整摄像头画面尺寸不符合预期
+
+Reply: 您好，声网sdk是没有AdjustVideoEncodedConfiguration480()这个方法的，麻烦您这边发下您这边参考的示例github链接；
+建议参考我们官网的UNITY API-EXAMPLE 的：
+[API-EXAMPLE](https://github.com/AgoraIO-Extensions/Agora-Unity-Quickstart/tree/main/API-Example-Unity)
+最后也麻烦您提供下声网的频道号、用户UID等信息，我们也确认下sdk侧的编码分辨率。
+
+---
+# ID: 32774
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 我使用qtCreator 开发 推流（只有视频）的功能，在加入通道，并且离开通道后，一直有一个日志（声网SDK）打印，麻烦帮我看下 报错的日志是什么导致的。日志在附件中：
+`ERROR   14:16:29:963 189976; [rs] no remote server!!!`
+
+Reply: 您好，[rs] no remote server 错误可以忽略，不影响咱们得sdk正常使用；
+
+---
+# ID: 32777
+
+SDK Product: Media-push
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 线上报错
+
+Request Description: 设置为不转吗旁路推流后，观看端只有声音，没有视频
+
+Reply: 您好，针对观众端没有视频画面的问题，需要您确认是单用户问题，还是所有的用户都出现了黑屏问题；
+针对单用户建议您先检查下用户的网络环境是否正常；
+如果是所有用户都出现了黑屏，麻烦您这边提供下声网频道号、黑屏时间点、主播UID，我们排查下推流状态
+
+---
+
+# ID: 33130
+
+SDK Product: RTC-Linux
+
+SDK Platform: Linux-Python
+
+SDK Version: 2.1.0
+
+Request Type: 崩溃（闪退、卡死）
+
+Request Description: 当android端app正在接收并播放后端（Linux的Agora-Python-Server-SDK）发的音频流，此时说话发送语音，会出现两种情况：
+1、持续不到1分钟，直接导致后端进程被杀掉，没有看到sdk的异常打印。
+2、android（播放时，此时说话）出现播放的声音断断续续。
+
+Reply: 请参考我们的示例代码看一下能否解决崩溃的问题[跑通示例项目](https://doc.shengwang.cn/doc/rtc-server-sdk/python/get-started/run-example)
+
+---
+# ID: 33131
+
+SDK Product: RTC-Linux
+
+SDK Platform: Linux-Python
+
+SDK Version: 2.1.0
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 当android端正在接收后端的（Linux的Agora-Python-Server-SDK）播放时，此时在android端说话，当后端收到此android的数据，很快并处理后，调用audio_track.clear_sender_buffer()，发现并没有起到打断的效果。请问打断怎么实现的？
+
+Reply: 打断效果直接调用unsubscribe就可以[停止订阅所有远端用户](https://doc.shengwang.cn/api-ref/rtc-server-sdk/python/python-api/localuser#unsubscribeallvideo)
+如果仍有问题可以提供sdklog方便我们进一步调查
+
+---
+# ID: 33139
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 公司自己搭了个声网的服务，但是在Android 客户端没看到设置服务器地址的方法。麻烦提供下设置方式
+
+Reply: 该场景实现需要私有化部署，请联系您的专属商务经理 或者 电话咨询400 6326626
+
+---
+# ID: 33160
+
+SDK Product: Cloud-recording
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 线上报错
+
+Request Description: {
+    "cname": "test",
+    "uid": "0",
+    "resourceId": "xxx",
+    "sid": "",
+    "code": 2
+}
+
+bad request no reason
+
+Reply: "code": 2一般是参数错误，按照文档检查参数以及请求body的格式结构。
+[使用 RESTful API 开始云端录制](https://doc.shengwang.cn/doc/cloud-recording/restful/get-started/quick-start)
+[响应状态码](https://doc.shengwang.cn/doc/cloud-recording/restful/response-code)
+
+---
+
+# ID: 33497
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.4.1
+
+Request Type: 其他问题
+
+Request Description: 使用通讯飞实时转写&翻译功能，能直接在后端生成一个txt并保存吗
+
+Reply: 您好，有实时转写和翻译需求我们建议优先使用[RTT restful 文档（7.x）](https://i46hiqvame.feishu.cn/docx/NTAQdKufEoswPqxbrLFcfQy7nvb?from=from_copylink)来实现，您可以自行保存文本内容到本地。
+
+---
+# ID: 33507
+
+SDK Product: CDN
+
+SDK Platform: CDN
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: rtmp旁路转推后flv流无法播放
+```json
+{'converter': {'name': '1581F6Q8D249T00G22S8_horizontal', 'rawOptions': {'rtcChannel': '1581F6Q8D249T00G22S8', 'rtcStreamUid': 417417}, 'rtmpUrl': 'xxx', 'idleTimeout': 120}}
+{"converter":{"id":"xxx","createTs":1735175274,"updateTs":1735175274,"state":"running"},"fields":"id,createTs,updateTs,state"}
+```
+播放地址：xxx
+
+Reply: 您好，可以依次检查下当前 appid 是否开启了旁路推流功能开关、推流地址的可用状态确认、切换转码对比看下效果、检查播放器是否正常
+如果还未解决，可以提供下具体的ConverterID 和出现问题的时间点，人工工程师稍后跟进处理
+
+---
+# ID: 33525
+
+SDK Product: RTM
+
+SDK Platform: Java
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 使用的事灵动会议，代码，后台配置都集成好的 测试的时候报如下错误：
+```log
+[AgoraEvent] ERROR AgoraRtmClient$login$1.onFailure 113:[AgoraRtmClient]domain:RTM, info:[API Call][message:rtm login fail:Login RTM service was rejected due to server error.]
+2024-12-27 10:30:33.408 20333-20881 FcrCore                 com.liantong.othertest               E  [AgoraEvent] ERROR FcrUISceneBaseActivity$createEngine$1.onFailure 101:[FcrUISceneActivity]login rtm error:Login RTM service was rejected due to server error. || -10012
+```
+
+Reply: 您好，10012 SDK 被服务器拒绝登录，请尝试检查 App ID 是否开通 RTM 服务，检查 Token 或 userId 是否被封禁。以及如果您是用的普通 appid 开启了灵动课堂项目，我们建议重新创建一个灵动课堂专属 appid 来使用。
+如果以上情况都不符合，麻烦提供具体 appid，人工工程师稍后跟进处理。
+
+---
+# ID: 33561
+
+SDK Product: RTC-Linux
+
+SDK Platform: Linux-C
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 1.sdk内仅有动态库，需要一个静态库加到主板（Linux）代码内
+2.芯片型号：SSD202
+3.cpu架构：ARM Cortex-A7
+4.操作系统及版本	Linux
+5.内存大小	128M
+6.编译工具链C库类型	glibc8.2.1
+7.视频编码格式	H.264
+8.视频分辨率	1280*720*20
+9.不支持硬浮点	
+
+
+Reply: 您好，请问当前在运行哪个版本的 SDK？运行 SDK 内自带的 Demo，音视频效果都是否正常？单独出包需要内部申请，请先确认下目前运行 Demo 的情况，稍后人工工程师会跟进
+
+---
+# ID: 33565
+
+SDK Product: Cloud-recording
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 想问一下
+获取指定项目用量的api目前查询不到了,请问这个api是否已经废弃,因为之前代码里面用到了,后续还要对这个接口进行使用
+
+Reply: 您好，目前没有对外开放的查询项目用量接口了，有[查看用量](https://doc.shengwang.cn/doc/console/general/user-guides/usage)需求请以控制台展示的为准
+
+---
 
 # ID: 37889
 

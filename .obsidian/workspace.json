@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "28c8f5b56363f0be",
+        "id": "ea6c3d215f180a9b",
         "type": "tabs",
         "children": [
           {
-            "id": "2ec02664b622828a",
+            "id": "caefff12d937929f",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -170,10 +170,10 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "2ec02664b622828a",
+  "active": "caefff12d937929f",
   "lastOpenFiles": [
-    "服务线知识库结果整理助手提示词.md",
     "工单训练 RAG 集.md",
+    "服务线知识库结果整理助手提示词.md",
     "未命名",
     "().md",
     "工单 AI 提示词.md",
