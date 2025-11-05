@@ -1,4 +1,408 @@
 
+# ID: 32678
+
+SDK Product: RTM
+
+SDK Platform: Java
+
+SDK Version: 2.2.1
+
+Request Type: 集成问题咨询
+
+Request Description: 请问下如果用户A调用publish方法发送一个User类型的消息给用户B，如果用户B当时不在线，等一段时间后上线了能收到这条信息吗？如果不能的话，你们有解决案例吗？
+
+Reply: 您好，rtmsdk2.2.2版本开始支持历史消息；该版本在 PublishOptions 中新增了 storeInHistory 属性，支持在频道中发送消息的同时，将消息存储到云端，后续用户可以通过历史消息接口获取；参考文档如下：
+[历史消息 (Beta)](https://doc.shengwang.cn/doc/rtm2/android/user-guide/message/history-message)
+
+---
+# ID: 32698
+
+SDK Product: CDN
+
+SDK Platform: CDN
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 目前采用CDN推流的方式推流到阿里云、目前可以显示推流地址、但是视频流和音频流没有数据、并且这个推流信息不稳定、有时候可以显示推流、有时候没法显示推流。请问有没有关于CDN推流到第三方的demo或者案例参考
+
+Reply: 您好，当前推流到cdn推荐使用旁路推流的方式，客户端SDK直推CDN已准备下架，不推荐使用；
+参考文档如下：
+[服务概述](https://doc.shengwang.cn/doc/media-push/restful/overview/product-overview)
+
+---
+
+# ID: 32706
+
+SDK Product: RTM
+
+SDK Platform: Object-C
+
+SDK Version: 2.1.11
+
+Request Type: 集成问题咨询
+
+Request Description: 请问下，我如何能验证，一个RTM token为什么是invalid的? 
+
+Reply: 您好，控制台有自助检验工具，可以自行校验下token：控制台-辅助工具-Token生成/校验–Token校验
+将您的token粘贴进去，解析一下，看解析出来的结果和您join传入的参数是否一致
+
+---
+# ID: 32722
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 目前我们设备端的收声效果不好，另一端听到的声音时大时小、有很强的顿挫感，听不清晰。同环境同设备下试了webRTC的官方Demo，在第一个Demo中也发现了收声问题（音量变化反馈、又低又断续），但是另一个Demo中收声是正常的，请问有什么解决方案？
+
+Reply: 您好，
+1、您这边可以是用webrtc官网的检测工具确认mic收音是否有问题：
+[WebRTC samplesSelect sources & outputs](https://webrtc.github.io/samples/src/content/devices/input-output/)
+2、如果正常，请使用声网的webrtcdemo 测试能否复现，如果可以复现，麻烦提供下频道号，以及那个uid听那个uid的声音断续和时间点
+https://webdemo.agora.io/
+
+
+---
+# ID: 32723
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.3.2
+
+Request Type: 其他问题
+
+Request Description: 很奇怪，我调试的时候，可以正常进入群聊，但是打包之后始终进不去。这是为什么？
+
+Reply: 您好，可能和以下几点有关：
+1、确认RtcEngine是否初始化成功，是否卡死？
+2、RtcEngine初始成功，需要看下joinchannel接口返回值，0表示正常加入；异常返回值参考接口说明
+[频道相关](https://doc.shengwang.cn/api-ref/rtc/flutter/API/toc_channel#api_irtcengine_joinchannel2)
+3、以上都正常，请提供问题时间点，频道号、用户UID以及声网sdk日志
+[LogConfig](https://doc.shengwang.cn/api-ref/rtc/android/API/class_logconfig#filePath)
+
+---
+# ID: 32725
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.22.0
+
+Request Type: 集成问题咨询
+
+Request Description: 我这边有多个视频源都需要直播，我们这边是要申请多个频道token吗？还是说要申请多个项目呢？
+
+Reply: 您好，声网侧每个直播间的每个用户都需要申请单独的token，生成token时需要保证：
+* 频道名称与加入频道时一致
+* UID与加入频道时完全匹配
+另外单个声网项目可以管理多个频道，无需创建多个声网项目
+
+---
+
+# ID: 32769
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.22.1
+
+Request Type: 集成问题咨询
+
+Request Description: 
+```log
+swcallvideo.vue:36 Uncaught (in promise) TypeError: client.value.init is not a function
+    at initAgora (swcallvideo.vue:36:16)
+    at swcallvideo.vue:42:3
+    at chunk-JCIXZJ4J.js?v=dc377717:5084:40
+    at callWithErrorHandling (chunk-JCIXZJ4J.js?v=dc377717:2504:19)
+    at callWithAsyncErrorHandling (chunk-JCIXZJ4J.js?v=dc377717:2511:17)
+    at hook.__weh.hook.__weh (chunk-JCIXZJ4J.js?v=dc377717:5064:19)
+    at flushPostFlushCbs (chunk-JCIXZJ4J.js?v=dc377717:2689:28)
+    at flushJobs (chunk-JCIXZJ4J.js?v=dc377717:2731:5)
+```
+
+Reply: 您好，这边提供下VUE 开发示例的demo：
+[API-EXAMPLE](https://github.com/AgoraIO/API-Examples-Web/blob/main/src/example/framework/vue/index.js)
+以及相关开发文档：
+[AgoraRTC Vue Docs](https://webdemo.agora.io/agora_rtc_vue_doc/)
+
+---
+
+# ID: 33115
+
+SDK Product: RTM
+
+SDK Platform: Java
+
+SDK Version: 2.1.10
+
+Request Type: 其他问题
+
+Request Description: 尊敬的用户，您好！
+您的声网账户 的RTM 体验套餐 的套餐内配额就快用尽了。
+为了不影响您正常使用该服务，请尽快升级套餐版本。
+请问一下, 是什么配额快用尽了? 明细在哪里看呢?
+
+Reply: 请联系您的专属商务经理或者直接通过电话联系声网商务进行咨询，联系方式：400 6326626
+
+---
+# ID: 33140
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.1.0-1
+
+Request Type: 集成问题咨询
+
+Request Description: 我们使用RtcEngineEx实现多通道通信
+我们使用mRtcEngine.enableAudioVolumeIndication(200, 3, false);启动用户音量监听，但是IRtcEngineEventHandler的onAudioVolumeIndication收不到消息的回调。
+如果是单通道是可以收到的，请问是哪里集成错误了吗？
+
+Reply: 使用 RtcEngineEx 实现多通道时，注意要调用ex方法：[enableAudioVolumeIndicationEx](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_audio_basic#api_irtcengineex_enableaudiovolumeindicationex)
+
+---
+# ID: 33150
+
+SDK Product: RTC-Linux
+
+SDK Platform: Linux-CPP
+
+SDK Version: 4.0.1
+
+Request Type: 集成问题咨询
+
+Request Description: 我看别人有一个物联网的硬件，音视频语音是用的你们家。但是不知道单片机的sdk，和收费方式是什么，webrtc 也是按分钟收费么？
+
+Reply: 嵌入式硬件端sdk 一般为[声网媒体流加速（原实时码流加速，Real-Time Streaming Acceleration，RTSA）](https://doc.shengwang.cn/doc/rtsa/c/overview/product-overview)
+费用一般按照设备license计算[申请和使用 License](https://doc.shengwang.cn/doc/rtsa/c/basic-features/license) 具体计费可以联系您的专属商务经理 或者 电话咨询400 6326626
+
+---
+# ID: 33152
+
+SDK Product: CDN
+
+SDK Platform: CDN
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 实现 HTTP HMAC 认证,文档描述太模糊，请提供php语言的接入示例，或提供详细的加密认证过程说明
+
+Reply: 请参考文档[实现 HTTP 基本认证](https://doc.shengwang.cn/doc/rtc/restful/user-guides/http-basic-auth) 其中包含PHP的示例代码
+请参考其他语言的示例代码，自行转换成 PHP 语言 [实现HTTP安全认证](https://doc.shengwang.cn/doc/cloud-transcoder/restful/user-guides/http-auth)
+
+---
+
+# ID: 33164
+
+SDK Product: RTMP
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: `/rtm/users/8889987154254/peer_messages`
+服务端调用这个接口给单人发送消息，但是客户端没有收到，我想查看发送日志
+
+Reply: `/rtm/users/<user_id>/peer_messages`是RTM 1.x的服务端发送点对点消息接口，如果客户端未收到服务端发送的消息可以先检查下客户端是否登录并且是在线状态。
+客户端日志获取：[setLogFile](https://docportal.shengwang.cn/cn/Real-time-Messaging/API%20Reference/RTM_java/classio_1_1agora_1_1rtm_1_1_rtm_client.html#ad44bd79d005d25c68712cc35d16d934b)
+服务端日志请联系人工技术支持获取
+
+---
+# ID: 33172
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.3.2
+
+Request Type: 集成问题咨询
+
+Request Description: 今天测试了 大半天 就消耗了 我1700分钟  吓到我了   我就两个设备调试    所有人离开频道  还要计费的？   有没有接口 可以看到 我这个账号下 哪些频道没有销毁  ，
+flutter调用销毁  是所有人离开频道 就自动销毁频道了吗？  还是要怎么处理，需要自己离开后  调用 engine.release 吗
+
+Reply: 1. 计费机制：
+针对每个用户，声网从其加入 RTC 频道开始计算时长用量，到离开这个频道结束计量。参考[计费策略](https://doc.shengwang.cn/doc/rtc/android/billing/billing-strategy)
+2. 频道销毁逻辑
+自动销毁：当频道内最后一个用户离开时，RTC 后端会自动销毁频道（无需手动调用接口）。
+3. 查看未销毁频道
+提供服务端接口[查询项目的频道列表](https://doc.shengwang.cn/doc/rtc/restful/channel-management/operations/get-dev-v1-channel-appid)
+也可以在水晶球中查看正在进行通话的频道[水晶球通话调查-查看通话详情](https://doc.shengwang.cn/doc/analytics/general/rtc/call-search/call-detail)
+
+---
+
+# ID: 33506
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 视频通话，代码里使用 soundpool 播放接通前的铃声，铃声再响，一切正常。但只要代码执行了“ mRtcEngine.joinChannel(token, channelId, "", Constant.AGORA_UID);”这句，铃声就没有了，没有声音了。不执行这句，铃声可以按设计的一直循环播放。如果这句放在播放铃声前面执行，那铃声就会全程无声。这个怎么处理？每次都会出现。
+
+Reply: 您好，加入频道以后音频路由会有切换，初步推测是我们 SDK 的音频录音和您的soundpool不一致导致的，可以通过修改[setaudioscenario](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_audio_basic#api_irtcengine_setaudioscenario)来解决，如果您soundpool用的是媒体音量，那就把 scenario 改成 GameStreaming；如果是通话，就改成 Chatroom
+
+---
+# ID: 33508
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.19.0
+
+Request Type: 开通权限、提供配额
+
+Request Description: 我想咨询一下，我们后端JAVA想实时获取直播会议的音频流在我们业务上使用，是不是可以用旁路推流功能实现？或者推荐别的更好的实现方案？有没有对应的JAVA的SDK提供？
+
+Reply: 旁路推流是把 RTC 频道里的流转推到 RTMP 地址上，和你们的需求关系不大
+如果您是 Linux Java，可以用我们的服务端 SDK：[跑通示例项目](https://doc.shengwang.cn/doc/rtc-server-sdk/java/get-started/run-example)
+
+---
+
+# ID: 33535
+
+SDK Product: Recording
+
+SDK Platform: Linux-Java
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 我们将java的录制SDK封装成一个服务，打包成jar包后放到CentOS7虚拟机中，运行java服务，微信小程序双方进入视频通话，开启录制服务后报错：
+（1）Terminal中提示如下：
+Failed to create agora channel: 0000008888
+AgoraJniProxySdk destructor begin
+AgoraJniProxySdk destructor end
+
+（2）recording_sys.log文件提示如下：
+(8596):ERROR (11:54:25:256)|RecordingEngineImpl.cpp:198: Illegal resolution:
+
+备注：使用命令行进行录制视频是成功的。
+
+Reply: 您好，有录制需求建议优先使用[云录制](https://doc.shengwang.cn/doc/cloud-recording/restful/landing-page)
+
+---
+
+# ID: 33542
+
+SDK Product: CDN
+
+SDK Platform: CDN
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: qzssrlzy.com
+该域名已经有ICp备案，腾讯云也能正常识别  。  但在推流播流push-agora.qzssrlzy.com 创建就提示我未备案，请加入白名单。 加入到正常识别。谢谢。
+
+添加Nginx证书， pem格式的无法正常上传。
+证书 ：无法传pem
+key: 上传key文件没有问题
+
+Reply: 您好，可以先配置加速区域为大陆以外地区，然后提供具体的域名、推拉流地址，人工工程师稍后在后台帮您改回来。
+以及证书上传失败的话，改用 Apache 格式试试，如果有 2 份 Apache ，传较大的那个就行。
+
+---
+
+# ID: 33558
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.0.1
+
+Request Type: 集成问题咨询
+
+Request Description: 1.是否提供一些内置的均衡器效果，如果提供，可以介绍下现在有哪些效果？
+2.关于混响效果，是否有一些调制好的混响效果，如明亮、低沉之类的，这些方法如何调用？
+3.是否有一些关于使用场景对音色的优化，比如我是一个交友语聊房，是否有能力提供一系列的音效设置，来提升音色，这里有没有内置的方案？比如配置一系列的混响、音调、声音环绕等
+
+Reply: 您好，SDK 有预设音效，具体实现方式参考 [VoiceEffects](https://github.com/AgoraIO/API-Examples/blob/main/Android/APIExample/app/src/main/java/io/agora/api/example/examples/advanced/VoiceEffects.java)。
+不过 SDK 内只能提供基础能力，更高级的音色改变建议集成第三方SDK 来实现。
+
+---
+# ID: 33566
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.5.0
+
+Request Type: 集成问题咨询
+
+Request Description: 实时互动RTC 如何接入画笔功能
+
+Reply: 您好，RTC 本身不自带白板、画笔功能，有此类需求需要单独集成白板 SDK。
+如果您需要直接传输实时处理过的画面，可以考虑用[自定义视频数据处理](https://doc.shengwang.cn/doc/rtc/android/advanced-features/video-processing)。
+
+---
+# ID: 33569
+
+SDK Product: Fastboard
+
+SDK Platform: Android
+
+SDK Version: 1.6.2
+
+Request Type: 集成问题咨询
+
+Request Description: Fastboard播放音视频时，播放器内的音量调节，不能改变播放器的音量大小。只能静音和有声音两个效果。调整大小没有生效。
+
+Reply: 您好，音量键控制的音量不一定是媒体音量，也可能是通话音量。
+在 Android 中，默认情况下，音量键的行为可能因当前焦点不同而变化。
+```java
+class MainActivity : AppCompatActivity() {
+override fun onCreate(savedInstanceState: Bundle?){ 
+super.onCreate(savedInstanceState) setContentView(R.layout.activity_main) 
+
+// 确保音量键控制的是媒体音量 
+volumeControlStream = AudioManager.STREAM_MUSIC 
+}
+}
+```
+
+
+---
+# ID: 33574
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.22.0
+
+Request Type: 集成问题咨询
+
+Request Description: 请问在什么情况下能监听到远端用户加入频道，能触发user-published，但是client.subscribe()这个方法监听的时候，sdk报错该用户不在频道
+
+Reply: 您好，可能是创建了多个 client，订阅是使用了不同的 client ，或者您这边是 vue 吗？是的话需要避免双向绑定的情况发生。
+
+---
+
 # ID: 32350
 
 SDK Product: RTC
