@@ -1,4 +1,126 @@
 
+# ID: 37932
+
+SDK Product: Console
+
+SDK Platform: All
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 使用C# SDK 生成token，过期，Utils.getTimestamp() 返回 1762391780 是正常的，uint expire = 600; 600秒，过期日期居然连当前都不对
+
+Reply: 您好，console 里校验 token 有效期的时间戳是 UTC 时间，+8 才是中国时间，可以注意下是否时区换算有问题
+
+---
+# ID: 37933
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 商务问题
+
+Request Description: 业务侧到底怎么统计rtm用量。现在rtm消息只有客户端能收到，你们意思是让客户端统计rtm消息条数然后发给服务端来统计吗
+
+Reply: 您好，RTM 没有直接查询用量的接口，以及 RTM 的用量统计也不是只看消息数计费的，连接我们节点也会计费，所以我们不推荐依赖我们的数据去做计费，建议自行构建一套计费体系去给您的终端用户收费。
+计费逻辑文档参考：[计费规则](https://doc.shengwang.cn/doc/rtm2/unity/overview/billing/billing-rules)
+
+---
+# ID: 37935
+
+SDK Product: RTC
+
+SDK Platform: React Native
+
+SDK Version: 4.5.0
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 我这边是东方财富跟你们对接的服务项目。
+我们使用的是rn的adk 4.5.0
+目前遇到的问题是：安卓手机使用一个agent先入会后共享屏幕，之后切出app，手机的麦克风占用就消失了。 如果只是入会切出app就能正常使用。
+需要我提供什么信息可以回复我，希望能得到解决方案
+
+Reply: 您好，请问下现在的问题是屏幕共享以后切后台无法保持麦克风采集？请问 APP 本身有做过[后台保活](https://doc.shengwang.cn/faq/list?category=quality-issues&platform=all&product=rtc)吗？
+以及可以提供下复现问题的录像和对应时间的 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)，打包压缩 zip 发来。
+
+---
+# ID: 37936
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.23.x
+
+Request Type: 集成问题咨询
+
+Request Description: rtm 、 rtc 文档中对 renewToken 的描述不一致
+现在需要确认 rtc 是否需要传递  频道号，如果需要请提供参数传递格式
+
+Reply: 您好，您看的是两个接口描述，这两个是不同的东西。
+RTC 的 renew 方法不需要传 `channelName`，直接传一个新的 token 就行。
+RTM 的 renew 方法如果不用 `streamchannel` 是不用传 channelName 进去的，需要用到 `streamchannel` 的时候可以用 RTM 的 `renew` 方法给 RTC 频道也去更新 token，但是需要指定频道名。
+
+---
+# ID: 37937
+
+SDK Product: Cloud-recording
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description:
+```json
+{"cname":"236","resourceId":"xxx","uid":"518"}
+```
+
+请求参数:
+```json
+{
+	"clientRequest": {
+		"token": "xxx",
+		"recordingConfig": {
+			"channelType": 0,
+			"streamTypes": 0,
+			"maxIdleTime": 180,
+			"subscribeUidGroup": 0
+		},
+		"extensionServiceConfig": {
+			"errorHandlePolicy": "error_abort",
+			"apiVersion": "v1",
+			"extensionServices": [{
+				"serviceName": "yitu_voice_async_scan",
+				"errorHandlePolicy": "error_abort",
+				"streamTypes": 0,
+				"serviceParam": {
+					"apiData": {
+						"accessKey": "xxx",
+						"secretKey": "xxx",
+						"bizType": "xxx",
+						"callbackSeed": "xxx"
+					},
+					"callbackAddr": "xxx"
+				}
+			}]
+		}
+	},
+	"cname": "236",
+	"uid": "518"
+}
+```
+
+
+Reply: 您好，请问现在的问题现象是什么？是 start 失败还是 start 成功以后找不到录制任务？有收到返回的 sid 吗？
+
+---
 
 # ID: 37909
 
