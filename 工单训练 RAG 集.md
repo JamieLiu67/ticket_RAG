@@ -1,4 +1,97 @@
 
+
+# ID: 37909
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: joinChannel之后 怎么获取屏幕分享的音频数据  onRecordAudioFrame 和 onPlaybackAudioFrame 的buffer都是空的
+
+Reply: 您好，音频裸数据通道拿不到屏幕共享的声音回调，请问您是什么场景需要获取屏幕共享的音频裸数据？
+
+---
+
+# ID: 37911
+
+SDK Product: Fastboard
+
+SDK Platform: iOS
+
+SDK Version: 1.4.2
+
+Request Type: 集成问题咨询
+
+Request Description: 请看附件
+问题1：画笔的上面有一行文字，请问哪个方法可以隐藏这一行文字？
+问题2：白板的工具栏我参考你们的文档，发现并未起效，麻烦你们指导一下
+
+Reply: 您好，
+1、上方的文字是书写者的光标，fastboard 预设的，无法修改。如果您考虑用 whiteboard，可以参考[鼠标光标适配器](https://developer.netless.link/javascript-zh/home/cursor-adapter)自行编写一套光标逻辑
+2、可以参考下[自定义 UI 控件](https://doc.shengwang.cn/doc/whiteboard/ios/fastboard-sdk/advanced-features/customize-widget)，检查下`toolbar`是否为 `enable = true` 的状态
+
+---
+
+# ID: 37914
+
+SDK Product: RTC
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 如果自定义集成 ASR
+
+Reply: 您好，请问现在用的是 convoAI 吗？convoAI 无法指定自定义 ASR，只能选择我们提供的几个厂商
+
+---
+
+# ID: 37922
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.5.1
+
+Request Type: 集成问题咨询
+
+Request Description: 尊敬的 Agora 技术支持团队：
+您好，我是一名 iOS 开发者，正在集成 Agora RTC SDK 开发实时音视频应用。在实现画中画（Picture-in-Picture, PiP）功能时，希望确保应用进入画中画模式后仍能持续保持本地摄像头的视频采集与推送，避免通话中断。
+根据 Apple 官方文档，iOS 提供了对 “多任务摄像头访问” 的支持能力。在此想咨询：
+1. Agora iOS SDK 是否原生支持该场景？是否需要进行特殊配置（如 SDK 初始化参数、视频轨道设置等）来保证画中画模式下摄像头持续采集？
+2. 自定义采集能实现上述需求，但是原来使用的背景虚化在自定义采集时无法生效，如果sdk没有提供设置ismultitaskingcameraaccessenabled的方法那有没有提供自定义采集时使用agora背景虚化的方法？
+
+
+Reply: 您好，我们的官方 Demo 有演示如何实现画中画+后台保持采集功能，可以运行+参考下
+* [PictureInPicture.java](https://github.com/AgoraIO/API-Examples/blob/main/Android/APIExample/app/src/main/java/io/agora/api/example/examples/advanced/PictureInPicture.java)
+* [IOS PictureInPicture](https://github.com/AgoraIO/API-Examples/tree/main/iOS/APIExample/APIExample/Examples/Advanced/PictureInPicture)
+其中 IOS 要实现进入后台保持采集就必须使用自采集，自采集也是支持开启虚拟背景的，api-example 里有虚拟背景的 Demo，您可以基于那个对照看下写法的区别，如果确认处理没问题还是不行，可以提供下相关代码截图+提供复现问题的 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)过来看下。
+
+---
+
+# ID: 37927
+
+SDK Product: RTC
+
+SDK Platform: Unity
+
+SDK Version: 4.5.1
+
+Request Type: 集成问题咨询
+
+Request Description: 如何在unity收到远端用户开麦事件后，可以不自动播放远端用户的语音流？我们希望和web这边一致，在收到远端用户开麦的事件后，手动subscribe远端用户语音流，在unity这边可以实现这个效果吗？
+
+Reply: 您好，Unity 里没有`Subscribe`接口，在加频道的时候配置`autoSubscribeAudio=false`禁止自动订阅，然后搭配[SetSubscribeAudioAllowlist](https://doc.shengwang.cn/api-ref/rtc/unity/API/toc_publishnsubscribe#SetSubscribeAudioAllowlist)来实现只订阅部分用户的效果。
+
+---
+
 # ID: 32678
 
 SDK Product: RTM
