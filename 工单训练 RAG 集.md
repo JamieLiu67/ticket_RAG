@@ -1,4 +1,81 @@
 
+# ID: 37939
+
+SDK Product: RTSA
+
+SDK Platform: Linux-C
+
+SDK Version: 1.9.6
+
+Request Type: 集成问题咨询
+
+Request Description: RTSA支持ESP32设备吗？
+
+Reply: 您好，支持的，有专属的 SDK [下载](https://doc.shengwang.cn/doc/rtsa/c/resources)
+
+---
+
+# ID: 37947
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 同时集成RTC与IM  SDK所发生的集成问题，导致RtcEngine初始化失败。
+集成SDK的代码如下：
+```Groovy
+implementation 'cn.shengwang.rtc:full-sdk:4.6.0'
+implementation 'cn.shengwang:chat-sdk:1.3.2'
+```
+
+也已经处理同时包含libaosl.so库的问题。
+问题报错请看附件。
+
+
+Reply: 您好，可以尝试以下步骤：
+1、在 dependencies 部分把 rtc 放在前面，或者在 rtc 和 im 前面加个`cn.shengwang.infra:aosl:1.3.0` 指定 aosl 高版本
+2、或者 RTC 降到4.5.0 版本
+
+---
+# ID: 37948
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 集成问题咨询
+
+Request Description: 用demo测试，以观众视角，歌词不能跟着音乐变化
+
+我这边直接引用的是lib_ktvapi里面的方法，是需要我改一下lib_ktvapi里面的调用才能使用吗？
+
+Reply: 您好，因为我们在线 K 歌房的 Demo 只预设了一首歌，没有信令同步业务，所以切歌以后 Demo 无法感知歌曲的变化，也没有切换歌词的业务处理
+切换歌曲播放状态、切换当前显示歌词的广播业务需要您自行实现。
+
+---
+
+# ID: 37953
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.23.x
+
+Request Type: 其他问题
+
+Request Description: 非主播端，连麦有回音
+
+Reply: 您好，回声是因为扬声器的声音被麦克风重新采集发回去才会产生的，如果双方有一方不是主播，理论上不可能出现回音问题，现在是谁听谁有回音？检查下主播端是不是调用了 `Localtrack` 的 `play` 指定听自己轨道的声音了？
+
+---
+
 # ID: 37932
 
 SDK Product: Console
