@@ -1,4 +1,87 @@
 
+# ID: 37956
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 视频通话有鉴黄功能么
+
+Reply: 您好，声网rtc没有内容审核功能，要自行集成第三方审核 SDK
+
+---
+
+# ID: 37965
+
+SDK Product: IM
+
+SDK Platform: Android
+
+SDK Version: 1.3.2
+
+Request Type: 其他问题
+
+Request Description: 我利用UIKit集成的IM
+为什么会话列表不显示用户名和头像呢？
+只有重新发起会话才有头像和昵称
+我关闭app，重新打卡后会话列表又没有用户名和头像了
+
+Reply: 您好，头像昵称需要存到本地，设置给uikit，uikit 没有对头像昵称进行存储，参考[用户自定义信息](https://im.shengwang.cn/docs/uikit/chatuikit/android/chatuikit_userinfo.html)
+
+---
+# ID: 37966
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.3.0
+
+Request Type: 商务问题
+
+Request Description: 想了解一下webRTC，烦请回复我一下，我的电话：18610366411
+
+Reply: 您好，Web SDK 的收费方式参考[计费策略](https://doc.shengwang.cn/doc/rtc/javascript/billing/billing-strategy),细节沟通可以电话联系 400 6326626
+
+---
+
+# ID: 37969
+
+SDK Product: CDN
+
+SDK Platform: CDN
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 怎么测试推流是否正常
+
+Reply: 您好，现在用的是融合 CDN 吗？用 OBS 往推流地址上推画面，用 ffplay 或者 vlc 一类的工具拉收流地址看画面就行了，看得到就正常
+
+---
+
+# ID: 37972
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.4.0
+
+Request Type: 崩溃（闪退、卡死）
+
+Request Description: iOS AgoraRtcEngine_iOS (4.4.0) AgoraRtcKit declareProviderVersion崩溃
+
+Reply: 您好，麻烦提供下原始崩溃堆栈和出现问题时的 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+或者 IPS 文件也可以，我这边找对应版本的符号表解析一下
+
+---
+
 # ID: 37939
 
 SDK Product: RTSA
