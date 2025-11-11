@@ -1,4 +1,35 @@
 
+# ID: 37988
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.2.0
+
+Request Type: 崩溃（闪退、卡死）
+
+Request Description: 每次退出频道的时候大概率直接闪退
+
+Reply: 您好，我们不推荐在回调内执行接口调用，这种操作容易导致崩溃、卡死问题，回调内推荐只做抛出，在非回调的子线程内执行 SDK 相关操作。可以检查下目前的集成是否有类似问题，如果看不出来，可以提供下退出频道的相关处理代码。
+
+---
+# ID: 37993
+
+SDK Product: CDN
+
+SDK Platform: CDN
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 直播的测试域名
+
+Reply: 您好，我们没有测试的域名，请在 console 上直接配置自己的域名来使用融合 CDN 服务
+
+---
+
 # ID: 37956
 
 SDK Product: RTC
