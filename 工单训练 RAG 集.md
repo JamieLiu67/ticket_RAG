@@ -1,4 +1,87 @@
 
+# ID: 38001
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 按照Agora-Java-Server-SDK
+/README.zh.md  来启动示例。
+`./build.sh -native start`
+调用`http://localhost:18080/api/server/basic?taskName=SendPcmFileTest`
+报错信息:
+```
+INFO  io.agora.rtc.example.common.SampleLogger - read appId: b0f175369c2548568fd6e49654eff613 token: 007eJxTYLgovpVxof3bzjzlbvGYT3OOJnzYNm929KK3ZjZyfY/0ufsVGJIM0gzNTY3NLJONTE0sTM0s0lLMUk0szUxNUtPSzAyNlzMKZzYEMjJYrtvCwsgAgSA+C4MhEDAwAAArZx2I from .keys
+Exception in thread "pool-2-thread-1" java.lang.NoClassDefFoundError: io/agora/rtc/internal/AgoraAudioFrameObserver
+	at io.agora.rtc.SDK.nativeLoad(Native Method)
+	at io.agora.rtc.SDK.load(SDK.java:22)
+	at io.agora.rtc.AgoraService.<init>(AgoraService.java:28)
+	at io.agora.rtc.example.basic.SendPcmFileTest.start(SendPcmFileTest.java:51)
+	at io.agora.rtc.example.api.ServerController.lambda$startBasicServer$1(ServerController.java:179)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+Caused by: java.lang.ClassNotFoundException: io.agora.rtc.internal.AgoraAudioFrameObserver
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:387)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:418)
+	at org.springframework.boot.loader.LaunchedURLClassLoader.loadClass(LaunchedURLClassLoader.java:93)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:351)
+```
+
+Reply: 您好，Agora-Java-Server-SDK 是给 Linux 服务端用的 SDK，请问您现在是在 Windows 上运行这个 SDK 的 Demo 吗？
+
+---
+# ID: 38006
+
+SDK Product: Flexible-classroom
+
+SDK Platform: Web
+
+SDK Version: 2.9.40
+
+Request Type: 集成问题咨询
+
+Request Description: CDN集成环境下开发，如何分别监听离开房间和关闭房间
+
+Reply: 您好，请检查下 Web 端的 LaunchOption 里没有填listener，应该要在listener 里配置需要监听的客户端[AgoraEduClassroomEvent](https://doc.shengwang.cn/api-ref/flexible-classroom/javascript/classroom-sdk#classroomevent)事件。
+以及也可以同步监听[灵动课堂服务端事件枚举](https://doc.shengwang.cn/doc/flexible-classroom/restful/api/api-sync#%E4%BA%8B%E4%BB%B6%E6%9E%9A%E4%B8%BE)来感知。
+
+---
+# ID: 38008
+
+SDK Product: RTC
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: voip转pstn如何实现语音中继功能
+
+Reply: 您好，之前有相关的云市场插件，但现在下架了，目前只能推荐您集成 小樱桃 PSTN 的 SDK 来拿到音频流，然后用[自采集](https://doc.shengwang.cn/doc/rtc/android/advanced-features/custom-audio-source)发到 RTC 频道里
+
+---
+# ID: 38011
+
+SDK Product: Flexible-classroom
+
+SDK Platform: Web
+
+SDK Version: 2.9.40
+
+Request Type: 集成问题咨询
+
+Request Description: 无法分开判断关闭房间和离开房间
+
+Reply: 您好，请检查下 Web 端的 LaunchOption 里没有填listener，应该要在listener 里配置需要监听的客户端[AgoraEduClassroomEvent](https://doc.shengwang.cn/api-ref/flexible-classroom/javascript/classroom-sdk#classroomevent)事件。
+
+---
+
 # ID: 37988
 
 SDK Product: RTC
