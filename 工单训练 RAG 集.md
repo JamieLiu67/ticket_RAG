@@ -1,4 +1,106 @@
 
+# ID: 38016
+
+SDK Product: Flexible-classroom
+
+SDK Platform: Web
+
+SDK Version: 2.9.40
+
+Request Type: 集成问题咨询
+
+Request Description: 请问灵动课堂有后端的状态回调吗？比如，直播间关闭这样的事件
+
+Reply: 您好，可以监听[服务端 CMD 事件](https://doc.shengwang.cn/doc/flexible-classroom/restful/api/api-sync#%E4%BA%8B%E4%BB%B6%E6%9E%9A%E4%B8%BE)来实现。
+需要的话，麻烦提供appid、回调地址、需要的 cmd 事件类型、灵动课堂所用的区域和班型，我们找研发后台帮您开通
+
+---
+# ID: 38019
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 我这边主播开播后，我需要服务端通过旁路推流推到我自己的rtmp流媒体服务器上面，这个如何操作
+
+Reply: 您好，如果需求只是从 RTC 频道里把画面推送到指定的 RTMP 地址上，参考[旁路推流](https://doc.shengwang.cn/doc/media-push/restful/landing-page)文档，调用 Restful 接口来指定 RTC 频道和 RTMP 目标地址转推就可以实现了
+
+---
+# ID: 38026
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 在实现屏幕共享功能的时候，只创建了screenVideoTrack。再另外一个方法里控制audioTrack的开启和关闭，经测试发现：audioTrack开关的时候，screenVideoTrack会出段短暂的黑屏，大概0.5秒左右。
+
+Reply: 您好，SDK 的 audioTrack 和 videoTrack 是独立的，理论上不会互相影响，可能是您业务上操作 `unpublish` 的时候控制到了多个 track 导致的，您可以自己 debug 看下，如果自查无果，可以开启 Web [日志上传](https://doc.shengwang.cn/faq/integration-issues/set-log-file)，提供频道号、uid、时间点，人工工程师稍后看下接口调用记录。
+
+---
+# ID: 38027
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.6.0
+
+Request Type: 其他问题
+
+Request Description: 你好，我们又遇到了回声问题，劳烦帮忙看下。
+1、问题表现：
+北京时间11.12晚10点20左右我们又遇到了回声问题，即我说的话又被手机外放出来，对应的channel是743704562930543032，对应的声网log在附件中。
+2、重现步骤：
+这个回声问题一直都有，只是偶现的，总体概率不大，但是遇到就比较麻烦，严重影响我们用户的使用体验。我们无法固定重现步骤。
+3、我们的使用方法：
+AgoraRtcEngineKit初始化配置如附件截图。初始化后，我们使用joinChannel和joinChannelEx两个方法同时加入了多频道。
+4、另外我们也想问下我们的业务代码如何检测到出现回声问题了呢？AgoraRtcEngineDelegate有相关的方法回调吗？或者有其他方法吗？我们也需要统计下这个问题实际发生的数量。
+
+Reply: 您好，
+1、回声问题优先让双方用户带耳机看是否有改善
+2、如果回声上报的数量较多，可以考虑 `scenario` 用 `chatroom`，用通话音量，走硬件回声消除看下效果
+3、回声是物理现象，代码检测不出来的，可以考虑做一个按钮上报，让用户遇到了主动上报，方便统计数据
+
+---
+# ID: 38028
+
+SDK Product: Flexible-classroom
+
+SDK Platform: Web
+
+SDK Version: 2.9.40
+
+Request Type: 其他问题
+
+Request Description: 我们想接入声网灵动课堂的SDK，上课时可以获取到聊天留言。当我并没有找到获取课堂聊天留言的接口/功能。官网是否通过获取课堂聊天留言的方法
+
+Reply: 您好，灵动课堂的 IM 用的是环信 IM，可以尝试集成[环信 SDK 的回调](https://doc.easemob.com/document/server-side/callback_postsending.html#%E5%9B%9E%E8%B0%83%E7%A4%BA%E4%BE%8B)来获取。
+
+---
+# ID: 38031
+
+SDK Product: Flexible-classroom
+
+SDK Platform: Web
+
+SDK Version: 2.9.40
+
+Request Type: 集成问题咨询
+
+Request Description: 课程云录制，html页面recordUrl设置到了域名和传参，`scene.bundle.js`文件接收到了，但是录制的页面是空白
+
+Reply: 您好，页面录制的效果相当于浏览器开启无痕以后直接访问这个指定 url ，如果录制到的就是白屏，那大概率直接访问这个 url 看到的也是白屏，可以先用浏览器无痕模式自查一下。
+
+---
+
 # ID: 38001
 
 SDK Product: RTC
