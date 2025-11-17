@@ -1,4 +1,194 @@
 
+# ID: 38034
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.6.0
+
+Request Type: 其他问题
+
+Request Description: 拨打对方总是延迟是怎么回事 对方接听了 我还在响铃界面 要等几秒才接通 这种应该怎么优化，给个思路
+
+Reply: 您好，RTC 本身不自带呼叫邀请，如果是呼叫邀请时的延迟，需要自行排查信令业务来解决
+
+---
+# ID: 38036
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 其他问题
+
+Request Description: 我们目前有一个特殊场景，即使用户配置了耳机设备也需要强制通过手机来录音（MediaRecorder.AudioSource.MIC），但播放的声音又需要通过耳机播放。声网SDK内部未找到定制audioSource相关API。
+我们目前通过自定义音频采集方案，把录音后的音频数据通过`pushExternalAudioFrame`方式把音频数据推送给声网，但由于我们目前使用场景比较特殊，是一个房间内同时本地加入了两个用户（`joinChannelEx` 加入两次房间，本地同时存在用户A和用户B），我只需要其中的一个用户推流，目前尝试把其中一个用户的`MediaOptions.publishCustomAudioTrack = false` 和 `mRtcEngine?.muteLocalAudioStreamEx(true, rtcConnectionA)`都无法生效，都会导致房间内的两个用户同时在推流。求官方提供下解决方案，或者增加定制录音源的配置接口。
+
+Reply: 1、请问您这边是有线耳机还是无线蓝牙耳机？有线耳机带麦克风的话，这个需求无法实现，采集和播放都会走耳机，这是系统行为。如果是蓝牙的话，走 a2dp 协议可以让耳机直播放，采集走手机，join 之前调用 SDK 接口传私参实现，具体参数可以等候人工工程师提供
+2、可以提供下复现问题时的 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)，人工工程师稍后查看并解析
+
+---
+# ID: 38038
+
+SDK Product: RTC
+
+SDK Platform: React Native
+
+SDK Version: 4.4.0
+
+Request Type: 其他问题
+
+Request Description: android接通有嘈杂音，G722格式
+
+Reply: 您好，请确保通话双方都配置了 G722 格式的音频编解码，可以提供下复现问题时的 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)，人工工程师稍后为您解析
+
+---
+# ID: 38043
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 写了个demo， 让ai加入我创建的直播频道， 但是加入不了
+
+Reply: 您好，加入不了的话有什么报错吗？可以提供下出错的信息，如果是智能体加入不了，提供 agentID；如果是客户端加入不了可以提供 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+
+---
+# ID: 38047
+
+SDK Product: IM
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 即时通讯IM中,哪个接口可以获取两个用户之间的聊天记录?
+
+Reply: 您好，请问指的是后台获取吗？ 如果是后台获取，只有两种方案：
+1、拉取历史记录，是全量按照小时拉取，需要自己筛选；这个有比较大的时延，按照小时为维度
+2、用回调服务，只要有消息就回调给您指定的服务器，这个是毫秒级，然后自行抽取相关用户的信息
+
+---
+# ID: 38050
+
+SDK Product: Whiteboard
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 去年站内信通知白板久域名已经计划弃用 需要转移到新域名 请发我一下那些域名即将弃用 用那些域名替换
+
+Reply: 您好，白板 SDK 从旧版迁移到新域名的话会变动以下域名（仅限白板 SDK，与 RTC 等其他产品无关）
+`scdncloudcapiv4.herewhite.com、cloudcapiv4.herewhite.com、capiv4.herewhite.com` 替换为：`api.netless.link、api.whiteboard.sd-rtn.com、api.whiteboard.agora.io(海外region)、api.whiteboard.rtelink.com(海外region)、api.baiban.shengwang.cn(中国region)`，相关功能：白板restful api
+`convertcdn.herewhite.com` 替换为 `convertcdn.netless.link`，相关功能：白板旧版转码cdn
+`demo.herewhite.com` 替换为 `demo.whiteboard.agora.io` ，相关功能：白板demo
+
+---
+# ID: 38052
+
+SDK Product: Console
+
+SDK Platform: All
+
+SDK Version: 当前版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 你们倒是给我个发票下载地址啊, 
+邮箱：1913441053@qq.com 这个邮箱不对, 我拿不到发票
+
+Reply: 您好，发票申请未收到类的问题可以提供下申请发票时所用的 cid，以及说明下申请的具体时间、需要接受发票的邮箱（可在声网 console-费用中心-发票详情设置内指定邮箱），人工工程师稍后会和财务确认情况。
+
+---
+# ID: 38053
+
+SDK Product: RTC
+
+SDK Platform: Unity
+
+SDK Version: 4.5.1
+
+Request Type: 集成问题咨询
+
+Request Description: Mac端从unity构建包含RTC的应用，无法签名，下面是Xcode报错信息
+```
+/usr/bin/codesign --force --sign - -o runtime --preserve-metadata\=identifier,entitlements,flags --generate-entitlement-der /Users/fayuan/Library/Developer/Xcode/DerivedData/test2-dnrzzuoefmhcpdexlqacxnshdoyc/Build/Intermediates.noindex/ArchiveIntermediates/VTrial/InstallationBuildProductsLocation/Applications/VTrial.app/Contents/PlugIns/AgoraRtcWrapperUnity.bundle
+
+/Users/fayuan/Library/Developer/Xcode/DerivedData/test2-dnrzzuoefmhcpdexlqacxnshdoyc/Build/Intermediates.noindex/ArchiveIntermediates/VTrial/InstallationBuildProductsLocation/Applications/VTrial.app/Contents/PlugIns/AgoraRtcWrapperUnity.bundle: replacing existing signature
+/Users/fayuan/Library/Developer/Xcode/DerivedData/test2-dnrzzuoefmhcpdexlqacxnshdoyc/Build/Intermediates.noindex/ArchiveIntermediates/VTrial/InstallationBuildProductsLocation/Applications/VTrial.app/Contents/PlugIns/AgoraRtcWrapperUnity.bundle: code object is not signed at all
+In subcomponent: /Users/fayuan/Library/Developer/Xcode/DerivedData/test2-dnrzzuoefmhcpdexlqacxnshdoyc/Build/Intermediates.noindex/ArchiveIntermediates/VTrial/InstallationBuildProductsLocation/Applications/VTrial.app/Contents/PlugIns/AgoraRtcWrapperUnity.bundle/Contents/Frameworks/AgoraFaceCaptureExtension.framework
+Command CodeSign failed with a nonzero exit code
+```
+
+Reply: 您好，需要先对 bundle 里面的每个 framework 签名，然后才能对 bundle 签名，您这边可以检查下有哪些 framework 没有被签名
+
+---
+# ID: 38055
+
+SDK Product: RTC
+
+SDK Platform: Electron
+
+SDK Version: 4.3.2
+
+Request Type: 集成问题咨询
+
+Request Description: 我可以用一个uid在一个channel里同时推屏幕流和视频流吗；
+
+Reply: 您好，一个 UID 只能发布一路视频流，electron 可以用 [加入多频道](https://doc.shengwang.cn/doc/rtc/electron/advanced-features/multiple-channel) 方法，分别用两个 uid 在频道内发流。
+
+---
+# ID: 38063
+
+SDK Product: RTC
+
+SDK Platform: React Native
+
+SDK Version: 4.3.2
+
+Request Type: 其他问题
+
+Request Description: 
+```
+[INFO] [app] license_activate uri: https://api.agora.io/dabiz/license/v2/active?pid=xxx&licenseKey=xxx&appid=xxx
+W (1316) wifi:<ba-add>idx:0 (ifx:0, c6:b2:5b:1a:d9:a1), tid:0, ssn:2161, winSize:64
+[ERR] ssl error: net_connect returned -82 - UNKNOWN ERROR CODE (0052)
+I (1350) DRV8311: ES8311 in Slave mode
+I (1358) wifi:BcnInt:102400, DTIM:1     
+```
+在ESP32S3上，进行授权激活时，返回错误
+
+Reply: 您好，请求的 url 需要修改下，参考[激活 License](https://doc.shengwang.cn/doc/rtsa/c/basic-features/license#3-%E6%BF%80%E6%B4%BB-license)，以及请确保用 curl 请求。
+
+---
+# ID: 38066
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: Android rtc sdk 是否有接口可以查询频道内某个用户是否仍在频道内
+
+Reply: 您好，没有直接查询的接口，但是可以[查询用户列表](https://doc.shengwang.cn/doc/rtc/restful/channel-management/operations/get-dev-v1-channel-user-appid-channelName)然后自行比对。
+
+---
+
 # ID: 38016
 
 SDK Product: Flexible-classroom
