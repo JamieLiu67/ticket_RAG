@@ -1,4 +1,116 @@
 
+# ID: 38086
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 集成问题咨询
+
+Request Description: 音视频通话集成，视频录制同步到文件存储，是否支持支持Azure  SMB协议，Blob文件格式？
+
+Reply: 您好，云录制上传的原理是录制完传输到指定的 OSS 路径上，我们只负责写入，这个过程是不需要Azure SMB协议的。以及我们的录制格式是固定的 ts 切片+m3u8 索引，不会生成其他格式，有需要的话，可以自行本地[转换录制文件格式](https://doc.shengwang.cn/doc/cloud-recording/restful/user-guides/manage-file/convert-format)
+参考：[录制文件介绍](https://doc.shengwang.cn/doc/cloud-recording/restful/user-guides/manage-file/introduce-recorded-files)
+
+---
+# ID: 38087
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.23.x
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 1：页面录制后的文件，声音有卡顿现象，不连续，一个小时内都是这个情况
+2：录制用户id：1406432，使用云端播放器的uid：1406433，当前录制的视频中，视频没问题，但是音频是一顿一顿的
+
+Reply: 您好，实际通话中其他人听 1406432 的声音正常吗？如果这个 uid 本身网络很差发出来的内容就是卡的，那录制的文件就一定是卡的,麻烦提供具体的录制 sid 以及对应的录制文件过来看下.
+
+---
+# ID: 38092
+
+SDK Product: RTC
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 线上报错
+
+Request Description: 使用你们的Agora-Java-Server-SDK发送语音消息,能发送出去,但是硬件接收说数据格式不对,说需要使用G722格式的,请问现在格式是必须要设置吗,另外test_data/tts_ai_16k_1ch.pcm 默认是什么格式的.
+
+Reply: 您好，Linux 服务端默认使用 opus 音频编码，和 IOT 设备互通的话需要使用私参调整对齐双端的协议，可以等候人工工程师跟进提供私参参数。
+
+---
+# ID: 38098
+
+SDK Product: Flexible-classroom
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 我们使用 秒搭的灵动课堂，现在出现一个问题，就是web端端录音说话声音，在安卓端听不到，这个是什么问题呢？还有秒搭的版本是："version": "2.7.0"
+
+Reply: 您好，秒搭已经计划下架了，不推荐使用，请直接[集成灵动课堂](https://doc.shengwang.cn/doc/flexible-classroom/android/get-started/integrate)
+
+---
+# ID: 38099
+
+SDK Product: RTC-Linux
+
+SDK Platform: Linux-Java
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: RTC服务端SDK的Java API中，通过回调`io.agora.rtc.IVideoEncodedFrameObserver.onEncodedVideoFrame()`得到了`EncodedVideoFrameInfo`，对于其中的`captureTimeMs`视频采集时间戳、`decodeTimeMs`视频渲染时间戳存在疑问。此前这两个时间戳一直是 0。更新至 4.4.32.200 版本后，时间戳不为0，但数值比较奇怪（例如22953660972），不是正常的Unix时间戳（例如1763532478266）。请问这是BUG，还是时间戳的定义采用了特殊的格式？另外，只有首帧是I帧，后续帧都是P帧，无I帧与B帧，请问这是正常的业务逻辑，还是统计信息有误呀？谢谢！
+
+Reply: 您好，
+1、这个时间戳是 SDK 内部的一个刻度，并不是 Unix 时间戳，直接用来对比值的大小也可以提现时间先后。
+2、目前 4.x SDK 的视频关键帧策略就是只发一个 I 帧，后续都发 P 帧，B 帧基本不会使用。如果有需要的话，可以描述下完整场景，人工工程师可以提供具体的私有参数调整发送私参的策略。
+
+---
+# ID: 38101
+
+SDK Product: RTSA
+
+SDK Platform: Linux-C
+
+SDK Version: 1.9.2
+
+Request Type: 其他问题
+
+Request Description: 声网是否支持esp32s3 音频呼叫 进行双向语音通话，电话咨询过客服 说的灵笋物联网平台可以，但是后期会被砍掉  是否有替代的产品 进行多端通话 设备端（esp32s3）+安卓端+web端
+
+Reply: 您好，灵隼已经要下架了，请不要使用。
+IOT 设备可以用 RTSA SDK，我们有 ESP32S3 的 SDK ，idf 版本小于 5.0 的话可以集成官网文档里的对外版本，参考[下载](https://doc.shengwang.cn/doc/rtsa/c/resources)
+如果是 idf5.0 以上的环境，需要联系人工工程师提供定制版本，请先确认下您这边的系统、架构、环境。
+
+---
+# ID: 38104
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: android rtc sdk 如何获取当前RtcEngine 开启的camera是前置还是后置
+
+Reply: 您好，目前没有直接获取当前所用摄像头方向的接口，一般 SDK 是默认使用前置摄像头，有需要的话可以在[setCameraCapturerConfiguration](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_video_device#setCameraCapturerConfiguration)里控制枚举
+
+---
+
 # ID: 38068
 
 SDK Product: RTM
