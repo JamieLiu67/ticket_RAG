@@ -1,4 +1,71 @@
 
+# ID: 38068
+
+SDK Product: RTM
+
+SDK Platform: Object-C
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 被叫加入房间 在什么方法响铃和做 UI 刷新比较合适 总是感觉不能同步
+
+Reply: 您好，这个属于您自己的业务场景，需要您自行构建并寻找合适的时机，一般是收到信令时做响铃+UI 提示，点击接受或拒绝以后信令传输回去做确认。
+
+---
+# ID: 38071
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 4.3.0
+
+Request Type: 开通权限、提供配额
+
+Request Description: 用声网工具，进行AI语音对话，需要开通 AI Agent v0.3服务。
+
+Reply: 您好，convoAI 目前已经发版正式版很久了，您可以参考[开通服务](https://doc.shengwang.cn/doc/convoai/restful/get-started/enable-service)自行开通相关功能并使用。
+
+---
+# ID: 38075
+
+SDK Product: Marketplace
+
+SDK Platform: Android
+
+SDK Version: 内容审核
+
+Request Type: 集成问题咨询
+
+Request Description: 数美音频审核，使用说明中联系声网技术支持
+
+Reply: 您好，目前不推荐对接云市场数美审核插件了，建议您联系数美厂商，在数美侧集成审核功能
+
+---
+# ID: 38080
+
+SDK Product: RTC
+
+SDK Platform: mini-app
+
+SDK Version: 2.6.5
+
+Request Type: 其他问题
+
+Request Description: 背景：
+1、众安保险旗下的小程序使用场景（容器不是微信，是凡泰小程序），项目名是随便取的。
+2、网站上面的测试小程序推拉流正常
+问题描述：
+1、推流每次只能 10 多秒就会断掉；
+2、手机小程序推流，PC 端拉流但是没有声音（小程序端拉流有声音）；
+附件里面有相关的日志。
+
+Reply: 您好，我们没有适配过凡泰小程序这个平台，小程序 SDK 只支持原生小程序开发
+
+---
+
 # ID: 38034
 
 SDK Product: RTC
