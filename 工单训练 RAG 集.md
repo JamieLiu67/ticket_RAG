@@ -1,4 +1,69 @@
 
+# ID: 38108
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.23.x
+
+Request Type: 其他问题
+
+Request Description: 集成问题咨询 - 我们想要做AI识别功能，如何获取声网的视视频流地址（不是视频帧数据），之前提供的接口不鞥解决问题，需要视频流地址
+
+Reply: 您好，RTC 是试试音视频通道，不是 CDN 推拉流地址，我们没有视频流地址直接对外提供。有需要的话，可以起一个[旁路推流](https://doc.shengwang.cn/doc/media-push/restful/landing-page)，转推到指定地址，然后让您的 AI 从收流地址获取画面。
+
+---
+# ID: 38111
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: Android 设备使用网络代理，joinchannel 失败
+
+Reply: 您好，请问您说的网络代理是什么？是指开 vpn 加频道吗？我们默认是链接最近节点的，开 vpn 会导致连接变长，容易出现断联，不建议开启 vpn 进行通话
+
+---
+# ID: 38115
+
+SDK Product: Cloud-recording
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: `https://gateway-cn-hz.netless.link/pv/rooms/da890f60c29011f09f01a96f07fd8f37/slices?beginAt=1763259040701&clientVersion=2.16.52&endAt=1763265051041`
+回访页面这个接口返回是空的，这是什么问题
+房间ID：xxx
+白板ID：xxx
+
+Reply: 您好，看您选的是云录制，但发的接口域名里有 `netless ` ，这个是白板的域名，请问现在是在用哪个产品？什么场景与需求？
+
+---
+# ID: 38119
+
+SDK Product: RTC
+
+SDK Platform: Unity
+
+SDK Version: 4.2.0
+
+Request Type: 集成问题咨询
+
+Request Description: 我想集成声网的语音聊天功能，我的问题是，我们的一个语音端是linux开发板，我没找到linux 版本的音频通话的sdk。
+
+Reply: 您好，Linux 开发板 属于IOT 设备，一般推荐用 [RTSA SDK](https://doc.shengwang.cn/doc/rtsa/c/landing-page)
+Linux 服务器的话可以直接用 [RTC 服务端 SDK](https://doc.shengwang.cn/doc/rtc-server-sdk/cpp/landing-page)
+
+---
+
 # ID: 38086
 
 SDK Product: RTC
