@@ -1,4 +1,1085 @@
+# ID: 32214
 
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 远程端控制本地端的视频停止，并且保留最后一帧停止前的画面，该画面能被远程设备所接收。我是使用`rtcEngine.muteLocalVideoStream(true)`远程设备就收不到视频流画面。有什么比较好的方式实现效果。
+
+Reply: SDK 没有提供控制远端是否发流的接口，`muteLocalVideoStream`只是针对本地的发流，true 就是停止发流，false 就是恢复。
+
+如果你有控制远端发流的需求，可以考虑集成第三方信令 SDK，让远端收到信令后自己执行mute操作；或者考虑使用 restful 接口指定 uid 失去短时间发流的权限；
+
+另外，远端设备默认显示最后一帧画面，需避免在回调中清除视图
+
+---
+# ID: 32215
+
+SDK Product: Flexible-classroom
+
+SDK Platform: Web
+
+SDK Version: 2.9.40
+
+Request Type: 集成问题咨询
+
+Request Description: 想请教一下，灵动课堂的插件，能否做到不实现轨迹同步。
+好比自带有一个答题器的插件，老师拖拽改变窗口位置，学生端也会改变窗口的位置从而影响作答。
+但是插件的同步模式只提供了“仅同步位置”和“同步位置和大小”两个选项，想知道有没有办法实现“不同步位置和大小”
+
+Reply: 插件的位置和大小一般都是同步，如果想不同步，可以看一下下发的事件变更，在`gettrackController`里，收到事件同步不处理就可以了。或者不用插件，自己添加组件
+
+---
+# ID: 32218
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 如何做到停止本地设备的采集，显示最后的画面，然后远程设备也能收到我保留的最后的画面
+
+Reply: SDK 本身自带就是远端停止发流后卡最后一帧，可以用我们的 Demo 去测试下看看
+
+---
+
+# ID: 32223
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.22.0
+
+Request Type: 线上报错
+
+Request Description: `AgoraRTC_N.js:6 Uncaught (in promise) AgoraRTCException: AgoraRTCError REMOTE_USER_IS_NOT_PUBLISHED`,
+翻看了代码 订阅在 user-published事件中订阅的，双方都发布了视频和音频的媒体类型，还是报这错，但是视频能正常接通，不知道有啥影响
+
+Reply: 您好，
+1、检查有没有多个 client，避免订阅错 client 
+2、vue在data中用对象不能接收，检查下自己的项目里有没有双向绑定的行为，如果有，请避免。 之前其他客户遇到过，当时是发现`const client = AgoraRTC.createClient({ mode: "live", codec: "vp8" });`这行代码的client放在js中就没问题，如果把client赋值给对象内的属性，使用属性就会出现问题
+ 
+
+---
+# ID: 32224
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.4.0
+
+Request Type: 集成问题咨询
+
+Request Description: 我需要关闭iOS端的回声消除怎么做，目的是为了用户使用qq音乐扬声器播放声音的时候，将音乐录进去
+
+Reply: `setAudioScenario` 设置为`gamestreaming`模式即可
+
+---
+# ID: 32225
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.3.2
+
+Request Type: 集成问题咨询
+
+Request Description: 我在使用php做后端调用接口`https://api.sd-rtn.com/dev/v1/kicking-rule`，踢除用户的时候，接口返回这样的错误：`Invalid authentication credentials`
+
+Reply: 这个一般是restful api的鉴权出现问题，后台请求中，header中的Authorization并不是前端使用的token。请参考文档处理[实现 HTTP 基本认证](https://doc.shengwang.cn/doc/rtc/restful/user-guides/http-basic-auth)
+
+---
+# ID: 32226
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.3.2
+
+Request Type: 集成问题咨询
+
+Request Description: 我使用flutter开发的会议app，控制台和logcat经常就报
+这个错误
+```
+Handler (android.os.Handler) {1f0c76e} sending message to a Handler on a dead thread
+W/MessageQueue( 4299): java.lang.IllegalStateException: Handler (android.os.Handler) {1f0c76e} sending message to a Handler on a dead thread
+W/MessageQueue( 4299): 	at android.os.MessageQueue.enqueueMessage(MessageQueue.java:560)
+W/MessageQueue( 4299): 	at android.os.Handler.enqueueMessage(Handler.java:786)
+W/MessageQueue( 4299): 	at android.os.Handler.sendMessageAtTime(Handler.java:735)
+W/MessageQueue( 4299): 	at android.os.Handler.sendMessageDelayed(Handler.java:705)
+W/MessageQueue( 4299): 	at android.os.Handler.post(Handler.java:435)
+W/MessageQueue( 4299): 	at android.hardware.camera2.impl.CameraDeviceImpl$CameraHandlerExecutor.execute(CameraDeviceImpl.java:2402)
+W/MessageQueue( 4299): 	at android.hardware.camera2.impl.CallbackProxies$SessionStateCallbackProxy.onClosed(CallbackProxies.java:104)
+W/MessageQueue( 4299): 	at android.hardware.camera2.impl.CameraCaptureSessionImpl.close(CameraCaptureSessionImpl.java:588)
+W/MessageQueue( 4299): 	at android.hardware.camera2.impl.CameraCaptureSessionImpl.finalize(CameraCaptureSessionImpl.java:894)
+W/MessageQueue( 4299): 	at java.lang.Daemons$FinalizerDaemon.doFinalize(Daemons.java:339)
+W/MessageQueue( 4299): 	at java.lang.Daemons$FinalizerDaemon.processReference(Daemons.java:324)
+W/MessageQueue( 4299): 	at java.lang.Daemons$FinalizerDaemon.runInternal(Daemons.java:300)
+W/MessageQueue( 4299): 	at java.lang.Daemons$Daemon.run(Daemons.java:145)
+```
+
+Reply: 看报错是你在朝一个已经死亡的线程发送消息，可以参考下我们 Demo 的处理方式，我们的 Demo 没有这种问题[fultter demo](https://github.com/AgoraIO-Extensions/Agora-Flutter-SDK/tree/main)
+
+---
+# ID: 32227
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 升级套餐后，无法接听视频，IOS和安卓都打不了
+
+Reply: 你好，升级套餐不会影响音视频通信，麻烦提供下出现问题的设备日志或者频道号、uid、时间点，说明谁听不见谁
+
+以及呼叫邀请不属于 RTC 能力，这个属于信令 是第三方 SDK 实现的，如果问题是呼叫邀请相关的，需要你自查
+
+---
+
+# ID: 32230
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.22.0
+
+Request Type: 线上报错
+
+Request Description: `AgoraRTCError CAN_NOT_GET_GATEWAY_SERVER: flag: 4096, message: AgoraRTCError CAN_NOT_GET_GATEWAY_SERVER: invalid vendor key, can not find appid`
+加入通道时报以上错误。
+
+Reply: 请检查appid拼写是否准确，另外可以提供join方法全部传参给我们协助调查
+
+---
+# ID: 32231
+
+SDK Product: Cloud-recording
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: flat 这么和阿里云oss配合起来，我一直没有办法录制
+
+Reply: flat是社区产品，未产品化。请在github上提交一个issue处理
+
+---
+# ID: 32233
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.22.0
+
+Request Type: 其他问题
+
+Request Description: web端集成了rtc和rtm，rtm的版本为1.2.2，rtc之前的版本：3.0.1，因web端rtc拉流的时候报错：“This browser does not support webRTC”，因此计划升级web端的rtc，但是在集成过程中，发现js报错，拉流失败，报错信息见截图。
+
+Reply: This browser does not support webRTC 是表示浏览器不支持 webrtc 协议，是浏览器的问题，和 SDK 没有关系。
+需要使用支持webrtc的浏览器去通话，[webrtc 浏览器兼容列表](https://doc.shengwang.cn/doc/rtc/javascript/overview/browser-compatibility)
+
+---
+# ID: 32234
+
+SDK Product: Fastboard
+
+SDK Platform: Web
+
+SDK Version: 0.3.10
+
+Request Type: 集成问题咨询
+
+Request Description: 功能配置--存储路径不知道怎么填
+
+Reply: 您好，可以参考文档[开启和配置互动白板服务](https://doc.shengwang.cn/doc/whiteboard/javascript/fastboard-sdk/get-started/enable-service#%E5%BC%80%E5%90%AF%E4%BA%92%E5%8A%A8%E7%99%BD%E6%9D%BF%E9%85%8D%E5%A5%97%E6%9C%8D%E5%8A%A1)来填写自己的 OSS 信息
+
+---
+
+# ID: 32238
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.0.0
+
+Request Type: 崩溃（闪退、卡死）
+
+Request Description: 在使用uniapp  sdk的时候出现两个问题
+1. 连接无人机 无人机开启直播  本地手机也开启直播 能看到画面，但是过了一会直播就会暂停 卡死不动 重新进入这个页面  重新加入频道才会继续看到直播动，手机用的4G 5G都会出现这个问题
+2. 当前在手机上看清晰度还可以  web端清晰度比较差  有什么配置能增加清晰度的吗  跟网速有关还是跟无人机设置有关  
+
+Reply: 你好，我们的uni-app SDK 已经停止更新和维护了。如一定要使用请提供下现象视频以及描述下出现卡顿时都做了哪些操作，然后提供下频道号、uid、时间点
+
+---
+# ID: 32249
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.3.2
+
+Request Type: 其他问题
+
+Request Description: 应用在接收到微信语音或者别的三方应用语音进入后台后，过几分钟服务端就会收到106或者104的推送。告知观众或者主播离线。这个问题是在客户端需要如何设置一下。
+
+Reply: 若需短暂保持连接（如后台通话），需声明后台音频模式`（Audio, AirPlay, and Picture in Picture）`，并配置 `AVAudioSession` 为 `playAndRecord`。
+注意：iOS 后台网络严格受限，超过 10 秒无数据包会触发 104(reason=2)（连接超时）。
+需要做后台保活，[iOS后台保活](https://doc.shengwang.cn/faq/quality-issues/ios-background)
+
+---
+# ID: 32250
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.21.0
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 大疆无人机直播能不能实现无人观看定时关流
+
+Reply: 你好，请问什么是无人观看定时关流？是指频道内没有其他观众收看的时候自动离开频道吗？
+这部分需要你们业务侧自己实现，可以[检测人数](https://doc.shengwang.cn/doc/rtc/restful/channel-management/operations/get-dev-v1-channel-user-appid-channelName)，当人数为 1时，就执行[踢人](https://doc.shengwang.cn/doc/rtc/restful/channel-management/operations/post-dev-v1-kicking-rule)接口
+[webhook维护用户在线状态](https://doc.shengwang.cn/doc/rtc/restful/best-practice/online-user-status)
+
+---
+# ID: 32251
+
+SDK Product: Console
+
+SDK Platform: All
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 秒搭集成相关问题咨询
+
+Reply: 秒搭产品已经下架，后续请不要使用，改为paas方案集成
+
+---
+
+# ID: 32253
+
+SDK Product: Cloud-recording
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 
+```json
+{
+  "cname": "7239183052914557004",
+  "uid": "5035801",
+  "resourceId": "xxx",
+  "sid": "xxx",
+  "serverResponse": {
+    "status": 4,
+    "fileList": [
+    ],
+    "fileListMode": "json",
+    "sliceStartTime": 0
+  }
+}
+```
+   查询录制状态， status为4就没携带录制的fileList，状态为5就能正常携带，如何查询才能确保一定能查询到录制的fileList文件呢
+
+Reply: 正在进行中的云录制任务查不到录制的fileList文件，录制结束后才会返回
+
+---
+# ID: 32256
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.22.0
+
+Request Type: 集成问题咨询
+
+Request Description: IOS手机，微信环境，web端首次进入页面时，订阅远端音视频没有声音，需要点击屏幕才有声音，请问要如何解决？
+
+Reply: 浏览器限制导致，已知问题。可以参考文档[处理浏览器的自动播放策略](https://doc.shengwang.cn/doc/rtc/javascript/best-practice/autoplay)
+
+---
+# ID: 32257
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.3.2
+
+Request Type: 集成问题咨询
+
+Request Description: 我使用 `RtcEngineEx` 引擎，在 `joinChannel` 之前调用 `muteLocalAudioStreamEx` 接口报错，错误码 -2。
+
+Reply: `muteLocalAudioStreamEx`需要在`joinchannelex` 之后调用，只有`joinchannelex`成功后才把ex频道的connection创建出来，否则就会报-2错误，即传参有误
+
+---
+# ID: 32259
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.4.0
+
+Request Type: 集成问题咨询
+
+Request Description: 集成 IOS 报错
+```
+Analyzing dependencies
+[!] Unable to find a specification for `AgoraLite_iOS  (= 4.4.0)`
+
+You have either:
+ * out-of-date source repos which you can update with `pod repo update` or with `pod install --repo-update`.
+ * mistyped the name or version.
+ * not added the source repo that hosts the Podspec to your Podfile.
+```
+
+Reply: 您好，请 `pod repo update` 再试一下
+
+---
+# ID: 32258
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.0.0
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 1.为什么发送端的系统CPU基本都是在60%~90%这个区间
+2.不管遥控器连接的是手机热点、WiFi、手机sim卡信号质量都是10000ms,是什么原因造成的？
+3、二、接收端，只要发送端出现丢包率，接收端就会出现渲染卡顿，接收端网络没有问题，起飞与未起飞渲染卡顿对比，为什么一起飞就会出现丢包率的问题呢？
+4.问题步骤看附件文档，昨天四场直播，两场起飞，两场没有飞
+
+Reply: 请问现在在用的 SDK 版本是多少？
+
+CPU占用高是设备本身的问题，采集编码本身就会对性能消耗有要求，如果你的机器配置低，那 CPU 占用肯定会高
+
+丢包可能会有网络、CPU 等因素的影响导致，如果你需要看具体原因，可以提供具体的频道号、uid、时间点、现象描述过来，我看看具体情况
+
+渲染卡顿是 CPU 的问题，原理同上，建议检查配置
+
+---
+# ID: 32267
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.19.0
+
+Request Type: 集成问题咨询
+
+Request Description: vue集成声网后,怎么拨打视频给app端
+
+Reply: 拨打属于信令 SDK 的能力，RTC 只提供在同一个频道内通话的能力，呼叫邀请可以考虑用IM 或者信令 SDK 来处理
+
+---
+# ID: 32268
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.22.0
+
+Request Type: 线上报错
+
+Request Description: 视频中调用  `muteLocalAudioStream` 接口报错`client.muteLocalAudioStream is not a function`
+
+Reply: Web 没有这个方法，Web 只有 setMuted()方法控制是否发送本地音视频轨道
+
+---
+# ID: 32269
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.2.6
+
+Request Type: 其他问题
+
+Request Description: web 听不到 android端的音频 只能看到视频
+
+Reply: 可以检查下 Android 端是否有发流，另外请提供设备日志
+
+---
+# ID: 32272
+
+SDK Product: CDN
+
+SDK Platform: CDN
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 请问海外站`https://agora.io` ，在哪里开通 融合CDN，找不到入口
+
+Reply: 融合cdn 目前不对海外 console 开放
+
+---
+# ID: 32275
+
+SDK Product: RTC
+
+SDK Platform: mini-app
+
+SDK Version: 2.6.4
+
+Request Type: 线上报错
+
+Request Description: 在使用小程序RTC  和 RTSA 智能设备可视对讲的过程中    小程序客户端初始化失败：
+```json
+{
+	"code": 432,
+	"reason": "1 is not a speaker.",
+	"serverResponse": {
+		"action": "subscribe",
+		"errCode": 9105
+	},
+	"wsurl": "xxx"
+}
+```
+
+ RTSA设备uid 是1   ,小程序可以接收到设备推流的音视频，但rtsa接收不到小程序下推的声音
+ 
+
+Reply: 只有主播身份才能发流，看下小程序用户的身份是不是设置成观众了，参考文档：
+[小程序错误码](https://doc.shengwang.cn/doc/rtc/mini-program/error-code)
+
+---
+# ID: 32274
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.0.0
+
+Request Type: 集成问题咨询
+
+Request Description: `found in modules jetified-chat-sdk-1.1.0-runtime (io.agora.rtc:chat-sdk:1.1.0) and jetified-hyphenate-chat-3.9.5-runtime (io.hyphenate:hyphenate-chat:3.9.5)`
+环信的和咱们的有点冲突，请问如何修改
+
+Reply: `io.agora.rtc:chat-sdk:1.1.0` 就是环信sdk，chat-sdk是海外版，hyphenate是国内版，两个环信放一起肯定会冲突，去掉一个就行
+
+---
+# ID: 32276
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.2.6
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 主播接声卡唱歌的时候出现炸麦情况
+
+Reply: 声卡场景需要参考文档单独处理，[实现高音质](https://doc.shengwang.cn/doc/rtc/android/best-practice/optimal-audio-quality#%E5%A3%B0%E5%8D%A1%E7%94%A8%E6%88%B7%E8%AE%BE%E7%BD%AE)
+
+1. 加个开关，主播自己选择，要是用声卡了就把关闭3A的私有参数调用一遍。非声卡用户这块的设置不要动；
+2. 单独出个针对声卡的包给这部分声卡主播
+
+一般用这两种方式的比较多，现在还没什么有效检测声卡的手段
+
+---
+# ID: 32277
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.4.0
+
+Request Type: 其他问题
+
+Request Description: 您好，视频流我如果想拍照当前帧， 有没有对应的api啊，startRecording:这个函数是录制视频的吧？
+
+Reply: 有截图接口[iOS截图接口](https://doc.shengwang.cn/api-ref/rtc/ios/API/toc_snapshot#api_irtcengine_takesnapshot)
+
+---
+# ID: 32280
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.22.0
+
+Request Type: 其他问题
+
+Request Description: 有个疑问，检测浏览器兼容性的api，`checkSystemRequirements` 返回false，但实际上可以进行视频通话，为什么呢？
+
+Reply: 可以通话不代表这个浏览器完全支持 webrtc 所有协议，可能存在部分功能不可用的情况。具体的支持程度看浏览器本身
+
+---
+
+# ID: 32283
+
+SDK Product: RTC
+
+SDK Platform: Unity
+
+SDK Version: 4.3.0
+
+Request Type: 集成问题咨询
+
+Request Description: 
+unity2022 
+agoraSDK4.3
+
+参考下列文档
+`https://docs.agora.io/en/broadcast-streaming/core-functionality/screen-sharing?platform=unity ``
+使用iOS的ReplayKit实现ScreenSharing时，
+调用`RtcEngine.StartScreenCapture(screenCaptureParameters2);`
+或者
+`RtcEngine.UpdateChannelMediaOptions(channelMediaOptions);`
+后，所期待的broadcast开始的View或者broadcast总览没有显示
+请问是我哪里设置不够吗
+
+Reply: 可以参考下我们 Demo 的处理，以及可以看下中文文档[屏幕共享文档](https://doc.shengwang.cn/doc/rtc/unity/basic-features/screen-share)
+
+---
+# ID: 32285
+
+SDK Product: RTC-Linux
+
+SDK Platform: Linux-CPP
+
+SDK Version: 4.2.31
+
+Request Type: 集成问题咨询
+
+Request Description: 我们优化了一波网络管理, 针对直播间无人的情况下我们不再推流, 当直播间有人进来后再放开推流, 这种情况下, 当直播间在无观众下开了几小时后, 直播间挂掉了!
+
+这种使用场景怎么处理呢?
+
+Reply: 房间状态结束只是为了统计通话记录做的聚合逻辑，和实际房间状态无关，一般来说频道里长时间无人就会算结束了.SDK 只会在非主动离开频道的前提下 和我们节点断开连接才会触发重连机制，重连失败是会有客户端回调的。可以参考[linux api文档](可以参考：https://doc.shengwang.cn/api-ref/rtc-server-sdk/cpp/classagora_1_1rtc_1_1_i_rtc_connection_observer#ae62590c268ad2904583dc9c62c337056)
+
+---
+# ID: 32286
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.4.1
+
+Request Type: 其他问题
+
+Request Description: 普通直播观众端已经通过appid+channelName方式已经实现，目前观众端要观看主播的共享屏幕想通过appid+channelName实现，但是目前共享屏幕画面出不来。
+需解决
+1. 观众端看共享屏幕画面
+2. 观众端共享屏幕与视像头直播画面的区别，api是否一致
+3. 详细的步骤。
+
+Reply: 屏幕共享需要额外一个 uid 来发送视频流，所以用重复uid 去发流肯定会报错，参考我们 Demo 处理。
+观众端看屏幕共享不需要额外操作什么的，对于观众来说就是正常订阅视频流而已，SDK 在接收的时候无法区分视频流是来自摄像头还是屏幕共享的。
+如果你的观众看不到画面，大概率是屏幕共享的主播分享失败了，建议先跑通 Demo 的屏幕共享，然后让观众端加入频道去观看，能看到画面就证明主播端发流正常
+
+---
+# ID: 32287
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.0.0
+
+Request Type: 集成问题咨询
+
+Request Description: 你们的最新iOS sdk 支持 swuftui 吗
+
+Reply: 支持，可以参考 [Swift Demo](https://github.com/AgoraIO/API-Examples/tree/main)
+
+---
+# ID: 32289
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.4.0
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 场景：屏幕外的屏幕共享，会议中，想分享一些带声音的视频的时候，会出现共享屏幕卡死的问题，用户退出了频道的问题，只有视频文件的时候出现这种问题，需要重新回到App，提示了用户重新加入了频道，不清楚是什么原因导致的
+
+Reply: 由于 iOS 系统限制，自 iOS 12.4 起，系统默认在 App 切后台时自动停止采集音视频。参考文档处理[iOS后台保活](https://doc.shengwang.cn/faq/quality-issues/ios-background)
+
+---
+# ID: 32291
+
+SDK Product: RTC
+
+SDK Platform: Restful
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: rtc 104 106回调事件能知道某个用户离开通话频道。 有办法能知道所有用户都离开频道吗， 用频道销毁的回调延迟太大了
+
+Reply: 没有这样的现成回调，只能你业务上自行记录这个频道里有多少人进多少人出，来判断是不是所有人都离开了
+或者你可以调用服务端接口查看频道内剩余人数[查看频道内剩余人数](https://doc.shengwang.cn/doc/rtc/restful/channel-management/operations/get-dev-v1-channel-user-appid-channelName)
+或者业务上调用踢人接口，手动把所有人踢出频道[踢人](https://doc.shengwang.cn/doc/rtc/restful/channel-management/operations/post-dev-v1-kicking-rule)
+
+---
+# ID: 32292
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.21.0
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 你好，在使用视频通话时，听到对方的声音会有有回声的感觉，感觉声音好像是在空间很大的地方发出来的，如果解决这种问题。
+
+Reply: 
+请问用的是我们 Demo 吗？听你的描述像是调用了`LocalAudioTrack`的 `play` 方法，把自己本地音频放出来了
+
+可以试试我们 [Web Demo](https://github.com/AgoraIO/API-Examples-Web)
+
+---
+# ID: 32293
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.0.0
+
+Request Type: 集成问题咨询
+
+Request Description: 你好，我原来的项目使用腾讯云IM+语音聊天做的，现在想转为改用声网的，这一块你们能提供技术指导吗？想了解一下
+
+Reply: 你可以对照我们的快速开始文档，看下我们实现一个音视频通话的最简单流程都有哪些[快速开始](https://doc.shengwang.cn/doc/rtc/android/get-started/quick-start)
+
+---
+# ID: 32295
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.0.0
+
+Request Type: 集成问题咨询
+
+Request Description: 我们现在想让用户在视频通话的时候，可以使用虚拟背景进行视频通话。我看文档，只有React Native有这个。我想问一下，web、安卓、服务端有这个接口吗
+
+Reply: Web 和 Android端都有,Demo 里就可以体验：[Web Demo](https://github.com/AgoraIO/API-Examples-Web)
+ [web虚拟背景](https://doc.shengwang.cn/doc/rtc/javascript/advanced-features/virtual-background)
+[Native虚拟背景](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_virtualbackground#api_irtcengine_enablevirtualbackground)
+
+---
+# ID: 32297
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.19.0
+
+Request Type: 集成问题咨询
+
+Request Description: 目前项目中使用的是用友封装的二次插件agoraRtc ，可以正常视频通话，  但是这个插件没有封装虚拟背景的功能  能否同时使用这个插件 和声网原生虚拟背景功能
+
+Reply: 用友不是我们官方的封装版本，我们无法保证最终的表现能否符合预期。
+如果你直接用我们的 SDK 去集成，是可以直接加插件看到效果的，推荐避免使用二次开发的插件
+
+---
+# ID: 32299
+
+SDK Product: RTC
+
+SDK Platform: Unreal
+
+SDK Version: 4.4.0
+
+Request Type: 集成问题咨询
+
+Request Description: 加入频道后，收到频道返回结果，但是说话的时候没有声音
+
+Reply: 请问是指远端听不见自己说话吗？可以拿一下设备日志，看看有什么报错
+
+以及确认下自己身份是不是主播，观众无法发流
+
+ 最后，可以试试我们 Demo 能否复现这个问题[unreal demo](https://doc.shengwang.cn/doc/rtc/unreal-cpp/get-started/run-demo)
+
+---
+# ID: 32303
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.22.0
+
+Request Type: 集成问题咨询
+
+Request Description: 目前尝试在使用了用友的二次插件后，想单独使用声网官网的虚拟背景功能   将官网展示的封装到js中  在vue中直接引入js报错
+报错  `TypeError: The superclass is not a constructor.`
+下边这个表示初始化成功了吗
+```
+cAgora-SDK [INFO]: color: #1E88E5; font-weight: bold; browser compatibility {"getDisplayMedia":false,"getStreamFromExtension":false,"supportUnifiedPlan":true,"supportMinBitrate":false,"supportSetRtpSenderParameters":true,"supportDualStream":true,"webAudioMediaStreamDest":true,"supportReplaceTrack":true,"supportWebGL":true,"webAudioWithAEC":true,"supportRequestFrame":true,"supportShareAudio":false,"supportDualStreamEncoding":false,"supportDataChannel":false,"supportPCSetConfiguration":true,"supportWebRTCEncodedTransform":false,"supportWebRTCInsertableStream":false,"supportRequestVideoFrameCallback":true,"supportWebCrypto":true} {"name":"WebKit","version":"605","os":"iOS","osVersion":"15.5","browserVersion":"605.1.15","deviceType":"mobile"}
+```
+
+Reply: 我们有一个 vue 的现成 Demo，你可以对比参考下或者直接用我们的 Demo来修改,[VUE Demo](https://github.com/AgoraIO/API-Examples-Web)
+
+---
+# ID: 32304
+
+SDK Product: Whiteboard
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 你好，在使用互动白板时：1、编辑者在绘制时拖拽或者缩放了白板，其他人看到的白板如何动态跟着变化；2、手机端浏览器加载白板时不能缩放，如何设置；
+
+Reply: 白板同步需要设置一个用户为主播，其他为跟随:
+[setViewMode](https://doc.shengwang.cn/api-ref/whiteboard/javascript/interfaces/room#setViewMode)
+
+缩放的问题你看下有没有设置禁止缩放的参数为 true:
+[disableCameraTransform](https://doc.shengwang.cn/api-ref/whiteboard/javascript/interfaces/room#disableCameraTransform)
+
+---
+# ID: 32307
+
+SDK Product: RTM
+
+SDK Platform: JavaScript
+
+SDK Version: 2.1.2
+
+Request Type: 集成问题咨询
+
+Request Description: 请问一下，实时消息rtm v2和v1版本发消息是否兼容，比如web端升级到了v2版本，安卓端还是v1的1.5.1版本双方是否可以通信？反过来是否可以？
+
+Reply: 您好，rtm的1.x和2.x版本点对点消息可以互通
+
+---
+# ID: 32308
+
+SDK Product: Cloud-recording
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: SID:xxx
+页面录制，没有录到页面上的图片，问题如何定位，我们自己打开这个录制页面时是有这个图片，而且图片是在录制中后期应该出现的并不是前期加载的问题
+
+Reply: 可以确认下有没有参考最佳实践来防止加载页面元素超时[保障页面录制可靠性](https://doc.shengwang.cn/doc/cloud-recording/restful/best-practices/webpage)
+
+---
+# ID: 32309
+
+SDK Product: Recording
+
+SDK Platform: Linux-Java
+
+SDK Version: 其他版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 使用华为P7 Pro 的自带浏览器，录制的视频有回声，怎么处理
+
+Reply: 如果是自己外放声音大被麦克风重新拾取到又发回去，那只能用户自己处理了，这个SDK 没有什么办法避免，建议带耳机或者减小扬声器音量。外放场景本身就会导致回声问题，推荐带耳机避免
+
+---
+# ID: 32311
+
+SDK Product: CDN
+
+SDK Platform: CDN
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 请问一下，域名是怎么处理的，如果我的域名在腾讯云上，又如何处理？
+
+Reply: 这里说的处理，是处理什么？只要是可用域名，按照文档去 console 上配置就行了，我们不关心是什么域名：[开始融合 CDN 直播](https://doc.shengwang.cn/doc/fusion-cdn/restful/get-started/quick-start)
+
+---
+# ID: 32313
+
+SDK Product: RTC-Linux
+
+SDK Platform: Linux-Java
+
+SDK Version: 4.0.1
+
+Request Type: 其他问题
+
+Request Description: 你好， 我用java推拉流demo使用你们提供的test数据（send_video.h264）视频推流正常，没有卡顿抖动问题，但是使用我们的视频就会出现画面抖动问题， 视频大小60m（send_video.h264文件只有292k），我排除了视频本身的问题（播放器播放流畅），排除了服务器带宽问题（服务器带宽300m）。目前推断可能是推帧顺序问题，提前接收到下一帧后又收到前一帧导致的卡顿。 
+我尝试修改了demo代码，加入了缓冲区，提前顺序缓冲150帧再进行发送帧，问题没有得到解决，画面还是会抖动，我想问一下你们有没有遇到过这个问题， so代码里是如何进行推帧的。
+
+Reply: 这个大疆无人机录制的文件有 b 帧，我们的 SDK 不支持解析 b 帧，所以才会出现卡顿，可以问下大疆如何关闭录制时b 帧，试试关闭 b 帧以后是否正常。或者换成没有 b 帧的文件来发送
+
+---
+# ID: 32320
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.2
+
+Request Type: 其他问题
+
+Request Description: 65472710主播在连麦中执行旁路转推流服务。
+结束退出连麦时执行了`stopRtmpStream`
+但转推流服务器没有实时结束掉往流地址转推的服务
+会导致我们这边连麦切到本地推流器时推不上同地址的cdn - 因为还存在着之前的推流没关闭结束
+
+诉求：需要帮忙查下执行了`stopRtmpStream`但没能实时关闭停止转推的原因？或者确认下这个关停是否有延时性
+
+Reply: 客户端旁路推流接口废弃，需尽快迁移至服务端实现
+
+---
+# ID: 32323
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 4.4.0
+
+Request Type: 集成问题咨询
+
+Request Description: 如何在同一个频道中推送两个视频源的流，并且在观众端能够将两个流在两个窗口上分开显示出来？
+
+Reply: 用两个 uid 在频道里分别发流就行了，对于观众就是 2 个远端视频流
+
+---
+# ID: 32324
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.0.0
+
+Request Type: 其他问题
+
+Request Description: 你好, 请问云代理路由应该如何设置呢?
+
+Reply: 请问这边什么需求，目前不太推荐用云代理方案了
+
+建议参考白名单方案[应对防火墙限制](https://doc.shengwang.cn/doc/rtc/javascript/basic-features/firewall)
+
+---
+# ID: 32326
+
+SDK Product: RTC-Linux
+
+SDK Platform: Linux-CPP
+
+SDK Version: 4.2.32
+
+Request Type: 集成问题咨询
+
+Request Description: 服务端使用 `sendStreamMessage` 接口给客户号端发送消息，发送返回是 0，表示发送成功，但客户端有的时候会收到 `onStreamMessageError` 的消息，收到的 code 是 `errStreamMessageTimeOut`
+
+CreateDataStream 时，reliable 和 ordered 都为 true，我想了解怎么才能正常推送数据给客户号端，既然能够给客户端超时数据，为什么不直接把数据给客户端呢？ 
+
+Reply: return 0 只是方法调用成功，不代表实际发送成功，检查一下发送大小是不是超过 30kb了，服务端的限制和客户端是一样的
+
+---
+# ID: 32327
+
+SDK Product: RTC
+
+SDK Platform: mini-app
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: UID为小程序uid,安卓能监听到此id进入和离开频道，小程序无法监听到安卓进入频道
+
+Reply: 小程序一直没有监听到Android端进入通道的问题可以提供下小程序的日志和 Android 端的日志看下，其中小程序端Log.setLogLevel方法设置小程序 SDK 输出日志等级，Log.uploadLogs方法上传 SDK 日志至服务器；安卓端日志是`/storage/emulated/0/Android/data/<package name>/files/agorasdk.log`
+
+---
+# ID: 32334
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 4.2.0
+
+Request Type: 商务问题
+
+Request Description: 1、一对一音视频
+2、价格
+
+Reply: 您好，
+关于计费等商务问题，为了使您的问题得到更好的跟进和解决，您可以直接通过电话或邮件的方式联系声网商务进行咨询，联系方式：400 6326626 或 sales@agora.io。
+
+---
+# ID: 32340
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.3.2
+
+Request Type: 其他问题
+
+Request Description: 是不是只要采播不到就会触发104或者106的回调。网络波动也会造成这种情况吧
+
+Reply: 采播不到（如视频采集失败）不会直接触发104或106回调，但网络质量比较差，长时间断网掉线时，我们大网会检测客户端心跳包，如果10秒收不到心跳包则认为这个用户离线，此时也会触发104/106
+
+---
+# ID: 32347
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.22.0
+
+Request Type: 集成问题咨询
+
+Request Description: web端用户观看直播有切换清晰度的方法吗
+
+Reply: 没有，RTC 是实时传输，主播端发什么，观众就收什么
+
+如果你需要切换分辨率，可以考虑在频道里加入不同分辨率的[云端转码](https://doc.shengwang.cn/doc/cloud-transcoder/restful/landing-page)，然后让观众自行订阅转码的视频流。
+
+---
+
+# ID: 32361
+
+SDK Product: RTC-Linux
+
+SDK Platform: Linux-Java
+
+SDK Version: 4.0.1
+
+Request Type: 集成问题咨询
+
+Request Description: 运行demo时，显示找不到相关类
+
+Reply: 请参考这个文档 [跑通示例项目](https://doc.shengwang.cn/doc/rtc-server-sdk/java/get-started/run-example)
+run.zsh里最好自行修改一下路径，确保是定位到 libs 下 so 文件的路径
+
+---
+# ID: 32528
+
+SDK Product: RTM
+
+SDK Platform: JavaScript
+
+SDK Version: 2.1.2
+
+Request Type: 集成问题咨询
+
+Request Description: 我们有没有运行在node环境里面的 sdk 我们需要做实时消息推送
+
+Reply: 你好，RTM2.x 支持node.js的rtm sdk如下，当前是beta版：
+[rtm-nodejs](https://www.npmjs.com/package/rtm-nodejs?activeTab=versions)
+
+---
+# ID: 32530
+
+SDK Product: RTC-Linux
+
+SDK Platform: Linux-CPP
+
+SDK Version: 4.2.32
+
+Request Type: 集成问题咨询
+
+Request Description: 我使用`rtmpConnection`进行h264视频推流
+在 `_connection->getRtmpLocalUser()->publishVideo(_customVideoTrack)` 会失败创建推流
+并且publishVideo返回码为-1，是什么原因？
+是rtmp无法推流已经编码好的h264视频吗？
+
+Reply: 您好，当前声网侧不推荐您使用端侧以及linux sdk推流到cdn，接口将会废弃；强烈建议您使用restful旁路推流方式，参考文档如下：
+[服务概述](https://doc.shengwang.cn/doc/media-push/restful/overview/product-overview)
+
+---
+# ID: 32531
+
+SDK Product: RTC
+
+SDK Platform: Restful
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 请教一下，使用场景是数字人推流、拉流。像把声网当作流媒体服务做中转。
+推流在Linux环境，使用python语音，推送的是video、audio的字节流，
+拉流在pc和移动端都有，使用声网sdk加入频道，实现拉流播放的效果。
+拉流看到提供了很多sdk，但是推流这端好像没有给SDK或者示例，请问支持python直接推流到声网吗？
+
+Reply: 您好，python sdk 是支持推拉流的，参考文档如下：
+[发送和接收媒体流](https://doc.shengwang.cn/doc/rtc-server-sdk/python/get-started/send-receive)
+[Agora-Python-Server-SDK](https://github.com/AgoraIO-Extensions/Agora-Python-Server-SDK/tree/release/2.1.0/agora_rtc/examples)
+
+---
+# ID: 32536
+
+SDK Product: RTC
+
+SDK Platform: Electron
+
+SDK Version: 4.3.0
+
+Request Type: 崩溃（闪退、卡死）
+
+Request Description: 在直播中切换连麦，出现内存居高不下的问题
+
+Reply: 您好，针对内存泄漏的问题，
+1、需要您这边先排查定位各个线程的内存增长曲线，确认是否是声网的线程引发的内存泄漏；通常遇到比较多的是业务UI引发内存泄漏居多。
+2、如果确实是声网的线程引发的，麻烦您提供内存增长曲线截图以及对应时间点声网sdk的日志，声网侧会进一步排查定位
+
+---
 # ID: 38108
 
 SDK Product: RTC
@@ -123,7 +1204,7 @@ Request Type: 集成问题咨询
 
 Request Description: 我们使用 秒搭的灵动课堂，现在出现一个问题，就是web端端录音说话声音，在安卓端听不到，这个是什么问题呢？还有秒搭的版本是："version": "2.7.0"
 
-Reply: 您好，秒搭已经计划下架了，不推荐使用，请直接[集成灵动课堂](https://doc.shengwang.cn/doc/flexible-classroom/android/get-started/integrate)
+Reply: 您好，秒搭已经下架了，不推荐使用，请直接[集成灵动课堂](https://doc.shengwang.cn/doc/flexible-classroom/android/get-started/integrate)
 
 ---
 # ID: 38099
@@ -14363,7 +15444,7 @@ Request Description: 我想python每隔2分钟检查一次实时互动RTC直播�
 
 回答思维链：客户提交的产品是云录制，但问的问题和云录制看起来不相关的，需要找客户再确认下现在到底在用什么产品。问题本身是 RTC 检测远端主播发流的，可以让客户在 Python 里监听on_user_video_track_state_changed回调，更具这个回调去判断频道里的远端视频流发送情况。因为Python官网文档有些滞后，需要让客户检查下 SDK 代码来完成回调监听。
 
-Reply:  您好，请问您这边是在用云录制还是 RTC？这个问题看起来是 RTC 监听远端发流状态的问题。Python SDK 可以通过监听里监听 on_user_video_track_state_changed 回调来了解远端发流状态，参考：[local_user_observer.py#L73C9-L73C42](https://github.com/AgoraIO-Extensions/Agora-Python-Server-SDK/blob/12fcb294749875d19503c7a93f318f67da2b6187/agora_rtc/agora/rtc/local_user_observer.py#L73C9-L73C42)
+Reply:  您好，请问您这边是在用云录制还是 RTC？这个问题看起来是 RTC 监听远端发流状态的问题。Python Linux SDK 可以通过监听里监听 `on_user_video_track_state_changed` 回调来了解远端发流状态，参考：[local_user_observer.py#L73C9-L73C42](https://github.com/AgoraIO-Extensions/Agora-Python-Server-SDK/blob/12fcb294749875d19503c7a93f318f67da2b6187/agora_rtc/agora/rtc/local_user_observer.py#L73C9-L73C42)
 
 ---
 
