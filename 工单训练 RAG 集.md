@@ -1,3 +1,626 @@
+
+# ID: 38122
+
+SDK Product: RTC
+
+SDK Platform: Electron
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 我使用的是esp32-s3 芯片使用的平台是esp-idf v5.5.1需要添加rtc实时语音对话功能 目前下载Electron-SDK-main后应该怎么集成到我自己的项目
+
+Reply: 您好， ESP 32 idf5.0 以上用这个[下载地址](https://i46hiqvame.feishu.cn/docx/Iy7AdDN8no3nscxxwSsc0elpnLh?from=from_copylink)
+
+---
+# ID: 38131
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 你好，我们在ios中使用贵公司`AgoraRtcEngine_iOS 4.1.0`版本无法通过pod集成，测试相邻版本4.2.0以及4.0.1均能正常pod，通过路径访问也提示相关错误，希望处理感谢
+
+Reply: 您好，4.1.0 版本的 IOS SDK 目前停止 cocoapods 下载了，建议直接用官网最新版本
+老版本还会有 bitcode 问题影响上架，升级最新版可以避免其他的已知问题。
+
+---
+# ID: 38132
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 加入rtc房间后如何获取房间内其他用户的推流状态
+
+Reply: 您好，Android 端推荐监听[onRemoteVideoStateChanged](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_video_basic#onRemoteVideoStateChanged)和[onremoteaudiostatechanged](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_audio_basic#callback_irtcengineeventhandler_onremoteaudiostatechanged)
+
+---
+# ID: 38134
+
+SDK Product: RTC
+
+SDK Platform: HarmonyOS
+
+SDK Version: 4.4.2
+
+Request Type: 集成问题咨询
+
+Request Description: 鸿蒙端无法看到远端的视频，但可以看到自己端的视频；对方也可以看到二端。
+
+监听到远端视频流正常，订阅正常，但在回调`onRemoteVideoStateChanged` 中 `state=STARTING` 之后无法转到`DECODING`，必现。
+远端的音频正常。
+
+远端android sdk 是4.6.0  ，鸿蒙是4.4.2 。
+
+Reply: 您好，可以先用[Demo](https://doc.shengwang.cn/doc/rtc/harmonyos/get-started/run-demo) 在真机上验证下互通是否有问题，如果能稳定复现，麻烦提供对应设备的日志，鸿蒙路径：`hdc file recv /data/app/el2/100/base/packagename/haps/entryname/files`
+
+---
+# ID: 38135
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 我们实现IM音视频通话功能,使用声网自动管理音频跨APP和APP内的音频抢占总是有些问题，如iOS18以上QQ音乐播放时音视频通话会混合播放。所以我们通过AgoraAudioSessionOperationRestrictionAll改成了自己手动管理AudioSession，也存在一些问题，比如：
+1、setCategory不设置mode参数无法同时播放系统震动声音（收到新消息）；
+2、setCategory设置mode参数设置为AVAudioSessionModeVideoChat会导致听筒模式和外放失效；
+3、setCategory设置mode参数设置为AVAudioSessionModeVoiceChat目前看功能正常，但是似乎对通话音质有影响；
+
+所以我们想咨询如下问题：
+1、使用AgoraAudioSessionOperationRestrictionAll手动管理audioSession的方式是否合理？
+2、音频通话和视频通话应该如何正确设置audioSession？
+3、IM音视频通话场景的最佳实践是什么？
+
+Reply: 您好，如果您的需求是 第三方音乐播放时，进入音视频通话自动打断第三方音乐，音视频通话结束后可以还原第三方音乐播放的话，AVAudioSession `setActive:true` 就会打断，退出时 `setActive:false` 就可以了
+
+---
+# ID: 38136
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.2.0
+
+Request Type: 集成问题咨询
+
+Request Description: 多频道处理， joinChannelEx 加入频道无响应
+
+Reply: 您好，可以检查下 onerror 回调，大概率是加频道失败抛出报错了
+以及对比我们的 [flutter 加入多频道Demo](https://github.com/AgoraIO-Extensions/Agora-Flutter-SDK/tree/main/example/lib/examples/advanced/join_multiple_channel) 看下
+
+---
+# ID: 38137
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 4.6.0
+
+Request Type: 商务问题
+
+Request Description: 现在想用声网的服务，之前已经完成企业认证，但是之前注册的手机号已经注销，目前无法登录。看如何处理一下，可以提供企业的相关资料。
+
+Reply: 您好，如果您的旧手机号已经注销了，可以直接用新手机号再注册一个新号。如果您的旧号有存款或者其他服务额度留存，请出示以前办理记录，或者手机账单，或者交费记录来证明这个手机号属于您。
+
+---
+# ID: 38138
+
+SDK Product: Flexible-classroom
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 请问灵动课堂，有没有服务端的示例代码？麻烦提供一下，谢谢。
+现在我看到的都是前端的示例（安卓，IOS...）
+
+Reply: 灵动课堂是 APAAS 服务，没有服务端代码，都是把文档中的开源项目部署到自己的服务器上去运行就可以了
+
+---
+# ID: 38143
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 对话式 AI 如何接入 ios 项目 需要集成 sdk 吗
+
+Reply: 您好，[对话式 AI](https://doc.shengwang.cn/doc/convoai/restful/landing-page)是 Restful 产品，调用 Restful 接口后就会在指定 RTC 频道内加入能够对话的智能体，IOS 端集成 RTC SDK 加入对饮的 RTC 频道就可以互通了。
+
+---
+# ID: 38146
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.23.x
+
+Request Type: 其他问题
+
+Request Description: 旁路推流，webhook 的设置界面里面又是空的，上次问过一次了。如何能看到设置界面 ？
+
+Reply: 您好，Webhook 事件在声网 console 对应产品能力的页面里配置，具体参考[验证签名](https://doc.shengwang.cn/doc/media-push/restful/webhook/enable-ncs#%E9%AA%8C%E8%AF%81%E7%AD%BE%E5%90%8D)。
+
+---
+# ID: 38153
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 其他问题
+
+Request Description: 语音审核  数美，返回错误  
+```
+行 19556: [HTTP] response code=400
+行 19560: [HTTP] response body={"message":"appid is invalid"}
+行 19561: [AGORA][acquire] response={"message":"appid is invalid"}
+```
+RESTful Api 这边生成新的ID和密钥一样不行
+
+Reply: 您好，数美云市场插件后续会下架，不建议新集成使用了，请直接对接数美侧来实现
+以及声网 appid 和 restful ak sk 是两套东西，appid 在声网 console 复制，请确保输入了正确的 appid，而不是 ak 或 sk
+
+---
+# ID: 38155
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.5.2
+
+Request Type: 集成问题咨询
+
+Request Description: 预览画面显示拉伸变形，之前3.7.0.2版本使用“che.video.camera_capture_rotation": 1”设置参数可以生效， 最近新升级到4.5.2，该参数不能用了，请问有新的参数可以用吗？
+
+Reply: 您好，画面拉伸变形是渲染的方式和画布不匹配导致的，和私参没有关系
+3.x 和 4.x 的处理有区别，请参考我们 [4.x demo](https://doc.shengwang.cn/doc/rtc/android/get-started/run-demo) 里的 view 处理方式，不要继续用3.x 的`create`的`view`
+检查下`setuplocalvideo`里面的传参，重新写一下；参数顺序是有变化的。
+
+---
+# ID: 38156
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 最近换了一批新机器，然后就出现直播的头像流发黄发绿， 但是调用系统自带相机软件拍照是没有问题的
+
+Reply: 您好，请问这些机器都是什么机型？手机还是开发板？非 Android 手机通常可以通过私参切换 camera 枚举来解决，具体私有参数需要人工工程师提供。
+发黄发绿的效果麻烦截图看下
+
+---
+# ID: 38157
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 集成问题咨询
+
+Request Description: 声网引入js版本AgoraRTC_N-4.18.3.js
+虚拟背景插件：agora-extension-virtual-background.js
+目前场景教师和学生视频，加入房间时client.setClientRole参数为host
+管理员旁听加入房间时client.setClientRole参数为audience
+管理员看到的虚拟背景图片和教师看到的不一样，管理员是反的，镜像的
+代码：
+```javascript
+const virtual_extension = new VirtualBackgroundExtension();
+const virtual_processor = virtual_extension.createProcessor();
+virtual_processor.init();
+virtual_processor.setOptions({type: 'img', source: imgElement,fit:'fill'});
+await virtual_processor.enable();
+```
+
+Reply: 您好，请问是只有背景镜像了吗？人是镜像的吗？麻烦提供下两侧视角看到的画面截图
+
+---
+# ID: 38158
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 4.6.1安卓版sdk，在IOT设备上使用，wifi下通话没问题，用定制4G卡的话自己加入频道、对方加入频道都能收到消息，但通话没声音，怀疑通话没通，请问实时通话走什么协议？这个需要4G运营商那边如何配置？
+
+Reply: 您好，定制 4G 或者 5G 流量卡都是需要报备域名才能正常互通的，4.6.0 及以上版本的 SDK 请确保 国内版本报备：`*.rtnsvc.com`，`*.realtimemesh.com`，海外版本报备 `*.rtesvc.com`, `*.sdrtnsvc.com`，以及初始化 SDK 的时候打开了`domainLimit `开关
+
+---
+# ID: 38163
+
+SDK Product: RTM
+
+SDK Platform: Flutter
+
+SDK Version: 2.2.2
+
+Request Type: 集成问题咨询
+
+Request Description: 升级Flutter RTM SDK到2.2.6之后，遇到了下面的问题
+```
+Because no versions of device_info_plus match >12.2.0 <13.0.0 and device_info_plus 12.2.0 depends on ffi ^2.1.4, device_info_plus ^12.2.0 requires ffi ^2.1.4.
+And because agora_rtm >=2.2.6 depends on ffi ^1.2.1, device_info_plus ^12.2.0 is incompatible with agora_rtm >=2.2.6.
+So, because flutter_tabicall depends on both agora_rtm ^2.2.6 and device_info_plus ^12.2.0, version solving failed.
+```
+
+
+Reply: 您好，可以用这种方式 选择一个通用的 ffi 版本来解决
+```yaml
+dependency_overrides:
+	ffi: ^2.1.4
+```
+
+
+---
+# ID: 38164
+
+SDK Product: RTC
+
+SDK Platform: Electron
+
+SDK Version: 4.5.2
+
+Request Type: 集成问题咨询
+
+Request Description: mac默认不支持声卡，electron-sdk能自动安装AgoraALD 虚拟声卡吗，只能用户手动安装吗
+
+Reply: 您好，可以把签名后的 agoraALD driver 放在项目目录 在运行时 sdk 会把项目中 dirver copy 到系统驱动目录，这样就自动安装了，参考飞书文档[如何自动安装AgoraALD 虚拟声卡](https://i46hiqvame.feishu.cn/wiki/KbBuwwtXziWk33kOCjFcvHULnve?from=from_copylink)
+
+---
+# ID: 38165
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 4.5.2
+
+Request Type: 集成问题咨询
+
+Request Description: 现在要设置推流画面镜像，设置后回调的图像数据有点问题。
+使用`registerVideoFrameObserver`注册的回调方法在`getMirrorApplied`得到的本地采集回调可以变成镜向，但远端拉流的图像数据也变成镜向了要怎么解决？
+需求是本地的回调图像数据是镜向，远端拉流的回调图像数据发送来的样子而不是镜向。
+现在本地回调接口用的是`onCaptureVideoFrame` 远端回调接口用的是`onRenderVideoFrame`
+
+Reply: 您好，`getMirrorApplied`的效果是全局的，会让`onCaptureVideoFrame`和`onRenderVideoFrame `都被镜像处理，无法单独设置。如果您有本地镜像远端正常的需求，可以在 `setupLocalVideo`的时候配置镜像渲染，这样本地看到的就是镜像画面了。
+如果您是自渲染的话，直接在自渲染的时候镜像处理本地预览的画面就行。
+
+---
+# ID: 38166
+
+SDK Product: Cloud-recording
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 云端录制设置了`unSubscribeAudioUids`和`unsubscribeVideoUids` 屏蔽了教师的视频流 但是录制的视频里面还是有 
+设置参数如下
+```json
+'unsubscribeAudioUids': ['1000408'], 
+'unsubscribeVideoUids': ['1000408']
+```
+
+Reply: 您好，应该是`unSubscribeAudioUids`和`unSubscribeVideoUids`，您写的是`unsubscribeAudioUids` 和`unsubscribeVideoUids`，大小写不一致导致变成了无效字段
+
+---
+# ID: 38168
+
+SDK Product: Whiteboard
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 获取到的Token会被双引号包裹。
+请问是我哪里参数传错了吗？
+如下图示例：
+分别是Curl命令行请求和程序请求，都会被双引号包裹。
+
+Reply: 您好，白板 token 建议直接 clone 我们的[白板 token 生成脚本](https://doc.shengwang.cn/doc/whiteboard/javascript/fastboard-sdk/basic-features/generate-token#%E5%9C%A8-app-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%94%9F%E6%88%90-token)在本地生产，这样处理更方便。
+
+---
+
+# ID: 32537
+
+SDK Product: Flexible-classroom
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 我这个视频录制时长是2小时多。按你们最长一段录制时长为2小时。那不是应该给我2段的录制信息么？为什么只有一段？
+
+Reply: 您好，针对灵动课堂页面录制时长超过2小时后，录制仅生成单文件的问题；
+需要您这边提供下项目的appid，人工工程师会联系后端研发做配置，配置后您的录制回调就能收到两端录制信息。
+
+---
+# ID: 32538
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.19.0
+
+Request Type: 集成问题咨询
+
+Request Description:       生成的token 方法如下  
+```javascript
+String webToken = token.buildTokenWithUid(appId, appCertificate, channelName, webUid, RtcTokenBuilder2.Role.ROLE_SUBSCRIBER, tokenExpirationInSeconds, privilegeExpirationInSeconds);
+```
+
+报错如下:
+```
+asyncToGenerator.js:7 Uncaught (in promise) AgoraRTCException: AgoraRTCError CAN_NOT_GET_GATEWAY_SERVER: flag: 4096, message: AgoraRTCError CAN_NOT_GET_GATEWAY_SERVER: invalid token, authorized failed
+```
+
+
+Reply: 1、检查 UID 一致性
+确保生成 Token 时传入的 webUid 与加入频道时使用的 UID 完全匹配（包括类型和值）。Web 平台 UID 建议使用int uid，如需使用string，参考文档[如何使用 String 型用户 ID？](https://docportal.shengwang.cn/cn/video-legacy/faq/string)
+
+2、验证频道名匹配
+确认 channelName 在生成 Token 和加入频道时完全一致（包括大小写、空格等特殊字符）。
+
+3、立即验证工具
+使用声网控制台的 [Token 校验工具](https://console.shengwang.cn/tools/token)实时验证生成的 Token 有效性：
+
+---
+
+# ID: 32545
+
+SDK Product: RTC
+
+SDK Platform: MacOS
+
+SDK Version: 4.4.1
+
+Request Type: 线上报错
+
+Request Description: 在英国的某个酒店内使用酒店的网络联不通，或者联通之后没有声音。
+
+这样的情况应该怎么解决啊？但是用英国的手机卡开热点是正常使用的。。。
+
+Reply: 您好，需要您这边提供下具体频道号、用户 UID 及问题发生时间点，如果有声网的sdk日志更佳；
+同时建议您检查下酒店网络是否正常，比如使用测速软件测速等。
+
+---
+# ID: 32547
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 我们开发的耳机，希望可以在播放声网对讲的时候，依然可以控制第三方音乐播放，经过测试看起来需要使用 AVAudioSession 的 ambient 而不是 playAndRecord 才能实现控制的是第三方音乐而不是声网，但是这个 ambient 有个问题就是第三方播放音乐回到我们 App 前台后，再锁屏，就没有声网的声音了，不知道回到前台的时候声网这边有没有什么处理，引发系统进入锁屏时就没有声网输出了。然后我还尝试过回到前台时使用 playAndRecord，退出后台再切为 ambient，遇到的问题是，切为 playAndRecord 的时候音乐就停止了，并且也不能保持耳机控制的是第三方音乐了，这个问题困扰我几天了，望回复，谢谢
+
+Reply: 您好，声网sdk在和第三方播放器搭配使用时，建议如下：
+1、当RTC频道内音频和第三方播放器同时播放的时候，RTC内部会按需把AVAudioSession置为deactive，会造成第三方播放卡断一下或者直接无声，可以通过私参解决，请您咨询人工工程师获取。
+2、RTC频道内无论是通话音量还是媒体音量category都是PlayAndRecord，如果这个参数被外部修改，内部ADM会强制重启重置，频道内声音会卡断。PlayAndRecord兼容Playback，建议是无论是频道内还是频道外，第三方播放器音应尽量保持PlayAndRecord不修改。
+3、CategoryOptions的修改内部没有做限制，但是在非必要的情况下不建议外部修改。
+
+---
+# ID: 32551
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 我们之前集成的是咱比较老的版本，大约2018年左右集成的，可能是2.X的版本，现在想要升级咱4.4的版本，由于差异较大，需要改动的地方较多，希望咱这提供之前版本的相关文档，我们看下之前的实现方式和现在实现方式，好做修改
+
+Reply: 您好，2.x，3.x的sdk都属于很老的版本了，这边发你下文档链接如下：
+[3.x legacy 发版说明](https://docportal.shengwang.cn/cn/video-legacy/release_android_video?platform=Android)
+
+建议咱们尽快安排升级到 4.x。
+
+---
+# ID: 32552
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.4.1
+
+Request Type: 其他问题
+
+Request Description: 问题描述：
+设备部分机型出现自己的直播图像倒转问题，无论是主播看他，还是他看自己都是倒转的。请问有什么解决方案。
+
+Reply: 您好，针对线上部分设备出现画面倒置的问题；
+麻烦您这边提供下声网频道号以及用户UID，人工工程师会针对异常设备做下发参数配置。
+
+---
+# ID: 32555
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.22.1
+
+Request Type: 其他问题
+
+Request Description: Mac Safari浏览器，实时音视频通话，原本需要授权麦克风和摄像头，但是只弹出了麦克风的授权提醒。权限开关已经设置为“询问”，但是没有提示
+
+Reply: 您好，建议您这边检查下Safari浏览器设置里是否禁用了摄像头；
+当然您这边也可以使用webrtc的官方demo来做测试看下是否正常：
+[Web SDK 浏览器检测工具](https://webrtc.github.io/samples/src/content/devices/input-output/)
+
+---
+# ID: 32557
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.22.1
+
+Request Type: 集成问题咨询
+
+Request Description: 视频通话，本地视频正常，远程视频只有声音没有图像
+我是参考官方的demo，第一个生成本地视频流正常，第二个div生成远程视频流时，只有声音但没有图像，还请帮忙分析下原因
+
+Reply: 您好，web端订阅渲染远端视频流可以参考我们的官网示例demo检查下集成逻辑；
+[API-Examples-Web](https://github.com/AgoraIO/API-Examples-Web/tree/main/src/example/basic)
+如自查后仍然有问题，需要您这边提供下声网频道号，本地及远端的uid，websdk调用`enableLogUpload`打开日志上传，以便我们进一步分析；建议是优先检查下远端用户的video标签是否设置正确
+
+---
+# ID: 32560
+
+SDK Product: RTC
+
+SDK Platform: mini-app
+
+SDK Version: 2.5.4
+
+Request Type: 集成问题咨询
+
+Request Description: 使用join方法时这个uid是什么参数，在哪里获取的
+
+Reply: 您好，miniapp小程序 sdk 的uid参数说明如下：
+INT: 整数作为用户 ID，需为 32 位无符号整数。建议设置范围：0 到 (232-1)。需要保证唯一。如果不指定 uid（即设为 null），服务器会报错。
+STRING: 字符串，长度不超过 255 个字符
+推荐您这边自定义指定一个 Number 型 uid（需确保频道内唯一性），便于区分线上客户端。
+
+---
+# ID: 32562
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.1.1
+
+Request Type: 集成问题咨询
+
+Request Description: 锁屏之后会黑屏
+
+Reply: 您好，针对您描述的安卓端锁屏后会黑屏的问题，需要您这边做下前台服务
+[为什么部分 Android 版本应用锁屏或切后台后采集音视频无效](https://doc-internal.shengwang.cn/doc-new/androidbackground/faq/quality-issues/android-background)
+
+---
+# ID: 32568
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 实现 1v1 私密房 服务端api在哪里
+
+Reply: 您好，声网未提供专属的 1v1 私密房服务端 API，需要您这边使用pass方案接入，参考文档如下：
+[实现音视频互动](https://doc.shengwang.cn/doc/rtc/android/get-started/quick-start)
+[跑通 API 示例项目](https://doc.shengwang.cn/doc/rtc/android/get-started/run-demo)
+CallApi 已经处于不维护状态，强烈不推荐使用场景化API方案。
+
+---
+# ID: 32569
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 其他版本
+
+Request Type: 线上报错
+
+Request Description: 我们app里面使用的iOS系统的录屏功能，使用agorasdk3.5.2.1版本推流，当录屏的时候，在抖音播一个视频，设备的外放声音会被压的很低，调节系统音量也没效果。（另外，我们尝试了agorasdk4.3.x版本，发现没有这个问题，但是我们短期没有升级计划）
+
+Reply: 您好，3.x SDK版本已经处于不维护状态，建议您这边安排升级到4.x版本SDK；
+另外可以尝试调用`setAudioProfile`将scenario设置为 `AgoraAudioScenarioGameStreaming`，走媒体音量。
+
+---
+# ID: 32570
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: Android项目集成 声网SDK，能否使用kotlin进行开发？目前没有找到kotlin开发文档
+
+Reply: 您好，安卓原生SDK 并不支持 Kotlin 开发，只能使用java。
+
+---
+# ID: 32571
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.22.1
+
+Request Type: 集成问题咨询
+
+Request Description: 调用 buildTokenWithUid() 方法生成的token最大有效期是24小时吗？？如何设置有效期超过24小时的token？
+
+Reply: Token 最大有效期：
+
+调用 buildTokenWithUid() 生成的 Token 最大有效期为 24 小时（86,400 秒），超过此时长将无法生成有效 Token。
+设置超过 24 小时有效期的方法：
+
+无法直接设置超过 24 小时：声网系统强制限制 Token 有效期上限为 24 小时，任何尝试设置 tokenExpire > 86400 的行为均无效。
+替代方案：
+动态更新 Token：在 Token 过期前（例如 23 小时），通过服务端重新生成新 Token 并调用客户端 `renewToken()` 方法更新。
+
+---
+
 # ID: 32214
 
 SDK Product: RTC
