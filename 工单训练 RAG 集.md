@@ -1,4 +1,339 @@
+# ID: 32582
 
+SDK Product: RTC
+
+SDK Platform: Electron
+
+SDK Version: 4.3.2
+
+Request Type: 其他问题
+
+Request Description: Mac电脑，共享150M的Pdf好后，10s后就听不到全体学生的声音了。比如：UID214256 、214021
+
+Reply: 您好，针对您反馈的开启屏幕共享10s后听不到学生声音的问题，需要您提供准确的频道，老师端的UID，以及问题时间点，这边排查后会及时告知；
+另外建议您这边检查下macos本身扬声器是否正常，以及该问题是否必现
+
+---
+# ID: 32585
+
+SDK Product: RTC-Linux
+
+SDK Platform: Linux-CPP
+
+SDK Version: 4.2.32
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 关于同时开两台机子推流码率异常的问题, 换了个网络环境确实没出现, 但是在原网络环境下, 飞书会议、腾讯会议等同类软件都没有出现码率问题, 我认为SDK在网络这一块应该也是有问题的
+
+Reply: 您好，针对linux c++ 推流码率异常的问题，需要您这边提供下声网频道号，UID，时间点以及声网sdk日志等关键信息，这边分析后给你同步；
+看您描述换个网络环境没关系，建议还是首先检查下网络上行是否正常；或者是通过`setVideoEncoderConfiguration`调整编码码率
+
+---
+
+# ID: 32592
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.22.1
+
+Request Type: 集成问题咨询
+
+Request Description: 视频中，虚拟背景插件和美颜插件可以同时使用吗？我用了文档中的方法，分别使用两个插件是可以的，先后开启美颜再开启虚拟背景，报错
+`Processor VideoProcessorDestination already being piped, please call BeautyProcessor.unpipe() beforehand.`
+
+Reply: 您好，想要同时使用虚拟背景插件和美颜插件，代码集成上不能调用两次`localTracks.videoTrack.pipe(processor).pipe(localTracks.videoTrack.processorDestination);`您需要在美颜的效果上pipe虚拟插件才行。
+
+---
+
+# ID: 32597
+
+SDK Product: RTC
+
+SDK Platform: Restful
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 如何通过SDK推流带透明背景的视频帧，目前用的SDK是Python语音，release/1.1版本。尝试alphaBuffer参数，目前不生效。
+是数据格式不正确，还是说有其他参数配置使用呢
+Reply: 您好，针对你使用python sdk 推流带透明背景的视频帧，
+1、首先需要使用最新版本的python sdk 如下[Agora-Python-Server-SDK](https://github.com/AgoraIO-Extensions/Agora-Python-Server-SDK/tree/release/2.3.4/agora_rtc/examples)
+2、在集成时需要注意
+`fill_alpha_buffer = 1`
+`alpha_mode = 1或者4`
+`alpha_buffer = bytes`
+在`encodeconfigure`里面，有一个是否编码`alpha`的，这个设置为true
+
+---
+
+# ID: 32599
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 如何关闭日志输出，一直出现在控制台
+
+Reply: 您好，flutter关闭sdk日志的输出可以参考如下文档：
+需要再初始化的时候配置一下日志等级为 NONE
+[LogConfig](https://doc.shengwang.cn/api-ref/rtc/flutter/API/class_logconfig)
+
+---
+# ID: 32601
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 模块载入有问题：
+```
+main.py
+from agora_realtime_ai_api.rtc import RtcEngine, RtcOptions
+找不到 agora_realtime_ai_api
+
+agent.py
+from agora.rtc.rtc_connection import RTCConnection, RTCConnInfo
+from attr import dataclass
+
+from agora_realtime_ai_api.rtc import Channel, ChatMessage, RtcEngine, RtcOptions
+找不到 agora ， agora_realtime_ai_api
+```
+
+运行：python -m realtime_agent.main server
+
+报错：
+```
+Traceback (most recent call last):
+File "", line 198, in _run_module_as_main
+File "", line 88, in _run_code
+File "C:\Code\OpenAI\openai-realtime-python\realtime_agent\main.py", line 13, in
+from .agent import InferenceConfig, RealtimeKitAgent
+File "C:\Code\OpenAI\openai-realtime-python\realtime_agent\agent.py", line 8, in
+from agora.rtc.rtc_connection import RTCConnection, RTCConnInfo
+ModuleNotFoundError: No module named 'agora.rtc.rtc_connection'
+```
+
+
+Reply: 您好，websdk 是不支持再python环境中使用的，如果您想集成python 音视频sdk，可以参考如下文档实现：
+[跑通示例项目](https://doc.shengwang.cn/doc/rtc-server-sdk/python/get-started/run-example)
+[发送和接收媒体流](https://doc.shengwang.cn/doc/rtc-server-sdk/python/get-started/send-receive)
+
+---
+
+# ID: 32603
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 问一下这个我推流采用阿里云的推流和播流地址· 声网这边需要怎么配置？
+
+目前遇到的情况就是安卓端的推流地址和播流地址就可以获取到、但是始终在阿里云这边获取到推流和播流信息、单独测试阿里云的推流和播流又是可以正常使用、也没有对鉴权做处理、
+
+Reply: 您好，
+1、声网客户端推流接口`startRtmpStreamWithTranscoding`已经不建议使用，后续产品规划中会下架此接口；建议您使用服务端`rtmpconverter`方式实现推流到cdn，参考文档：
+[服务概述](https://doc.shengwang.cn/doc/media-push/restful/overview/product-overview)
+2、需要保证推拉流域名可用，并且推流地址不能重复使用，否则会报错
+
+---
+# ID: 32607
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.2
+
+Request Type: 集成问题咨询
+
+Request Description: Android 8.1手机呼叫手表接通后没反应
+
+Reply: 您好，需要确认下没反应指的是什么现象，比如手表端看不到/听不到手机端的音视频；另外需要您这边提供下声网的频道号，手表和手机端的UID，以及手表端的声网sdk日志；
+人工工程师在排查完后会及时给您答复
+
+---
+
+# ID: 32617
+
+SDK Product: Cloud-recording
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 线上报错
+
+Request Description: acquire 接口请求成功，请求开始录制接口报错：
+```json
+{
+	"code": 2,
+	"reason": "services not selected!"
+}
+```
+
+请求体我对照好几遍了，实在找不到哪里出问题了
+
+Reply: 您好，大概率是您这边把acquire 里面的body 传入到 start 里发出去了，会报这个错，建议抓原始的 start 请求看一下请求内容是什么。
+
+
+---
+# ID: 32618
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 在建立1-1面试通话时：
+- 面试官一端始终看到学生端的视频画面是黑屏。
+- 双方可以听到声音。
+- 学生端可以看到面试官一端的画面。
+
+这个学生的电脑可以100%重现这个问题。怀疑与摄像头的某些设置有关系，但无法从log中看到找到线索。
+该学生摄像头工作正常，使用Google Meeting, Skype, Zoom均无问题。
+
+烦请帮忙看看在Agora内部是否有log可以查到线索。
+
+Reply: 您好，针对黑屏的问题，需要您这边提供频道名称、面试官及学生端的uid，以及问题时间点；
+针对web端，需要您这边调用`AgoraRTC.enableLogUpload(); // 开启自动日志上传` ，便于我们进行分析。
+
+---
+# ID: 32619
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 目前我在声网管理页面中的水晶球里面通话详情里面可以看到发送端的有音频和视频流信息、但是粉丝进入方式以后就没有视频和音频流信息· 在管理页面的的水晶球页面里面也看不到接收端端流·信息· 这个需要怎么排查？
+
+Reply: 您好，需要您这边提供下房间号、问题时间点、发送端与接收端 UID，这边人工工程师在排查后会及时给您回复。
+
+---
+# ID: 32625
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 咱们web端SDK4.15.1版本可以在钉钉环境进行音频通话吗？或者有没有新版本可以在钉钉中进行音频通话
+
+Reply: 您好，websdk在4.21.0版本开始增加了对部分阿里系 App（如支付宝、钉钉等）的兼容，你可以直接在这些 App 中收发音视频流。
+
+---
+
+# ID: 32628
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.22.1
+
+Request Type: 效果不佳、不达预期
+
+Request Description:  观看直播的页面黑屏了3~4分钟
+观看直播画面黑屏时间点13:59~14:01
+主播端画面不卡，观看端页面卡，观看端web端观看是链接的WiFi以及手机端观看，链接的数据，都是画面黑屏
+
+Reply: 您好，麻烦您提供完整的问题信息如下：
+1. 声网频道号(cname)：
+2. 出问题的时间点：
+3. 问题现象： (例)
+(1) uid=123 听不到/看不到 uid=456，大约持续20分钟
+(2) uid=123 听/看 uid=456卡顿
+4.声网的sdk日志；
+
+另外也建议您优先检查下问题用户的网络是否正常。
+
+---
+
+# ID: 32632
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.4.0
+
+Request Type: 集成问题咨询
+
+Request Description: 发现AgoraRtcEngine_iOS 的二进制库都进行了代码混淆，不是正规的二进制，导致代码生成 ipa的时候不能进行再次混淆，提交审核 app 时，被苹果4.3问题拒绝。
+
+Reply: 您好，苹果审核4.3问题更多的是应用重复性，如代码重复、模块化设计等；建议您参考下面的文档尝试解决：
+[苹果审核4.3问题](https://www.cnblogs.com/gddg/p/18140383)
+
+---
+# ID: 32637
+
+SDK Product: RTC
+
+SDK Platform: MacOS
+
+SDK Version: 4.0.0
+
+Request Type: 线上报错
+
+Request Description: 申请开通语音转文字功能
+
+Reply: 您好，
+声网提供自研RTT产品：基于RESTful API的方案，无需集成额外SDK或注册第三方账号。适用于直接通过API调用实现转写功能；如果需要开通，麻烦提供下项目的APPID，人工工程师会为您开通服务；
+
+---
+# ID: 32642
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.4.1
+
+Request Type: 集成问题咨询
+
+Request Description: 你好，我想问下在语音房里面，我能不能实现主播a与主播b在通话，其他观众只能听到主播a的音频，如果可以那要怎么实现呢
+
+Reply: 您好，
+方案1：
+观众端可以先通过调用`muteAllRemoteAudioStreams` 不订阅远端所有主播的音频，再调用`muteRemoteAudioStream`接口 将某个主播的音频流设置为`false`，订阅该主播的音频；
+参考文档[发布和订阅](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_publishnsubscribe#muteAllRemoteAudioStreams)
+
+方案2：
+在观众端调用`muteRemoteAudioStream(uid, true)` 屏蔽主播B的音频流（需传入主播B的UID）。
+调用 `muteRemoteAudioStream(uid, false)` 单独订阅主播A的音频流（需传入主播A的UID）。
+关键代码示例：
+```java
+// 观众端加入频道后执行
+mRtcEngine.muteRemoteAudioStream(hostB_uid, true); // 屏蔽主播B
+mRtcEngine.muteRemoteAudioStream(hostA_uid, false); // 订阅主播A
+```
+
+---
 # ID: 38122
 
 SDK Product: RTC
@@ -16217,33 +16552,6 @@ Reply:  您好，您这边可以这样试下：
 2、def on_playback_audio_frame_before_mixing(self, agora_local_user, channelId, uid, audio_frame: AudioFrame, vad_result_state:int, vad_result_bytearray:bytearray):
 
 sdk会在这个回调里面返回vad的结果，使用uid来做区分不同的用户的结果。
-
----
-
-# ID: 33638
-
-SDK Product: RTC
-
-SDK Version: 4.5.0
-
-SDK Platform: Android
-
-Request type: 集成问题咨询
-
-Request Description: 你好，如果出海社交类APP想在海外市场使用实时转写和实时翻译，如中东和东南亚这些小语种地区，有几个问题请教一下，谢谢。
-1、从成本和准确率指来说，推荐哪些自然语言处理产品啊？有相关的推荐数据吗？
-2、你们有自研的RTT和云商店的微软、讯飞、云上曲率等自然语言处理插件，除自研的RTT外，第三方插件都是SDK直接对接第三方产品的服务器而不是由声网的服务去对接第三方产品的服务呢？
-3、有自研RTT和云商店外的第三方转写和实时翻译的产品推荐吗？如果想接这些产品是APP直接对接，还是经过你们的SDK或服务端对接呢？
-
-回答思维链：客户目前在选型转写+翻译能力产品，目前声网国内有云市场插件可以用第三方能力实现，海外有一个自研的 RTT 产品是 restful 方案的，比较方便，效果也不错，虽然国内没有上架但结合客户的场景来看应该会有出海需求，可以考虑让客户试用这个海外产品看下效果。可以给客户简单介绍下两个产品，然后邀请客户留下联系方式，方便后续人工工程师进一步场景确认和产品推荐。
-
-Reply:  您好，
-1、目前有云市场转写插件和自研 RTT 可以使用，前者是纯 Native 移动端方案，后者是 restful 方案。具体的数据建议您自行测试来得出结论，这样数据最准确。
-2、云市场的插件都是通过封装第三方接口，在插件侧做参数透传，在第三方上实现转写的。需要注册第三方的账号以后才能使用。RTT 是声网自研restful方案，无需注册第三方账号信息，也无需额外集成 SDK。
-3、RTT 目前只在海外官网上架了，但是服务全球可用，可以看下这个文档：[REST quickstart](https://docs.agora.io/en/real-time-stt/get-started/quickstart)。
-Demo 参考：[RTT Demo](https://stt-demo.agora.io/#/home)
-
-您可以先试下这两个产品的效果，我作为 AI 助手不方便直接推荐，您可以再介绍下完整场景，留个联系方式，方便人工工程师晚些时候和您语音沟通。
 
 ---
 
