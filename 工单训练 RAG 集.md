@@ -1,4 +1,101 @@
 
+# ID: 38172
+
+SDK Product: RTC
+
+SDK Platform: Unity
+
+SDK Version: 4.5.0
+
+Request Type: 其他问题
+
+Request Description: 上传Google Play后台后， Google Play后台显示libAgoraRtcWrapper.so不支持16kb,
+请问下  这个是在那个版本的Unity SDK 开始支持的？  我这边升级到4.5.1能处理这个问题吗？
+
+Reply: 您好，目前官网上的 Unity 版本不支持 16kb，请更换成[支持 16kb 版本的 4.5.1 Unity SDK Full 包](https://download.agora.io/sdk/release/Agora_Unity_RTC_SDK_4.5.1_FULL_20250617_468_build.5.zip)
+音频包用[支持 16kb 版本的 4.5.1 Unity SDK Audio 包](https://download.agora.io/sdk/release/Agora_Unity_RTC_SDK_4.5.1_VOICE_20250617_471_build.5.zip)
+
+---
+# ID: 38177
+
+SDK Product: Cloud-recording
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 請問雲端錄製服務上傳視頻到雲存儲時有沒有固定ip呢？由於安全考量，我們需要針對使用accessKey的上傳方配置IP白名單
+
+Reply: 您好，云录制不提供固定域名或 IP，请使用 OSS 提供商的 Bucket 权限策略 或 STS 临时令牌 替代实现 
+
+---
+# ID: 38181
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.5.2
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 安卓设备使用移动的4G物联卡，rtc语音通话没有声音，使用wifi网络时通话正常
+物联网卡里添加了域名白名单`.*agora.io`和`sd-rtn.com`；
+以下是启动rtc的日志，显示加入频道成功，但没有音频数据，请问会是什么原因导致的？
+
+Reply: 您好，从 4.6.0 开始，使用物联网卡需要报备的域名改为了 国内额外报备 `*.rtnsvc.com` 和 `*.realtimemesh.com`，请确认下目前使用的 SDK 版本是否在 4.6.0及以上
+以及确保开启了`domainLimit`开关。
+
+---
+# ID: 38182
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 我需要确认一个东西，就是现在在国内的平台上使用声网的服务，但是实际上我们的app都是海外用户在用，如果使用海外的那个agora 速度会更快吗（因为我们大部分用户都是欧美地区的）
+
+Reply: 您好，所有 SDK 都是优先连接当地节点的，，只是从 4.6.0 版本开始，海外版本在国内的时候默认不会优先连国内的节点，需要申请后解除限制。海外用户用国内版本 SDK 还是正常的，速度不会受影响。
+
+---
+# ID: 38183
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 其他问题
+
+Request Description: 想咨询，实时音视频会议的功能，是否有提供实时字幕翻译的功能调用接口？以及是否有配套ui组件
+
+Reply: 您好，RTC 本身不自带字幕功能，要实现的话需要使用 [Real-Time Speech to Text](https://docs.agora.io/en/real-time-stt/overview/product-overview)，该产品还没有国内文档，但是服务可用，可以参考海外文档集成。
+如果您是在使用 convoAI 的话，是有封装好的字幕组件的，参考[实时字幕](https://doc.shengwang.cn/doc/convoai/restful/user-guides/realtime-sub)。
+
+---
+# ID: 38191
+
+SDK Product: RTC
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 目前看到在用户获取token的过程中 是需要传入 channelName，所以一个token对应一个channel是么？ 那这样的话我们想做成抖音那种上下滑动的模式，这样的话 只能在滑到对应房间的时候重新获取token么？ 有没有通用token的方案？
+
+Reply: 您好，可以在生成 token 的时候指定频道名为通配符，这样 token 就不校验频道名了，参考[生成通配 Token](https://doc.shengwang.cn/doc/rtc/ios/basic-features/token-authentication#%E7%94%9F%E6%88%90%E9%80%9A%E9%85%8D-token)
+
+---
+
 # ID: 33154
 
 SDK Product: RTM
@@ -11069,12 +11166,16 @@ SDK Version: 4.6.0
 
 Request Type: 集成问题咨询
 
-Request Description: 3.7.2.1版本迁移到4.6.0版本，         mRtcEngine.setCameraCapturerConfiguration(
+Request Description: 3.7.2.1版本迁移到4.6.0版本，        
+```java
+mRtcEngine.setCameraCapturerConfiguration(
                     new CameraCapturerConfiguration(
                             CameraCapturerConfiguration.CAPTURER_OUTPUT_PREFERENCE.CAPTURER_OUTPUT_PREFERENCE_PERFORMANCE,
                             CameraCapturerConfiguration.CAMERA_DIRECTION.CAMERA_FRONT
                     )
-            );设置摄像头策略这四个枚举：https://docportal.shengwang.cn/cn/video-legacy/API%20Reference/java/enumio_1_1agora_1_1rtc_1_1video_1_1_camera_capturer_configuration_1_1_c_a_p_t_u_r_e_r___o_u_t_p_u_t___p_r_e_f_e_r_e_n_c_e.html#aeebd07224559669e412eb34d6e9a4a53 在新版本用哪个API去设置：“预览质量接近于编码器的输出质量”
+            );
+```
+设置摄像头策略这四个枚举在新版本用哪个API去设置：“预览质量接近于编码器的输出质量”
 
 Reply: 您好，4.x 上已经去掉了这个枚举，并把这个行为设置为默认了，无需在采集时额外配置。
 
