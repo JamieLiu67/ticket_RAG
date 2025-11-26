@@ -1,4 +1,160 @@
 
+# ID: 38198
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.3.0
+
+Request Type: 集成问题咨询
+
+Request Description: 我在iOS端加入频道成功，可以听见安卓端的说话，自己麦克风的声音 对方听不到，iPhone的麦克风权限已开。
+iOS端我是用 `self.rtcEngine setClientRole:AgoraClientRoleBroadcaster`的逻辑实现的。
+安卓端的log如下：
+```
+onAudioSubscribeStateChanged channel:1003 uid:10000306 oldState:0 newState:2 elapsed:5
+onAudioSubscribeStateChanged channel:1003 uid:10000306 oldState:2 newState:1 elapsed:1，
+```
+远端订阅没有成功。
+
+
+Reply: 您好，[onAudioSubscribeStateChanged](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_publishnsubscribe#onAudioSubscribeStateChanged)的`oldState`为 1 表示`SUB_STATE_NO_SUBSCRIBED`，可能的原因在文档中详细列举了，您可以先对照文档排查下是否有类似情况发生
+
+---
+# ID: 38206
+
+SDK Product: RTC
+
+SDK Platform: Electron
+
+SDK Version: 其他版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 想咨询一下在调用`setBeautyEffectOptions`开启美颜后，视频画面下方会出现一些马赛克，是什么原因造成的，是否有方法能优化
+
+Reply: 您好，请问目前出现问题的什么平台和 SDK 版本？4.2.x 的 Windows 美颜确实有些问题，推荐避免使用`setBeautyEffectOptions`，改用第三方美颜来实现。
+
+---
+# ID: 38211
+
+SDK Product: Flexible-classroom
+
+SDK Platform: Web
+
+SDK Version: 2.9.40
+
+Request Type: 集成问题咨询
+
+Request Description: 我们下载你们的demo代码，token改成我们的之后，可以进入课堂，但是，右下角没有 im图标模块，我们需要这个IM模块，如何调出来呢？
+
+Reply: 您好，可以检查下调用服务端创建课堂接口时传入的 `roomProperties.widgets.easemobIM.state`字段是否禁用了 聊天室组件
+
+---
+# ID: 38212
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.23.x
+
+Request Type: 集成问题咨询
+
+Request Description: 实时互动开启屏幕共享，在`user-published`事件回调函数返回的user中，能获取到video媒体流，如何获取媒体流的宽高尺寸大小？看文档没有提供，自己找到下划线开头的`user._videoTrack._videoWidth`偶尔可以获取到，但是很不稳定，如何解决？
+
+
+Reply: 您好，`getRemoteVideoStats` 会返回 [RemoteVideoTrackStats](https://doc.shengwang.cn/api-ref/rtc/javascript/interfaces/remotevideotrackstats)，`RemoteVideoTrackStats` 里看`receiveResolutionHeight` 和`receiveResolutionWidth`可以获得宽高信息
+
+
+---
+# ID: 38213
+
+SDK Product: Cloud-recording
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 云录制如果频道中只有一个真实用户，我监听声网回调（用户加入频道，用户离开频道），来作为真实用户是否在频道中可以么？
+
+例如：收到了声网回调A用户加入频道，我就设置一个状态为true；收到了声网回到A用户离开了频道，我就将状态设置为false。通过这种方式来判断频道内是否还有真实用户，如果没有则停止云录制。这个加入/离开一定是按照顺序的么？会不会先收到了离开，后收到了加入，那么用户在我这就永远都是加入在频道内了。
+
+Reply: 您好，云录制有 `idletime` 字段，如果频道里没人发流一段时间，`idletime` 时间到了云录制会自己退出的，不需要您手动维护状态去关闭。
+
+---
+# ID: 38214
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.23.x
+
+Request Type: 开通权限、提供配额
+
+Request Description: 您好，咨询一下同一个账号在频道创建个数上有没有限制，频道并发创建QPS是多少？
+
+Reply: 您好，RTC 没有创建频道的并发 QPS 限制
+
+---
+
+# ID: 32208
+
+SDK Product: RTC
+
+SDK Platform: Unity
+
+SDK Version: 4.4.0
+
+Request Type: 集成问题咨询
+
+Request Description: 在游戏异常崩溃后，我没有办法调用 Leave 方法离开频道。然后，我重新打开游戏客户端并尝试重新连接，但此时游戏房间已经因时间到达而关闭，导致我无法再进入原来的游戏房间。请问在这段时间里，我是否仍然连接在声网的频道内？如果我确实还在频道内，此时使用游戏服务器返回给我的另一个 Token 和 uid 尝试加入新的房间时，似乎无法成功进入新频道。对此是否有处理方案？
+
+Reply: 崩溃以后属于客户端和我们边缘节点断开连接了，这个时候用户连不上服务器但还会被视为在频道内。此时我们的服务端会尝试重连客户端 20s 左右，如果在此期间重连上了 那就继续保持在频道内的状态，如果连不上 就按连接超时 异常退出频道记录。
+
+所以优先用原来的 uid 和 token 重连加频道，如果加不进去可以再申请新的 token 和 uid，不过一般来说 新的 token 和uid 肯定可以直接加入的，如果加不进去可以检查一下 token 是否匹配新的 uid
+
+---
+
+# ID: 32211
+
+SDK Product: RTC
+
+SDK Platform: Unity
+
+SDK Version: 4.4.0
+
+Request Type: 效果不佳、不达预期
+
+Request Description: IOS调用EnableLocalAudio接口会卡顿 能否在后续版本优化一下
+
+Reply: EnableLocalAudio会重启adm，耗时较久，不建议业务上高频使用，只在初始化后调用一次即可
+
+---
+# ID: 32214
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 远程端控制本地端的视频停止，并且保留最后一帧停止前的画面，该画面能被远程设备所接收。我是使用rtcEngine.muteLocalVideoStream(true);远程设备就收不到视频流画面。有什么比较好的方式实现效果。
+
+Reply: SDK 没有提供控制远端是否发流的接口，muteLocalVideoStream只是针对本地的发流，true 就是停止发流，false 就是恢复。
+
+如果你有控制远端发流的需求，可以考虑集成第三方信令 SDK，让远端收到信令后自己执行mute操作；或者考虑使用 restful 接口指定 uid 失去短时间发流的权限；
+
+另外，远端设备默认显示最后一帧画面，需避免在回调中清除视图
+
+---
+
 # ID: 38172
 
 SDK Product: RTC
