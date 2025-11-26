@@ -25,8 +25,7 @@ Thumbs.db
 # 可能包含敏感信息的文件（根据需要调整）
 CS_KI.json
 error_code.h
-工单AI提示词.md
-服务线知识库结果整理助手提示词.md
+
 # 备份文件
 *.bak
 *.backup
