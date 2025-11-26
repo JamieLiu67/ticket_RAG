@@ -1,0 +1,37 @@
+# macOS 系统文件
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Obsidian 配置文件（如果不想同步笔记软件配置）
+.obsidian/
+
+# 临时文件
+*.tmp
+*.temp
+*.log
+*.swp
+*.swo
+*~
+
+# 编辑器配置文件
+.vscode/
+*.sublime-*
+
+# 可能包含敏感信息的文件（根据需要调整）
+CS_KI.json
+error_code.h
+工单AI提示词.md
+服务线知识库结果整理助手提示词.md
+# 备份文件
+*.bak
+*.backup
+
+# 其他常见的忽略文件
+node_modules/
+.env
+.env.local
