@@ -1,4 +1,65 @@
 
+# ID: 38221
+
+SDK Product: Recording
+
+SDK Platform: Linux-Java
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 日志提示执行了start的录制sh脚本，但是实际上没有视频生成。导致移动视频的时候报空指针。如果流量打到A服务器那就会有视频，但是没有打到A服务器。打到了B服务器。两个脚本的权限都是一样的。
+
+Reply: 您好，我们本地录制已经更新过一般新的了，建议先集成我们最新的[本地服务端录制下载](https://doc.shengwang.cn/doc/recording/java/resources)，跑一下 Demo 看看还会不会有问题
+
+---
+# ID: 38223
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.1
+
+Request Type: 其他问题
+
+Request Description: 问下我们有客户需要在伊朗使用，咱们的服务支持伊朗地区吗
+
+Reply: 您好，支持伊朗的，不用特殊部署
+
+---
+# ID: 38226
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 在语聊房间我进入后台 麦克风会断掉 sdk支持进入后台录音不断吗
+
+Reply: 您好，可以看下文档，给 app 做一个前台消息常驻+保活，参考[为什么部分 Android 版本 App 锁屏或切后台音视频采集或播放（渲染）无效？](https://doc.shengwang.cn/faq/quality-issues/android-background)
+
+---
+# ID: 38231
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.6.0
+
+Request Type: 其他问题
+
+Request Description: iOS rtc版本号4.6.0，AgoraRtcVideoCanvas的renderMode设置为AgoraVideoRenderModeFit，但是视频未铺满的区域没有显示黑色
+
+Reply: 您好，AgoraRtcVideoCanvas 里的backgroundColor 设置成黑色就可以解决了
+
+---
+
 # ID: 38198
 
 SDK Product: RTC
