@@ -1,4 +1,36 @@
 
+# ID: 38249
+
+SDK Product: CDN
+
+SDK Platform: CDN
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 申请测试域名，我自己弄的域名推流不成功，不知道是什么原因
+
+Reply: 您好，我们没有测试域名，请问现在您自己配置的推拉流域名在 console 上是什么状态？可以截图看一下，然后提供下域名、推拉流地址给我，我看看情况
+您这边也检查下 [CNAME 的配置](https://doc.shengwang.cn/doc/fusion-cdn/restful/get-started/quick-start#3-%E5%AE%8C%E6%88%90-cname-%E9%85%8D%E7%BD%AE)是否已经完成了？
+
+---
+# ID: 38253
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 其他问题
+
+Request Description: 大疆在h264/265流中包含了sei信息，声网播放器能够直接读取视频流中的sei的信息并绘制矩形框做标记框的位置和类型吗？
+
+Reply: 您好，不支持，建议自渲染来实现相关业务，可以参考[Web 自渲染 Demo](https://github.com/AgoraIO/API-Examples-Web/tree/main/src/example/advanced/selfRendering)
+
+---
+
 # ID: 38221
 
 SDK Product: Recording
