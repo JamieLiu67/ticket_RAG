@@ -1,4 +1,69 @@
 
+# ID: 38261
+
+SDK Product: RTC
+
+SDK Platform: MacOS
+
+SDK Version: 4.3.0
+
+Request Type: 集成问题咨询
+
+Request Description: 请问，如果集成macos rtc sdk实现屏幕共享功能，如何指定屏幕分享的内容的时候“不显示鼠标的光标”？
+
+Reply: 您好，
+1、可以参考下 Mac 的[屏幕共享](https://doc.shengwang.cn/doc/rtc/macos/basic-features/screen-share)文档
+2、屏幕共享时无法隐藏光标，显示鼠标是系统行为，SDK 侧无法调整
+
+---
+# ID: 38262
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 其他问题
+
+Request Description: track的类型应该IRemoteVideoTrack吧，你们是不是搞错啦，IRemoteVideoTrack extends IRemoteTrack的，IRemoteTrack 的play方法的参数没有config参数
+
+Reply: 您好，IRemoteTrack的 play 没有 config 配置，一般都是具体到 audioTrack 或者 videoTrack 才会有 config 配置的，参考[iremotevideotrack](https://doc.shengwang.cn/api-ref/rtc/javascript/interfaces/iremotevideotrack)
+
+---
+# ID: 38266
+
+SDK Product: Fastboard
+
+SDK Platform: Web
+
+SDK Version: 1.0.0
+
+Request Type: 集成问题咨询
+
+Request Description: Fastboard 使用通过 CDN 集成 SDK 后，访问浏览器报错。
+
+请问如何通过CDN方式集成SDK呢？
+
+Reply: 您好，CDN 集成有局限性，除了`fastboard@1.0.0`还需要`@netless/window-manager white-web-sdk`，还需要用`type="module"`的方式，建议尽量[通过 npm 集成 SDK](https://doc.shengwang.cn/doc/whiteboard/javascript/fastboard-sdk/resources-fb)
+
+---
+# ID: 38272
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: sdk版本 3.7.0   能小屏幕直播吗？ 增加小窗口，可以缩小直播间
+
+Reply: 您好，小窗、画中画功能是 4.x 才实现的，您至少需要升级到 4.x 才可以用到[PictureInPicture](https://github.com/AgoraIO/API-Examples/tree/main/iOS/APIExample/APIExample/Examples/Advanced/PictureInPicture)
+
+---
+
 # ID: 38249
 
 SDK Product: CDN
