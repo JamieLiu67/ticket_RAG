@@ -1,4 +1,133 @@
 
+# ID: 38277
+
+SDK Product: RTC-Linux
+
+SDK Platform: Linux-C
+
+SDK Version: 4.4.32
+
+Request Type: 集成问题咨询
+
+Request Description: `sendStreamMessage`发送信息sdk返回`ret = -9`，已验证streamId可用，并且不存在频率过高或者msg过大的问题
+
+Reply: 您好，Linux 服务端 SDK 调用`sendStreamMessage`返回-9 表示用了观众身份在发送，这个接口需要用主播身份才能正常调用发送的，请修改对应用户的 role
+
+---
+# ID: 38282
+
+SDK Product: RTC
+
+SDK Platform: React
+
+SDK Version: 2.5.0
+
+Request Type: 其他问题
+
+Request Description: 在 iOS 中，无论是 .mobileconfig 还是 PWA 的全屏情况下，无法显示摄像头视频（音频能获取到）。在 safari 浏览器是正常的。
+
+Reply: 您好，可以先把 [webrtc 官方的 Demo](https://webrtc.github.io/samples/src/content/getusermedia/gum/) 放进去看下能否正常获取摄像头权限，如果 WebRTC 官方 Demo 无法正常工作，那就说明当前 Webview 不支持 webrtc 协议
+
+---
+# ID: 38286
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.23.x
+
+Request Type: 其他问题
+
+Request Description: 我们的视频源中有sei信息，需要在播放时展示，声网的播放器如何实现？有好的方案和建议吗 ？
+
+Reply: 您好，Web 的IRemoteVideoTrack 里有 [sei-received](https://doc.shengwang.cn/api-ref/rtc/javascript/interfaces/iremotevideotrack#on) 可以监听，这样就可以拿到远端发来的 SEI 信息了，然后您自行处理就行
+
+---
+# ID: 38289
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.23.x
+
+Request Type: 集成问题咨询
+
+Request Description: 
+前端需求明确仅使用麦克风，但浏览器实际弹窗为“麦克风和摄像头”合并权限，而非单独麦克风。希望明确禁止请求摄像头权限，确保用户不被摄像头弹窗打扰。
+
+我方前端已严格实现“只麦克风”权限路径，并提供明确的用户提示与代码证据；仍出现摄像头权限弹窗，影响用户体验。
+
+Reply: 您好，SDK 不会自己调用摄像头的，推测代码里肯定有调用创建视频轨道的相关操作，可以开启[日志上传](https://doc.shengwang.cn/faq/integration-issues/set-log-file)以后复现问题，再提供频道号、uid、时间点发来看下
+以及测试下我们 Demo里的[纯语音通话](https://doc.shengwang.cn/doc/rtc/javascript/basic-features/audio-quick-start)会不会有同样的问题
+
+---
+# ID: 38295
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 集成问题咨询
+
+Request Description: 咨询一下批量订阅的功能需不需要手动调用取消批量订阅？
+我调用massSubscribe方法批量订阅ABCDE，如果我想切换订阅的对象，是直接调用massSubscribe方法批量订阅FGHIJ就可以了，还是要先调用massUnsubscribe方法批量取消订阅ABCDE，然后再调用massSubscribe方法批量订阅FGHIJ？
+
+Reply: 您好，`massSubscribe` 只是订阅方法，不会自动取消订阅，业务上有需求的话需要搭配 `massUnsubscribe` 去手动取消订阅不需要的 uid
+
+---
+# ID: 38298
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 650ms 是理论链路的最低延迟，使用特定三方厂商搭配+经过私参特调以后可以实现
+想问下  集成如果想达到这个效果  具体有实践方案么？
+
+Reply: 您好， 650ms 是理论最低延迟，会受到链路上第三方厂商的波动情况而增加延迟，降低延迟的话可以去 [AI 模型评测平台](https://www.shengwang.cn/duihua/benchmark/overview?region=Shanghai)自行组合延迟更低的搭配
+客户端上可以参考[音频设置最佳实践](https://doc.shengwang.cn/doc/convoai/restful/best-practice/audio-settings)
+
+---
+# ID: 38302
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 集成问题咨询
+
+Request Description: 怎么获取远端画面的视频的帧率
+
+Reply: 您好，可以监听[onRemoteVideoStats](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_video_basic#onRemoteVideoStats)来获取
+
+---
+# ID: 38304
+
+SDK Product: Flexible-classroom
+
+SDK Platform: Web
+
+SDK Version: 2.9.40
+
+Request Type: 集成问题咨询
+
+Request Description: 我现在接入了灵动课堂web的sdk，想让用户用手机打开直播间的网页也可以正常显示 web的sdk的ui好想没有兼容手机端，我现在需要再接入h5的吗，最简单的方式是什么，有h5的sdk吗？没有找到
+
+Reply: 您好，灵动课堂要看到 h5 页面的话，Web 端 launch 的时候配置[LaunchOption](https://doc.shengwang.cn/api-ref/flexible-classroom/javascript/classroom-sdk#launchoption)的platform 为 h5 就可以了
+不过我们优先推荐用 [PAAS SDK](https://doc.shengwang.cn/doc/rtc/javascript/get-started/run-demo) ，开发更灵活一些
+
+---
+
 # ID: 38261
 
 SDK Product: RTC
