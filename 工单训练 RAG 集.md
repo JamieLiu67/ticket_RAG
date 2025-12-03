@@ -1,3 +1,84 @@
+# ID: 38308
+
+SDK Product: Cloud-recording
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 西南-成都地区OSS请求参数需要怎么配置？
+
+Reply: 您好，云录制的 vendor 对应 region 信息可以查看[第三方云存储地区说明](https://doc.shengwang.cn/doc/cloud-recording/restful/api/reference)
+
+---
+# ID: 38309
+
+SDK Product: Recording
+
+SDK Platform: Linux-C
+
+SDK Version: 其他版本
+
+Request Type: 商务问题
+
+Request Description: 想要在类似于扫地机器人的产品上集成视频对话功能，需要 Linux SDK
+
+Reply: 您好，服务端 Linux 可以用：[RTC 服务端 SDK](https://doc.shengwang.cn/doc/rtc-server-sdk/cpp/landing-page)
+IOT Linux 设备可以用[媒体流加速](https://doc.shengwang.cn/doc/rtsa/c/landing-page)
+
+---
+# ID: 38313
+
+SDK Product: CDN
+
+SDK Platform: CDN
+
+SDK Version: 当前版本
+
+Request Type: 线上报错
+
+Request Description: 
+1. CDN推流失败，水晶球CDN实时推流中无法看到详情；
+2. 拉流端报错，报PLAYER_ERROR_INVALID_MEDIA_SOURCE等信息；
+3. 频道通话是能正常开的；
+
+Reply: 您好，请提供下出现问题的 CDN 推拉流地址，人工工程师稍后验证下地址可用性
+
+---
+# ID: 38320
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 请问：我了解到贵司不提供前端语音对话式的AI通话的前端UI界面，我想知道如果我们自己设计UI的时候，是依据哪个模块的API呢？
+
+背景：我们自己已经部署本地私有化大模型，RAG知识库问答，然后我们是通过h5的形式嵌入到安卓、鸿蒙的系统的im聊天工具的某个模块中打开进入h5AI助手中。
+
+Reply: 您好，convoAI 是用 Restful 接口来让智能体加入 RTC 频道的，前端 UI 是您自行实现的，前端要展示的内容可以参考文档看下需要的数据都分别来自什么功能，比如通过 webhook 来[监听智能体事件](https://doc.shengwang.cn/doc/convoai/restful/user-guides/listen-agent-events)
+
+---
+# ID: 38322
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 其他版本
+
+Request Type: 商务问题
+
+Request Description: 我们的应用场景：工业设备监控 要求7x24x365全面监控 一个摄像头推流  拉流查看端口平时1个 偶尔有2-4个 应该买什么产品。之前买过RTC感觉费用过高 有没有更合适的可用产品呢？
+
+Reply: 您这个场景可以考虑下 RTC 的[极速直播](https://doc.shengwang.cn/doc/rtc/windows/basic-features/ls-quick-start)，极速直播费用会低一些
+
+---
 
 # ID: 38277
 
