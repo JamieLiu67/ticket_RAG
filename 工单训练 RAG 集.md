@@ -1,3 +1,66 @@
+
+# ID:38321
+
+ SDK Product: RTC 
+
+ SDK Platform: React Native 
+ 
+ SDK Version: 4.5.0 
+ 
+ Request Type: 集成问题咨询
+ 
+ Request Description: 我想问一下声网的sdk会自建通知通道么？我这边查到一个名为“dummy_channel_id”的通知通道。
+
+Reply: 您好，这个通知通道是 Native SDK 里的 Android 屏幕共享的 aar 插件自建的，用于屏幕共享期间保证 app 在后台能保持视频和音频采集，默认用的命名就是"dummy_channel_id"，不支持自定义修改。
+
+---
+
+# ID: 38341
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 对话式 AI 引擎是否支持南京话方言识别，识别准确率是否能达到 90% 以上？
+
+Reply: 您好，可以咨询下 ASR 的第三方厂商对于方言的支持能力如何，convoAI 的 ASR 是调用第三方来实现的，第三方 ASR 厂商支持方言识别就可以做到。
+
+---
+# ID: 38343
+
+SDK Product: RTMP
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 现在开通了rtmp网关服务，需要将流媒体中的设备流推到会议里通过rtmp协议，流媒体和声网建立连接后退了一会就断掉了，请帮忙查看下，下面提供了日志
+
+Reply: 您好，可以先检查下推流码和推流地址本身是否正确，以及也可以排查下您推流时用的音视频编码格式是否在我们的支持范围内：[功能描述](https://doc.shengwang.cn/doc/rtmp-gateway/restful/overview/product-overview#%E5%8A%9F%E8%83%BD%E6%8F%8F%E8%BF%B0)
+
+---
+# ID: 38344
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.5.0
+
+Request Type: 集成问题咨询
+
+Request Description: iOS 是否支持 LiveCommunicationKit 框架？如何集成？
+
+Reply: 您好，LiveCommunicationKit 是类似 Callkit 的独立的信令 SDK，和 RTC 没有关联，您业务上自行集成然后搭配调用 RTC 的接口就行
+
+---
+
 # ID: 38308
 
 SDK Product: Cloud-recording
