@@ -1,4 +1,90 @@
 
+# ID: 38352
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 开通权限、提供配额
+
+Request Description: 我需要开通实时语音翻译（real-time-stt）的服务，帮我开通一下
+ 
+
+Reply: 您好，RTT 服务请先联系：400 6326626 分配一个跟进的销售，然后填写[报备单](https://pofz0vdxq1.feishu.cn/share/base/form/shrcnx1fsGa8p8avYejHdCfpRZg)
+报备完成后同步销售，销售再为您开通对应的服务
+
+---
+# ID: 38353
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 我要下载美颜素材包 `AgoraBeautyMaterial.bundle.zip`
+在哪里下载
+
+Reply: 您好，声网高级美颜是付费服务，发布期间限时免费体验，您可以联系人工工程师来获取问卷，填写问卷后我们将为您提供对应版本的美颜素材包下载地址
+
+---
+# ID: 38355
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: R1 套件跑通 Device 端  https://doc.shengwang.cn/doc/toybox/iot/get-started/run-r1
+
+但是git clone不下来代码，没gitlab权限。 git clone --recurse-submodules https://gitlab.bekencorp.com/armino/bk_ai/bk_aidk.git -b ai_release/v2.0.1
+
+
+Reply: 您好，Device 端 可以用这个仓库 [bk_aidk](https://github.com/bekencorp/bk_aidk)
+
+---
+# ID: 38357
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 你好，我们最近在集成AI降噪插件，在文档里看见了以下：
+自 v4.4.0 起，SDK 提供低延迟版 AI 降噪插件，能够在保持一定降噪效果的前提下降低处理的延迟。如需使用该功能，请联系技术支持。
+
+我们现在是web。ios。安卓3个端都尝试接入AI降噪，文档的版本已经测试了没有问题，这个低延迟版本的请问如何接入呢？我们想对比一下，顺带可以发一个标准的和低延迟版本的对比吗？
+
+Reply: 您如果下载的是 Native 的 full 包 SDK 的话，SDK 里自带LLExtension ，这个就是低延迟降噪插件，效果会比普通的 AI 降噪的算法生效延迟低100 ms 左右，但使用起来非常复杂，如果对延迟没有特别需求的话一般不推荐使用
+有需要的话，麻烦描述下具体的场景和需求内容。
+
+---
+# ID: 38361
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.5.2
+
+Request Type: 其他问题
+
+Request Description: 语音视频通话时，说话内容不清晰（不是音量不够），请问是什么原因
+
+Reply: 您好，听起来是音质问题，可以先参考[实现高音质](https://doc.shengwang.cn/doc/rtc/android/best-practice/optimal-audio-quality)的最佳实践调整下`AudioProfile`和`audioScenario`再试试
+
+---
+
 # ID:38321
 
  SDK Product: RTC 
@@ -2146,22 +2232,7 @@ Reply: 您好，苹果审核4.3问题更多的是应用重复性，如代码重�
 [苹果审核4.3问题](https://www.cnblogs.com/gddg/p/18140383)
 
 ---
-# ID: 32637
 
-SDK Product: RTC
-
-SDK Platform: MacOS
-
-SDK Version: 4.0.0
-
-Request Type: 线上报错
-
-Request Description: 申请开通语音转文字功能
-
-Reply: 您好，
-声网提供自研RTT产品：基于RESTful API的方案，无需集成额外SDK或注册第三方账号。适用于直接通过API调用实现转写功能；如果需要开通，麻烦提供下项目的APPID，人工工程师会为您开通服务；
-
----
 # ID: 32642
 
 SDK Product: RTC
@@ -5648,21 +5719,6 @@ Reply: "code": 2一般是参数错误，按照文档检查参数以及请求body
 
 ---
 
-# ID: 33497
-
-SDK Product: RTC
-
-SDK Platform: Android
-
-SDK Version: 4.4.1
-
-Request Type: 其他问题
-
-Request Description: 使用通讯飞实时转写&翻译功能，能直接在后端生成一个txt并保存吗
-
-Reply: 您好，有实时转写和翻译需求我们建议优先使用[RTT restful 文档（7.x）](https://i46hiqvame.feishu.cn/docx/NTAQdKufEoswPqxbrLFcfQy7nvb?from=from_copylink)来实现，您可以自行保存文本内容到本地。
-
----
 # ID: 33507
 
 SDK Product: CDN
@@ -7120,35 +7176,7 @@ Request Description: Flutter 开发为了支持谷歌16k,咱们的Rtc 升级到:
 Reply: 您好，相芯的 8.1.4 本身不支持 16kb，所以需要换到支持 16kb 的插件版本，请问您这边接受升级到 8.14.0 吗？接受的话可以参考下这个仓库里 Readme 的插件下载地址[AgoraMarketPlace_FU_Flutter](https://github.com/JamieLiu67/AgoraMarketPlace_FU_Flutter)
 
 ---
-# ID: 37746
 
-SDK Product: Cloud-recording
-
-SDK Platform: Restful
-
-SDK Version: 当前版本
-
-Request Type: 其他问题
-
-Request Description: 多人会议，开启云录制，输出结果：是否可以按照每条声道单独输出一条音频结果。现在是在oss上产生一个mp4文件。
-我们需求是：语音会议，需要识别哪句话是哪个用户说的，类似如下：
-发言人1：
-你好
-发言人2：
-我很好
-
-现在如果直接把云录制生成的mp4给大模型，大模型会返回如上发言内容，现在想要将真实用户名称传递给大模型，也就是需要知道在 几分几秒是哪个用户说的话，期望返回 如下结果：
-小明：
-你好
-小红：
-我很好
-
-声网这边有什么方案，可以让我们知道 几分几秒是哪个用户发言么？
-
-
-Reply: 您好，单用云录制是实现不了的，您可以考虑使用我们的试试转写字幕功能来实现，这个产品没有上架国内文档但是可以正常使用，您可以先看飞书文档以及评论区的海外文档：[RTT restful 文档（7.x）](https://i46hiqvame.feishu.cn/docx/NTAQdKufEoswPqxbrLFcfQy7nvb)
-
----
 # ID: 37747
 
 SDK Product: IM
@@ -13960,22 +13988,7 @@ Reply: 您好，RTC 的频道销毁是频道里最后一个用户离开频道的
 参考：[102 channel destroy](https://doc.shengwang.cn/doc/rtc/restful/webhook/events#102-channel-destroy)
 
 ---
-# ID: 36786
 
-SDK Product: Marketplace
-
-SDK Platform: Web
-
-SDK Version: 自然语言处理
-
-Request Type: 开通权限、提供配额
-
-Request Description: 想测试rtt可以开通权限嘛
-
-Reply: 您好，请问是要开通 Restful 接口方案的 RTT 服务吗？如果是的话可以预留下需要开通的 appid，人工工程师稍后为您解答。
-如果您想用的是云市场转写插件，这个需要联系销售申请测试证书才能使用，商务联系电话：400 6326626。
-
----
 # ID: 36787
 
 SDK Product: RTC
