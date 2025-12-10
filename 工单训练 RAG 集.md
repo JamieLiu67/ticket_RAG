@@ -1,4 +1,302 @@
 
+# ID: 32701
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.0.0
+
+Request Type: 集成问题咨询
+
+Request Description: 您好，我再运行demo声动互娱时，测试测试直播功能，开始直播提示`checkAndSetupBeautyPath fail! DynamicResourceUrl not found`，请问下`KeyCenter` 文件里面的 `DynamicResourceUrl` 这个字段填写什么？有测试的url吗？可以让秀场直播可以正常直播？
+
+Reply: 您好，这个值是内部使用的, 请参考readme把美颜资源放进去，现在报错问题只是美颜相关资源缺失了
+
+另外也建议您不要使用声网互娱的demo，当前已经处于不维护阶段；建议您参考我们的[API-EXAMPLE](https://github.com/Shengwang-Community/API-Examples/tree/main/iOS/APIExample)
+
+---
+
+# ID: 32976
+
+SDK Product: RTC
+
+SDK Platform: mini-app
+
+SDK Version: 2.6.5
+
+Request Type: 集成问题咨询
+
+Request Description: 我们做了个多人会议的小程序demo，
+其它基础问题都解决了，上真机测试，两个手机，第一个join后，第二个join时，两个机器都会报错：
+```
+Wed Nov 20 2024 11:37:19 GMT+0800(CST)[ERROR]:client stream 1234 subscribed failed:i"code":432"reason":"1234 is not aspeaker.","serverResponse"."action":"subscribe""errCode":9105}"wsurl":"wss://minia
+pp.agoraio.cn/119-84-240-198/api"}
+
+```
+
+说用户角色不对，我们并不理解该用什么角色。因为是多人会议场景，用了broadcaster
+请问该如何处理？
+
+Reply: 确保用了主播身份进频道发流，432 就是订阅了一个非主播身份的 uid 才会有的错误码，可以再确认下自己的业务
+api文档[setrole](https://doc.shengwang.cn/api-ref/rtc/mini-program/classes/client#setrole)
+同时也可以参考下我们 [小程序Demo](https://doc.shengwang.cn/doc/rtc/mini-program/get-started/run-demo) 的处理
+
+---
+
+# ID: 33102
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.0.0
+
+Request Type: 集成问题咨询
+
+Request Description: 后台想部署离线服务
+android端集成以下这些在哪申请：
+App ID 和 App 证书：这些是你在声网开发者平台上创建项目时生成的，用于身份验证。
+其他配置信息：根据具体产品，你可能还需要其他配置信息，如IM服务的Org Name、App Name、Client ID和Client Secret等。
+
+Reply: App ID 和 App 证书申请：登录[声网控制台](https://console.shengwang.cn/)在项目设置中获取 App ID 和 App 证书
+IM服务的Org Name、App Name、Client ID和Client Secret：登录[环信控制台](https://console.easemob.com/user/login)获取相关信息
+
+
+---
+
+# ID: 33110
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.1.1
+
+Request Type: 其他问题
+
+Request Description: Xcode 升级到16.1版本后打包上架报错
+```
+Asset validation failed
+Invalid Executable. The executable 'seeDao.app/Frameworks/AgoraDav1d.framework/ AgoraDav1d' contains bitcode. (ID: 4b16c270-c34c-4fae-b956-ac867c59d636)|
+```
+
+Reply: xCode16 上对于 bitcode 审核比较严格，4.1.x 系列的 SDK 都会有这个问题。可以考虑把 RTC升级到4.5.0及以上版本再去打包上架，或者参考下方文档里的脚本，自行删除项目里的 bitcode
+
+参考：[如何解决xCode16打包报错Invalid Executable](https://stackoverflow.com/questions/78993520/invalid-executable-the-executable-appname-app-frameworks-hermes-framework-herm)
+
+---
+
+# ID: 33123
+
+SDK Product: Flexible-classroom
+
+SDK Platform: Electron
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 灵动会议的demo什么时间可以提供？
+
+Reply: 灵动会议没有 Demo，可以参考[集成灵动会议](https://doc.shengwang.cn/doc/meeting/android/get-started/integrate-meeting)直接集成到自己项目中
+
+---
+
+# ID: 38365
+
+SDK Product: RTC
+
+SDK Platform: HarmonyOS
+
+SDK Version: 4.4.2
+
+Request Type: 集成问题咨询
+
+Request Description: 请问是否支持鸿蒙next端APP的画中画功能，类似于微信通话最小化窗口的功能，如果支持是否可以提供相关实例代码或文档
+
+Reply: 您好，我们没有深度测试过， sdk 支持渲染 surfaceId， 理论上可以从悬浮窗的`XComponent`获取到`surfaceId`， 然后在构建`VideoCanvas` 设置 `isSurface` 为`true` 来实现
+
+---
+# ID: 38379
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.23.x
+
+Request Type: 其他问题
+
+Request Description: 已经生成了 app证书,如何关闭
+
+Reply: 您好，这个主要证书开启后无法关闭，这个证书打开后，默认就需要使用token才能加入频道。 但是如果您右上角的允许仅appid加入的开关还是开启状态的话，那就允许token加入，也允许无token加入。 
+这个功能后续会停止支持，所以建议您在创建 appid 的时候分别创建一个开启 token 鉴权和不开启 token 鉴权的项目
+
+---
+# ID: 38389
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.4.0
+
+Request Type: 集成问题咨询
+
+Request Description: 客户端rtc需要实现变声服务，可以支持大叔音、萝莉音、机械音等需要使用哪一个API呢
+
+Reply: 您好，可以参考下 [Api-example里的变声示例](https://github.com/Shengwang-Community/API-Examples/tree/main/iOS/APIExample/APIExample/Examples/Advanced/VoiceChanger)
+
+---
+# ID: 38390
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.3.0
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 请问支持声卡吗，有用户反馈iphone连麦时插着声卡设备，但听不到声卡传输的声音
+
+Reply: 您好，用户使用声卡时请关闭 3A 处理：[实现高音质](https://doc.shengwang.cn/doc/rtc/ios/best-practice/optimal-audio-quality)
+
+---
+# ID: 38391
+
+SDK Product: Media-push
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 您好，这边有个无人机直播的使用场景：机库将无人机的直播视频推送到声网。然后页面客户端订阅声网的视频服务，观看无人机的直播视频。目前有个需求是：声网是否支持转一路流到移动云用于AI分析和录制。看到官网有旁路推流到CDN。是否支持推流到我们这边的 srs服务呢，使用的rtmp 协议。
+
+Reply: 您好，可以用[服务端旁路推流](https://doc.shengwang.cn/doc/media-push/restful/landing-page)来把 RTC 的画面推到指定 rtmp 地址上
+
+---
+# ID: 38392
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: VirtualBackgroundSource，fff一直返回3，根据错误码看了，没看出问题
+
+Reply: 您好，可以参考下 我们的官方 [Android 虚拟背景Demo](https://github.com/Shengwang-Community/API-Examples/blob/main/Android/APIExample/app/src/main/java/io/agora/api/example/examples/advanced/VideoProcessExtension.java)
+
+看下同样的参数用我们 Demo 是否会出现一样的报错
+
+---
+# ID: 38393
+
+SDK Product: RTM
+
+SDK Platform: Java
+
+SDK Version: 2.2.6
+
+Request Type: 集成问题咨询
+
+Request Description: 请问android升级RTM SDK轻量级版本， `implementation 'io.agora:agora-rtm-lite:x.y.z'`
+可以支持 16 KB 内存页大小吗？
+
+Reply: 您好，只要是 2.2.2 的版本以上就支持
+
+---
+
+# ID: 38433
+
+SDK Product: RTC
+
+SDK Platform: Unity
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 
+1. 如何查看unity3d中声网sdk的版本？
+2. unity3d声网sdk在政府部门使用，需要设置防火墙白名单，请提供支持！
+
+Reply: 您好，要查看 SDK 版本可以用接口 [getversion](https://doc.shengwang.cn/api-ref/rtc/unity/API/toc_network#api_irtcengine_getversion)
+RTC 是默认要再公网传输的，如果要内网使用的话需要付费开通[云代理](https://doc.shengwang.cn/doc/rtc/unity/basic-features/firewall)功能，您需要先联系您的对接商务了解云代理相关报价，确认后再申请开通
+
+---
+# ID: 38435
+
+SDK Product: Analytics
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 开通权限、提供配额
+
+Request Description: 申请开通 PSTN 云呼叫服务
+内容：
+你好，我正在使用你们的“对话式 AI 引擎”，需要通过 RESTful API (/v1/projects/{我的AppID}/cloud-calling/call) 来呼叫真实的手机号码 (PSTN)。
+但是在我的产品列表里找不到“云呼叫”服务的开通入口。请问如何为我的项目开通这项服务？谢谢！
+
+Reply: 您好，请保证您的 cid 企业认证通过，同时工单内备注您使用的 cid、appid、具体应用场景，我们内部登记后为您开通
+
+---
+# ID: 38438
+
+SDK Product: RTM
+
+SDK Platform: Java
+
+SDK Version: 2.2.6
+
+Request Type: 其他问题
+
+Request Description: java springboot 项目使用RTM检测是否在线
+linux环境目前线上环境部署启动是否需要每次启动前都需要执行以下命令：
+`export LD_LIBRARY_PATH=/tmp/rtm`
+
+Reply: 您好，`export LD_LIBRARY_PATH=/tmp/rtm` 是配置临时路径，您要是在系统的环境变量配置过的话就不需要了
+
+---
+# ID: 38439
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 集成问题咨询
+
+Request Description: 使用垫片功能api :`enableVideoImageSource(boolean enabled, ImageTrackOptions options); `集成后测试直接anr崩溃
+
+Reply: 您好，请问有跑通并参考过我们[垫片 Demo](https://github.com/Shengwang-Community/API-Examples/blob/ae7e6697de66339b06e30862c4a1125fba549f31/Android/APIExample/app/src/main/java/io/agora/api/example/examples/advanced/LiveStreaming.java#L202) 的处理吗？可以对比下集成的用法有没有区别
+
+---
+# ID: 38449
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 使用垫片能力后，怎样把设置垫片的图片类似采集画面一样回显到预览处
+
+Reply: 您好，垫片功能本身仅作用于推流画面，即远端看到的是垫片图片，但本地预览默认仍显示摄像头采集的画面。有需要的话业务上指定`setupLocalVideo`的时候渲染指定`sourceType` 为图片就行
+
+---
+
 # ID: 38352
 
 SDK Product: RTC
