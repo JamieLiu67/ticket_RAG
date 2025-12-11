@@ -1,4 +1,118 @@
 
+# ID: 38408
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 集成问题咨询
+
+Request Description: 请问web sdk视频编码采用的是H264 High Profile么？
+
+Reply: 您好，Native SDK 默认发 `high profile`, Web 默认发 `Baseline`,两者互通没有问题，一般不需要特殊调整
+
+---
+# ID: 38414
+
+SDK Product: RTC
+
+SDK Platform: Unity
+
+SDK Version: 4.5.1
+
+Request Type: 集成问题咨询
+
+Request Description: 我游戏接入实时互动 sdk 开视频， 我游戏内是用 Unity 原生播放音效，我现在互相开视频 尽然能听到对方 游戏音效点击按钮，等其他音效 如何关闭远端的音效声音 但是要能听到远端的 聊天
+
+Reply: 您好，`setAudioScenario`设置为`chatroom`试一下，`Gamestreaming`会共享设备本身的系统音量到远端去
+
+---
+# ID: 38423
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 其他问题
+
+Request Description: 我现在有个新需求，想在企业微信、钉钉、飞书内创建应用，通过应用和我的app进行音视频通话，最初是想通过h5集成，和我们ai聊了一下，给我的反馈是1. 浏览器支持
+企业微信:
+
+H5不支持在企业微信内直接使用声网的Web SDK进行音视频通话。企业微信的内置浏览器对WebRTC的支持有限，无法满足实时音视频的需求。
+钉钉:
+
+钉钉的内置浏览器支持WebRTC，可以使用声网的Web SDK进行音视频通话。但需要注意的是，钉钉的内置浏览器可能有一些限制，建议进行充分的测试。
+飞书:
+
+飞书的内置浏览器也支持WebRTC，可以使用声网的Web SDK进行音视频通话。同样，建议进行充分的测试以确保兼容性和稳定性。
+有什么可行的方案吗
+
+Reply: 您好，要使用 Web SDK 的话需要保证这些内置浏览器所用的 Webview 本身支持 WebRTC 协议，可以用[WebRTC 官方 Demo](https://webrtc.github.io/samples/)验证下可用性。
+参考[浏览器兼容性和已知问题](https://doc.shengwang.cn/doc/rtc/javascript/overview/browser-compatibility)
+
+---
+# ID: 38425
+
+SDK Product: RTC
+
+SDK Platform: React
+
+SDK Version: 2.3.0
+
+Request Type: 集成问题咨询
+
+Request Description: 我们需要使用声网 rtc功能开发一个python服务1对1的向web端推送视频（带声音）的逻辑，需要咨询接入的细节
+
+Reply: 您好，需要服务端集成 Python SDK，Web 集成 WebSDK，双方加入相同的频道来进行互通
+[python SDK](https://doc.shengwang.cn/doc/rtc-server-sdk/python/get-started/send-receive)
+[web](https://doc.shengwang.cn/doc/rtc/javascript/get-started/quick-start)
+
+---
+# ID: 38426
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.4.0
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 带耳机的情况下，上麦看着是通话模式，下麦是媒体模式，并且通话模式下电流音很严重
+
+Reply: 麻烦提供完整的频道号、uid、时间点，说明哪个 uid 听哪个 uid 有问题，具体现象和对应的视频都提供下
+可以的话，再拿一下对应设备的 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+
+---
+# ID: 38428
+
+SDK Product: Cloud-recording
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 云端录制引入的
+```
+<dependency>
+            <groupId>io.agora</groupId>
+            <artifactId>agora-rest-client-core</artifactId>
+            <version>0.5.0</version>
+            <!--<scope>compile</scope>-->
+</dependency>
+```
+  ，里面的reactor-core是3.3.4运行的时候报错，说需要reactor-core 3.4版本以上，是需要排除，然后完全单独引入所有jar包吗？
+
+Reply: 您好，不推荐用这种方式集成云录制，云录制本身是 Restful 接口服务，建议直接调用 [Restful 接口](https://doc.shengwang.cn/doc/cloud-recording/restful/get-started/quick-start)来实现
+
+---
+
 # ID: 32701
 
 SDK Product: RTC
