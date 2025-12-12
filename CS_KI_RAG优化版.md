@@ -1,6 +1,46 @@
 
 ---
 
+# CS_KI_0230
+问题ID:0230  
+问题描述: 4.x 多频道下，Android屏幕共享这路流音频大概率发不出去  
+影响范围: 4.x  
+影响平台: Android、iOS  
+修复方案及进展: 规避：确保 ex 加入频道成功后再开启屏幕共享音频流  
+
+---
+
+# CS_KI_0229
+问题ID:0229  
+问题描述: 4.5.2.4～、4.6.1～版本，音频自渲染 + SDK采集 + 媒体音量下，setExternalAudioSink 如果设置非 8k/16k/32k/48k 采样率格式的音频，会导致 SDK sw aec 失效引起必现漏回声  
+影响范围: 4.5.2.4～；4.6.1～  
+影响平台: 全平台  
+修复方案及进展: 规避：设置 APM 支持的采样率（8k/16k/32k/48k）  
+
+---
+
+# CS_KI_0228
+问题ID:0228  
+问题描述: Chrome 143 有另一个行为变更，会导致我们 WebRTC 3.x SDK 版本无法收流  
+影响范围: WebRTC 3.x SDK  
+影响平台: Web（Chrome 143）  
+修复方案及进展: 特殊版 3.6.11.200 修复  
+
+---
+
+# CS_KI_0227
+问题ID:0227  
+问题描述: Chrome 143 有一个行为变更，会导致我们 WebRTC SDK 目前所有版本在特定顺序后发流时报错  
+复现顺序: A/B 互通音视频 → A 取消发流 + A 取消所有订阅 → A 再次发流  
+报错信息: Failed to execute 'createOffer' on 'RTCPeerConnection': Session error code: ERROR_CONTENT. Session error description: Failed to set recv parameters for m-section with mid='xx'  
+影响范围: WebRTC SDK（所有版本）  
+影响平台: Web（Chrome 143）  
+修复方案及进展:  
+1、Chromium 目前已有人提 issue，已记为 P0 bug：我们会持续跟进，推动 Chrome 处理此问题  
+2、我们紧急出了 fix 版本 `agora-rtc-sdk-ng@4.24.1-1`，后续发布 4.24.2 到官网，并附带完整问题描述  
+
+---
+
 # CS_KI_0226
 问题ID:0226  
 问题描述: 4.x MacOS15以上窗口分享，部分窗口出图慢或者不出图  
