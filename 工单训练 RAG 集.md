@@ -1,4 +1,52 @@
 
+# ID: 38458
+
+SDK Product: RTM
+
+SDK Platform: Java
+
+SDK Version: 2.2.6
+
+Request Type: 其他问题
+
+Request Description: 声网Rtm ,android  应用得打开，点home 键退回到主界面，另一台设备拨打，一直提示对方未在线，其实对方只要把应用恢复到前台，立马能打通，而且是按home 键20秒，另一台手机就提示不在线了，这个如何解决？
+
+Reply: 1、app 本身要做保活才不会[限制后台活动](https://doc.shengwang.cn/faq/quality-issues/android-background)，保证网络连接
+2、RTM 是需要双方都在线才能收发消息的，如果远端不在线就会发送失败，除非您使用历史消息，等远端上线了他再获取[历史消息](https://doc.shengwang.cn/doc/rtm2/android/user-guide/message/history-message)来拿到
+
+---
+# ID: 38462
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.5.2
+
+Request Type: 效果不佳、不达预期
+
+Request Description: ios系统版本26.1，sdk版本：`agoraLite_ios 4.5.2`，在上麦的情况下，闭麦之后，手机音量键调整大小无效了， 在ios系统版本18.3上是好的
+
+Reply: 您好，闭麦用的是 `enableLocalAudio` 吗？可以改用 [mutelocalaudiostream](https://doc.shengwang.cn/api-ref/rtc/ios/API/toc_publishnsubscribe#api_irtcengine_mutelocalaudiostream) 方法去规避这个情况
+这个属于 IOS 系统本身的问题
+
+---
+# ID: 38463
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 其他问题
+
+Request Description: android  与设备端进行通话，  `int channelProfile = Constants.CHANNEL_PROFILE_COMMUNICATION;engine.setChannelProfile(channelProfile);  `我能通道设备的声音，但我的声音，设备听不到， `int channelProfile = Constants.CHANNEL_PROFILE_COMMUNICATION_1v1;engine.setChannelProfile(channelProfile);  `这样设置，是设备端能听到声音，android 端却听不到声音，这是因为什么？加入频道也成功了
+
+Reply: 不建议用`CHANNEL_PROFILE_COMMUNICATION`，建议用直播模式，确保双方都是主播身份在发流，且双方编码都一致，参考[与 RTC SDK 互通音视频数据](https://doc.shengwang.cn/doc/rtsa/c/best-practices/interoperate-rtc)
+
+---
+
 # ID: 38408
 
 SDK Product: RTC
