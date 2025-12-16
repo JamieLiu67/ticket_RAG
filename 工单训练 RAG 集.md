@@ -1,4 +1,125 @@
 
+# ID: 38498
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 调用 ai 引擎上传图片接口的作用是什么 我使用Conversational-AI-Demo-main 这个 dome 上传图片是智能体 并没有给我回答图片
+
+
+Reply: 您好，可以先确认下目前所用的模型本身是否支持多模态输入，以及排查下[发送图片消息](https://doc.shengwang.cn/doc/convoai/restful/user-guides/send-multimodal-message)中的前提条件是否都已经满足，如果自查无果，可以提供下具体的 agentID
+
+---
+# ID: 38508
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.23.x
+
+Request Type: 集成问题咨询
+
+Request Description: 您好，我的嵌入式linux设备已经集成了`Agora-RTSALite-RmRdRcAcAjCF-arm-linux-gnueabihf-v1.9.2-20231220_171304-287745`版本的 sdk，
+现在有个平台客户需要使用我们的设备，但是使用他们appId，且不使用license授权的方式，改用时长套餐的方式，请提供一下非license授权方式的SDK,谢谢。
+
+Reply: 您好，
+1、rtsa sdk默认正常都是需要授权license激活使用的
+[申请和使用 License](https://doc.shengwang.cn/doc/rtsa/c/basic-features/license)
+2、非license授权的sdk 是我们实时互动的rtc，比如安卓平台，但是是不兼容您的设备平台架构的；
+
+---
+# ID: 38509
+
+SDK Product: RTC
+
+SDK Platform: HarmonyOS
+
+SDK Version: 4.4.0
+
+Request Type: 集成问题咨询
+
+Request Description: 鸿蒙设备app对鸿蒙设备小程序发起视频通话，小程序端的摄像头黑屏
+但是鸿蒙设备app对安卓设备小程序发起视频通话，正常
+
+Reply: 当前声网小程序sdk对于纯血鸿蒙暂无支持计划
+
+---
+# ID: 38513
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 由于声网没有提供flutter桌面端的sdk。我想要使用桌面端的能力 我能否用flutter和electron进行混合开发好还是使用fluter配合macOS和Windows的sdk做成flutter插件更好一点，是否有成熟的方案案例可以作为背书
+
+Reply: 声网的flutter sdk是支持window平台的
+[产品概述](https://doc.shengwang.cn/doc/rtc/flutter/overview/product-overview)
+
+---
+# ID: 38514
+
+SDK Product: RTMP
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 使用RTMP网关服务将无人机视频码流使用SRT协议推送到声网，使用声网播放器播放出现 花屏现象，目前是在有限的几处地方出现花屏。 
+推流指令：`/opt/ffmpegDir/ffmpeg -loglevel quiet -rtsp_transport tcp -timeout 5000000 -i rtsp://127.0.0.1:17108/live/xxx/99-0-0/normal-0 -vcodec copy -an -f mpegts srt://xxxx?streamid=xxx&latency=200&fec=on&fec_k=4&fec_m=6`
+
+Reply: 用rtmp推流，帧率也会有调到0的情况。因为rtmp是基于tcp的，所以网络抖动的时候就会拉大延时然后卡顿，srt因为是基于udp的，延时过大的话就会丢包，如果一帧里面部分包被丢弃，就会表现为花屏，可以先检查下网络环境是否稳定
+
+---
+# ID: 38516
+
+SDK Product: Media-push
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 使用旁路推流，调用`https://api.sd-rtn.com/cn/v1/projects/xxx/rtmp-converters`报错
+```json
+{
+    "reason": "No invalid permission to use this function. Contact us."
+}
+```
+
+目前有开通旁路推流功能
+
+Reply: 您好，请检查下对应 appid 是否处于停机状态，`No invalid permission to use this function.`通常表示因为 appid 不可用导致无法使用旁路推流功能。
+
+---
+# ID: 38521
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 我的设备用默认配置无法播放远端用户声音，目前测出可播放远端用户的配置值有`config.mAudioScenario = AUDIO_SCENARIO_GAME_STREAMING`，`AUDIO_SCENARIO_MEETING`，`AUDIO_SCENARIO_AI_CLIENT`。 但播出远端用户声音是有爆音的，如何解决爆音问题。
+
+Reply: 您好，可以参考下[如何区分媒体音量和通话音量？](https://doc.shengwang.cn/faq/integration-issues/system-volume)，看下设备在不同`scenario`下走不同音量通道的表现是否一致，并提供稳定复现问题是的 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+
+---
+
 # ID: 38474
 
 SDK Product: RTC
