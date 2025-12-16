@@ -1,4 +1,77 @@
 
+# ID: 38523
+
+SDK Product: Cloud-recording
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 您好 使用Java jdk进行云端录制，参数`mixedVideoLayout`设置的1，自适应，但2个人视频通讯，录制的视频里只有一个人的音视频，少了一个人的，怎么可以做到录制完整的2个或多人的音视频？
+
+Reply: 推测是录制端用了频道里已经有的 uid，把发流的人顶出频道了，可以自查一下 uid 是否有冲突的情况，录制段本身要用的 uid 不能和频道里重复
+如果确定没问题的话，可以给一下 sid
+
+---
+# ID: 38527
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.1
+
+Request Type: 集成问题咨询
+
+Request Description: 接入声网高级美颜，获取安卓和ios获取美颜素材包 AgoraBeautyMaterial.bundle.zip
+
+Reply: 请问您目前在用的是 4.6.1 SDK 吗？要用高级美颜的话推荐用 [4.5.2.6](https://i46hiqvame.feishu.cn/wiki/SCGwwimqaiVjIVkWy59ci7sZnve?from=from_copylink) 版本，这个链接里包含了对应的`AgoraBeautyMaterial.bundle.zip`文件
+以及希望您能填写一下这个[高级美颜问卷](https://ai.feishu.cn/share/base/form/shrcnFAOuPGRMzFYxpB5k0SPqeb?from=navigation)，来帮助我们后续改进、升级高级美颜的相关能力
+
+---
+# ID: 38530
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 其他问题
+
+Request Description: 从云上往下拉流，对网速要求是多少？
+
+Reply: 没有具体的网速，只有码率要求，网络能够满足[码率参考](https://doc.shengwang.cn/doc/cloud-recording/restful/api/reference#%E5%B8%B8%E7%94%A8%E8%A7%86%E9%A2%91%E5%B1%9E%E6%80%A7)就行
+
+---
+# ID: 38531
+
+SDK Product: RTC
+
+SDK Platform: Electron
+
+SDK Version: 4.4.0
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 使用场景：桌面远程投屏（将桌面视频流发送至远端）
+问题：部分浅色色块无法在远端显示，但使用HDMI进行投屏时可以显示，说明设备没问题，视频流有问题
+期望：使用声网服务进行视频流传输时可以显示所有颜色
+channel：xxx
+发送端
+uid：2258163
+sdk：agora-electron-sdk@4.4.0
+
+接收端：
+uid: 1258162
+sdk: react-native-agora@4.5.1
+
+Reply: 您好，这个是 4.4.0 的已知问题，可以升级 Electron SDK 到[最新版本](https://doc.shengwang.cn/doc/rtc/electron/resources)再试下
+
+---
+
 # ID: 38498
 
 SDK Product: ConvoAI
