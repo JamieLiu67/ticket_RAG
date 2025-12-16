@@ -1,4 +1,169 @@
 
+# ID: 38474
+
+SDK Product: RTC
+
+SDK Platform: Electron
+
+SDK Version: 4.3.0
+
+Request Type: 其他问题
+
+Request Description: 请问一下electron sdk是否支持vite开发,已vite集成sdk提示api导入报错,目前github上提供的都是webpack的demo,如果支持的话能否提供一下相应的代码demo,谢谢
+
+Reply: 支持，可以看下[Electron 平台常见开发问题](https://doc.shengwang.cn/faq/integration-issues/electron-faq)末尾找不到模组的解决办法
+
+---
+# ID: 38475
+
+SDK Product: RTSA
+
+SDK Platform: Linux-C
+
+SDK Version: 1.9.6
+
+Request Type: 集成问题咨询
+
+Request Description: 开启ace:
+```c
+channel_options.enable_audio_downlink_aec = true;
+channel_options.enable_audio_downlink_aec_pcm_dump = true;
+```
+
+出现两种情况：
+1、配置`channel_options.audio_codec_opt.audio_codec_type = AUDIO_CODEC_TYPE_OPUS`时，加入频道错误：`[2025-12-12 10:39:26.700][err][api][__join_channel_common:2368] downlink 3a audio_codec_type=1 invalid, must be audio_codec_type_e`
+2、配置`channel_options.audio_codec_opt.audio_codec_type = AUDIO_CODEC_TYPE_G722`时可以加入频道，但是上行无声音
+见日志。
+
+Reply: 您好，不需要开启`enable_audio_downlink_aec_pcm_dump`，设置为 `false` 就行
+
+---
+# ID: 38478
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 其他问题
+
+Request Description: 场景描述：
+1、有两个个app id 
+2、硬件设备端采用c++开发，app端是采用`uniapp`端开发（webjs sdk）
+3、在仅app id鉴权下，设备端和app端都可以进行发布和订阅，音视频都没有问题
+4、在app id + token鉴权下，设备端的音视频，app端是可以接收到的，但是app端的音视频，设备端是接收不到的
+
+Reply: 您好，请提供具体的频道号、uid、时间点、[SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+
+---
+# ID: 38479
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 其他问题
+
+Request Description: 我们的直播视频源中有sei信息，需要在播放时解析，`IRemoteVideoTrack `的监听事件 `sei-received` 需要你们后台开通吗？ 目前监听不到。
+
+Reply: 您好，不需要后台开通的，可以截图看下目前监听的处理方式，以及开启[日志上传](https://doc.shengwang.cn/faq/integration-issues/set-log-file)后提供下复现问题时的频道号、uid、时间点
+
+---
+# ID: 38487
+
+SDK Product: RTMP
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 在rtmp网关和实时互动 RTC两种推流的情况下
+
+这边查询频道是否存在，使用接口：`https://api.sd-rtn.com/dev/v1/channel/user/{appid}/{channelName}/hosts_only`
+
+有概率返回：
+```json
+{"data":{"mode":1,"total":3,"channel_exist":true,"users":[xxx]},"success":true}
+```
+
+没有broadcasters字段，多了users字段,和文档描述不符
+
+Reply: 您好，可以检查下实际发送出去的原始请求是不是漏了 host only？这些字段是 url 没有 host only 才有的：[查询用户列表](https://doc.shengwang.cn/doc/rtc/restful/channel-management/operations/get-dev-v1-channel-user-appid-channelName)
+
+---
+# ID: 38488
+
+SDK Product: RTC
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: webhook事件回调健康测试测不过。
+另一个类似的项目是OK的，这个url用测试脚本模拟回调也是OK的。
+
+Reply: 您好，Webhook 健康检查没有通过的话就是我们访问不到您配置的 url，可以提供下 console 上的报错截图并且自查下 url 的访问可用情况。
+
+---
+# ID: 38489
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.5.1
+
+Request Type: 集成问题咨询
+
+Request Description: 我们的产品是一个android设备，利用RTC上传视频到控制中心，4G卡为上海联通的定向卡，并在联通备案了`*.agora.io，*.agoraio.cn，*.sd-rtn.com` 三个通配域名，rtc sdk版本4.5.1，这个问题在25年3月份的时候通过工单，解决 ，能正常进频道和推流。目前遇到一个新的问题，我们要在进入频道后，通过旁路推流的方式（`startRtmpStreamWithoutTranscoding`），把视频推送到一个RTMP地址上去，在正常网络情况下，功能正常，但是使用联通定向卡后，旁路推流方法返回超时(reason为3），频道内视频正常。请问是否还需要添加额外的白名单？
+
+Reply: 看您在用 `startRtmpStreamWithoutTranscoding `，现在用的是客户端旁路推理接口吗？推荐用[服务端旁路推流](https://doc.shengwang.cn/doc/media-push/restful/landing-page)去实现，不要在客户端上实现
+
+---
+# ID: 38490
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description:  ios 调试模式正常 release包打出来 无法初始化 sdk 
+
+Reply: flutter 在 IOS 的 release 模式上有一个已知问题，可以检查下[如何解决 Flutter 上 iOS release 包初始化时报 symbol not found 的问题？](https://doc.shengwang.cn/faq/integration-issues/flutter-ios-build)
+
+---
+# ID: 38494
+
+SDK Product: RTC
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 问题：业务这边需要实现用户房间通话收费功能，既在用户进行通话时每分钟进行扣费，余额不足时断开通话的功能。
+例如：
+一.1v1场景下，用户A和用户B连麦成功，开始时间00:00，通话时长在01分，02分，03分 ......  时业务这边需要进行扣费操作。
+二.语音直播场景下，用户在麦位上时，在每一分钟的时间节点，同1v1扣费场景
+我目前在文档里面没有看到用户发流或者接受媒体流时回调业务服务的功能，业务服务端这边需要怎么感知用户通话的每分钟状态呢？
+
+Reply: 您好，根据过往经验来看，不建议依赖我们的时长数据去做计量计费系统，建议您业务上自行维护。
+要踢人出频道的话可以用：[踢人接口](https://doc.shengwang.cn/doc/rtc/restful/channel-management/operations/post-dev-v1-kicking-rule)
+或者生成 token 的时候限定 token 的有效期，有效期到了就自动移出频道了，参考[使用 token 鉴权](https://doc.shengwang.cn/doc/rtc/android/basic-features/token-authentication)
+
+---
+
 # ID: 38458
 
 SDK Product: RTM
