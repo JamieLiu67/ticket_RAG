@@ -1,4 +1,35 @@
 
+# ID: 38542
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 我 ios端使用了 ai 引擎的相关 api  代码是从 demo 中参考拿过来的 我想确定下代码中是否有包含HealthKit 框架
+
+Reply: 您好，没有用到HealthKit
+
+---
+# ID: 38554
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 三星A52 Android 12 用户杀进程后还能听到声音，
+
+Reply: 系统杀进程以后频道就断开连接了，一般不会再听见频道内声音，所以这种情况可能是系统没有杀进程导致的，需要复现的时候获取 logcat 抓一下系统日志看看
+
+---
+
 # ID: 38523
 
 SDK Product: Cloud-recording
