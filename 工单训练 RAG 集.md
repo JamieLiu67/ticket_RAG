@@ -1,4 +1,71 @@
 
+# ID: 38570
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 我上传了一个压缩日志，22：01有一则和 AI通话，帮我查下是什么原因收不到服务端下发的 rtm 消息 目前是可以正常和 ai 对话 就是收不到消息
+
+Reply: 可以自查下是不是 token 没有 RTM 权限，从而导致客户端、服务端加入 RTM 频道的时候失败了，请[生成同时具有 RTC 和 RTM 权限的 token](https://doc.shengwang.cn/faq/integration-issues/generate-token) 来使用。
+
+---
+# ID: 38578
+
+SDK Product: Fastboard
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: web端已老师以管理员身份开启白板，学生以观众身份观看，如果学生退出观看，管理员这边能否收到回调
+
+Reply: 白板本身不提供用户上下线的创建监听，所以没有回调可以提供
+可以考虑用 [onRoomStateChanged](https://doc.shengwang.cn/doc/whiteboard/javascript/whiteboard-sdk/basic-features/manage-room-status#%E6%B3%A8%E5%86%8C%E5%9B%9E%E8%B0%83%E7%9B%91%E5%90%AC%E4%B8%9A%E5%8A%A1%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96) `state?.roomMembers`和本地`roomMembers`对比来感知人数变化，推断上下线事件发生 
+
+---
+# ID: 38581
+
+SDK Product: RTC
+
+SDK Platform: mini-app
+
+SDK Version: 2.6.5
+
+Request Type: 集成问题咨询
+
+Request Description: 用户端：小程序sdk
+坐席端：webjs
+
+问题描述：坐席端显示用户的画面不清晰，这个现象一直存在；
+请问声网对视频流是否有一定的压缩机制，或者老师们有没有改进建议！谢谢
+
+Reply: 您好，采集是小程序侧实现的，小程序组件采集的原始画面不清晰，编码发送出去的就不清晰，一般和用户网络情况相关，SDK 没有压缩机制
+
+---
+
+# ID: 38566
+
+SDK Product: RTSA
+
+SDK Platform: Linux-C
+
+SDK Version: 1.9.5
+
+Request Type: 集成问题咨询
+
+Request Description: 麻烦问下 在初始化媒体流加速的sdk时 有没有关于创建9000对外端口
+
+Reply: 您好，RTSA SDK 每次初始化使用的端口是随机的，请问现在是什么场景和需求需要了解端口使用情况？
+
+---
+
 # ID: 38542
 
 SDK Product: ConvoAI
@@ -9,7 +76,7 @@ SDK Version: 当前版本
 
 Request Type: 其他问题
 
-Request Description: 我 ios端使用了 ai 引擎的相关 api  代码是从 demo 中参考拿过来的 我想确定下代码中是否有包含HealthKit 框架
+Request Description: 我 ios 端使用了 ai 引擎的相关 api  代码是从 demo 中参考拿过来的 我想确定下代码中是否有包含HealthKit 框架
 
 Reply: 您好，没有用到HealthKit
 
@@ -292,9 +359,13 @@ SDK Version: 4.24.x
 
 Request Type: 其他问题
 
-Request Description: 我们的直播视频源中有sei信息，需要在播放时解析，`IRemoteVideoTrack `的监听事件 `sei-received` 需要你们后台开通吗？ 目前监听不到。
+Request Description: 我们的直播视频源中有信息，需要在播放时解析，`IRemoteVideoTrack `的监听事件 `sei-received` 需要你们后台开通吗？ 目前监听不到。
 
-Reply: 您好，不需要后台开通的，可以截图看下目前监听的处理方式，以及开启[日志上传](https://doc.shengwang.cn/faq/integration-issues/set-log-file)后提供下复现问题时的频道号、uid、时间点
+Reply: 您好，不需要后台开通的。
+1、Web 端需要加一个私参调用 `AgoraRTC.setParameter("ENABLE_VIDEO_SEI", "true")`  才能接受和发送 sei，但这个能力在 chrome 浏览器原始上实现的就有问题，很有可能后续某个版本改动后 Web 就不支持 sei 的收发了，所以不推荐 Web 上实现
+
+2、建议用 Native加频道接收 sei，云录制网关不一定识别 sei 信息，建议用 Native 侧加频道注册 [onMetadataReceived](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_metadata_observer#onMetadataReceived) 回调监听
+参考 [MediaMetadata Demo](https://github.com/Shengwang-Community/API-Examples/blob/ae7e6697de66339b06e30862c4a1125fba549f31/Android/APIExample/app/src/main/java/io/agora/api/example/examples/advanced/MediaMetadata.java)
 
 ---
 # ID: 38487
@@ -1568,7 +1639,7 @@ Request Description: 安卓设备使用移动的4G物联卡，rtc语音通话没
 物联网卡里添加了域名白名单`.*agora.io`和`sd-rtn.com`；
 以下是启动rtc的日志，显示加入频道成功，但没有音频数据，请问会是什么原因导致的？
 
-Reply: 您好，从 4.6.0 开始，使用物联网卡需要报备的域名改为了 国内额外报备 `*.rtnsvc.com` 和 `*.realtimemesh.com`，请确认下目前使用的 SDK 版本是否在 4.6.0及以上
+Reply: 您好，Android SDK 从 4.6.0 开始，使用物联网卡需要报备的域名改为了 国内额外报备 `*.rtnsvc.com` 和 `*.realtimemesh.com`，请确认下目前使用的 SDK 版本是否在 4.6.0及以上
 以及确保开启了`domainLimit`开关。
 
 ---
@@ -7631,7 +7702,7 @@ Request Type: 效果不佳、不达预期
 
 Request Description: 流量卡开启直播失败，WIFI可以，目前放行了`*.agora.io`, `*.sd-rtn.com`，还有其他需要放行的吗
 
-Reply: 您好，请问目前在用什么版本、平台的 SDK？4.6.0 及以上 的话用的域名不同，要报备不同的域名
+Reply: 您好，请问目前在用什么版本、平台的 SDK？Native SDK 4.6.0 及以上 的话用的域名不同，要报备不同的域名
 
 4.6.0 及以上区分国内和海外两个版本的 SDK，分别为：
 
