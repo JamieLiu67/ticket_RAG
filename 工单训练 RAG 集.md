@@ -1,4 +1,120 @@
 
+# ID: 38602
+
+SDK Product: RTC
+
+SDK Platform:  Web
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: `AgoraRTC.createClient`以后报错：  `BAD_ENVIRONMENT`，sdk 版本： `AgoraRTCSDK-3.0.0.js`
+报错，如何解决
+目前客户端无法互通视频
+
+Reply: 您好，`BAD_ENVIRONMENT`是 Web SDK 因为当前浏览器不支持 WebRTC 协议导致初始化失败的打印，请使用 chrome 浏览器这类支持 WebRTC 协议的浏览器再试试，参考[浏览器兼容性和已知问题](https://doc.shengwang.cn/doc/rtc/javascript/overview/browser-compatibility)
+
+---
+# ID: 38603
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 集成问题咨询
+
+Request Description: web端视频通话中，能获取到网络状态是wifi还是5g吗
+
+Reply: 您好，我们的 Web  SDK 没有办法感知当前的网络状态，可以考虑用原生接口去实现
+
+---
+# ID: 38604
+
+SDK Product: RTSA
+
+SDK Platform: Linux-C
+
+SDK Version: 其他版本
+
+Request Type: 崩溃（闪退、卡死）
+
+Request Description: 使用sdk时，订阅了音视频的远端回调，用户加入房间时，便会直接 `Segmentation fault (core dumped)`
+排查步骤：
+1.本地播放器开关测试，订阅远端视频流。结果：用户加入房间时，便会直接 `Segmentation fault (core dumped)`。
+2.本地播放器开关测试，不订阅远端视频流。结果：正常。
+
+Reply: 需要提供下设备的的架构、操作系统、编辑工具链所用 C 库及编译选项等信息；以及当前使用的是哪个sdk，链接需要发下，大概率是sdk不适配引发的crash，或者发送端和接收端使用的编码协议不一致导致的，修改编码参考[与 RTC SDK 互通音视频数据](https://doc.shengwang.cn/doc/rtsa/c/best-practices/interoperate-rtc)
+
+---
+# ID: 38607
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.5.1
+
+Request Type: 其他问题
+
+Request Description: 加入RTC频道后，游戏内的音效会听不到，参考了网上unity同样问题的解决方法，每次进入频道的时候调用：`[self.rtcEngine setParameters:@"{\"che.audio.keep.audiosession\":true}"];`
+第一次进入频道时音效可以正常播放了 可是退出频道 再次进入 音效还是无法正常播放。我的游戏引擎是：cocos creator 3.8.5版本
+
+Reply: 初始化之后，加入频道前再加两个私参，然后复现问题，拿一下完整的 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+`agoraKit.setParameters("{\"rtc.debug.enable\": true}");`
+`agoraKit.setParameters("{\"che.audio.record_audio_session_call_stack\": true}");`
+
+---
+# ID: 38609
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: `Command CompileMetalFile failed with a nonzero exit code`
+编译demo问题报错
+
+Reply: 您好，`failed with a nonzero exit code` 这个报错没什么指向性，找找build记录里面具体的报错，查询下对应的含义
+
+---
+# ID: 38616
+
+SDK Product: CDN
+
+SDK Platform: CDN
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 我没有找到在哪配置 发布点 只能使用live，这个live能在生产上使用吗？
+
+
+Reply: 您好，需要用请求[增加发布点](https://doc.shengwang.cn/doc/fusion-cdn/restful/streaming/operations/post-v1-projects-appid-fls-entry_points)
+
+---
+# ID: 38620
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.5.2
+
+Request Type: 其他问题
+
+Request Description: 您好，之前在平台上充了2000块钱预交金，请问可以开发票吗？增值税普通发票
+
+Reply: 您好，充值可以随时提现，所以无法开票，需要产生实际消费以后才行
+
+---
+
 # ID: 38570
 
 SDK Product: ConvoAI
@@ -6612,31 +6728,6 @@ Request Type: 集成问题咨询
 Request Description: 公司自己搭了个声网的服务，但是在Android 客户端没看到设置服务器地址的方法。麻烦提供下设置方式
 
 Reply: 该场景实现需要私有化部署，请联系您的专属商务经理 或者 电话咨询400 6326626
-
----
-# ID: 33160
-
-SDK Product: Cloud-recording
-
-SDK Platform: Restful
-
-SDK Version: 当前版本
-
-Request Type: 线上报错
-
-Request Description: {
-    "cname": "test",
-    "uid": "0",
-    "resourceId": "xxx",
-    "sid": "",
-    "code": 2
-}
-
-bad request no reason
-
-Reply: "code": 2一般是参数错误，按照文档检查参数以及请求body的格式结构。
-[使用 RESTful API 开始云端录制](https://doc.shengwang.cn/doc/cloud-recording/restful/get-started/quick-start)
-[响应状态码](https://doc.shengwang.cn/doc/cloud-recording/restful/response-code)
 
 ---
 
