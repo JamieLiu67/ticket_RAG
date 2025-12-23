@@ -1,4 +1,66 @@
 
+# ID: 38626
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 我想咨询一下，我后端能通过什么接口获取，ASR转化的文本以及最终语音转化的文本。
+
+Reply: 您好，可以参考下[实时字幕](https://doc.shengwang.cn/doc/convoai/restful/user-guides/realtime-sub)
+
+---
+# ID: 38631
+
+SDK Product: CDN
+
+SDK Platform: CDN
+
+SDK Version: 当前版本
+
+Request Type: 崩溃（闪退、卡死）
+
+Request Description: 用户首次访问的时候，这两个加载非常慢，加起来8S多，有时候十几秒，有时候直接加载失败。有办法改善吗？
+
+Reply: 您好，hls 的第一个用户拉流就是慢的， 一般要等3个`GOP`；如果是所有用户第一次拉流都很慢，可以尝试把推理工具的 `GOP` 改到1试试，可以缩短第一个用户的起播时间
+我们的CDN是边缘切片的，如果用户拉流被分配到不同的边缘机器，那么这个边缘机器上的第一个用户拉流就是需要等待3个`GOP`的 
+
+---
+# ID: 38642
+
+SDK Product: RTC
+
+SDK Platform: mini-app
+
+SDK Version: 2.6.5
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 根据后端返回的 rtmp 地址 获得视频流，有的可以正常播放，有的无法播放。
+
+Reply: 您好，小程序组件返回的 rtmp地址是小程序侧提供的，如果无法播放需要小程序侧调查。声网的小程序服务也是从这个地址上拉流，转发进 RTC 频道内来实现的，如果原 rtmp 地址就放不了那 RTC 肯定拉不到流
+
+---
+# ID: 38644
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 云端录制的第三方存储使用自建的还有地区限制么
+
+Reply: 云录制 vendor 为 11 的时候 region 字段设置了也不生效，参考[参考信息](https://doc.shengwang.cn/doc/cloud-recording/restful/api/reference)
+
+---
+
 # ID: 38602
 
 SDK Product: RTC
