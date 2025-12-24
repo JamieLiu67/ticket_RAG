@@ -1,4 +1,99 @@
 
+# ID: 38646
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.6.0
+
+Request Type: 其他问题
+
+Request Description: 我想咨询，我们之前的产品是宝宝监控，通过音视频互动来监控宝宝或者和宝宝音视频通话，现在我们的产品需求变更，音视频通话中，或者监控中，能不能从单语音通话，切到音视频通话，并且从音视频通话再切到单语音通话。然后单语言通话计费和音视频通话计费价格一样么。我下面上传的图文，是我们最新的需求，帮我看一下是否支持。
+
+Reply: 您好，在频道内默认是音频时长计费，产生视频订阅以后会有计算视频费用，人多的话计费规则不变，但产生的用量会变多，具体参考[计费策略](https://doc.shengwang.cn/doc/rtc/android/billing/billing-strategy)
+或者咨询您的对接销售，如果没有销售的话可以电话沟通：400 6326626
+
+---
+# ID: 38650
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 4.6.0
+
+Request Type: 其他问题
+
+Request Description: 有没有linux平台的x86或arm的c++客户端rtc sdk，主要要能实现本地视频的推流到云端
+
+Reply: 您好，可以考虑用我们的[输入在线媒体流](https://doc.shengwang.cn/doc/media-pull/restful/landing-page)
+或者集成 [Linux SDK](https://doc.shengwang.cn/doc/rtc-server-sdk/cpp/landing-page)
+
+如果是 IOT 设备的话，可以用[媒体流加速](https://doc.shengwang.cn/doc/rtsa/c/landing-page)
+
+---
+# ID: 38654
+
+SDK Product: Media-push
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 您好，目前在使用视频直播下的实时音视频+视频直播，需要咨询一下，使用实时音视频旁路转推时，调用API更新布局，由推用户A屏幕共享桌面改为推用户B的视像头,会出现观看直播的用户播放停止，手动刷新页面吗？
+
+Reply: 您好，旁路推流是把画面转推到一个指定 RTMP 地址上，更新转推的布局不会导致这个 rtmp 地址收到的流中断，如果有类似情况发生，是需要您自行排查网页播放业务来解决的。可以同时用 vlc 或者 ffplay 拉流对比看下，更新布局拉流是不需要观众手动操作，自己变动的
+
+---
+# ID: 38657
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 主播角色状态下，能只录制音频，不录制视频么
+
+Reply: [startAudioRecordingWithConfig](https://doc.shengwang.cn/api-ref/rtc/ios/API/toc_recording#startAudioRecordingWithConfig:) 是只录制音频，[startRecording](https://doc.shengwang.cn/api-ref/rtc/ios/API/toc_recording#startRecording:) 是同时录制音视频
+
+---
+# ID: 38658
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 4847205用户ID加入频道情况查看，貌似是加入失败了
+
+Reply: 您好，加入频道失败请提供具体 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+
+---
+# ID: 38660
+
+SDK Product: RTC
+
+SDK Platform: mini-app
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 通过接口拿到appIdchanneltoken  并且能拿到流的订阅地址 但是使用liveplayer 播放不出来
+
+Reply: 您好，liveplayer 组件里的 rtmp 流是小程序侧提供的，如果这个 rtmp 地址本身无法被拉流观看，那我们的小程序 RTC SDK 也拉不到流，无法把画面转发进 RTC 频道内，需要找小程序侧问下什么原因导致拉流地址不可用
+
+---
+
 # ID: 38626
 
 SDK Product: ConvoAI
@@ -6530,21 +6625,6 @@ Reply: 建议engine全局单例使用；参考demo 测试能否复现；提供sd
 
 ---
 
-# ID: 32670
-
-SDK Product: RTM
-
-SDK Platform: Java
-
-SDK Version: 2.2.1
-
-Request Type: 集成问题咨询
-
-Request Description: 你好，我们之前用的rtm是1.4.2版本的，目前打算迁移到2.2.1版本，但是现在在迁移的时候，在1.4.2版本中发送消息后，2.2.1的onMessageEvent方法并没有进行回调。（第一张是1.4.2的发送调用）
-
-Reply: 您好，RTM2相对于RTM1有较大变化，建议参考迁移指南并使用RTM2的新能力实现业务功能；rtm1.x并不能和rtm2.x互通，建议您尽快升级
-
----
 # ID: 32679
 
 SDK Product: RTM
@@ -19514,6 +19594,7 @@ Request type: 集成问题咨询
 
 Request Description: 1. 我看sdk接受pcm流之后只有通道数，采样率这些信息，pcm的sample_fmt是什么呢？
 对应到ffmpeg中是
+```c
 enum AVSampleFormat {
 AV_SAMPLE_FMT_NONE = -1,
 AV_SAMPLE_FMT_U8, ///< unsigned 8 bits
@@ -19532,6 +19613,8 @@ AV_SAMPLE_FMT_S64P, ///< signed 64 bits, planar
 
 AV_SAMPLE_FMT_NB ///< Number of sample formats. DO NOT USE if linking dynamically
 };
+```
+
 是哪个枚举呀
 
 回答思维链：通过问题描述看，客户想咨询linux sdk 音频自采集接口相关功能；这里涉及到sendAudioPcmData()接口的使用，以及与FFMPGA的AVSampleFormat 之间的使用关联
