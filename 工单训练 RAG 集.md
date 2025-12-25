@@ -1,4 +1,20 @@
 
+# ID: 38665
+
+SDK Product: Flexible-classroom
+
+SDK Platform: iOS
+
+SDK Version: 2.8.100
+
+Request Type: 集成问题咨询
+
+Request Description: error打印错误`Error Domain=core Code=20404100 "(null)" UserInfo={message=The operation couldn’t be completed. (Armin error 404.)}`
+
+Reply: 参考[灵动课堂响应状态码](https://doc.shengwang.cn/doc/flexible-classroom/restful/response-code)，20404100 是课堂不存在，请检查课堂 ID 是否正确。
+
+---
+
 # ID: 38646
 
 SDK Product: RTC
