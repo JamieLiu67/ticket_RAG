@@ -1,4 +1,59 @@
 
+# ID: 38678
+
+SDK Product: Flexible-classroom
+
+SDK Platform: iOS
+
+SDK Version: 2.8.100
+
+Request Type: 崩溃（闪退、卡死）
+
+Request Description: 启动崩溃,这是错误信息
+```
+Symbol not found: __ZN5swift34swift50override_conformsToProtocolEPKNS_14TargetMetadataINS_9InProcessEEEPKNS_24TargetProtocolDescriptorIS1_EEPFPKNS_18TargetWitnessTableIS1_EES4_S8_E
+  Referenced from: <C95001D7-48E9-37EC-8A65-F8F23DA9822D> /private/var/containers/Bundle/Application/F84C5840-D200-4B17-9997-DB485A148715/SW_test_oc.app/Frameworks/AgoraReport.framework/AgoraReport
+  Expected in:     <A23ACF34-D55F-3CFF-910F-D6FB5952E5E9> /private/var/containers/Bundle/Application/F84C5840-D200-4B17-9997-DB485A148715/SW_test_oc.app/Frameworks/Armin.framework/Armin
+dyld config: DYLD_LIBRARY_PATH=/usr/lib/system/introspection DYLD_INSERT_LIBRARIES=/usr/lib/libLogRedirect.dylib:/usr/lib/libBacktraceRecording.dylib:/usr/lib/libMainThreadChecker.dylib:/usr/lib/libRPAC.dylib:/usr/lib/libViewDebuggerSupport.dylib
+```
+
+Reply: 您好，请问现在在用的灵动课堂版本是多少？如果是老版本有崩溃情况的话，建议优先升级目前的 SDK 到最新版本再试试
+
+---
+# ID: 38682
+
+SDK Product: RTSA
+
+SDK Platform: Linux-C
+
+SDK Version: 1.9.5
+
+Request Type: 集成问题咨询
+
+Request Description: 麻烦问下 现在我使用的是ESPC6能否集成 ESPS3 sdk？
+
+Reply: 您好，RTSA 目前还没有适配过 ESPC6 的 SDK，如果有需要的话需要申请
+
+---
+# ID: 38685
+
+SDK Product: RTC-Linux
+
+SDK Platform: Linux-Go
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 
+GO SDK版本：v2.4.1
+直接运行 Go SDK 会这行日志：`SESS_CTRL: version: 20250221.bdv2.5.hip.sharedlib.timeout 
+目前项目从v2.2.9 升级到v2.4.1后，项目运行正常，但是日志一直会出现这个提示，这个对项目会产生什么影响吗？我该如何fix呢？
+
+Reply: 您好，`SESS_CTRL: version: 20250221.bdv2.5.hip.sharedlib.timeout` 研发侧反馈这个是内部调试打印，后续版本会去除，可以忽略
+
+---
+
 # ID: 38665
 
 SDK Product: Flexible-classroom
