@@ -1,4 +1,59 @@
 
+# ID: 38702
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 使用`AgoraRtcMediaPlayerProtocol`  `open` 本地mp4视频，然后使用`takeSnapshot`截图，一直返回-1错误，`joinchannel`是成功的
+
+Reply: 您好，`takeSnapshot`无法对用`MediaPlayer`发流的视频文件画面截图，报错-1 是预期内的。
+
+---
+# ID: 38706
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 实时互动 SDK 有同时支持 Linux ,Mac,Windows 的版本吗
+这里有些地方显示 Windows ,有些地方显示 C++（全平台），请问这里的版本是支持所有平台的版本吗
+并且 C++ 全平台版本没有找到下载链接
+
+
+Reply: 您好，没有同时支持的 Linux ,Mac,Windows 的 SDK，需要各自集成各自的。
+文档里 C++ 的全平台指的是各平台都是基于 C++底层接口封装的，可以看这篇来了解 C++的来看最底层提供了哪些能力，并不是所有平台都包了 C++ 100% 接口的。
+
+[Linux SDK](https://doc.shengwang.cn/doc/rtc-server-sdk/cpp/landing-page)
+[Macos SDK](https://doc.shengwang.cn/doc/rtc/macos/landing-page)
+[Windows SDK](https://doc.shengwang.cn/doc/rtc/windows/landing-page)
+
+---
+# ID: 38709
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 我们发现我们的使用记录中有FHD的用量，但我们的业务只需要HD即可，想通过设置来控制最多只用到HD。
+不知道应该如何修改设置，希望能指导一下。
+
+Reply: 您好，我们的分辨率是[集合分辨率](https://doc.shengwang.cn/doc/rtc/android/billing/billing-strategy#%E9%9B%86%E5%90%88%E5%88%86%E8%BE%A8%E7%8E%87)计算的，按照最后所有分辨率综合所在的档位计算，具体细节可以咨询：400 6326626
+
+---
+
 # ID: 38678
 
 SDK Product: Flexible-classroom
