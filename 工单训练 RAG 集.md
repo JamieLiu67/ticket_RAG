@@ -1,4 +1,50 @@
 
+# ID: 38714
+
+SDK Product: Cloud-recording
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 线上报错
+
+Request Description: 云录制时长超1h后，查询录制状态报错：resourceId exceeded time limit!，这个是什么原因呀？
+
+Reply: 云录制请求后返回`resourceId exceeded time limit!`表示resourceid 过期了，重新调用[获取云端录制资源](https://doc.shengwang.cn/doc/cloud-recording/restful/cloud-recording/operations/post-v1-apps-appid-cloud_recording-acquire)接口去`acquire` 一个新的`resourceId `就可以了，有需要的话可以把时间设置的长一些，默认值 72，最大值 720
+
+---
+# ID: 38719
+
+SDK Product: RTM
+
+SDK Platform: Swift
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 您好，我在集成RTM的时候，申请了临时Token，登录RTM的时候是正常的，普通消息都可以成功发送，但是在Topic的时候使用的AgoraRtmStreamChannel，调用joinStreamChannel()方法，加入会报错【加入 streamChannel 失败！ code:AgoraRtmErrorCode(rawValue: -11007) 原因： Join stream channel failed.】Token是没问题的，可以登录RTM成功和发送普通消息。这是什么原因呢？我写的集成代码在下面的附件内。
+
+Reply: 您好，可以检查下`join`stream channel 的时候传入的 token 是否具备 RTC 权限，没有的话是加不进去的。`login`的时候只有一个 RTM 权限就足够了，所以建议有 stream channel 需求的时候生成同时具备 RTC 和 RTM 权限的 token，参考[join](https://doc.shengwang.cn/api-ref/rtm2/swift/toc-channel/channel#join)的字段解释。
+
+---
+# ID: 38722
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 想实现音频自渲染功能，期望在`onPlaybackAudioFrameBeforeMixing`回调中收到每一个加入用户的声音；远端用户加入后，`onRemoteAudioStateChange` 回调  `state:4,reason:9`； `onPlaybackAudioFrameBeforeMixing`回调不被调用；可能的原因是什么
+
+Reply: 您好，参考[onRemoteAudioStateChanged](https://doc.shengwang.cn/api-ref/rtc/windows/API/toc_audio_basic#callback_irtcengineeventhandler_onremoteaudiostatechanged)的接口文档，`REMOTE_AUDIO_STATE_REASON`为 9 表示`REMOTE_AUDIO_REASON_LOCAL_PLAY_FAILED`本地用户收到远端音频数据包但播放失败，导致远端音频状态发生变化。可以检查下网络是否畅通，以及是否只有一台设备有这个情况发生，如果稳定复现的话，麻烦提供下具体的 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+
+---
+
 # ID: 38702
 
 SDK Product: RTC
@@ -761,7 +807,7 @@ Request Type: 其他问题
 Request Description: 我们的直播视频源中有信息，需要在播放时解析，`IRemoteVideoTrack `的监听事件 `sei-received` 需要你们后台开通吗？ 目前监听不到。
 
 Reply: 您好，不需要后台开通的。
-1、Web 端需要加一个私参调用 `AgoraRTC.setParameter("ENABLE_VIDEO_SEI", "true")`  才能接受和发送 sei，但这个能力在 chrome 浏览器原始上实现的就有问题，很有可能后续某个版本改动后 Web 就不支持 sei 的收发了，所以不推荐 Web 上实现
+1、Web 端需要加一个私参调用 `AgoraRTC.setParameter("ENABLE_VIDEO_SEI", true)`  才能接受和发送 sei，但这个能力在 chrome 浏览器原始上实现的就有问题，很有可能后续某个版本改动后 Web 就不支持 sei 的收发了，所以不推荐 Web 上实现
 
 2、建议用 Native加频道接收 sei，云录制网关不一定识别 sei 信息，建议用 Native 侧加频道注册 [onMetadataReceived](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_metadata_observer#onMetadataReceived) 回调监听
 参考 [MediaMetadata Demo](https://github.com/Shengwang-Community/API-Examples/blob/ae7e6697de66339b06e30862c4a1125fba549f31/Android/APIExample/app/src/main/java/io/agora/api/example/examples/advanced/MediaMetadata.java)
