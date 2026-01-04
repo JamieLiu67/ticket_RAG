@@ -1,4 +1,121 @@
 
+# ID: 38728
+
+SDK Product: Media-push
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description:  
+1. 创建旁路推流成功
+2. 填写推流地址，点击开始推流
+3. `onRtmpStreamingStateChanged`, 先返回 `state:4, errcode3`;   接着返回` state:4，errcode:16`
+4. 反复重试n遍，一样结果，无法完成旁路推流
+
+Reply: 您好，旁路推流用服务端启动就行了，客户端是不用再填一次地址和调用的
+服务端旁路推流启动以后自动转发频道里的内容到预设的地址上，到时候拉流观看就能看到 RTC 画面了
+
+---
+# ID: 38729
+
+SDK Product: RTSA
+
+SDK Platform: Linux-C
+
+SDK Version: 1.9.6
+
+Request Type: 集成问题咨询
+
+Request Description: 请问，RTSA能否在设备端进行录音录像？
+
+Reply: 您可以自行保存收到的远端流，或者用我们的[云录制](https://doc.shengwang.cn/doc/cloud-recording/restful/landing-page)直接录制频道里的内容
+
+---
+# ID: 38730
+
+SDK Product: Fastboard
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 你们官网根本没有任何一个可用的web集成的示例， 我通过你们官网AI问了以后，给的示例也都是完全不能用的，现在我这边更是连fastboard的依赖包都无法通过npm安装，一安装就报错
+
+Reply: Fastboard  Demo 参考这个仓库：[fastboard](https://github.com/netless-io/fastboard)
+
+---
+# ID: 38738
+
+SDK Product: CDN
+
+SDK Platform: CDN
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 域名配置后不生效，腾讯那边没有问题。
+
+Reply: 您好，融合 CDN 的域名配置需要时间，请再耐心等待一段时间
+
+---
+# ID: 38745
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: AgoraAIGCService集成问题，github给出的demo 跑不通
+
+Reply: 您好，我们已经没有交 AIGC 的产品了，目前的 AI 产品叫[对话式 AI 引擎](https://doc.shengwang.cn/doc/convoai/restful/get-started/quick-start)，调用 Restful 接口启动或者在声网 console 的 playground 里可以直接体验
+
+---
+# ID: 38754
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 能否帮我关闭云端录制，手误点开启了
+
+Reply: 云录制的 console 开关打开就没法关闭了，但是不调用云录制接口的话就不会产生付费，所以不用太在意
+
+---
+# ID: 38755
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 其他问题
+
+Request Description: 是这样的一个需求，不知道web端能是否有这个功能
+
+我们现在有移动端集成（android ios）直播功能，现在想做个后台管理系统，想实时去查看各个直播间直播画面情况，怎么能实现这个功能，
+
+我们是一个页面可能会有比如10个直播间画面，怎么能同时播放这10个直播间的画面，总不能一下加入10个直播间的频道然后获取画面还是怎么做？
+
+备注：本次工单是技术咨询，不是某个应用出了问题
+
+Reply: Web 的话创建多个 client 就行了，一个 client 只能用一个 uid 加频道，参考[Web 加入多频道 Demo](https://github.com/AgoraIO/API-Examples-Web/blob/main/src/example/advanced/joinMultipleChannel/index.js)
+
+---
+
 # ID: 38714
 
 SDK Product: Cloud-recording
@@ -761,18 +878,13 @@ SDK Version: 1.9.6
 
 Request Type: 集成问题咨询
 
-Request Description: 开启ace:
+Request Description: 我想在 RTSA 上开启 3A 处理，是这样吗？
 ```c
 channel_options.enable_audio_downlink_aec = true;
 channel_options.enable_audio_downlink_aec_pcm_dump = true;
 ```
 
-出现两种情况：
-1、配置`channel_options.audio_codec_opt.audio_codec_type = AUDIO_CODEC_TYPE_OPUS`时，加入频道错误：`[2025-12-12 10:39:26.700][err][api][__join_channel_common:2368] downlink 3a audio_codec_type=1 invalid, must be audio_codec_type_e`
-2、配置`channel_options.audio_codec_opt.audio_codec_type = AUDIO_CODEC_TYPE_G722`时可以加入频道，但是上行无声音
-见日志。
-
-Reply: 您好，不需要开启`enable_audio_downlink_aec_pcm_dump`，设置为 `false` 就行
+Reply: 您好，要在 RTSA 上使用 AEC 功能的话开启`enable_audio_downlink_aec`就行，不需要开启`enable_audio_downlink_aec_pcm_dump`。不过 RTSA SDK 的 3A 性能消耗较大，不推荐在 IOT 设备上开启我们 SDK 的3A处理。
 
 ---
 # ID: 38478
