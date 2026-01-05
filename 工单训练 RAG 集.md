@@ -1,4 +1,85 @@
 
+# ID: 38761
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: Windows SDK，是否可以基于Qt进行开发？ 支持H265格式视频的播放吗？
+
+Reply: 1、Native SDK 支持 h265，但远端 Web 只能发 h265，无法解码接收 h265 的画面，建议和 Web 互通的话双方都用 h264 或者 vp8，参考[VIDEO_CODEC_TYPE](https://doc.shengwang.cn/api-ref/rtc/windows/API/enum_videocodectype)
+2、理论支持 QT 开发，但是我们没有 QT 的相关 Demo
+
+---
+# ID: 38762
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 集成问题咨询
+
+Request Description: Web端 SDK， 支持H265格式视频的播放吗？我这边用的是最新版的 chrome 浏览器
+
+Reply: Web 只支持编码发送 h265，但是 h265 会有回退机制，需要保证通话双方使用的 SDK 版本都支持 h265，否则就会变回 h264
+一般建议用 h264 或者 vp8，h265 的支持情况还不是很理想，Web SDK 目前还无法解析 h265
+
+---
+# ID: 38764
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.5.2
+
+Request Type: 集成问题咨询
+
+Request Description: 观看端，怎么实现录屏保存到本地
+
+Reply: 可以参考我们 Demo：[MediaRecorder](https://github.com/AgoraIO/API-Examples/blob/1d81ec61fdc183161f99fcb79e3ece8bbd1e05a2/Android/APIExample/app/src/main/java/io/agora/api/example/examples/advanced/MediaRecorder.java)
+一般有录制需求优先推荐[云录制](https://doc.shengwang.cn/doc/cloud-recording/restful/landing-page)
+
+---
+# ID: 38765
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.5.2
+
+Request Type: 集成问题咨询
+
+Request Description: 我们在使用屏幕共享功能的时候，申请屏幕录制权限总是会申请两次，所有android手机都是这样，请问这是什么问题？
+
+Reply: 这个现象看起来是业务的问题，您可以对比我们的[屏幕共享 Demo](https://github.com/AgoraIO/API-Examples/blob/1d81ec61fdc183161f99fcb79e3ece8bbd1e05a2/Android/APIExample/app/src/main/java/io/agora/api/example/examples/advanced/ScreenSharing.java) 看下我们 Demo 会不会屏幕共享时申请 2 次
+推测是您业务上调用了 2 次接口或者有其他业务导致了又一次弹窗申请
+
+---
+# ID: 38766
+
+SDK Product: RTM
+
+SDK Platform: Flutter
+
+SDK Version: 2.2.5
+
+Request Type: 集成问题咨询
+
+Request Description: 为什么后台开启了历史消息记录。调用接口也支持也设置对了。早上还可以正常的读取历史消息。现在只能接受实时消息。历史消息新发的消息丢失了。配置没问题。代码没问题。
+
+Reply: 您好，请确认确保调用`publish`方法时有配置`storeInHistory`属性，
+如果确认配置了但还是没有历史消息，请参考文档获取 [RTM 日志](https://doc.shengwang.cn/doc/rtm2/flutter/error-codes) 文件发来看下
+
+---
+
 # ID: 38728
 
 SDK Product: Media-push
@@ -5332,9 +5413,9 @@ SDK Version: 4.3.2
 
 Request Type: 其他问题
 
-Request Description: 是不是只要采播不到就会触发104或者106的回调。网络波动也会造成这种情况吧
+Request Description: 是不是只要采播不到就会触发错误码 104或者106的回调。网络波动也会造成这种情况吧
 
-Reply: 采播不到（如视频采集失败）不会直接触发104或106回调，但网络质量比较差，长时间断网掉线时，我们大网会检测客户端心跳包，如果10秒收不到心跳包则认为这个用户离线，此时也会触发104/106
+Reply: 采播不到（如视频采集失败）不会直接触发 错误码 104或106回调，网络质量比较差、长时间断网掉线、开启 vpn时，我们大网会检测客户端心跳包，如果10秒收不到心跳包则认为这个用户离线，此时也会触发错误码 104、106
 
 ---
 # ID: 32347
@@ -9175,7 +9256,7 @@ Request Type: 其他问题
 Request Description: startRecording();本地保存返回-4
 
 Reply: 您好，startRecording 返回 -4 表示 RtcEngine 当前状态不支持该操作。可能因为录制正在进行中或录制出错停止。
-建议参考我们的官方 Demo[MediaRecorder](https://github.com/AgoraIO/API-Examples/blob/main/Android/APIExample/app/src/main/java/io/agora/api/example/examples/advanced/MediaRecorder.java)，以及有录制需求我们优先推荐[云录制](https://doc.shengwang.cn/doc/cloud-recording/restful/landing-page)，比客户端录制方便的多
+建议参考我们的官方SDK Demo[MediaRecorder](https://github.com/AgoraIO/API-Examples/blob/main/Android/APIExample/app/src/main/java/io/agora/api/example/examples/advanced/MediaRecorder.java)，以及有录制需求我们优先推荐[云录制](https://doc.shengwang.cn/doc/cloud-recording/restful/landing-page)，比客户端录制方便的多
 
 ---
 
