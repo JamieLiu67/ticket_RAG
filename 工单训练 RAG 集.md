@@ -1,4 +1,54 @@
 
+# ID: 38781
+
+SDK Product: RTC-Linux
+
+SDK Platform: Linux-Java
+
+SDK Version: 4.4.32
+
+Request Type: 集成问题咨询
+
+Request Description: 集成 SDK 后运行报错：`java.lang.UnsatisfiedLinkError: /opt/java/native/libffmpeg_utils.so: libavcodec.so.60: cannot open shared object file: No such file or directory`
+要如何解决？
+
+Reply: 您好，建议升级到最新版本 SDK ，然后检查下有没有把sdk里所有的so都放到`/lib/native/linux/x86_64 `路径下，一般是有 so 路径放错了所以提示找不到
+不过前提是已经配置过系统环境变量的路径。
+
+---
+# ID: 38785
+
+SDK Product: Cloud-recording
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: APP证书可以关闭吗？目前看到有打开关闭按钮，但是禁止使用
+
+Reply: 您好，声网控制台上的 App 证书开启后无法关闭，有需要的话可以新建一个 Appid，选择不开启鉴权来解决。
+
+---
+# ID: 38787
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 对话式AI引擎是否支持私有化部署？
+是否支持选择部分功能？
+如何收费？
+
+Reply: 您好，convoAI 支持私有化部署，具体细节请电话咨询：400 6326626
+
+---
+
 # ID: 38761
 
 SDK Product: RTC
@@ -172,7 +222,7 @@ Request Type: 其他问题
 
 Request Description: 能否帮我关闭云端录制，手误点开启了
 
-Reply: 云录制的 console 开关打开就没法关闭了，但是不调用云录制接口的话就不会产生付费，所以不用太在意
+Reply: 声网 console 上云录制功能的开关打开就没法关闭了，但是不调用云录制接口的话就不会产生付费，所以不用太在意。
 
 ---
 # ID: 38755
@@ -17851,7 +17901,7 @@ SDK Platform: Android
 
 Request type: 集成问题咨询
 
-Request Description: 视频发送端使用的android设备，sdk版本号3.3.0.设备使用了上海联通定向卡，添加了*.agora.io，.agoraio.cn，.sd-rtn.com 三个通配域名。在进入频道后，发生视频，sdk无报错。水晶球系统看，发送端正常推流。但是接收端(web，sdk版本4.11.0）无法接收到视频，水晶球显示无接收信息。
+Request Description: 视频发送端使用的android设备，sdk版本号3.3.0.设备使用了上海联通定向卡，添加了`*.agora.io，.agoraio.cn，.sd-rtn.com` 三个通配域名。在进入频道后，发生视频，sdk无报错。水晶球系统看，发送端正常推流。但是接收端(web，sdk版本4.11.0）无法接收到视频，水晶球显示无接收信息。
 测试频道号djcs000002,可以随时复现。
 需要麻烦贵司支持人员，协助解决，帮忙找出是否需要添加其他域名或ip白名单，或者其他解决方式。
 
@@ -17891,10 +17941,7 @@ SDK Platform: Web
 
 Request type: 集成问题咨询
 
-Request Description: 使用临时生成的token，并且调用时不使用uid可以播放，会触发user-joined事件：
-`const token = '007eJxTYHiiaqD0bvHyT1fbw1jf+R5yiFLND74085Ba2FG+zqSo3m0KDBaWxiZmSaaWiSZJxiZpyUaJBmap5knGKRaGqZbmJubmjT+fpDcEMjIsTjRmZmSAQBCfm6EktbgkOSMxLy81h4EBAFOCIr0=';`
-`await agoraClient.join(appId, channel, token);`
-但是换成从服务端获取的token，并且调用时带上uid就不能播放了，无法触发user-joined事件，也没有报错
+Request Description: 使用临时生成的token，并且调用时不使用uid可以播放，会触发user-joined事件，但是换成从服务端获取的token，并且调用时带上uid就不能播放了，无法触发user-joined事件，也没有报错
 
 回答思维链：客户用临时token的时候可以加入频道发流并且监听user-joined事件，但是用自己生成的token就不行了，可以让客户检查下token和uid是否匹配，以及是否用主播身份加入频道发流了，观众是无法触发user-joined 的
 
@@ -17977,7 +18024,7 @@ Request Description: 我的发票为什么还不开啊？
 
 回答思维链：看起来是涉及到发票的商务问题，可以让客户先提供下申请发票的事件和具体cid，并且让客户稍作等待，等人工工程师处理。
 
-Reply:  您好，麻烦提供下具体的 cid 和申请时间，稍后人工工程师就为您解答。
+Reply:  您好，麻烦提供下具体的 cid、申请时间、接收邮箱地址，稍后人工工程师就为您解答。
 
 ---
 
@@ -18026,38 +18073,6 @@ Reply:  您好，可以尝试下避免使用`joinChannelWithUserAccount`，SDK �
 
 ---
 
-# ID: 34495
-
-SDK Product: Cloud-recording
-
-SDK Version: 当前版本
-
-SDK Platform: Restful
-
-Request type: 线上报错 
-
-Request Description: 用的云录制的restful接口，用了好几年了，为了下周迎检，今天线上复测结果获取资源ID接口报了个错。
-
-接口：cloud_recording/acquire
-
-入参：
-```json
-{"uid":"8810546176","cname":"myyf797229771","clientRequest":{"resourceExpiredHour":72}}
-```
-
-出参：获取resourceID发生异常:
-```json
-{reason=post method api body check failed!, code=2}
-```
-
-我对照官网文档curl的示例参数，发现请求体没有缺失参数，不知为何会报这个错。
-
-回答思维链：body check failed!, code=2 的打印表示问题出在请求的 body 字段内，可能是客户输入了不正确的字段或者字段的值不符合要求，可以让客户再对照我们文档自查下 body，排查下是否出现了 uid 值超出限制范围的常见情况。
-
-Reply:  您好，这个打印本身代表 body 字段不符合要求，可以检查下是否出现了字段的值超出范围（比如 uid超出 int）或者缺少了一些必填字段的情况。
-
----
-
 # ID: 34490
 
 SDK Product: RTC
@@ -18091,24 +18106,6 @@ Request Description: 你好，我发现一个问题，就是uid是1的时候，�
 回答思维链：客户修改 uid 后就可以加入频道并看到画面了，听起来是加入频道时用的 uid 和频道内已有的重复了导致互踢，因此更换 uid 之前没能看到远端画面，可以和客户解释一下频道内 uid 不能重复的原因
 
 Reply:  您好，音视频互通是通过双方用不同uid 加入相同频道才能实现的，加入频道后去订阅指定 uid 才能看到画面，否则相同 uid 会把先加入的用户踢出频道，可以检查下 uid 是否有重复的情况。
-
----
-
-# ID: 34432
-
-SDK Product: RTC
-
-SDK Version: 当前版本
-
-SDK Platform: Restful
-
-Request type: 效果不佳，不达预期
-
-Request Description: 视频录制结束后再阿里云oss并未找到录制的视频内容
-
-回答思维链：客户在咨询云录制的线上问题，云录制的 ts 切片和 m3u8 都是实时上传 OSS 的。如果客户在 start 的时候指定了转码，那就会在 24 时内由声网侧转码 mp4 文件再上传 OSS。客户没有提到 ts 和 m3u8 的情况，可能是录制上传有些问题或者录制启动没有成功，需要找客户提供下具体的录制 sid，来让相关同事调查后台日志看看具体原因
-
-Reply:  您好，可以提供下具体的 sid，人工工程师稍后为您解答
 
 ---
 
@@ -18327,9 +18324,9 @@ SDK Platform: HarmonyOS
 
 Request type: 集成问题咨询
 
-Request Description: 为了解除某个远端用户的视图绑定，在调用setupRemoteVideo方法时，传入null或者undefined，抛出异常，提示类型错误。
-this._rtcEngine?.setupRemoteVideo(null)。
-我应该怎么做才嫩解除某个远端用户的绑定视图。
+Request Description: 为了解除某个远端用户的视图绑定，在调用`setupRemoteVideo`方法时，传入null或者undefined，抛出异常，提示类型错误。
+`this._rtcEngine?.setupRemoteVideo(null)`。
+我应该怎么做才能解除某个远端用户的绑定视图。
 
 回答思维链：客户正在尝试在HarmonyOS平台上解除远端试图绑定，但是直接给setupRemoteVideo传了null，应该引导客户给videocanvas里的xcomponentId传空
 
@@ -18352,67 +18349,6 @@ Request Description: 声网加入频道joinChannelWithUserAccount返回0说明�
 回答思维链：没有收到onJoinChannelSuccess 大概率是加入频道失败了，客户以为joinChannelWithUserAccount 返回 0 就表示加入成功的理解是不对的，需要解释一下加入频道需要以会掉为准，并且引导客户监听onConnectionStateChanged 来了解实际的频道链接状态
 
 Reply:  您好，调用 join 方法后 return0 只代表方法执行完毕，收到onJoinChannelSuccess才算加入成功。可以业务上监听onConnectionStateChanged 来判断实际的频道链接状态。参考[频道连接状态管理](https://doc.shengwang.cn/doc/rtc/android/basic-features/channel-connection)。
-
----
-
-# ID: 34299
-
-SDK Product: RTC-Linux
-
-SDK Version: 2.2.0
-
-SDK Platform: Linux-Go
-
-Request type: 集成问题咨询
-
-Request Description: 1、我目前使用的demo是go-AIGC-AGEN-DEMO-2.7，用于实现实时语音交互功能，该示例应该阅读哪一个类别的技术文档，web类别吗？
-2、该项目目前使用的sdk是[https://download.agora.io/sdk/release/agora_rtc_sdk-x86_64-linux-gnu-v4.4.30-20241024_101940-398537.zip](https://download.agora.io/sdk/release/agora_rtc_sdk-x86_64-linux-gnu-v4.4.30-20241024_101940-398537.zip "Follow link")，[使用 AI 降噪插件](https://doc.shengwang.cn/doc/rtc/javascript/advanced-features/noise-reduction "Follow link")中描述AI降噪需要 集成 v4.15.0 或以上版本的 Web SDK，v4.4.30和v4.15.0是同一个系列的sdk吗？哪一个版本更新？
-
-回答思维链：客户应该在用 convoAI 的服务端 SDK，问题 1可以让客户拉一下最新的 convoAI go SDK 代码。问题 2 应该是客户想要用 Web 端和 convoAI 的智能体对话，但是不知道服务端 SDK 和客户端 SDK 的区别是什么，可以给他 Web Demo 了解下 Web SDK 和服务端 SDK 的区别
-
-Reply:  您好，服务端要使用 convoAI 的话有自己的 SDK，参考：[使用 Go SDK 实现对话式 AI 引擎](https://doc.shengwang.cn/doc/convoai/restful/get-started/quick-start-go)
-这个 SDK 提供了让智能体加入 RTC 频道的能力，要和智能体互通的话需要用客户端加入频道发流来实现，可以考虑用 [Web SDK](https://doc.shengwang.cn/doc/rtc/javascript/get-started/run-demo)，具体文档参考。
-convoAI 的服务端 SDK 和 Web SDK 不是一个东西，但都是提供了让各自平台加入 RTC 频道的能力
-
----
-
-# ID: 34206
-
-SDK Product: RTC
-
-SDK Version: 4.2.0
-
-SDK Platform: Windows
-
-Request type: 集成问题咨询
-
-Request Description: 摄像头和屏幕共享视频合流。尝试用C#调用SDK
-```C#
-int mergeResult = rtc_engine_.
-StartLocalVideoTranscoder(new LocalTranscoderConfiguration
-{
-streamCount = 2,
-videoInputStreams = new TranscodingVideoStream[]
-{
-new TranscodingVideoStream
-
-{ sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_SCREEN, x = 0, y = 0, width = VideoTrackParam.bgWidth, height = VideoTrackParam.bgHeight, zOrder=0, }
-
-,
-new TranscodingVideoStream
-
-{ sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA, x = VideoTrackParam.frontX, y = VideoTrackParam.frontY, width = VideoTrackParam.frontWidth, height = VideoTrackParam.frontHeight, zOrder=1, }
-
-}
-});
-```
-
-启动摄像头，屏幕截图正常。合成流在观众端只看到桌面画面，没有看到摄像头画面。摄像头的width=screenWidth/10,height=screenheight/10,
-附件是SDK LOg.哪些地方调用错误？
-
-回答思维链：客户在咨询合流发流失败的问题，并且提供了 SDK 日志，可以让客户先自查下是不是join 的时候配置了多个发布视频流的字段，然后等人工工程师稍后解决。
-
-Reply:  您好，可以自查下是不是 join 的时候配置了多个发布视频流的字段，一个 uid 只能发一路视频流的。以及请您稍等，人工工程师稍后会来查看日志解答问题。
 
 ---
 
@@ -18558,52 +18494,11 @@ tcp:443, 8443, 80
 
 回答思维链：这是一个linuxSDK 网络环境配置问题；通过问题描述来看，客户的使用环境是有防火墙的，客户侧需要知道声网SDK在有限制的网络环境下如何配置，这里需要是声网云代理方案
 
-Reply:  您好，针对网络访问限制的环境，需要使用声网[云代理](https://doc.shengwang.cn/doc/rtc-server-sdk/java/advanced-features/cloud-proxy)方案；参考文档如下：
+Reply:  您好，针对网络访问限制的环境，需要使用声网[云代理](https://doc.shengwang.cn/doc/rtc-server-sdk/java/advanced-features/cloud-proxy)方案；需要开启云代理以后再配置指定域名、端口、协议才能使用
 
 
 ---
-# ID: 34077
 
-SDK Product: SDK-extension
-
-SDK Version: 4.5.0
-
-SDK Platform: Android
-
-Request type: 线上问题
-
-Request Description: 使用讯飞语言转写出现偶现的崩溃现象
-```
-#02 pc 000000000012360c /data/app/~~zo_uoDn8zaq9A__s_5X6NQ==/pieces.verdict.wicket-rMfY2uMUuh6ABK98L96cDQ==/lib/arm64/libagora-hy.so [arm64-v8a::41cb92e4e6e2cd08f17f07a9901100aa]
-4
-#03 pc 0000000000121660 /data/app/~~zo_uoDn8zaq9A__s_5X6NQ==/pieces.verdict.wicket-rMfY2uMUuh6ABK98L96cDQ==/lib/arm64/libagora-hy.so [arm64-v8a::41cb92e4e6e2cd08f17f07a9901100aa]
-5
-#04 pc 0000000000102ab4 /data/app/~~zo_uoDn8zaq9A__s_5X6NQ==/pieces.verdict.wicket-rMfY2uMUuh6ABK98L96cDQ==/lib/arm64/libagora-hy.so [arm64-v8a::41cb92e4e6e2cd08f17f07a9901100aa]
-6
-#05 pc 00000000000ff9e4 /data/app/~~zo_uoDn8zaq9A__s_5X6NQ==/pieces.verdict.wicket-rMfY2uMUuh6ABK98L96cDQ==/lib/arm64/libagora-hy.so [arm64-v8a::41cb92e4e6e2cd08f17f07a9901100aa]
-7
-#06 pc 0000000000110588 /data/app/~~zo_uoDn8zaq9A__s_5X6NQ==/pieces.verdict.wicket-rMfY2uMUuh6ABK98L96cDQ==/lib/arm64/libagora-hy.so [arm64-v8a::41cb92e4e6e2cd08f17f07a9901100aa]
-8
-#07 pc 00000000000fa538 /data/app/~~zo_uoDn8zaq9A__s_5X6NQ==/pieces.verdict.wicket-rMfY2uMUuh6ABK98L96cDQ==/lib/arm64/libagora-hy.so [arm64-v8a::41cb92e4e6e2cd08f17f07a9901100aa]
-9
-#08 pc 0000000000107b7c /data/app/~~zo_uoDn8zaq9A__s_5X6NQ==/pieces.verdict.wicket-rMfY2uMUuh6ABK98L96cDQ==/lib/arm64/libagora-hy.so [arm64-v8a::41cb92e4e6e2cd08f17f07a9901100aa]
-10
-#09 pc 0000000000107848 /data/app/~~zo_uoDn8zaq9A__s_5X6NQ==/pieces.verdict.wicket-rMfY2uMUuh6ABK98L96cDQ==/lib/arm64/libagora-hy.so [arm64-v8a::41cb92e4e6e2cd08f17f07a9901100aa]
-11
-#10 pc 0000000000124904 /data/app/~~zo_uoDn8zaq9A__s_5X6NQ==/pieces.verdict.wicket-rMfY2uMUuh6ABK98L96cDQ==/lib/arm64/libagora-hy.so [arm64-v8a::41cb92e4e6e2cd08f17f07a9901100aa]
-12
-#11 pc 0000000000124684 /data/app/~~zo_uoDn8zaq9A__s_5X6NQ==/pieces.verdict.wicket-rMfY2uMUuh6ABK98L96cDQ==/lib/arm64/libagora-hy.so [arm64-v8a::41cb92e4e6e2cd08f17f07a9901100aa]
-13
-#12 pc 00000000000a4f40 /data/app/~~zo_uoDn8zaq9A__s_5X6NQ==/pieces.verdict.wicket-rMfY2uMUuh6ABK98L96cDQ==/lib/arm64/libagora-hy.so [arm64-v8a::41cb92e4e6e2cd08f17f07a9901100aa]
-14
-#13 pc 00000000001733bc /data/app/~~zo_uoDn8zaq9A__s_5X6NQ==/pieces.verdict.wicket-rMfY2uMUuh6ABK98L96cDQ==/lib/arm64/libagora-hy.so [arm64-v8a::41cb92e4e6e2cd08f17f07a9901100aa]
-```
-
-回答思维链：这是一个使用声网讯飞云市场插件崩溃问题；对于云市场插件相关问题，都需要和客户确认使用的声网sdk版本，之后需要人工工程师内部确认插件版本是否适配。
-
-Reply:  您好，麻烦您这边提供下使用的声网SDK版本，需要等候人工工程师确认对应的插件版本；感谢您的理解与配合，谢谢。
-
----
 # ID: 34061
 
 SDK Product: RTC
@@ -18622,25 +18517,6 @@ Reply:  您好，频道的创建和销毁是由我们后端做的，对于用户
 
 ---
 
-# ID: 34058
-
-SDK Product: RTC-Linux
-
-SDK Version: 当前版本
-
-SDK Platform: Linux-Java
-
-Request type: 其他问题
-
-Request Description: 请问连接声网的服务端需要的网络配置有哪些
-
-回答思维链：这是一个使用声网sdk的网络配置问题；正常需要服务器接入公网，有公网 IP；且允许访问 .agora.io 以及 .agoralab.co
-
-Reply:  您好，声网服务端网络要求如下:
-服务器接入公网，有公网 IP
-服务器允许访问 .agora.io 以及 .agoralab.co
-
----
 # ID: 34044
 
 SDK Product: CDN
@@ -18701,43 +18577,7 @@ Request Description: agora_python_server_sdk中的IVideoEncodedFrameObserver接�
 Reply:  您好，这里比较怀疑是推送进来的数据就出现异常，建议您这边测试下在同一个频道加个接收端和python端互通，接收端图像是否正常；
 
 ---
-# ID: 34019
 
-SDK Product: RTC-Linux
-
-SDK Version: 4.0.1
-
-SDK Platform: Linux-Java
-
-Request type: 集成问题咨询
-
-Request Description: 创建 AI 智能体，报错请求参数错误，具体的返回内容：
-```json
-{"detail":"","reason":"InvalidRequest"}
-```
-
-请求参数：
-```json
-{
-"name": "1889f1ac6ac44d8c9bded3c2c4c53e3d",
-"properties": {
-"channel": "81471e0c5d654e56abf9531e63684a7c",
-"agent_rtc_uid": "0",
-"remote_rtc_uids": ["*"],
-"idle_timeout": 600,
-"asr":
-
-{ "language": "en-US" }
-}
-}
-```
-
-回答思维链：这是一个conversationAI 智能体创建失败的问题；此类问题的通常解决思路是建议让客户使用控制台上的playground测试成功后，点击View Code拿到完整的请求即可
-
-Reply:  您好，您给的请求参数是不完整，建议是先在控制台上的playground测试成功后，点击View Code拿到完整的请求即可；链接如下
-https://console.shengwang.cn/product/ConversationAI?tab=Playground
-
----
 # ID: 33985
 
 SDK Product: RTC-Linux
@@ -18801,51 +18641,12 @@ SDK Platform: Android
 
 Request type: 效果不佳、不达预期
 
-Request Description: mRtcEngine.muteRemoteAudioStream(uid, true); 关闭远程用户的语音流 ， 远程用户 onRemoteAudioStateChanged 回调未触发
+Request Description: `mRtcEngine.muteRemoteAudioStream(uid, true); `关闭远程用户的语音流 ， 远程用户 `onRemoteAudioStateChanged` 回调未触发
 
-回答思维链：客户以为 muteRemoteAudioStream 会控制远端的发流状态，需要提醒客户muteRemoteAudioStream 只能控制本端不订阅，onRemoteAudioStateChanged 回调只有在远端自己改动发流状态的时候才会触发
+回答思维链：客户以为 `muteRemoteAudioStream` 会控制远端的发流状态，需要提醒客户`muteRemoteAudioStream` 只能控制本端不订阅，`onRemoteAudioStateChanged` 回调只有在远端自己改动发流状态的时候才会触发
 
 Reply:  您好，[muteRemoteAudioStream](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_publishnsubscribe#api_irtcengine_muteremoteaudiostream)只是控制本端不去订阅远端发出的音频流，不会控制远端的实际发流情况。
 [onRemoteAudioStateChanged](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_audio_basic#onRemoteAudioStateChanged)是远端用户采集、发送层面出现变动时才会触发的回调，mute 方法不会影响到远端的实际发流所以不会触发。
-
----
-
-# ID: 33944
-
-SDK Product: Analytics
-
-SDK Version: 当前版本
-
-SDK Platform: Restful
-
-Request type: 线上问题
-
-Request Description: 请求地址：
-`https://api.sd-rtn.com/beta/insight/usage/by_time?start_ts=1738857600000&end_ts=1739499359000&appid=cf32bef49b4d47e0bdaf6dace009ae49&metric=totalDuration&aggregateGranularity=1h`
-响应结果：
-```json
-{
-"code": 400,
-"message": "Bad request, parameter : startTs can not be null",
-"data": null
-}
-```
-
-接口提示startTs没传，后改为
-`https://api.sd-rtn.com/beta/insight/usage/by_time?startTs=1738857600000&endTs=1739499359000&appid=cf32bef49b4d47e0bdaf6dace009ae49&metric=totalDuration&aggregateGranularity=1h`
-响应结果：
-```json
-{
-"code": 500,
-"message": "Unknown Error",
-"data": null
-}
-```
-
-回答思维链：这是一个水晶球restful请求失败的问题，通常来说 返回500 都是内部错误，需要人工工程师介入排查
-
-Reply:  您好，感谢您联系声网技术支持，我们已收到您提交的工单，正在为您处理。另外针对这个问题，建议您：
-1、再检查以下查询参数格式，是否异常或者有不合法的字段
 
 ---
 
@@ -18886,11 +18687,7 @@ Request Description: 1. 使用定向流量卡，定向流量白名单IP包括以
 回答思维链：这是一个RTSA SDK 设备使用流量卡加入不了频道的问题；通常针对定向流量卡的适配，是需要先向运营商报备相关域名以及在初始化代码设置domainLimit
 
 Reply:  您好，针对定向流量卡接入，需要您这边参考如下方案实现：
-1. 向运营商报备*.agora.io, *.
-sd-rtn.com两个通配域名（至少需要*.
-agora.io，最好是也加上*.
-sd-rtn.com以满足高可用需求）。如需区域限制功能，需要增加*.
-agoraio.cn这个通配域名。
+1. 向运营商报备`*.agora.io, *.sd-rtn.com`两个通配域名（至少需要`*.agora.io`，最好是也加上`*.sd-rtn.com`以满足高可用需求）。如需区域限制功能，需要增加`*.agoraio.cn`这个通配域名。
 2. 代码设置
 ```java
 RtcEngine create(RtcEngineConfig config) RtcEngineConfig->domainLimit = true
@@ -19027,29 +18824,6 @@ Reply:  您好，麻烦您按以下模版整理问题，以便我们能第一时
 3. 问题现象： (例) (1) uid=123 听不到/看不到 uid=456，大约持续20分钟 (2) uid=123 听/看 uid=456卡顿
 4. 现象录屏:如果有的话尽量提供
 5. sdklog：如果有的话尽量提供 [如何设置日志文件](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
-
----
-
-# ID: 33888
-
-SDK Product: rtmpconverter
-
-SDK Version: 当前版本
-
-SDK Platform: Restful
-
-Request type: 线上报错
-
-Request Description: 1. 问题表现，使用旁路推流，无法将RTC的主播流旁路推流到声网的CDN
-2. 问题现场信息
-旁路推流开始时间： 11:23:50
-旁路推流地址： rtmp://pushcloudlive.czi.com.cn/live/7c14653b67e34bc7a2d5941f1544fef7:1581F6Q8X24BP00G019C:81-0-0
-
-回答思维链：这个一个rtmp-converter推流失败的问题，客户已经提供了频道号、时间点以及推流地址；需要人工技术工程师排查后给出答复。
-
-Reply:  您好，感谢您联系声网技术支持，我们已收到您提交的工单，正在为您处理。另外针对这个问题，建议您：
-1、先查下converter是否创建成功，调用创建的接口是否返回200；
-2、检查rtmp地址是否可用，以及是否正在被应用使用；
 
 ---
 
@@ -19266,13 +19040,6 @@ SDK Platform: Java
 Request type: 集成问题咨询
 
 Request Description: 创建 RtmClient 时报错：`Exception in thread "main" java.lang.UnsatisfiedLinkError: no aosl in java.library.path`
-
-代码如下：  
-```java
-RtmConfig rtmConfig = new RtmConfig.Builder(APPID, userId)  
-.eventListener(mRtmEventListener)  
-.build();  
-mRtmClient = RtmClient.create(rtmConfig);
 ```
 
 实际报错如下：  
@@ -19539,26 +19306,6 @@ Reply:  您好，请问现在在用的产品是 RTC 还是 RTM？如果是 RTC �
 
 ---
 
-# ID: 33738
-
-SDK Product: Cloud-recording
-
-SDK Version: 当前版本
-
-SDK Platform: Restful
-
-Request type: 集成问题咨询
-
-Request Description: 麻烦帮忙查下在调用`/v1/apps/%s/cloud_recording/resourceid/%s/sid/%s/mode/mix/query`这个接口时，sid：b024c073b94e0419c10b53aef14bcb71
-接口返回404，请问什么情况下会返回404-服务器无法根据请求找到资源（网页）？这些参数都是从声网获取的，为什么会404？
-
-回答思维链：客户成功开启云端录制后调用 query 方法返回了 404，可以让客户先参考文档自查，然后等人工工程师查找对应sid 的记录看下具体原因.
-
-Reply:  您好，query 404 是被查询的录制任务不存在或已经结束了，您可以先对照[为什么成功开启云端录制后调用 query 方法返回 404？](https://doc.shengwang.cn/faq/integration-issues/return-404)自查一下，人工工程师稍后会查询 sid 的后台记录看下具体原因
-
-
----
-
 # ID: 33714
 
 SDK Product: RTMP
@@ -19667,26 +19414,6 @@ Request Description: 调用rtmClient.login（）显示超时
 
 Reply:  您好，请问现在在用的 RTM 版本是多少？1.x 已经停止更新维护了，建议使用 [2.x 版本](https://doc.shengwang.cn/doc/rtm2/javascript/overview/migration-guide)
 login 超时大概率和客户端网络有关，可以检查下客户端的网络状况，切换可以稳定连接公网的热点或者 wifi 再试试。
-
----
-
-# ID: 33689
-
-SDK Product: Cloud-Recording
-
-SDK Version: 当前版本
-
-SDK Platform: Restful
-
-Request type: 线上报错
-
-Request Description: 该云端录制未生成回放，麻烦看一下什么原因：  
-sid:ad98e85fb842db158b928aa97908ec47  
-channelName:course-e08f1d45
-
-回答思维链：客户已经提供 sid 和频道名了，接下来等待人工工程师处理就够了。可以考虑再收集一下具体的录制时间点。
-
-Reply:  您好，可以再确认下录制发送的时间点吗？人工工程师稍后为您排查
 
 ---
 
