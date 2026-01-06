@@ -1126,8 +1126,6 @@
 
 ---
 
-
-
 # WARN_ADM_RECORD_IS_OCCUPIED (1033)
 错误码: 1033
 含义: 录音设备被占用（警告）
@@ -1149,8 +1147,6 @@
 
 ---
 
-
-
 # WARN_ADM_IOS_SESSION_DEACTIVATE_FAIL (1207)
 错误码: 1207
 含义: iOS 取消激活 session 失败（警告）
@@ -1158,10 +1154,6 @@
 平台: iOS
 
 ---
-
-
-
-
 
 # WARN_ADM_IOS_SESSION_MODE_ILLEGAL (1034)
 错误码: 1034
