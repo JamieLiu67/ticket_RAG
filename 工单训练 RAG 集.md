@@ -1,4 +1,35 @@
 
+# ID: 38795
+
+SDK Product: RTC
+
+SDK Platform: Electron
+
+SDK Version: 4.3.2
+
+Request Type: 集成问题咨询
+
+Request Description: 我现在有两个用户加入一个频道；一个用`joinChannel`发视频流，一个用`joinChannelEx`发屏幕共享流；然后在`onTokenPrivilegeWillExpire`的回调中使用`renewToken`去更新`token`；两个用户的更新结果都是0成功；但是共享的那个用户还是到期离开没更新成功
+
+Reply: 您好，`renew` 属于 `engine` 对象，所以只能更新 `engine` 下的频道连接，无法给 `engineEX` 的多频道连接更新。多频道场景下要更新 token 需要使用`updateChannelMediaOptionsEx`方法
+
+---
+# ID: 38801
+
+SDK Product: Cloud-recording
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 云端录制启用了，没有生效吗？
+
+Reply: 您好，云录制是要调用 Restful 接口以后才会工作的，不是自动的
+
+---
+
 # ID: 38781
 
 SDK Product: RTC-Linux
