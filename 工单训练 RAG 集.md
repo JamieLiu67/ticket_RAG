@@ -1,4 +1,37 @@
 
+# ID: 38810
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 在视频录制过程中中间都会断，怎样保证录制时间长问题
+
+Reply: 云录制的 `start` 请求里有`maxIdleTime`字段，是用来控制云录制多久收不到流以后自己退出的。如果有需要可以设置的长一点，这样频道里没人发流录制端也不会马上自己退频道结束录制了
+
+---
+# ID: 38811
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 集成问题咨询
+
+Request Description: 你好，声网灵隼支持多个客户端同时和设备音视频吗
+
+Reply: 您好，灵隼平台后续会下架，不推荐使用了
+有 IOT 需求可以用 [RTSA SDK](https://doc.shengwang.cn/doc/rtsa/c/landing-page)
+所有 RTC RTSA SDK 都支持频道内多人互通的
+
+---
+
 # ID: 38795
 
 SDK Product: RTC
@@ -1267,17 +1300,7 @@ SDK Version: 4.24.x
 
 Request Type: 其他问题
 
-Request Description: 我现在有个新需求，想在企业微信、钉钉、飞书内创建应用，通过应用和我的app进行音视频通话，最初是想通过h5集成，和我们ai聊了一下，给我的反馈是1. 浏览器支持
-企业微信:
-
-H5不支持在企业微信内直接使用声网的Web SDK进行音视频通话。企业微信的内置浏览器对WebRTC的支持有限，无法满足实时音视频的需求。
-钉钉:
-
-钉钉的内置浏览器支持WebRTC，可以使用声网的Web SDK进行音视频通话。但需要注意的是，钉钉的内置浏览器可能有一些限制，建议进行充分的测试。
-飞书:
-
-飞书的内置浏览器也支持WebRTC，可以使用声网的Web SDK进行音视频通话。同样，建议进行充分的测试以确保兼容性和稳定性。
-有什么可行的方案吗
+Request Description: 我现在有个新需求，想在企业微信、钉钉、飞书内创建应用，通过应用和我的app进行音视频通话，最初是想通过h5集成，有什么可行的方案吗
 
 Reply: 您好，要使用 Web SDK 的话需要保证这些内置浏览器所用的 Webview 本身支持 WebRTC 协议，可以用[WebRTC 官方 Demo](https://webrtc.github.io/samples/)验证下可用性。
 参考[浏览器兼容性和已知问题](https://doc.shengwang.cn/doc/rtc/javascript/overview/browser-compatibility)
