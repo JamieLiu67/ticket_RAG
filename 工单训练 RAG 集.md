@@ -1,4 +1,83 @@
 
+# ID: 38847
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 其他问题
+
+Request Description: 对话式 AI 引擎 ，ASR LLM 豆包模型，欧洲，美国也都支持吗
+
+Reply: 您好，对话式 AI 引擎只是把指定的 LLM 加入到 RTC 频道里互通，RTC 频道里的用户在全球都可以用，LLM 在哪里无所谓，因为最后语音交互都是在 RTC 频道里实现的
+
+---
+# ID: 38849
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.23.x
+
+Request Type: 集成问题咨询
+
+Request Description: 您好，请问下为什么我们使用你们提供的python sdk,参数复制到你们提供的示例里面是可以用的，但是使用你们的sdk就不能用，后面换了个token就都可以用了，并且偶尔不稳定呢 ，请问是什么原因呢
+
+Reply: 您好，关于您遇到的 Token 问题，建议按以下步骤排查与优化：
+1、更换 Token 前缀：
+建议使用 007 开头的 Token。006 开头的 Token 工具无法解析，不利于排查问题。007 格式支持全量字段解析，详情参考文档：[生成 Token](https://doc.shengwang.cn/doc/rtc/javascript/basic-features/token-authentication#token-code)。
+2、关于 Token 有效期：
+Token 本身不存在 “不稳定” 的说法，只有过期时间的概念。
+上限限制： 无论生成时配置的有效期是多少，系统最大有效时间均为 24 小时。
+实际生效： 最终有效期取 “配置时间” 与 “24 小时” 的较小值。
+3、临时 Token： 不校验 UID，频道名匹配就可以进入频道。
+正式 Token： 严格校验 UID。请务必保证生成 Token 时填入的 UID 和频道名，与客户端 Join 时传入的参数完全一致，否则会导致加入频道失败。
+4、您可以使用控制台的工具自行校验 Token 是否正确：
+路径： 控制台 -> 辅助工具 -> Token 生成 / 校验 -> Token 校验
+操作： 粘贴 Token 解析，核对解析出的 uid 和 channelName 是否与您 Join 时传入的参数完全匹配。
+
+---
+# ID: 38855
+
+SDK Product: RTC
+
+SDK Platform: React Native
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: `String acquireUrl = "https://api.agora.io/v1/projects/" + appId + "/rtsc/speech-to-text/builderTokens";`
+你们的那个会议实时字幕功能，我调用api返回
+```
+>>> [RTT] Failed to acquire token: 
+{"message":"invalid_appid"}
+```
+帮我检查一下，是否是我传参有问题
+
+Reply: 您好，`/rtsc/speech-to-text/builderTokens` 这个是我们内部的接口，请不要使用
+要生成 token 可以 clone 我们的仓库，跑里面的脚本来生成，参考[使用 Token 鉴权](https://doc.shengwang.cn/doc/rtc/android/basic-features/token-authentication)
+
+---
+# ID: 38857
+
+SDK Product: RTM
+
+SDK Platform: Java
+
+SDK Version: 其他版本
+
+Request Type: 商务问题
+
+Request Description: 我想基于User Channel开发相应功能，但其的api并发限制并未明确列出，无法进行相应设计，api限制接口文档里只有关于message channel和stream channel的限制
+
+Reply: 您好，User Channel 严格意义上并不是 channel，它只是点对点消息，限制参考Message Channel 就行，都是 60 条消息每秒
+
+---
+
 # ID: 38834
 
 SDK Product: RTC
