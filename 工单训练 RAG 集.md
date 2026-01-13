@@ -1,4 +1,92 @@
 
+# ID: 38834
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 4.6.0
+
+Request Type: 其他问题
+
+Request Description: 我在使用途中，使用采集卡推流出现了亮度错误，也就是过曝的问题，这该怎么解决？
+
+Reply: 请问您的采集具体是如何实现的？如果本身有采集卡可以试下用[自采集方案](https://doc.shengwang.cn/doc/rtc/windows/advanced-features/custom-video-source)而不是 SDK 采集
+
+---
+# ID: 38838
+
+SDK Product: RTC
+
+SDK Platform: mini-app
+
+SDK Version: 2.6.5
+
+Request Type: 集成问题咨询
+
+Request Description: 目标：多人会议中实时监听是那个（哪些）用户在说话，并高亮显示那个（哪些）用户
+已做尝试：
+1.在网页端已实现该功能
+2.在微信小程序端通过监听`audiovolumenotify`事件来实现
+`audiovolumenotify`事件不触发
+
+Reply: 您好，我们的小程序 SDK 本身不提供音量回调接口，需要您自行实现，具体可以咨询下微信小程序团队
+
+---
+# ID: 38843
+
+SDK Product: Flexible-classroom
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 灵动课堂直播结束后如何调取直播数据
+
+Reply: 1、直播间人数无法准确统计，建议业务上在客户端做个启动的上报，在自己这里统计
+2、直播时长可以在收到课堂结束回调的 1 小时内调用 Restful 接口[查询课堂信息](https://doc.shengwang.cn/doc/flexible-classroom/restful/api/api-classroom#%E6%9F%A5%E8%AF%A2%E8%AF%BE%E5%A0%82)，通过开始时间和结束时间来计算
+3、直播聊天用的是环信 IM，需要咨询环信 IM 侧如何开启历史消息保存
+
+---
+
+# ID: 38825
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.2
+
+Request Type: 集成问题咨询
+
+Request Description: 在控制台创建频道并生成临时token可以加入该频道并成功语音通话，但如果在程序中，把频道id改为新的，却不能成功加入并成功语音通话。不知道为什么？
+按照文档，如果在程序中设定新的频道id，频道会自动创建，并成功加入。
+
+Reply: 您好，临时 token 校验频道名，如果加入的频道名和生成 token 是设定的频道名不一致就会报错无法进入，需要参考[使用 Token 鉴权](https://doc.shengwang.cn/doc/rtc/android/basic-features/token-authentication)生成正确的 token 来使用
+
+---
+# ID: 38830
+
+SDK Product: RTC
+
+SDK Platform: MacOS
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 您好，我在集成RTC的时候，运行Xcode会报很多类重复的错误，日志如下（这种对上线会有影响吗）Demo示例里面直接跑起来也会有这种提示日志。
+```
+objc[93216]: Class RTECVPixelBuffer is implemented in both /Users/duoping/Library/Developer/Xcode/DerivedData/APIExample-etukxzpyoszxpkcrjmapqqwuormd/Build/Products/Debug/APIExample.app/Contents/Frameworks/AgoraScreenCaptureExtension.framework/Versions/A/AgoraScreenCaptureExtension (0x101c40950) and /Users/duoping/Library/Developer/Xcode/DerivedData/APIExample-etukxzpyoszxpkcrjmapqqwuormd/Build/Products/Debug/APIExample.app/Contents/Frameworks/AgoraRtcKit.framework/Versions/A/AgoraRtcKit (0x107fd8cc8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+```
+
+Reply: 您好，不会有影响，可以把不需要用的插件手动删除，参考[减小 App 体积](https://doc.shengwang.cn/doc/rtc/macos/best-practice/reduce-app-size)，这样打印的内容会少一点。
+后续我们会让研发隐藏这类打印来减少干扰
+
+---
+
 # ID: 38810
 
 SDK Product: RTC
