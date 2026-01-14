@@ -1,4 +1,35 @@
 
+# ID: 38863
+
+SDK Product: RTC
+
+SDK Platform: HarmonyOS
+
+SDK Version: 4.4.2
+
+Request Type: 集成问题咨询
+
+Request Description: 我们项目是flutter实现的，纯鸿蒙实现界面太复杂，如何能把画面通过PlatformView传到flutter层去实现画面显示？
+
+Reply: 您好，我们的 flutter SDK 不支持在鸿蒙 SDK 上运行，目前也暂无计划适配
+
+---
+# ID: 38864
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 集成问题咨询
+
+Request Description: 我们软件主要使用在内网环境，需要为音视频通话开放地址白名单，麻烦提供一下接口请求的外网地址
+
+Reply: 您好，要在内网使用 RTC 需要付费开通[云代理](https://doc.shengwang.cn/doc/rtc/android/basic-features/firewall)服务，请先联系销售获取报价
+
+---
+
 # ID: 38847
 
 SDK Product: RTC
