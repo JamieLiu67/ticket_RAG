@@ -1,4 +1,168 @@
 
+# ID: 38874
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.5.0
+
+Request Type: 其他问题
+
+Request Description: 我们目前平台有一些IOS用户返回在房间类麦克风在使用过程中，如果微信来了新消息不会有任何消息推送通知。这是因为什么原因呢？
+
+Reply: 您好，这个和我们 SDK 没有直接关系，建议排查下 IOS 消息推送机制，微信的消息通知是微信和苹果消息推送实现的，我们 SDK 不可能影响消息推送机制的
+
+---
+# ID: 38876
+
+SDK Product: RTC
+
+SDK Platform: HarmonyOS
+
+SDK Version: 4.4.2
+
+Request Type: 集成问题咨询
+
+Request Description: 我这边想咨询一下，使用声网的Android SDK、IOS SDK、鸿蒙SDK，是否可以与开源的Janus Gateway实现对接？
+
+Reply: 声网的 WebSDK 是基于开源 webrtc 协议封装的私有协议，无法和其他协议直接互通。如果您考虑用 rtmp 协议的话，可以用 [RTMP 网关](https://doc.shengwang.cn/doc/rtmp-gateway/restful/landing-page)产品来把流推进 RTC 频道里。
+要从 RTC 频道里把画面拿到 RTMP 流里，需要用[旁路推理](https://doc.shengwang.cn/doc/media-pull/restful/landing-page)
+
+---
+# ID: 38877
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 4.3.0
+
+Request Type: 集成问题咨询
+
+Request Description: 你好 我想咨询一下 客服端可以支持外部流媒体吗 比如rtmp或者rtsp作为采集端 然后进行相关推送
+
+Reply: 可以用 [RTMP 网关](https://doc.shengwang.cn/doc/rtmp-gateway/restful/landing-page)产品来把流推进 RTC 频道里。
+
+---
+# ID: 38878
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 我们这个一对一的视频通话进行过程完全正常。但最终结果.ts文件和.m3u8文件写入阿里云OSS的情况出现问题。从阿里云OSS的文件列表来看，.ts文件不完整，缺失了好多个。.m3u8文件正常。
+
+这个问题之前在我们其他的面试视频中也曾经出现过，但最终过了一天之后，所有文件都出现并且完整。
+
+我们想了解两个问题：
+1. 这种问题出现的原因是什么？我们要如何能够改善？
+2. 因为这次这个通话视频我们非常紧急需要使用，几个小时内我们要提交这个视频。能否烦请您们技术工程师帮忙在后台先手动获取后发送给我们？谢谢。
+
+Reply: 如果存在部分云录制切片丢失情况，可以检查下是否存在发起录制的地区和最终录制上传的 OSS `region` 不同的跨区情况，跨区就容易出现这种部分切片上传超时需要重试的情况。
+
+---
+# ID: 38880
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.1
+
+Request Type: 其他问题
+
+Request Description: 1、h264格式 码流数据，通过`pushExternalEncodedVideoFrameById` 方法推流 返回的Int为`[-2]`，但在控制台上有时间扣除
+2、推流时，在声网WEB Demo上未能显示。
+具体看附件
+
+Reply: 您好，Android SDK 上不支持用自采集发送 h264 格式的实时流，请完整介绍下您目前的业务需求和场景，寻找替代方案。
+
+---
+# ID: 38882
+
+SDK Product: RTC
+
+SDK Platform: Electron
+
+SDK Version: 4.3.2
+
+Request Type: 集成问题咨询
+
+Request Description: 请问你们有提供根据音频生成文字纪要的功能吗，如果有的话怎么开通收费
+
+Reply: 您好，目前有一个还没有正式上架国内官网的[实时转写翻译服务](https://doc-internal.shengwang.cn/doc-new/stt_v7/doc/speech-to-text/restful/landing-page)，但没有会议纪要能力。
+需要开通试用的话需要先联系销售申请，没有销售的话可以先电话沟通：400 6326626
+
+---
+# ID: 38885
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 线上报错
+
+Request Description: 一个阿拉伯的用户，加入房间一直失败，日志上看onConnectionStateChanged 多次回调 state 4 reason 14，同时会打印 AGORA_SDK: vpnInUse is false 日志
+
+Reply: 您好，沙特、中东地区如果使用 3.x SDK 频繁反馈有用户加入频道失败的话，建议升级到最新的 3.x Weekly 版本再试试，看下还会不会复现。
+参考[3.x Weekly Hotfix 发版说明](https://docs-preprod.agora.io/cn/video-legacy/weekly_hotfix?platform=iOS)
+如果升级后还有问题，麻烦提供具体的客户端 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)
+
+---
+# ID: 38888
+
+SDK Product: Flexible-classroom
+
+SDK Platform: Web
+
+SDK Version: 2.9.40
+
+Request Type: 集成问题咨询
+
+Request Description: 灵动课堂的 websdk 是否能够直接在uniapp中使用，我的app是uniapp，想使用灵动课堂的能力，不知道是否支持？
+
+Reply: 您好，灵动课堂不支持 uni-app 方式集成
+
+---
+# ID: 38895
+
+SDK Product: RTC
+
+SDK Platform: Unity
+
+SDK Version: 4.5.1
+
+Request Type: 其他问题
+
+Request Description: 提交googleplay时,提示库`base/lib/arm64-v8a/libAgoraRtcWrapper.so`不支持16KB
+
+Reply: 官网的版本没有更新，这可以使用这个[支持 16kb 的 Unity 4.5.1 full](https://download.agora.io/sdk/release/Agora_Unity_RTC_SDK_4.5.1_FULL_20250617_468_build.5.zip)
+或者[支持 16kb 的 Unity 4.5.1 full](https://download.agora.io/sdk/release/Agora_Unity_RTC_SDK_4.5.1_VOICE_20250617_471_build.5.zip)
+
+---
+# ID: 38899
+
+SDK Product: RTC-Linux
+
+SDK Platform: Linux-Python
+
+SDK Version: 2.2.4
+
+Request Type: 集成问题咨询
+
+Request Description: 有没有国内的Web Demo？
+
+Reply: 您好，国内 Web Demo 用 [Web Demo](https://webdemo.agora.io/index.html)
+
+---
+
 # ID: 38863
 
 SDK Product: RTC
@@ -11206,7 +11370,7 @@ Request Type: 其他问题
 
 Request Description: 观众端加入直播间   在主播端的日志没有任何反应
 
-Reply: 您好，因为观众人数较多，所以 SDK 设计时就设定观众加入频道就是无法感知的。如果需要感知观众进出频道的事件，可以用 [NCS 事件](https://doc.shengwang.cn/doc/rtc/restful/webhook/events#105-audience-join-channel)去做，不过人多的时候回调就会非常频繁,还请注意。
+Reply: 您好，因为观众人数较多，所以 SDK 设计时就设定观众加入频道就是无法感知的。如果需要感知观众进出频道的事件，可以用 [Webhook 事件](https://doc.shengwang.cn/doc/rtc/restful/webhook/events#105-audience-join-channel)去做，不过人多的时候回调就会非常频繁,还请注意。
 
 ---
 
@@ -13054,7 +13218,7 @@ Request Type: 集成问题咨询
 
 Request Description: 主播开播后，产生意外关掉了客户端。服务端通过什么接口去判断当前直播已经被关闭
 
-Reply: 您好，IOS 杀后台是可以被感知到的，SDK 会认为用户主动退出了。Android 感知不到，SDK 会尝试重连 20s，20s 连不上就认为超时连接，判定这个 uid 离线，不在频道内了。频道里没有人在，频道就会变成不存在的状态
+Reply: 您好，IOS 杀后台后客户端 SDK是可以被感知到的，SDK 会认为用户主动退出了。Android 感知不到，SDK 会尝试重连 20s，20s 连不上就认为超时连接，判定这个 uid 离线，不在频道内了。频道里没有人在，频道就会变成不存在的状态
 
 这些都可以用 [查询用户列表](https://doc.shengwang.cn/doc/rtc/restful/channel-management/operations/get-dev-v1-channel-user-appid-channelName) 接口查询。
 
