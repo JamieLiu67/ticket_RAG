@@ -1,4 +1,52 @@
 
+# ID: 38908
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 报错：
+请求失败: 500
+`{"detail":"core: edge failed, reason: 'NoneType' object has no attribute 'output_modalities'","reason":"InternalServerError"}`
+
+Reply: 您好，请检查下目前使用的网络是否能访问公网，我们的服务需要公网使用。以及确保 ASR、LLM、TTS 信息都有填写，如果还有问题麻烦将原始 curl 请求放在 txt 中发来
+
+---
+# ID: 38920
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 集成问题咨询
+
+Request Description: 我们有一个新的业务场景，需要打通本地内线电话系统与 Agora RTC 频道。为了评估技术可行性，特向贵方咨询关于 SIP Gateway (或 SIP Connect) 功能的支持情况。
+
+Reply: 您好，声网目前没有 SIP 的相关对接产品，有这类需求可以去咨询下小樱桃 PSTN，集成他们的 SDK 来使用
+
+---
+# ID: 38921
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.23.x
+
+Request Type: 集成问题咨询
+
+Request Description: 想问下咱们有没有linux服务端sdk，用于服务端进行进房推拉流，类似进行转推用途。然后有python版本的sdk吗？想跟livekit agent进行对接，不知道有没有相关的案例。
+
+Reply: 有[服务端 SDK](https://doc.shengwang.cn/doc/rtc-server-sdk/python/landing-page)，但是只能在我们的 RTC 频道内进行传输，没有办法和 `livekit` 打通的，建议使用我们的 [convoAI](https://doc.shengwang.cn/doc/convoai/restful/landing-page)
+
+---
+
 # ID: 38874
 
 SDK Product: RTC
