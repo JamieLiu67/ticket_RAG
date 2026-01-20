@@ -1,4 +1,70 @@
 
+# ID: 38924
+
+SDK Product: IM
+
+SDK Platform: iOS
+
+SDK Version: 1.3.2
+
+Request Type: 其他问题
+
+Request Description: `ShengwangChat-UIKit-ios`
+我看这个只有ios的swift版本，有OC多版本吗？android有Java的版本吗
+
+Reply: 您好，声网 IM 的 UIkit 只有 swift 和 KT 版本的，没有 oc 和 java
+
+---
+# ID: 38925
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 集成问题咨询
+
+Request Description: 旁路推流 打算购买aliyun的CDN。应该买哪种类型的呢？
+
+Reply: 旁路推流只需要一个 RTMP 地址来收流，具体 CDN 买哪种可以咨询下提供商，问下他们哪种是一个推流地址一个拉流地址的。
+或者也可以直接使用我们的融合 CDN，不过我们没有测试 CDN 地址，需要您用自己的域名在声网 console 上配置来使用。
+
+---
+# ID: 38929
+
+SDK Product: RTSA
+
+SDK Platform: Linux-C
+
+SDK Version: 1.9.5
+
+Request Type: 崩溃（闪退、卡死）
+
+Request Description: 芯片平台：ESP32-S3(idf v5.5.2)
+SDK版本：agora-iot-sdk-1.9.5-esp32s3-idf5.x-20250626
+问题描述：移植完成后运行会崩溃，主要体现在调用 agora_rtc_init() 时，SDK 内部似乎会调用 xTaskCreateRestrictedPinnedToCore()，在这里出现问题。在 idf 5.5.2 是没有 xTaskCreateRestrictedPinnedToCore 这个函数实现的，请问应该怎么解决？
+
+Reply: 您好，我们的 `agora-iot-sdk-1.9.5-esp32s3-idf5.x-20250626` 包没有适配过 5.5.2，请不要使用，改回 IDF5.2.3
+
+---
+# ID: 38930
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 我这边的设备比较棘手，需要浏览走一次本地代理，例如`127.0.0.1:XXXXX`然后出去，包括接收也是需要这样子转发，请问声网有现成的接口吗？
+
+Reply: 我们 Native 端sdk4.5.0 以上支持socks5代理，可以通过私有参数api配置socks5代理服务器，文档里是示例，改成您自己的socks5代理服务器地址就行了
+参考下[Http/Https/socks5代理](https://i46hiqvame.feishu.cn/wiki/KK7xwdMm6iBctPkY8YKcYATln4f?from=from_copylink)
+
+---
+
 # ID: 38908
 
 SDK Product: ConvoAI
