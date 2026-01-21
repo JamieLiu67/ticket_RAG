@@ -1,4 +1,61 @@
 
+# ID: 38935
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 集成问题咨询
+
+Request Description: 首次join慢
+```
+15:35:05:352 Agora-SDK [DEBUG]: [client-8ed4b] Connect to backup choose_server: https://webrtc2-ap-web-3.agora.io/api/v2/transpond/webrtc?v=2
+vconsole.min.js:10 15:35:05:362 Agora-SDK [DEBUG]: [client-8ed4b] Connect to backup choose_server: https://webrtc2-4.ap.sd-rtn.com/api/v2/transpond/webrtc?v=2
+
+vconsole.min.js:10 15:35:09:213 Agora-SDK [WARNING]: [client-8ed4b] multi unilbs network error, retry AgoraRTCException: AgoraRTCError NETWORK_TIMEOUT: timeout of 5000ms exceeded
+    at http://localhost:4173/tiyan/connect-web-component/assets/index-BmwQN5NM.js:2:1834491
+e.callOriginalConsole @ vconsole.min.js:10
+```
+
+Reply: 您好，`multi unilbs network error`表示多出口网络错误，因您所使用的网络是多出口网络，网络环境本身就容易导致连接我们节点时不够稳定从而增加耗时
+建议您更换不同网路环境再多尝试看看，若还是无效再麻烦开启[日志上传](https://doc.shengwang.cn/faq/integration-issues/set-log-file)，然后提供频道信息
+
+---
+# ID: 38937
+
+SDK Product: Cloud-recording
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 商务问题
+
+Request Description: 我开启云端录制，每次录制完成需要将数据传递给数美进行审核。我如何知道本次录制是否完成呢？且会持续录制，没次录制都要传递给数美。
+
+Reply:
+1、云录制的内容全部上传完成后会有 [webhook 事件通知](https://doc.shengwang.cn/doc/cloud-recording/restful/webhook/uploading#31-uploaded)，可以从这里判断。
+2、如果要审核 RTC 频道里的内容一般不依赖云录制来实现，建议直接和审核厂商对接，优先推荐网易易盾，如果您已经和数美对接了可以咨询下数美的技术支持有没有办法直接实现。
+
+---
+# ID: 38941
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 集成问题咨询
+
+Request Description: 我们推流端和拉流端应该是都没有音频，想了解一下音频的消耗是如何产生的
+
+Reply: 您好，只要加入频道没有产生视频订阅就会计算音频时长，这是我们的[计费策略](https://doc.shengwang.cn/doc/rtc/javascript/billing/billing-strategy)
+
+---
+
 # ID: 38924
 
 SDK Product: IM
