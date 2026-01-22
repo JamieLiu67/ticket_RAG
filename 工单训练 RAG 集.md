@@ -1,3 +1,124 @@
+# ID: 3
+
+SDK Product: RTMP网关
+
+SDK Platform: restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题
+
+Request Description: 调用rtmp网关产品，delete接口销毁推流码，正在推流的直播会结束吗？
+
+Reply: 不会。销毁后，你无法再使用该推流码进行推流。但如果推流码正在使用中，销毁推流码并不会影响当前正在推送的流。如果要立即禁用该条流，需参考[使用 SID 强制断开在推流 API](https://doc.shengwang.cn/doc/rtmp-gateway/restful/rtmp-gateway/operations/delete-region-v1-projects-appId-rtls-ingress-online-streams-sid)
+
+---
+# ID: 4
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.5.2
+
+Request Type: 集成问题
+
+Request Description: rtc sdk 和 环信im 报aosl.xcframework库冲突，打包报错内容如下：
+```
+dyld config: DYLD_LIBRARY_PATH=/usr/lib/system/introspection
+DYLD INSERT LIBRARIES=/usr/lib/libLogRedirect
+.dylib:/usr/1ib/libBacktraceRecording.dylib:/usr/lib/libMainThreadchecker
+dvlib:/usr/lib/libRPAc,dylib:/usr/lib/libviewDebuggersupport
+.dylib:/System/Library/PrivateFrameworks/GPUToolsCapture
+.framework/GPUToolscapture
+```
+
+Reply: 声网 iOS 4.5.2.8 的aosl.xcframework库版本比环信IM 的aosl库版本高；
+故需要再podfile里删除环信IM低版本的aosl库，保留声网的高版本的aosl才行
+参考文档：[如何处理同时集成 RTM SDK 和 RTC SDK 遇到库冲突问题？](https://doc.shengwang.cn/faq/integration-issues/rtm2-rtc-integration-issue#rtm-222-%E4%B9%8B%E5%89%8D%E7%89%88%E6%9C%AC)
+
+---
+# ID: 38946
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.3.0
+
+Request Type: 集成问题咨询
+
+Request Description: 声网有没有什么方案支持语音转文字? 比如在线会议的会议纪要等场景情况下
+
+Reply: 您好，目前有一个还没有正式上架国内官网的[实时转写翻译服务](https://doc-internal.shengwang.cn/doc-new/stt_v7/doc/speech-to-text/restful/landing-page)，但没有会议纪要能力。
+需要开通试用的话需要先联系销售申请，没有销售的话可以先电话沟通：400 6326626
+
+---
+# ID: 38948
+
+SDK Product: RTC-Linux
+
+SDK Platform: Linux-C
+
+SDK Version: 4.4.32
+
+Request Type: 集成问题咨询
+
+Request Description: 请问下,有关音频的 回声/消噪 相关的功能, 能通过什么方式来设置和查询吗? 
+
+Reply: 您好，服务端 SDK 没有专门设置回声消除的接口，SDK 里内置了回声消除的算法，默认是开启的
+
+---
+# ID: 38951
+
+SDK Product: RTC
+
+SDK Platform: mini-app
+
+SDK Version: 2.6.5
+
+Request Type: 其他问题
+
+Request Description: 小程序的后台用Java，我怎么生成房间Token呢？有无支持的Maven包
+
+Reply: 您好，当前声网的maven库已经没有在进行更新了，不推荐使用
+现在的推荐做法就是参考[使用 Token 鉴权](https://doc.shengwang.cn/doc/rtc/mini-program/basic-features/token-authentication)，把文档里给出示例代码的 github 仓库 clone 到本地，用里面的脚本去本地运行生成token使用
+
+
+---
+# ID: 38952
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 其他问题
+
+Request Description: 开通在线ktv 权限
+
+Reply: 您好，在线 KTV 版权曲库开通请填写[音集协-国内曲库-客户报备问卷](https://my.feishu.cn/share/base/form/shrcndHOoIbgMQLoCsEyDeDQhne)然后同步销售
+
+---
+# ID: 38955
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.1
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 有没有远端用户镜像的相关api，现在setRemoteRenderMode过期了也无法达到效果
+
+
+Reply: [setupRemoteVideo](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_video_rendering#api_irtcengine_setupremotevideo) 就是用来控制远端画面在本地渲染是否镜像的接口
+
+SDK 只能控制用户在本地渲染别人或编码发送自己画面时候是否开启镜像，没有办法遥控远端改编码镜像的，如果您说的现象就是本地已经设置了远端画面为镜像渲染，但看到的还是非镜像的，麻烦录个现象视频+提供出现问题时双方的 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)，说明是哪个 uid 看哪个 uid 有问题
+
+---
 
 # ID: 38935
 
