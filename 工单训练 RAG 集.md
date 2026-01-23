@@ -1,3 +1,114 @@
+
+# ID: 38956
+
+SDK Product: RTC
+
+SDK Platform: MacOS
+
+SDK Version: 4.3.0
+
+Request Type: 其他问题
+
+Request Description: 如何设置声纹识别功能，是否需要申请开通账号权限。
+
+Reply: 您好，声纹识别是 [convoAI](https://doc.shengwang.cn/doc/convoai/restful/convoai/operations/start-agent) 的能力，启动时配置 sal 字段里的内容即可
+
+---
+# ID: 38958
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.1
+
+Request Type: 其他问题
+
+Request Description: 企业支付，应该冲到这个账户，怎么冲到另外的账户了？
+
+Reply: 您好，充值类商务问题可以直接咨询您的对接销售，声网 console 左侧边栏-设置-工作空间设置里拨打销售负责人的手机号
+
+---
+# ID: 38961
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.6.0
+
+Request Type: 崩溃（闪退、卡死）
+
+Request Description: 	AgoraAudio_iOS升级到 ShengwangRtcEngine_iOS 之后，加入频道之后，无法使用carplay，正在连接的carplay也会被挤掉，怎么处理
+
+Reply: 我们 SDK 互通时需要 playandrecord 权限，但 CarPlay 本身不支持这个模式，所以无法加频道以后使用。参考[CarPlay-Developer-Guide](https://developer.apple.com/download/files/CarPlay-Developer-Guide.pdf)
+
+---
+# ID: 38963
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 我的项目目的是做一个企业内部使用的AI自动发起，通过语音对话实现知识点考核的APP。我想咨询是否可以后台发起，离线唤醒自定义的APP,将对话式AI和语音通话项目对接实现？是否可行？
+
+Reply: 离线唤醒 app 的能力 SDK 不提供，需要您自行实现，其他的可以通过用 convoAI 实现
+
+---
+# ID: 38964
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 我有个知识库，想集成到对话式AI引擎，基于指定的知识进行回答，这个应该怎么做
+
+Reply: LLM 本身配置好 RAG 就行，然后在 convoAI 里确保调用的是带了 RAG 的 LLM 就可以用了
+
+---
+# ID: 38965
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.23.x
+
+Request Type: 集成问题咨询
+
+Request Description: 1、对话式 AI 引擎，可以替换成自定义的asr服务么。替换后，还可以使用优雅打断功能么？
+目前我有一个和硬件绑定的asr多模态方案，硬件有麦克风和摄像头，只有识别到人脸，说话才会进行语音识转换。调用时通过ws连接局域网IP地址，实时获取asr的识别结果（流式音频数据和文字数据）。
+
+2、对话式 AI 引擎，是否可以实时获取到tts合成的原音频数据？
+
+Reply: 1、ASR 只能选我们固定的几家，枚举范围外的不支持，参考[创建对话式智能体](https://doc.shengwang.cn/doc/convoai/restful/convoai/operations/start-agent)
+2、不支持，convoAI 是封装好的业务，tts 生成语音以后是直接发进 RTC 频道里的，如果有需要可以加入 RTC 频道订阅远端音频流然后 dump 到本地。请问您这边是什么使用场景和业务需求需要拿 tts 的数据？
+
+---
+# ID: 38966
+
+SDK Product: CDN
+
+SDK Platform: CDN
+
+SDK Version: 当前版本
+
+Request Type: 开通权限、提供配额
+
+Request Description: 我这边测试报错：CDN推流启动失败：`AgoraRTCError UNEXPECTED_RESPONSE: live streaming app center error, code: 400, reason: invalid_appid (17:00:29)`
+
+Reply: 您好，[融合 CDN](https://doc.shengwang.cn/doc/fusion-cdn/restful/get-started/enable-service) 是直接再 console 配置开通的，请确保已经手动配置过域名和推拉流地址了。以及如果您有调用客户端直推 CDN 接口的话请避免，这个接口已经很久没维护了，不推荐使用。
+
+---
+
 # ID: 3
 
 SDK Product: RTMP网关
@@ -19,7 +130,7 @@ SDK Product: RTC
 
 SDK Platform: iOS
 
-SDK Version: 4.5.2
+SDK Version: 4.5.2.8
 
 Request Type: 集成问题
 
