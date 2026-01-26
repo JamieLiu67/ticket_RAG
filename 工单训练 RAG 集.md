@@ -1,3 +1,138 @@
+# ID: 5
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 线上问题
+
+Request Description: 在 Web 端观看远端视频流时，视频画面会卡住约 10 秒钟，之后自动恢复正常。
+    * 接收端日志中出现关键错误：RECV_VIDEO_DECODE_FAILED (code: 1005)。
+    * 受影响浏览器/环境：Windows Edge 浏览器、Android WebView
+
+Reply: 原因：动态创建 / 挂载 / 清理视频渲染视图的 DOM 操作，在 Edge/WebView 等浏览器中引发解码器异常（错误码 1005），解码失败导致画面卡顿。
+方案：应用初始化时预创建视图容器，全局静态复用，避免重复 DOM 操作。
+反馈：已向 Chrome 提交 [issue](https://issues.chromium.org/issues/464296300)
+
+---
+# ID: 6
+
+SDK Product: RTC
+
+SDK Platform: 所有平台
+
+SDK Version: 所有版本
+
+Request Type: 线上问题
+
+Request Description: 初始化和加频道时 token 对应的 appid不一致时，会获取不到配置下发。
+
+Reply: 初始化和加频道时 token 对应的 appid不一致时，SDK 会用后者对应的 appid 来加频道，但是配置下发参数是根据初始化 SDK 时配置的 appid 来生效的，因此会导致配置下发后不生效。
+
+---
+# ID: 38969
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 需求：我的sip电话,  想接入agora上，对接智能体。
+
+Reply: 您好，目前声网没有对外开放的 SIP 产品，如果您的需求是 AI 外呼，可以考虑使用我们 console 上对外开放的Call Center 来实现，需要体验的话请先电话联系：400 6326626
+
+---
+# ID: 38970
+
+SDK Product: RTSA
+
+SDK Platform: Linux-C
+
+SDK Version: 1.9.5
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 4G模式下会报下面的错误，请问这一般是什么问题引起的
+```
+[1769235825.010][wrn][snd_aud][handle_PAudioRexferReq_v2:568] 205 calls suppressed
+[1769235825.010][wrn][snd_aud] audio rexfer req can't be handled, seq 2235
+[1769235825.013][wrn][snd_aud] audio rexfer req can't be handled, seq 2236
+[1769235825.019][wrn][snd_aud] audio rexfer req can't be handled, seq 2237
+```
+
+Reply: 这个打印本身不代表什么错误，可以忽略，请问现在有什么不可用现象吗？如果有的话可以拿一下 INFO 级别的完整日志发来看看
+
+---
+# ID: 38971
+
+SDK Product: RTSA
+
+SDK Platform: Linux-C
+
+SDK Version: 1.9.5
+
+Request Type: 集成问题咨询
+
+Request Description: 想咨询一下一个应用场景，RTSA是不是有个广播模式（一对多）， 比如一个通道能支持多少听众，有数量限制吗
+
+Reply: 您好，RTSA 的通话是在 RTC 频道实现的，RTC 本身是支持一个频道多主播的，但一般来说 IOT 的 1v1 场景多一些
+一个 RTC 频道同时发音频流的上限 32 人，发视频流上限 17 人，观众人数没有上限
+
+---
+# ID: 38981
+
+SDK Product: IM
+
+SDK Platform: iOS
+
+SDK Version: 1.3.2
+
+Request Type: 线上报错
+
+Request Description: `messagesDidReceive`怎么获得具体的消息内容，怎么解析的
+
+Reply: 您好，请问有参考过这篇[发送和接收消息](https://im.shengwang.cn/docs/sdk/ios/message_send_receive.html)吗？在 `AgoraChatManagerDelegate` 注册监听回调，收到消息的时候就会自动触发了
+然后直接从回调里拿文本内容就行，其实没有解密这一步
+
+---
+# ID: 38988
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 集成问题咨询
+
+Request Description: 互动连麦中拉二胡然后其它用户听不到声音，当时错误配置 RtcEngine::setAudioScenario(this:0x7e1e341400, {"scenario":1})。后续wx沟通说需要配置GAME_STREAMING模式，修改测试后来回切换两模式在模拟环境中（播放二胡音乐）都能听到音乐-感觉两模式差别不大。请问这是为什么呢？
+api枚举中scenario只支持default：0，gamestreaming：3，chatroom：5。那我之前旧版本错误配置1的话会自动生效成default：0吗？
+
+Reply: gamestreaming 走的是媒体音量，回声消除和降噪都会走软件算法处理；chatroom 会走通话音量，用的都是硬件算法，用 GS 的话可以避免本地音量输入过大被当成噪音消除的情况：[如何区分媒体音量和通话音量？](https://doc.shengwang.cn/faq/integration-issues/system-volume)
+
+具体的枚举参考文档[setAudioScenario](https://doc.shengwang.cn/api-ref/rtc/android/API/toc_audio_basic#setAudioScenario)，配置了不存在的枚举默认还是走 0 default
+
+---
+# ID: 38995
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 4.3.0
+
+Request Type: 集成问题咨询
+
+Request Description: 你好，我要在树莓派上运行webrtc。应该用那个版本的sdk？windws版本下的c++行么？树莓派是arm64的
+
+Reply: Web SDK 只看浏览器版本，和硬件没什么关系，只要所用的[浏览器支持](https://doc.shengwang.cn/doc/rtc/javascript/overview/browser-compatibility) WebRTC 就行
+
+---
 
 # ID: 38956
 
