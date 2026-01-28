@@ -1,3 +1,136 @@
+
+# ID: 7
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 4.5.2.5
+
+Request Type: 线上问题
+
+Request Description: Windows平台在使用RTC SDK进行物理摄像头采集时出现卡顿。设置了以下两种视频编码配置进行对比：
+竖屏分辨率：720x1280 @ 30fps → 出现本地预览卡顿。
+横屏分辨率：1280x720 @ 30fps → 预览流畅，无问题。
+
+Reply: 如果问题平台是 Android 或 Windows,建议让声网工程师检查下 SDK 日志里`Best camera format` 的打印里选择的分辨率帧率组合是否符合预期。
+如果摄像头本身不支持高帧率的竖屏分辨率。SDK会自适应，尝试从能力列表中匹配一个能够满足或超过此分辨率要求的配置。可能会选择一个在像素数量上更高但帧率极低的配置作为“最接近”的匹配，从而导致预览卡顿。
+
+解决方案
+1. 更换摄像头硬件：更换为支持所需竖屏分辨率帧率组合的摄像头设备。
+2. 应用层预检查与提示：在设置视频参数前，通过SDK接口`numberOfCapabilities`和`getCapability`获取摄像头支持的能力列表。主动比对业务期望的组合。如果期望的配置不存在，则提前向用户提示，或自动推荐一个可用的最佳替代配置（例如使用横屏模式，或降低竖屏分辨率/帧率）。
+3. 运行时监控与反馈：在视频流运行过程中，通过`onLocalVideoStats`回调监控本地的`captureFrameRate`、`captureFrameWidth`和`captureFrameHeight`。如果检测到实际采集帧率远低于应用设定的目标帧率，可在应用界面给出提示，例如：“当前摄像头不支持流畅的竖屏拍摄，建议切换为横屏模式或调整分辨率”。
+
+---
+# ID: 8
+
+SDK Product: RTSA
+
+SDK Platform: ESP32
+
+SDK Version: 1.9.6
+
+Request Type: 集成问题
+
+Request Description: ESP32 编译aosl库lwip_gethostname接口报错，提示缺少“`celt_encode_with_ec、ec_enc_done、pitch_search'” 实现
+
+Reply: 原因是因为ESP-IDF 的构建系统（CMake + ld）默认只把“被引用到”的目标文件从 .a 里抽出来。如果 lwip_gethostbyname() 没有任何“显式引用”，ld 就会把它当成“没人用”而丢弃，结果第三方静态库再去引用时就报 undefined reference。 (因为 aosl 库是另外编译的，在这个工程直接用了 libaosl.a 库文件，但在当前整个工程源文件中没有调用 lwip_gethostbyname() )
+
+解决方案是强制链接进来，在 CMakeLists.txt 中加入以下内容即可：
+```
+idf_component_get_property(lwip_lib lwip COMPONENT_LIB)
+target_link_libraries(${COMPONENT_LIB} PUBLIC "-u lwip_gethostbyname" ${lwip_lib})
+```
+
+
+---
+
+# ID: 39001
+
+SDK Product: CDN
+
+SDK Platform: CDN
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 咨询一下价格 跟集成方式
+
+Reply: 融合 CDN 计费文档参考：[融合 CDN 直播计费](https://doc.shengwang.cn/doc/fusion-cdn/restful/overview/billing)
+具体报价可以咨询您的对接销售 声网 console 左侧边栏-设置-工作空间设置里拨打销售负责人的手机号
+CDN 没有什么集成一说，主要是配置域名来获得推拉流地址，参考[开始融合 CDN 直播](https://doc.shengwang.cn/doc/fusion-cdn/restful/get-started/quick-start)
+
+---
+# ID: 39004
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.5.2
+
+Request Type: 集成问题咨询
+
+Request Description: flutter中集成的agora_rtc_engine语音通话功能：
+1、在于语音过程中佩戴耳机听不到声音，把耳机从耳朵上拿下来再带回去就正常了，大多人都能复现，是什么原因，是否有相关的配置或者监听方法；
+2、部分人在语音中戴了耳机，但是用不了耳机的麦克风，因为戴着耳机说话不能离手机太远，远了就听不清，所以判断是他只能用手机的麦克风，麦克风是否有相关的配置或者监听方法
+
+Reply: 可以参考下 flutter [发版已知问题](https://doc.shengwang.cn/doc/rtc/flutter/overview/release-notes)
+ AirPods Pro 不支持在通话音量模式下使用 A2DP 协议，可能会导致该设备在该模式下无法成功连接。
+您这边先[设置 scenario](https://doc.shengwang.cn/api-ref/rtc/flutter/API/toc_audio_basic#api_irtcengine_setaudioscenario) 走 gamestreaming，强制走媒体音量试试呢
+
+---
+# ID: 39005
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 集成问题咨询
+
+Request Description: 如果发生 Webhook 回调事件未接收到的情况会怎么办呢?
+
+Reply: 不会重新投递，如果全丢了那就丢了的，这点需要注意，不能让业务强依赖 Webhook 事件，只能做个参考
+不过 Webhook 本身是一个事件发送多次的，如果只是其中一个丢失了也问题不大，还有多个重复的事件可以被收到
+
+---
+# ID: 39006
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.3.0
+
+Request Type: 集成问题咨询
+
+Request Description: iOS中语音通话中如何获取双方的音频数据，视频通话中如何获取视频数据和音频数据
+
+Reply: 如果需求是录制通话内容，我们推荐用[云录制](https://doc.shengwang.cn/doc/cloud-recording/restful/landing-page)
+如果只是要拿裸数据出来处理，参考[原始音频数据](https://doc.shengwang.cn/doc/rtc/ios/advanced-features/raw-audio-data)
+
+---
+# ID: 39007
+
+SDK Product: RTC
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 线上报错
+
+Request Description: `/open-api/v2/iot-core/secret-node/device/activate` 接口不能返回正确的字段？
+`Content type 'application/octet-stream' not supported for `
+
+Reply: `/open-api/v2/iot-core/secret-node/device/activate`这个请求 url 看起来属于一个已经废弃的产品，不建议继续使用。
+如果您是 IOT 场景，我们推荐集成 [RTSA SDK](https://doc.shengwang.cn/doc/rtsa/c/landing-page)
+
+---
+
 # ID: 5
 
 SDK Product: RTC
