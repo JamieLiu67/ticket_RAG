@@ -1,3 +1,27 @@
+# CS_KI_0233 
+问题ID:0233  
+问题描述: 通过 Maven 集成 Android RTC SDK 4.5.0–4.6.2 官网版本，在 Android Gradle plugin 升级到 9.0.0 后编译报错：‎`Namespace 'io.agora.rtc' is used in multiple modules and/or libraries`  
+影响范围: 4.5.0–4.6.2 Android 官网版本（weekly 版本无此问题）  
+影响平台: Android（AGP 9.0.0）  
+修复方案及进展: 暂未从 SDK 侧修复，可建议客户在 ‎`gradle.properties` 中显式设置 ‎`android.uniquePackageNames=false` 作为 workaround
+
+---
+
+# CS_KI_0232 
+问题ID:0232  
+问题描述: 4.6.0–4.6.1 版本 Android 端偶现编码不出帧  
+影响范围: 4.6.0–4.6.1  
+影响平台: Android  
+修复方案及进展: 原因疑似为新版本引入，目前仍在确认中，尚无明确修复方案或规避建议
+
+---
+
+# CS_KI_0231 
+问题ID:0231  
+问题描述: 大重构频道开启 ‎`frame_dump` 私参 ‎`location: all, action: start` 后，通过 ‎`frame_dump: location: all, action: stop` 无法停止 dump  
+影响范围: 当前所有版本  
+影响平台: 全平台（大重构）  
+修复方案及进展: Workaround：需分别下发多条私参按节点依次 stop，如 ‎`location: apm`、‎`record_origin`、‎`play`、‎`playback_mixer`、‎`pre_send_proc` 等逐个停止；正式修复方案待开发
 
 ---
 
