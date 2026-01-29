@@ -1,4 +1,36 @@
 
+# ID: 39026
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 集成问题咨询
+
+Request Description: 使用安卓sdk开启屏幕共享推流时，视频流卡住不动
+
+Reply: 麻烦提供下具体的 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)，说明什么时间点复现的，以及具体现象是哪个 uid 看哪个 uid 卡顿。
+同时也可以对比下我们的 [屏幕共享 Demo](https://github.com/Shengwang-Community/API-Examples/blob/main/Android/APIExample/app/src/main/java/io/agora/api/example/examples/advanced/ScreenSharing.java) 是否正常。
+
+---
+# ID: 39029
+
+SDK Product: RTSA
+
+SDK Platform: Linux-C
+
+SDK Version: 其他版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 设备是linux嵌入式设备，使用的RTSA的SDK版本已经是1.9.7了，推流的视频是H265格式的，问题就是在手机App端看到设备的画面偶尔会有花屏马赛的现象，设备和手机的网络正常，网速尚可，且设备端的推流的视频帧有测试在发送到声网SDK前保存到本地，没有发现有马赛克花屏的现象
+
+Reply: 麻烦清空下 Android、RTSA 设备的[日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)路径，然后复现下问题，拿一下最新的日志，我们看下是 RTSA 编码上有问题还是 RTC 接收端解码的问题。
+
+---
+
 # ID: 7
 
 SDK Product: RTC
