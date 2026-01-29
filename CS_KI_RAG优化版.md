@@ -1,9 +1,20 @@
+# CS_KI_0234 
+问题ID:0234 
+问题描述: 在 iPad iOS 26.2 设备上，通话过程中使用其他采播（典型如系统键盘的语音转文字）会导致 SDK 采播异常，通话无声，需重启 App 才能恢复正常采播  
+影响范围: 使用 iPad iOS 26.2 的所有版本  
+影响平台: iPad（iOS 26.2）  
+修复方案及进展: 系统层面 bug，目前 SDK 侧无法根治；规避建议为业务中隐藏或禁用系统语音转文字入口，避免用户在通话中触发该功能，从源头降低命中概率
+
+---
 # CS_KI_0233 
 问题ID:0233  
-问题描述: 通过 Maven 集成 Android RTC SDK 4.5.0–4.6.2 官网版本，在 Android Gradle plugin 升级到 9.0.0 后编译报错：‎`Namespace 'io.agora.rtc' is used in multiple modules and/or libraries`  
+问题描述: 通过 Maven 集成 Android RTC SDK 4.5.0–4.6.2 官网版本，在 Android Gradle plugin 升级到 9.0.0 后编译报错：
+```
+Namespace 'io.agora.rtc' is used in multiple modules and/or libraries
+```
 影响范围: 4.5.0–4.6.2 Android 官网版本（weekly 版本无此问题）  
 影响平台: Android（AGP 9.0.0）  
-修复方案及进展: 暂未从 SDK 侧修复，可建议客户在 ‎`gradle.properties` 中显式设置 ‎`android.uniquePackageNames=false` 作为 workaround
+修复方案及进展: 暂未从 SDK 侧修复，可建议客户在 `gradle.properties` 中显式设置 `android.uniquePackageNames=false` 作为 workaround
 
 ---
 
@@ -18,10 +29,10 @@
 
 # CS_KI_0231 
 问题ID:0231  
-问题描述: 大重构频道开启 ‎`frame_dump` 私参 ‎`location: all, action: start` 后，通过 ‎`frame_dump: location: all, action: stop` 无法停止 dump  
+问题描述: 大重构频道开启 `frame_dump` 私参 `location: all, action: start` 后，通过 `frame_dump: location: all, action: stop` 无法停止 dump  
 影响范围: 当前所有版本  
 影响平台: 全平台（大重构）  
-修复方案及进展: Workaround：需分别下发多条私参按节点依次 stop，如 ‎`location: apm`、‎`record_origin`、‎`play`、‎`playback_mixer`、‎`pre_send_proc` 等逐个停止；正式修复方案待开发
+修复方案及进展: Workaround：需分别下发多条私参按节点依次 stop，如 `location: apm`、`record_origin`、`play`、`playback_mixer`、`pre_send_proc` 等逐个停止；正式修复方案待开发
 
 ---
 
