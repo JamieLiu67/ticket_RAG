@@ -1,4 +1,50 @@
 
+# ID: 39044
+
+SDK Product: Cloud-recording
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 我们把云录制的`stsExpiration`设置成12 个小时，还需要每 60 分钟重新申请 stsToken，并调用 update 更新 storageConfig 中的相关参数吗？
+
+Reply: 不用，自行保证全录制周期内不会过期即可 ，只有有效期 60 分钟及以内的`stsToken`才需要及时更新。
+
+---
+# ID: 39045
+
+SDK Product: RTC-Linux
+
+SDK Platform: Linux-Python
+
+SDK Version: 2.2.4
+
+Request Type: 集成问题咨询
+
+Request Description: 运行`example_video_encoded_receive.py`最后会生成一个.h264的文件，不能正常播放，是什么情况导致的呢？
+
+Reply: `example_video_encoded_receive.py` 的 Demo 处理就是保存远端流到本地，如果不需要保存的话直接在收到视频数据的时候自行处理播放就行了，不过一般服务端很少有播放的需求，一般都是客户端加入频道来实时观看视频流，比如用 Web 端，请问您这边是什么场景？
+
+---
+# ID: 39046
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 您好，基于 BK7259 芯片的“ R2 全场景 AI 机器人开发套件”如何购买？
+
+Reply: 您好，可以电话联系销售来了解相关信息：400 6326626
+
+---
+
 # ID: 39026
 
 SDK Product: RTC
