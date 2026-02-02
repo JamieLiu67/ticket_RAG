@@ -1,4 +1,98 @@
 
+# ID: 39047
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 我们计划接入声网的对话式AI，在创建对话式智能体时，我们使用微软的asr，但是需要混合识别，比如中英文混合识别、越南语+英文混合识别等等，应该如何配置，请尽快与我联系。用量大
+
+Reply: 这个能力需要 ASR 厂商支持才能实现，具体如何配置参数需要咨询 ASR 厂商
+
+---
+# ID: 39057
+
+SDK Product: RTC
+
+SDK Platform: mini-app
+
+SDK Version: 2.6.5
+
+Request Type: 集成问题咨询
+
+Request Description: 怎么设置频道模式为通信?
+
+Reply: 您好，小程序 SDK 没有`ChannelProfile`一说，默认是直播模式
+
+---
+# ID: 39060
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 从3.x版本升级到4.x版本后对浏览器的兼容如何（4.x新版本是否兼容3.x版本使用的浏览器），除了浏览器兼容还有其他的影响吗
+
+Reply: 升级 Web SDK 不会有浏览器兼容问题，浏览器兼容主要看浏览器本身是否支持 webrtc 协议，和我们的 SDK 版本没有太大关系
+
+---
+# ID: 39062
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 请问大模型如何开启联网搜索选项，在配置页面找不到 联网的地方 
+AI助手无法准确回答如何开启  
+
+Reply: 在 LLM 的`params`字段里按照 LLM 提供商要求的去传值就行了，一般 LLM 官方调用的时候会有字段控制当前回答是否开启联网
+
+---
+# ID: 39066
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 1.云端录制，合流录制的视频内容为红色背景的问题
+2.项目中的生产环境和测试环境有什么区别？
+
+Reply: 1、背景色是您自行配置的，参考[开始云端录制](https://doc.shengwang.cn/doc/cloud-recording/restful/cloud-recording/operations/post-v1-apps-appid-cloud_recording-resourceid-resourceid-mode-mode-start)里的字段`backgroundColor`
+2、没有区别，只是声网控制台的前端 UI，方便用户快速识别
+
+---
+# ID: 39067
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.5.2
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 如何从扬声器播放远端声音？`SetEnableSpeakerphone`和`setDefaultAudioRoutetoSpeakerphone`效果都不好
+
+Reply: Android 和 IOS 都可以把 scenario 设成 Gamestreaming 来强制走媒体音量，这样就走扬声器外放了，使用 [setAudioScenario](https://doc.shengwang.cn/api-ref/rtc/ios/API/toc_audio_basic#api_irtcengine_setaudioscenario)
+
+---
+
 # ID: 39044
 
 SDK Product: Cloud-recording
