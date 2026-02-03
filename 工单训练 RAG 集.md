@@ -1,4 +1,67 @@
 
+# ID: 39075
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.23.x
+
+Request Type: 线上报错
+
+Request Description: 开播失败，报错：`CAN_NOT_GET_GATEWAY_SERVER / invalid vendor key, can not find appid`
+
+Reply:  如果 appid 本身没有问题，还出现`invalid vendor key, can not find appid`的报错大概率是 appid 的传值有问题，麻烦检查下是不是传错内容了或者传成别的对象了
+
+---
+# ID: 39078
+
+SDK Product: Cloud-recording
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 云录制问题,我是1v1 call，为什么推送过来数据中有很多重复的m3u8文件呢
+
+Reply: 如果录制文件上传到你指定的云存储失败，声网云端录制会将文件通过备份云转存至你指定的云存储。为确保不覆盖最新版本，M3U8 文件名会附上后缀,从而出现多份重复的 M3U8 文件。参考[异常情况下的录制文件名](https://doc.shengwang.cn/doc/cloud-recording/restful/user-guides/manage-file/introduce-recorded-files#%E5%8F%82%E8%80%83%E4%BF%A1%E6%81%AF)
+当云存储中存在带有后缀的 M3U8 文件，你需要将 index 最大的 M3U8 文件与无后缀的 M3U8 文件对比，选择内容较多的一个，作为最终使用的 M3U8 文件。通过备份云转存的 TS/WebM 文件以及 MP4 文件的文件名不会附上该后缀。
+
+---
+# ID: 39081
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 线上报错
+
+Request Description: localhost 不报错，使用域名https就报错
+
+Reply: 您好，请优先检查当前的 https 证书是否正常，WebRTC 协议只支持 localhost 和 https 环境，如果确认证书正常的话就检查下当前所用的 Web SDK 版本是否为最新，不是的话就升级下
+
+---
+# ID: 39082
+
+SDK Product: RTC
+
+SDK Platform: React Native
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 语音转文字，字幕功能的那个webHook在哪配置，我怎么没看到。媒体服务里面没有语音转文字
+
+Reply: 您好，语音转文字（RTT/STT）产品目前不对自服务客户开通自助开关，请填写[问卷](https://pofz0vdxq1.feishu.cn/share/base/form/shrcnx1fsGa8p8avYejHdCfpRZg)联系销售来了解详情，如果已经填写过的话就直接和销售同步下
+
+
+---
+
 # ID: 39047
 
 SDK Product: ConvoAI
