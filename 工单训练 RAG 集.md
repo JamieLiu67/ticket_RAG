@@ -1,4 +1,96 @@
 
+# ID: 39084
+
+SDK Product: RTM
+
+SDK Platform: JavaScript
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 这个国内版的这个功能对应的是国际版的功能叫什么，现在我需求是从国内版转到国际版，但是不知道对应的功能模块，不知道看哪个文档，有直接转的方法或者转的文档看吗
+
+Reply: RTM 在海外叫[Signaling](https://docs.agora.io/en/signaling/overview/product-overview)，需要用海外账号登录 Agora console 才能使用，国内账号无法登录海外 console 和使用的。
+
+---
+# ID: 39085
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 4.3.0
+
+Request Type: 其他问题
+
+Request Description: 能帮核对一下  这个声网使用情况和开方的时长么
+之前正常情况每天是  600-1000的时长   现在突然就这么多
+
+Reply: 您好，关于计费计量问题参考文档[计费策略](https://doc.shengwang.cn/doc/rtc/ios/billing/billing-strategy)，具体细节可以联系您的专属商务查询明细
+
+---
+# ID: 39086
+
+SDK Product: RTMPG
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 我们用rtmp网关生成的推流地址可以正常使用但是我司需要使用srt推流 查询官网显示也支持srt推流url但是玩当方面找不到任何url拼接的地方，如果有可以提供下srt推流地址url生成规则
+
+Reply: 您好，RTMP 网关有 SRT 需求可以参考[使用 SRT 协议推流](https://i46hiqvame.feishu.cn/wiki/RoJswqF1SialGFkTtClcqqM2nHd?from=from_copylink)
+
+---
+# ID: 39091
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 其他问题
+
+Request Description: 我的代码中没有使用音频共享，只有屏幕共享。也没有其他人跟我使用同一个项目。现在统计显示我音频用量600多分钟，怎么回事
+
+Reply: 没有产生视频订阅前计费都是按照音频时长统计的，就算什么都不做、不发流也会算音频时长的，只发布屏幕共享或摄像头的视频流没有人订阅时就是按音频时长统计的
+
+---
+# ID: 39101
+
+SDK Product: Whiteboard
+
+SDK Platform: Web
+
+SDK Version: 2.16.53
+
+Request Type: 商务问题
+
+Request Description: 想看一下demo。
+
+Reply: Web 白板Demo 参考：[下载](https://doc.shengwang.cn/doc/whiteboard/javascript/whiteboard-sdk/resources-wb)
+
+---
+# ID: 39103
+
+SDK Product: RTC
+
+SDK Platform: iOS
+
+SDK Version: 4.6.0
+
+Request Type: 效果不佳、不达预期
+
+Request Description: iOS 降噪严重 不需要降噪 播放的节拍器声音被降成了风声呼呼的
+
+Reply: 参考[实现高音质](https://doc.shengwang.cn/doc/rtc/ios/best-practice/optimal-audio-quality)，改用`AUDIO_SCENARIO_GAME_STREAMING `试试
+
+---
+
 # ID: 39075
 
 SDK Product: RTC
