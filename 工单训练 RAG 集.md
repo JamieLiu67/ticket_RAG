@@ -1,4 +1,44 @@
 
+# ID: 39123
+
+SDK Product: RTC
+
+SDK Platform: mini-app
+
+SDK Version: 2.6.5
+
+Request Type: 集成问题咨询
+
+Request Description: 如何实现“微呼叫”功能，没有找到对应的文档
+
+Reply: 微呼叫文档还没有上官网，可以先看这个内部版本：[微呼叫-实现和小程序互通](https://doc-internal.shengwang.cn/doc-new/voip/doc/voip-callkit/restful/get-started/start-video-call)
+
+---
+# ID: 39126
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.3.2
+
+Request Type: 集成问题咨询
+
+Request Description: 请问使用MediaPlayer播放网络媒体时，如何设置网络请求header？
+我使用
+```
+setPlayerOptionInString(
+        key: 'http-header-fields',
+        value: headerString,
+      )
+```
+抛出-2。
+
+Reply: 您好，MediaPlayer 不支持播放需要鉴权的 url，所以无法用`setPlayerOptionInString `配置网络请求header
+请使用能够直接被访问的在线文件 url
+
+---
+
 # ID: 39084
 
 SDK Product: RTM
