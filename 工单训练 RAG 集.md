@@ -1,4 +1,69 @@
 
+# ID: 39129
+
+SDK Product: RTSA
+
+SDK Platform: Linux-C
+
+SDK Version: 1.9.3
+
+Request Type: 集成问题咨询
+
+Request Description: 现在我设备集成了cat1模组 但是sdk初始化失败 是什么问题， 在使用CAT1运营商的定向流量卡时，需要在初始化SDK引擎时配置domain_limit字段为true。针对定向流量卡接入，需要向运营商报备两个通配域名，并在代码中设置RtcEngineConfig->domainLimit = true。 以上操作都完成了 就是不行
+
+Reply: 您好，可以先提供下`domainLimit=true`的相关代码处理，以及再确认下运营商那边是否报备成功了
+如果都确认了的话，麻烦提供下 SDK 日志过来
+
+---
+# ID: 39133
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 请问发送端如何实现自定义视频编码，比如ROI区域编码等等。我已经实现视频编码器程序，如何接入声网SDK，有相关的接口文档吗。
+
+Reply: 目前 Native SDK 不支持自编码发流，您这边是什么场景需要用自编码呢？SDK 自带编码的
+
+---
+# ID: 39136
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.5.2
+
+Request Type: 其他问题
+
+Request Description: 自定义视频采集和渲染
+有相关的示例代码吗
+我想做到  视频画面 不通过SDK 采集，使用 设备自身API 采集视频帧进行 视频通话 （视频和音频）
+
+Reply: 自采集参考文档：[自定义视频采集](https://doc.shengwang.cn/doc/rtc/android/advanced-features/custom-video-source)
+自渲染参考文档：[自定义视频渲染](https://doc.shengwang.cn/doc/rtc/android/advanced-features/custom-video-rendering)
+
+---
+# ID: 39141
+
+SDK Product: RTSA
+
+SDK Platform: Linux-C
+
+SDK Version: 1.9.3
+
+Request Type: 集成问题咨询
+
+Request Description: `*.sd-rtn.com` 运营商那边系统不识别 - 这个符号，需要提供映射的 ip 这个能否提供下 
+
+Reply: 我们无法提供具体 IP，建议让运营商在仔细确认下现在报备的是不是域名类型，域名是肯定支持-的。
+
+---
+
 # ID: 39123
 
 SDK Product: RTC
