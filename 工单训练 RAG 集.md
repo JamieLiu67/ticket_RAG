@@ -1,4 +1,20 @@
 
+# ID: 9
+
+SDK Product: RTC
+
+SDK Platform: 所有平台
+
+SDK Version: 所有版本
+
+Request Type: 集成问题
+
+Request Description: Token 解析结果显示 uid 为空
+
+Reply: Token 解析结果显示 uid 为空表示可以填写任意 uid 来加入频道，这个 Token 不需要校验 join 传入的 uid，一般声网 console 生成的临时 token 会有这个情况，保证频道名、所用 appid 一致、Token 还在有效期内即可加频道成功。
+
+---
+
 # ID: 39129
 
 SDK Product: RTSA
