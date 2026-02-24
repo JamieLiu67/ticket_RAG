@@ -9,6 +9,7 @@ Thumbs.db
 
 # Obsidian 配置文件（如果不想同步笔记软件配置）
 .obsidian/
+*.canvas
 
 # 临时文件
 *.tmp
