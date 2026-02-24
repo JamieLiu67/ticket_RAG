@@ -1,4 +1,140 @@
 
+# ID: 39144
+
+SDK Product: RTC
+
+SDK Platform: mini-app
+
+SDK Version: 2.6.5
+
+Request Type: 其他问题
+
+Request Description: 有几个技术选型问题需要咨询 ：1 声网小程序sdk 里面播放推流的视频；必须搭配live-player 才能使用吗？ 2 设备端是JPEG 协议发过来的，小程序是不是要开通接收 JPEG 视频数据的服务才能使用 ？ 3 如果前两种实际情况都不允许，是否还可以采取声网其他实现方案？谢谢
+
+Reply: 小程序端支持接收 JPEG，但是需要针对 appid 进行配置。小程序的画面播放是组件实现的，只能用 live-player 播放
+
+需要开通的话请提供以下内容：
+```
+公司名：// 你在使用声网服务时登记的公司名。
+AppID：// 需要开通服务的项目的 App ID。
+服务需求：// 需要开通的服务，例如 G711 音频数据互通。
+联系电话
+联系邮箱
+```
+或者让设备端改发 h264，这样小程序就能收发互通了
+
+---
+# ID: 39145
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.23.x
+
+Request Type: 其他问题
+
+Request Description: 方案问题咨询：现在websdk 不支持JPEG 协议 ；但是我想web 端也能支持播放视频流；还有其他方案解决吗？谢谢
+
+Reply: 没有别的解决方案，Web 不支持收发JPEG，只能让互通的双方使用 JPEG 以外的格式来互通了，参考：[与 RTC SDK 互通音视频数据](https://doc.shengwang.cn/doc/rtsa/c/best-practices/interoperate-rtc)
+
+---
+# ID: 39147
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 用户说话声音有回音
+
+我们默认是开启了3A，对回音和杂音做了消除，但效果不大好。
+我们客户端api如果把音质改为高级是否解决这个问题？
+但高级对用户的网络要求较高，东南亚用户网络不太好，也许听声音会一卡一卡的？
+现在不知道该怎么办。请问有解决方案么？
+
+Reply: 1、回音问题本质是扬声器声音开的太大，被麦克风拾取以后重新发回来，算法再怎么优化也没有办法完全规避这种物理现象，建议出现回音的时候先让用户自行判断下回声源来自哪个用户，让这个用户闭麦或者带耳机来解决是最快的
+
+如果希望算法优化的话，可以考虑 scenario 走 chatroom，用通话音量时回声消除走的是硬件算法，效果会好一些
+
+2、音质改高级解决不了回声问题
+
+3、SDK 本身对于弱网场景有过优化，但如果网实在太差，该丢包还是会丢，还是会卡，建议用户换个稳定点的网，这种客户自身问题导致的卡顿 我们 SDK 是没有什么优化空间的
+
+---
+# ID: 39151
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.2
+
+Request Type: 其他问题
+
+Request Description: 同一套程序，代码相同，在有的手机上直播时没有声声音 
+
+Reply: 麻烦提供下出现问题的频道号、uid、时间点，说明下是听不见被人还是别人听不见这个手机
+
+---
+# ID: 39158
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 我使用uniapp + vue3 的技术栈，声网版本：4.24.2
+在安卓app中 使用webview方案，一直报错` agoraRTCError NOT_READABLE：NotReadableError:Could not start audio source`，权限已允许
+请问：
+1. 这是否是 WebView 平台限制？
+2. 是否有针对 WebView 的特殊配置？
+3. 是否需要回退到特定版本的 SDK？
+
+Reply: uni-app SDK 已经停止更新维护很久了，要在 uni-app 上用 Web SDK 的话，需要保证所用的 Webview 本身支持 webrtc 协议，否则就会出现这种报错，参考[浏览器兼容性和已知问题](https://doc.shengwang.cn/doc/rtc/javascript/overview/browser-compatibility)
+
+可以用 [webrtc 官方 Demo](https://webrtc.github.io/samples/) 在目前使用的 Webview 里试试，如果官方 Demo 都无法正常运行那就是不支持
+
+---
+# ID: 39163
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 其他问题
+
+Request Description: 购买加油包购买错了，本来是购买RTC加油包，错买成云端录制加油包了。需要把云端录制加油包退了，重新购买RTC加油包。
+
+Reply: 您好，退费类的商务问题可以直接咨询您的对接销售，可在声网 console 左侧边栏-设置-工作空间设置里拨打销售负责人的手机号
+
+---
+# ID: 39164
+
+SDK Product: RTMPG
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 您好 我们之前对接rtmp网关的推流地址推送持H265(SRT协议推)成功后发现目前只能在Web demo查看直播流 根据文档实时互动观众端 URL 拉流  这里的文档看到这里给的是私有协议的播放格式 请问下声网平台提供常规的拉流播放url协议吗 例如 rtmp,flv,hls 这种格式的拉流地址能够拉H265的拉流地址下来播放吗？
+
+Reply: RTMP 网关是把画面推进 RTC 频道里去看到，RTC 没有直接输出rtmp,flv,hls 这种格式的拉流地址，需要集成 RTC SDK 以后加入 RTC 频道去看。
+
+如果要把 RTC 的画面转推到一个指定 rtmp 地址上，可以用[旁路推流](https://doc.shengwang.cn/doc/media-push/restful/media-push/operations/post-region-v1-projects-appId-rtmp-converters)，旁路推流支持转推 h265 的。
+
+---
+
 # ID: 9
 
 SDK Product: RTC
