@@ -1,3 +1,33 @@
+# ID: 39170
+
+SDK Product: RTC
+
+SDK Platform: Unity
+
+SDK Version: 其他版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 接了外接声卡之后，会有可能检测不到声音
+
+Reply: 外接声卡的话需要关闭 SDK 的 3a 处理，参考[声卡用户设置](https://doc.shengwang.cn/doc/rtc/unity/best-practice/optimal-audio-quality#%E5%A3%B0%E5%8D%A1%E7%94%A8%E6%88%B7%E8%AE%BE%E7%BD%AE)
+
+---
+# ID: 39172
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 集成问题咨询
+
+Request Description: electron应用使用web端的 sdk,调用 `createScreenVideoTrack` 后不返回 `screenAudioTrack`
+
+Reply: electron 环境里用 WebSDK 拿不到系统音频的，Web SDK 只能在 chrome 浏览器下才能获取到屏幕共享的音频轨道
+
+---
 
 # ID: 39144
 
