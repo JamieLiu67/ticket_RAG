@@ -1,3 +1,50 @@
+
+# ID: 39181
+
+SDK Product: Flexible-classroom
+
+SDK Platform: iOS
+
+SDK Version: 2.8.100
+
+Request Type: 其他问题
+
+Request Description: 想实现一个效果，当前学生在自己这边显示一直在台上（显示一路本地流在台上不推送到出去）。但是在其他老师学生那边的状态还是根据实际是否在台上显示，要怎么实现呢
+
+Reply: 您好，非 UI 的定制化需求在灵动课堂上无法实现，有这类需求的话可以考虑改用 [RTC PAAS SDK](https://doc.shengwang.cn/doc/rtc/ios/landing-page)，自行构建一套服务出来
+
+---
+# ID: 39183
+
+SDK Product: RTC
+
+SDK Platform: mini-app
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 视频语音通话时，小程序端和远端视频通话页面展示正常，但是在水晶球监控中，该频道中没有小程序端的视频流，只显示接收端的信息，
+
+Reply: 您好，请确认下互通的双方是否能和对方互动？一般水晶球的频道记录里看不到 uid 就是没加入频道成功，如果确认频道记录里找不到，但是互通正常的话，麻烦提供具体的频道名、uid、时间点，我们核实下后台
+
+---
+# ID: 39188
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 我们的安卓设备音频的采样率48kHz, 应该怎么配置？
+
+Reply: 参考[高音质最佳实践](https://doc.shengwang.cn/doc/rtc/android/best-practice/optimal-audio-quality)调整 audioprofile 就行，我们支持 48k 采集的
+
+---
+
 # ID: 39170
 
 SDK Product: RTC
@@ -1089,7 +1136,7 @@ SDK Version: 4.3.0
 
 Request Type: 其他问题
 
-Request Description: 开通在线ktv 权限
+Request Description: 开通在线 ktv 权限
 
 Reply: 您好，在线 KTV 版权曲库开通请填写[音集协-国内曲库-客户报备问卷](https://my.feishu.cn/share/base/form/shrcndHOoIbgMQLoCsEyDeDQhne)然后同步销售
 
