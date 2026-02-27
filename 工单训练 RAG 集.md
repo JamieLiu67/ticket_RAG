@@ -1,3 +1,55 @@
+# ID: 10
+
+SDK Product: RTC
+
+SDK Platform: 所有平台
+
+SDK Version: 所有版本
+
+Request Type: 集成问题
+
+Request Description: 2.x、3.x、4.x SDK 都可以用通配 Token 加频道吗？
+
+Reply: 可以，token 校验是声网的网关实现的，和客户端版本没有关系，可以使用正确的通配 token 加入 RTC 频道
+
+---
+
+# ID: 39194
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.2
+
+Request Type: 效果不佳、不达预期
+
+Request Description:  视频图像出现栅格化问题
+
+Reply: 现在是本地预览还是看远端画面有问题？
+如果是本地预览的话，有加美颜什么的吗？有的话可以先去掉美颜试试，以及对比下我们 [Demo](https://doc.shengwang.cn/doc/rtc/android/get-started/run-demo) 是否正常。
+
+---
+# ID: 39201
+
+SDK Product: RTM
+
+SDK Platform: Unity
+
+SDK Version: 2.1.9
+
+Request Type: 其他问题
+
+Request Description: 最新版本的rtm unity插件,android平台上传google play提示库不支持16KB
+```
+Libraries that do not support 16 KB:
+base/lib/arm64-v8a/libAgoraRtmWrapper.so
+base/lib/arm64-v8a/libagora-rtm-sdk.so
+```
+
+Reply: 您好，支持 16kb 的RTM Unity 用这个包： [Agora_Unity_RTM_SDK_2.2.2.1]https://download.agora.io/rtmsdk/release/Agora_Unity_RTM_SDK_2.2.2.1_20251029_527_16KB-build.3.zip
+
+---
 
 # ID: 39181
 
@@ -14485,10 +14537,12 @@ Request Type: 集成问题咨询
 
 Request Description: 通过getNativeHandle去调用C++接口对外暴露的方法,
 registerAudioFrameObserver注册的观测位置不同，触发的不同回调，拿到的音频来源也不同，这个是可以了解的,但是这个拿到的音频我能否暴露给HarmonyOS端然后使用ArkTs语言去处理这些音频流呢,这样的话要如何操作,我看到C++中原始数据数据这个方法里边只做了打印,其他处理没有,我要做些什么处理才能将音频流去传递给鸿蒙端呢,我想在鸿蒙端进行处理,下面附件是安卓端的一个处理
+```java
 bool OriginAudioData::onRecordAudioFrame(const char *channelId, AudioFrame &audioFrame) { 
     AG_INFO("OriginAudioData::onRecordAudioFrame called");
     return false; 
 }
+```
 
 Reply: 您好，这个需求无法实现，裸数据的处理只能在 C++层完成，arkts 是单线程，从 C++拿数据给到 arkts 层容易出现跨线程卡死问题，建议在 C++层完成处理后再把处理完的数据传到 arkts 层。
 
@@ -17716,7 +17770,7 @@ Request Type: 集成问题咨询
 
 Request Description: 项目在做鸿蒙化适配，RTM有鸿蒙sdk吗
 
-Reply: 您好，目前RTM Flutter SDK 暂未提供专门适配鸿蒙系统（HarmonyOS）的版本，如果您有适配鸿蒙的需求，我们有一个 Beta 版本的纯血鸿蒙 RTM SDK，如果您考虑原生开发的话可以说明下，等候人工工程师稍后提供下载地址。
+Reply: 您好，目前RTM Flutter SDK 暂未提供专门适配鸿蒙系统（HarmonyOS）的版本，只支持原生鸿蒙 SDK，参考[RTM 鸿蒙 SDK](https://doc.shengwang.cn/doc/rtm2/harmonyos/landing-page)。
 
 ---
 # ID: 36743
