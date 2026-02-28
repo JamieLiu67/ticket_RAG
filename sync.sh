@@ -266,19 +266,59 @@ format_id_list() {
 
 # ============ 生成工单文件的 commit message 部分 ============
 generate_ticket_message() {
-    LAST_COMMIT_MSG=$(git log -1 --format="%s")
-    LAST_DATES=$(echo "$LAST_COMMIT_MSG" | grep -oE '[0-9]{4}\.[0-9]{1,2}\.[0-9]{1,2}')
+    # 获取变动检测结果
+    local changes
+    changes=$(detect_changes "$TICKET_FILE" "ticket")
     
-    if [ -n "$LAST_DATES" ]; then
-        LAST_END_DATE=$(echo "$LAST_DATES" | tail -1)
-        echo "新增 ${LAST_END_DATE} 19:00 到 ${TODAY} 19:00 的工单对答记录"
-    else
-        if [[ "$OSTYPE" == "darwin"* ]]; then
-            YESTERDAY=$(date -v-1d +%Y.%-m.%-d 2>/dev/null || echo "$TODAY")
+    # 解析变动
+    local added_ids deleted_ids modified_ids
+    added_ids=$(echo "$changes" | grep -o 'ADDED:[^|]*' | cut -d: -f2)
+    deleted_ids=$(echo "$changes" | grep -o 'DELETED:[^|]*' | cut -d: -f2)
+    modified_ids=$(echo "$changes" | grep -o 'MODIFIED:[^|]*' | cut -d: -f2)
+    
+    # 构建 message 部分
+    local parts=()
+    
+    # 如果有新增，添加时间段信息
+    if [ -n "$added_ids" ]; then
+        local LAST_COMMIT_MSG LAST_DATES LAST_END_DATE
+        LAST_COMMIT_MSG=$(git log -1 --format="%s")
+        LAST_DATES=$(echo "$LAST_COMMIT_MSG" | grep -oE '[0-9]{4}\.[0-9]{1,2}\.[0-9]{1,2}')
+        
+        if [ -n "$LAST_DATES" ]; then
+            LAST_END_DATE=$(echo "$LAST_DATES" | tail -1)
+            parts+=("新增 ${LAST_END_DATE} 19:00 到 ${TODAY} 19:00 的工单对答记录")
         else
-            YESTERDAY=$(date -d "yesterday" +%Y.%-m.%-d 2>/dev/null || echo "$TODAY")
+            local YESTERDAY
+            if [[ "$OSTYPE" == "darwin"* ]]; then
+                YESTERDAY=$(date -v-1d +%Y.%-m.%-d 2>/dev/null || echo "$TODAY")
+            else
+                YESTERDAY=$(date -d "yesterday" +%Y.%-m.%-d 2>/dev/null || echo "$TODAY")
+            fi
+            parts+=("新增 ${YESTERDAY} 19:00 到 ${TODAY} 19:00 的工单对答记录")
         fi
-        echo "新增 ${YESTERDAY} 19:00 到 ${TODAY} 19:00 的工单对答记录"
+    fi
+    
+    # 如果有删除，列出 ID
+    if [ -n "$deleted_ids" ]; then
+        local formatted_deleted
+        formatted_deleted=$(format_id_list "$deleted_ids")
+        parts+=("删除工单 ID: ${formatted_deleted}")
+    fi
+    
+    # 如果有修改，列出 ID
+    if [ -n "$modified_ids" ]; then
+        local formatted_modified
+        formatted_modified=$(format_id_list "$modified_ids")
+        parts+=("修改工单 ID: ${formatted_modified}")
+    fi
+    
+    # 合并所有部分（用分号连接）
+    if [ ${#parts[@]} -eq 0 ]; then
+        echo "更新工单文件"
+    else
+        local IFS='；'
+        echo "${parts[*]}"
     fi
 }
 
