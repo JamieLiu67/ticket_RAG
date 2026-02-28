@@ -324,28 +324,46 @@ generate_ticket_message() {
 
 # ============ 生成 CS_KI 文件的 commit message 部分 ============
 generate_cski_message() {
-    # 获取当前文件中的最大 ID
-    CURRENT_MAX=$(grep -oE '# CS_KI_[0-9]+' "$CSKI_FILE" | grep -oE '[0-9]+' | sort -n | tail -1)
+    # 获取变动检测结果
+    local changes
+    changes=$(detect_changes "$CSKI_FILE" "cski")
     
-    # 获取上次提交时的文件内容中的最大 ID
-    if git show HEAD:"$CSKI_FILE" 2>/dev/null | grep -oE '# CS_KI_[0-9]+' | grep -oE '[0-9]+' | sort -n | tail -1 > /tmp/last_max_id.txt 2>/dev/null; then
-        LAST_MAX=$(cat /tmp/last_max_id.txt)
-    else
-        LAST_MAX=0
+    # 解析变动
+    local added_ids deleted_ids modified_ids
+    added_ids=$(echo "$changes" | grep -o 'ADDED:[^|]*' | cut -d: -f2)
+    deleted_ids=$(echo "$changes" | grep -o 'DELETED:[^|]*' | cut -d: -f2)
+    modified_ids=$(echo "$changes" | grep -o 'MODIFIED:[^|]*' | cut -d: -f2)
+    
+    # 构建 message 部分
+    local parts=()
+    
+    # 如果有新增，使用范围格式
+    if [ -n "$added_ids" ]; then
+        local formatted_added
+        formatted_added=$(compress_id_range "$added_ids")
+        parts+=("新增 CSKI ${formatted_added}")
     fi
     
-    rm -f /tmp/last_max_id.txt
+    # 如果有删除，列出 ID
+    if [ -n "$deleted_ids" ]; then
+        local formatted_deleted
+        formatted_deleted=$(format_id_list "$deleted_ids")
+        parts+=("删除 CSKI ${formatted_deleted}")
+    fi
     
-    if [ -n "$CURRENT_MAX" ] && [ "$CURRENT_MAX" -gt "$LAST_MAX" ]; then
-        if [ "$((LAST_MAX + 1))" -eq "$CURRENT_MAX" ]; then
-            # 只新增了一个
-            echo "新增 CSKI ${CURRENT_MAX}"
-        else
-            # 新增了多个
-            echo "新增 CSKI $((LAST_MAX + 1))-${CURRENT_MAX}"
-        fi
+    # 如果有修改，列出 ID
+    if [ -n "$modified_ids" ]; then
+        local formatted_modified
+        formatted_modified=$(format_id_list "$modified_ids")
+        parts+=("修改 CSKI ${formatted_modified}")
+    fi
+    
+    # 合并所有部分
+    if [ ${#parts[@]} -eq 0 ]; then
+        echo "更新 CSKI 文件"
     else
-        echo "更新 CSKI"
+        local IFS='；'
+        echo "${parts[*]}"
     fi
 }
 
