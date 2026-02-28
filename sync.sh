@@ -63,6 +63,72 @@ extract_ids_cski() {
     grep "^# CS_KI_" "$file" 2>/dev/null | sed 's/# CS_KI_//' | awk '{print $1}' | sort -n
 }
 
+# 提取工单条目的完整内容（从 # ID: xxx 到下一个 --- 之前）
+extract_ticket_entry() {
+    local content="$1"
+    local id="$2"
+    
+    echo "$content" | awk -v id="$id" '
+        BEGIN { capturing = 0; entry = "" }
+        /^# ID: / { 
+            if (capturing) { 
+                capturing = 0 
+            }
+            if ($3 == id) { 
+                capturing = 1 
+            }
+        }
+        capturing { 
+            entry = entry $0 "\n" 
+        }
+        END { 
+            if (capturing) {
+                gsub(/---\s*$/, "", entry)
+                print entry
+            }
+        }
+    '
+}
+
+# 提取 CS_KI 条目的完整内容（从 # CS_KI_xxx 到下一个 --- 之前）
+extract_cski_entry() {
+    local content="$1"
+    local id="$2"
+    
+    printf -v padded_id "%04d" "$id"
+    
+    echo "$content" | awk -v id="$padded_id" '
+        BEGIN { capturing = 0; entry = "" }
+        /^# CS_KI_/ { 
+            if (capturing) { 
+                capturing = 0 
+            }
+            if (substr($0, 10, 4) == id) { 
+                capturing = 1 
+            }
+        }
+        capturing { 
+            entry = entry $0 "\n" 
+        }
+        END { 
+            if (capturing) {
+                gsub(/---\s*$/, "", entry)
+                print entry
+            }
+        }
+    '
+}
+
+# 计算字符串的 MD5 哈希（跨平台兼容）
+compute_hash() {
+    local content="$1"
+    if command -v md5sum >/dev/null 2>&1; then
+        echo "$content" | md5sum | awk '{print $1}'
+    else
+        echo "$content" | md5 | awk '{print $1}'
+    fi
+}
+
 # ============ 生成工单文件的 commit message 部分 ============
 generate_ticket_message() {
     LAST_COMMIT_MSG=$(git log -1 --format="%s")
