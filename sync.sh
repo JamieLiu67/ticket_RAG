@@ -213,6 +213,57 @@ detect_changes() {
     echo "ADDED:$added_ids|DELETED:$deleted_ids|MODIFIED:$modified_ids"
 }
 
+# ============ ID 格式化函数 ============
+
+# 将 ID 列表压缩为范围表示（连续 ID 合并）
+# 输入: "1 2 3 5 7 8 9"  输出: "1-3, 5, 7-9"
+compress_id_range() {
+    local ids="$1"
+    ids=$(echo "$ids" | tr ',' '\n' | sort -n | uniq)
+    
+    local result=""
+    local start=""
+    local prev=""
+    
+    for id in $ids; do
+        id=$(echo "$id" | tr -d ' ' | sed 's/^0*//')
+        if [ -z "$id" ]; then
+            id=0
+        fi
+        if [ -z "$start" ]; then
+            start=$id
+            prev=$id
+        elif [ $((prev + 1)) -eq "$id" ]; then
+            prev=$id
+        else
+            if [ "$start" -eq "$prev" ]; then
+                result="${result}${start}, "
+            else
+                result="${result}${start}-${prev}, "
+            fi
+            start=$id
+            prev=$id
+        fi
+    done
+    
+    # 处理最后一组
+    if [ -n "$start" ]; then
+        if [ "$start" -eq "$prev" ]; then
+            result="${result}${start}"
+        else
+            result="${result}${start}-${prev}"
+        fi
+    fi
+    
+    echo "$result"
+}
+
+# 格式化 ID 列表为逗号分隔字符串（不压缩）
+format_id_list() {
+    local ids="$1"
+    echo "$ids" | tr ',' '\n' | tr '\n' ',' | sed 's/,$//' | sed 's/,/, /g'
+}
+
 # ============ 生成工单文件的 commit message 部分 ============
 generate_ticket_message() {
     LAST_COMMIT_MSG=$(git log -1 --format="%s")
