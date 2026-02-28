@@ -129,6 +129,90 @@ compute_hash() {
     fi
 }
 
+# ============ 变动检测函数 ============
+
+# 检测文件的变动（新增/删除/修改）
+# 返回格式: ADDED: id1,id2|DELETED: id3,id4|MODIFIED: id5,id6
+detect_changes() {
+    local file="$1"
+    local file_type="$2"  # "ticket" or "cski"
+    
+    # 获取当前文件内容
+    local current_content
+    current_content=$(cat "$file" 2>/dev/null)
+    
+    # 获取上次提交的文件内容
+    local last_content
+    last_content=$(git show HEAD:"$file" 2>/dev/null)
+    
+    # 如果上次没有提交（首次提交），所有内容都是新增
+    if [ -z "$last_content" ]; then
+        if [ "$file_type" == "ticket" ]; then
+            local all_ids
+            all_ids=$(extract_ids_ticket "$file")
+            echo "ADDED:$all_ids|DELETED:|MODIFIED:"
+        else
+            local all_ids
+            all_ids=$(extract_ids_cski "$file")
+            echo "ADDED:$all_ids|DELETED:|MODIFIED:"
+        fi
+        return
+    fi
+    
+    # 提取 ID 列表
+    local current_ids last_ids
+    if [ "$file_type" == "ticket" ]; then
+        current_ids=$(echo "$current_content" | grep "^# ID:" | awk '{print $3}' | sort -n)
+        last_ids=$(echo "$last_content" | grep "^# ID:" | awk '{print $3}' | sort -n)
+    else
+        current_ids=$(echo "$current_content" | grep "^# CS_KI_" | sed 's/# CS_KI_//' | awk '{print $1}' | sort -n)
+        last_ids=$(echo "$last_content" | grep "^# CS_KI_" | sed 's/# CS_KI_//' | awk '{print $1}' | sort -n)
+    fi
+    
+    # 计算新增（在 current 中但不在 last 中）
+    local added_ids
+    added_ids=$(comm -23 <(echo "$current_ids") <(echo "$last_ids"))
+    
+    # 计算删除（在 last 中但不在 current 中）
+    local deleted_ids
+    deleted_ids=$(comm -13 <(echo "$current_ids") <(echo "$last_ids"))
+    
+    # 计算可能修改的 ID（交集）
+    local common_ids
+    common_ids=$(comm -12 <(echo "$current_ids") <(echo "$last_ids"))
+    
+    # 检测修改
+    local modified_ids=""
+    for id in $common_ids; do
+        local last_entry current_entry last_hash current_hash
+        
+        if [ "$file_type" == "ticket" ]; then
+            last_entry=$(extract_ticket_entry "$last_content" "$id")
+            current_entry=$(extract_ticket_entry "$current_content" "$id")
+        else
+            last_entry=$(extract_cski_entry "$last_content" "$id")
+            current_entry=$(extract_cski_entry "$current_content" "$id")
+        fi
+        
+        # 计算哈希并比较
+        last_hash=$(compute_hash "$last_entry")
+        current_hash=$(compute_hash "$current_entry")
+        
+        if [ "$last_hash" != "$current_hash" ]; then
+            modified_ids="${modified_ids}${id},"
+        fi
+    done
+    
+    # 去掉末尾的逗号
+    modified_ids=${modified_ids%,}
+    
+    # 格式化输出
+    added_ids=$(echo "$added_ids" | tr '\n' ',' | sed 's/,$//')
+    deleted_ids=$(echo "$deleted_ids" | tr '\n' ',' | sed 's/,$//')
+    
+    echo "ADDED:$added_ids|DELETED:$deleted_ids|MODIFIED:$modified_ids"
+}
+
 # ============ 生成工单文件的 commit message 部分 ============
 generate_ticket_message() {
     LAST_COMMIT_MSG=$(git log -1 --format="%s")
