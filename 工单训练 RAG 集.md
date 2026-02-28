@@ -1,3 +1,37 @@
+
+# ID: 39205
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.5.2
+
+Request Type: 集成问题咨询
+
+Request Description: 我想要用Flutter开发声网RTC功能，使用Flutter编译打包出的应用支持支持平台Windows、iOS、Android三种运行环境。
+
+Flutter 编译打包出的安装包，iOS和Android的文档是支持的，但是Windows没有发现是否支持，现在需要了解Flutter编译打包出的应用是否支持Windows应用
+
+Reply: 您好，我们的支持的 flutter SDK 是支持打包到 Windows 和 Mac 的，可以用我们 [Demo](https://doc.shengwang.cn/doc/rtc/flutter/get-started/run-demo) 测试下
+
+---
+# ID: 39208
+
+SDK Product: RTM
+
+SDK Platform: Java
+
+SDK Version: 2.2.7
+
+Request Type: 其他问题
+
+Request Description: 房间管理是我们后台自己实现么，还是有现成的sdk可以集成
+
+Reply: RTM 一般没有房间管理的概念，请问您说的房间管理是什么样的场景和需求？
+
+---
+
 # ID: 10
 
 SDK Product: RTC
