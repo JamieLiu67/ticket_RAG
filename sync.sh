@@ -17,6 +17,21 @@ CSKI_FILE="CS_KI_RAG优化版.md"
 OSS_BUCKET="oss://agora-rte-rag-hz"
 OSS_ENDPOINT="oss-cn-hangzhou.aliyuncs.com"
 
+# 最多显示的 ID 数量（超过则只显示数量）
+MAX_DISPLAY_IDS=10
+
+# ============ 工具函数 ============
+
+# 统计 ID 数量
+count_ids() {
+    local ids="$1"
+    if [ -z "$ids" ]; then
+        echo "0"
+        return
+    fi
+    echo "$ids" | tr ',' '\n' | grep -v '^$' | wc -l
+}
+
 # ============ 获取今日日期 ============
 if [[ "$OSTYPE" == "darwin"* ]]; then
     TODAY=$(date +%Y.%-m.%-d)
@@ -137,23 +152,40 @@ detect_changes() {
     local file="$1"
     local file_type="$2"  # "ticket" or "cski"
     
+    # 检查文件是否存在
+    if [ ! -f "$file" ]; then
+        echo "ADDED:|DELETED:|MODIFIED:"
+        return
+    fi
+    
+    # 检查是否是 git 仓库
+    if ! git rev-parse --git-dir >/dev/null 2>&1; then
+        echo "ADDED:|DELETED:|MODIFIED:"
+        return
+    fi
+    
     # 获取当前文件内容
     local current_content
     current_content=$(cat "$file" 2>/dev/null)
     
+    if [ -z "$current_content" ]; then
+        echo "ADDED:|DELETED:|MODIFIED:"
+        return
+    fi
+    
     # 获取上次提交的文件内容
     local last_content
-    last_content=$(git show HEAD:"$file" 2>/dev/null)
+    last_content=$(git show HEAD:"$file" 2>/dev/null || echo "")
     
-    # 如果上次没有提交（首次提交），所有内容都是新增
+    # 如果上次没有提交（首次提交或文件是新的）
     if [ -z "$last_content" ]; then
         if [ "$file_type" == "ticket" ]; then
             local all_ids
-            all_ids=$(extract_ids_ticket "$file")
+            all_ids=$(extract_ids_ticket "$file" | tr '\n' ',' | sed 's/,$//')
             echo "ADDED:$all_ids|DELETED:|MODIFIED:"
         else
             local all_ids
-            all_ids=$(extract_ids_cski "$file")
+            all_ids=$(extract_ids_cski "$file" | tr '\n' ',' | sed 's/,$//')
             echo "ADDED:$all_ids|DELETED:|MODIFIED:"
         fi
         return
@@ -299,18 +331,32 @@ generate_ticket_message() {
         fi
     fi
     
-    # 如果有删除，列出 ID
+    # 如果有删除，列出 ID（或数量）
     if [ -n "$deleted_ids" ]; then
-        local formatted_deleted
-        formatted_deleted=$(format_id_list "$deleted_ids")
-        parts+=("删除工单 ID: ${formatted_deleted}")
+        local deleted_count
+        deleted_count=$(count_ids "$deleted_ids")
+        
+        if [ "$deleted_count" -gt "$MAX_DISPLAY_IDS" ]; then
+            parts+=("删除 ${deleted_count} 条工单")
+        else
+            local formatted_deleted
+            formatted_deleted=$(format_id_list "$deleted_ids")
+            parts+=("删除工单 ID: ${formatted_deleted}")
+        fi
     fi
     
-    # 如果有修改，列出 ID
+    # 如果有修改，列出 ID（或数量）
     if [ -n "$modified_ids" ]; then
-        local formatted_modified
-        formatted_modified=$(format_id_list "$modified_ids")
-        parts+=("修改工单 ID: ${formatted_modified}")
+        local modified_count
+        modified_count=$(count_ids "$modified_ids")
+        
+        if [ "$modified_count" -gt "$MAX_DISPLAY_IDS" ]; then
+            parts+=("修改 ${modified_count} 条工单")
+        else
+            local formatted_modified
+            formatted_modified=$(format_id_list "$modified_ids")
+            parts+=("修改工单 ID: ${formatted_modified}")
+        fi
     fi
     
     # 合并所有部分（用分号连接）
@@ -344,18 +390,32 @@ generate_cski_message() {
         parts+=("新增 CSKI ${formatted_added}")
     fi
     
-    # 如果有删除，列出 ID
+    # 如果有删除，列出 ID（或数量）
     if [ -n "$deleted_ids" ]; then
-        local formatted_deleted
-        formatted_deleted=$(format_id_list "$deleted_ids")
-        parts+=("删除 CSKI ${formatted_deleted}")
+        local deleted_count
+        deleted_count=$(count_ids "$deleted_ids")
+        
+        if [ "$deleted_count" -gt "$MAX_DISPLAY_IDS" ]; then
+            parts+=("删除 ${deleted_count} 条 CSKI")
+        else
+            local formatted_deleted
+            formatted_deleted=$(format_id_list "$deleted_ids")
+            parts+=("删除 CSKI ${formatted_deleted}")
+        fi
     fi
     
-    # 如果有修改，列出 ID
+    # 如果有修改，列出 ID（或数量）
     if [ -n "$modified_ids" ]; then
-        local formatted_modified
-        formatted_modified=$(format_id_list "$modified_ids")
-        parts+=("修改 CSKI ${formatted_modified}")
+        local modified_count
+        modified_count=$(count_ids "$modified_ids")
+        
+        if [ "$modified_count" -gt "$MAX_DISPLAY_IDS" ]; then
+            parts+=("修改 ${modified_count} 条 CSKI")
+        else
+            local formatted_modified
+            formatted_modified=$(format_id_list "$modified_ids")
+            parts+=("修改 CSKI ${formatted_modified}")
+        fi
     fi
     
     # 合并所有部分
