@@ -189,7 +189,11 @@ parse_file_to_hashes() {
                     close(tmpfile)
                     print current_id
                 }
-                current_id = substr($0, 10, 4) + 0
+                # 使用字段分割提取 ID，避免特殊字符问题
+                split($0, parts, "_")
+                current_id = parts[3]
+                # 去掉所有非数字字符
+                gsub(/[^0-9]/, "", current_id)
                 entry = ""
                 next
             }
@@ -260,32 +264,35 @@ detect_changes() {
         return
     fi
     
-    # 获取上次提交的文件内容
-    local last_content
-    last_content=$(git show HEAD:"$file" 2>/dev/null || echo "")
+    # 精确模式：使用临时文件存储哈希
+    local current_file last_file
+    current_file=$(mktemp)
+    last_file=$(mktemp)
     
-    # 如果上次没有提交
-    if [ -z "$last_content" ]; then
+    # 检查是否是首次提交（没有历史版本）
+    local last_file_tmp="${last_file}.tmp"
+    if ! git show HEAD:"$file" > "$last_file_tmp" 2>/dev/null; then
+        # 首次提交，所有条目都是新增的
         local all_ids
         if [ "$file_type" == "ticket" ]; then
             all_ids=$(parse_file_to_ids_fast "$file" "$file_type" | tr '\n' ',' | sed 's/,$//')
         else
             all_ids=$(parse_file_to_ids_fast "$file" "$file_type" | sed 's/^0*//' | tr '\n' ',' | sed 's/,$//')
         fi
+        rm -f "$current_file" "$last_file" "$last_file_tmp"
         echo "ADDED:$all_ids|DELETED:|MODIFIED:"
         return
     fi
     
-    # 精确模式：使用临时文件存储哈希
-    local current_file last_file
-    current_file=$(mktemp)
-    last_file=$(mktemp)
-    
     # 解析当前文件
     if [ "$SHOW_PROGRESS" == "true" ]; then
-        # 获取总数用于进度条
+        # 获取总数用于进度条（使用 awk 避免 grep -c 的返回值问题）
         local total_ids
-        total_ids=$(grep -c "^# ID:" "$file" 2>/dev/null || grep -c "^# CS_KI_" "$file" 2>/dev/null || echo "1")
+        if [ "$file_type" == "ticket" ]; then
+            total_ids=$(awk '/^# ID:/ {count++} END {print count+0}' "$file" 2>/dev/null || echo "1")
+        else
+            total_ids=$(awk '/^# CS_KI_/ {count++} END {print count+0}' "$file" 2>/dev/null || echo "1")
+        fi
         
         # 分批处理显示进度
         parse_file_to_hashes "$file" "$file_type" > "$current_file" &
@@ -293,9 +300,9 @@ detect_changes() {
         
         local processed=0
         local first_show=true
-        while kill -0 $pid 2>/dev/null && [ $processed -lt $total_ids ]; do
+        while kill -0 $pid 2>/dev/null && [ "$processed" -lt "$total_ids" ]; do
             processed=$((processed + total_ids / 20 + 1))
-            if [ $processed -gt $total_ids ]; then
+            if [ "$processed" -gt "$total_ids" ]; then
                 processed=$total_ids
             fi
             if [ "$first_show" == "true" ]; then
@@ -307,7 +314,7 @@ detect_changes() {
             sleep 0.1
         done
         # 确保显示100%
-        if [ $processed -lt $total_ids ]; then
+        if [ "$processed" -lt "$total_ids" ]; then
             show_progress $total_ids $total_ids "分析 ${desc}"
         fi
         wait $pid 2>/dev/null
@@ -315,20 +322,23 @@ detect_changes() {
         parse_file_to_hashes "$file" "$file_type" > "$current_file"
     fi
     
-    # 解析旧文件
-    echo "$last_content" > "${last_file}.tmp"
+    # 解析旧文件（last_file_tmp 已在上面创建）
     if [ "$SHOW_PROGRESS" == "true" ]; then
         local total_ids_old
-        total_ids_old=$(echo "$last_content" | grep -c "^# ID:" 2>/dev/null || echo "$last_content" | grep -c "^# CS_KI_" 2>/dev/null || echo "1")
+        if [ "$file_type" == "ticket" ]; then
+            total_ids_old=$(awk '/^# ID:/ {count++} END {print count+0}' "$last_file_tmp" 2>/dev/null || echo "1")
+        else
+            total_ids_old=$(awk '/^# CS_KI_/ {count++} END {print count+0}' "$last_file_tmp" 2>/dev/null || echo "1")
+        fi
         
-        parse_file_to_hashes "${last_file}.tmp" "$file_type" > "$last_file" &
+        parse_file_to_hashes "$last_file_tmp" "$file_type" > "$last_file" &
         local pid=$!
         
         local processed=0
         local first_show=true
-        while kill -0 $pid 2>/dev/null && [ $processed -lt $total_ids_old ]; do
+        while kill -0 $pid 2>/dev/null && [ "$processed" -lt "$total_ids_old" ]; do
             processed=$((processed + total_ids_old / 20 + 1))
-            if [ $processed -gt $total_ids_old ]; then
+            if [ "$processed" -gt "$total_ids_old" ]; then
                 processed=$total_ids_old
             fi
             if [ "$first_show" == "true" ]; then
@@ -340,15 +350,15 @@ detect_changes() {
             sleep 0.1
         done
         # 确保显示100%
-        if [ $processed -lt $total_ids_old ]; then
+        if [ "$processed" -lt "$total_ids_old" ]; then
             show_progress $total_ids_old $total_ids_old "对比历史版本"
         fi
         wait $pid 2>/dev/null
     else
-        parse_file_to_hashes "${last_file}.tmp" "$file_type" > "$last_file"
+        parse_file_to_hashes "$last_file_tmp" "$file_type" > "$last_file"
     fi
     
-    rm -f "${last_file}.tmp"
+    rm -f "$last_file_tmp"
     
     # 比较两个文件
     local added_ids deleted_ids modified_ids
@@ -395,34 +405,48 @@ compress_id_range() {
     
     local result=""
     local start=""
-    local prev=""
+    local start_formatted=""
+    local prev_num=""
     
     for id in $ids; do
-        id=$(echo "$id" | tr -d ' ' | sed 's/^0*//')
+        # 保留原始格式，只去掉空格
+        id=$(echo "$id" | tr -d ' ')
         if [ -z "$id" ]; then
-            id=0
+            continue
         fi
+        
+        # 提取数字部分用于比较
+        local num_id=$(echo "$id" | sed 's/^0*//')
+        if [ -z "$num_id" ]; then
+            num_id=0
+        fi
+        
         if [ -z "$start" ]; then
-            start=$id
-            prev=$id
-        elif [ $((prev + 1)) -eq "$id" ]; then
-            prev=$id
+            start=$num_id
+            start_formatted=$id
+            prev_num=$num_id
+        elif [ $((prev_num + 1)) -eq "$num_id" ]; then
+            prev_num=$num_id
         else
-            if [ "$start" -eq "$prev" ]; then
-                result="${result}${start}, "
+            if [ "$start" -eq "$prev_num" ]; then
+                result="${result}${start_formatted}, "
             else
-                result="${result}${start}-${prev}, "
+                # 范围显示时也保留格式（使用前一个 ID 的格式）
+                local prev_formatted=$(printf "%04d" $prev_num)
+                result="${result}${start_formatted}-${prev_formatted}, "
             fi
-            start=$id
-            prev=$id
+            start=$num_id
+            start_formatted=$id
+            prev_num=$num_id
         fi
     done
     
     if [ -n "$start" ]; then
-        if [ "$start" -eq "$prev" ]; then
-            result="${result}${start}"
+        if [ "$start" -eq "$prev_num" ]; then
+            result="${result}${start_formatted}"
         else
-            result="${result}${start}-${prev}"
+            local prev_formatted=$(printf "%04d" $prev_num)
+            result="${result}${start_formatted}-${prev_formatted}"
         fi
     fi
     
