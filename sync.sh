@@ -6,6 +6,10 @@
 
 set -e
 
+# ============ 临时目录管理 ============
+TMPDIR=$(mktemp -d)
+trap 'rm -rf "$TMPDIR"' EXIT
+
 # ============ 颜色定义 ============
 GREEN='\033[0;32m'
 RED='\033[0;31m'
@@ -32,6 +36,7 @@ TIMEOUT_SECONDS=60
 # 命令行参数
 FAST_MODE=false
 SHOW_PROGRESS=true
+DRY_RUN=false
 
 # ============ 命令行参数解析 ============
 parse_args() {
@@ -43,6 +48,10 @@ parse_args() {
                 ;;
             --no-progress)
                 SHOW_PROGRESS=false
+                shift
+                ;;
+            --dry-run)
+                DRY_RUN=true
                 shift
                 ;;
             --help|-h)
@@ -59,17 +68,19 @@ parse_args() {
 }
 
 show_help() {
-    echo "用法: ./sync.sh [选项]"
+    echo "用法：./sync.sh [选项]"
     echo ""
     echo "选项:"
     echo "  --fast          快速模式（不计算哈希，只统计数量）"
     echo "  --no-progress   不显示进度条"
+    echo "  --dry-run       模拟模式（检测变动但不实际提交和上传）"
     echo "  --help, -h      显示帮助信息"
     echo ""
     echo "示例:"
     echo "  ./sync.sh                    # 默认精确模式"
     echo "  ./sync.sh --fast             # 快速模式"
     echo "  ./sync.sh --fast --no-progress  # 快速模式且无进度条"
+    echo "  ./sync.sh --dry-run          # 模拟模式测试"
 }
 
 # ============ 图形进度条 ============
@@ -82,6 +93,7 @@ show_progress() {
     local msg=$3
     local is_new=${4:-false}  # 是否是新的进度条（首次显示）
     
+    # 禁用进度条时不显示
     if [ "$SHOW_PROGRESS" != "true" ]; then
         return
     fi
@@ -131,11 +143,7 @@ count_ids() {
 }
 
 # ============ 获取今日日期 ============
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    TODAY=$(date +%Y.%-m.%-d)
-else
-    TODAY=$(date +%Y.%-m.%-d)
-fi
+TODAY=$(date +%Y.%-m.%-d)
 
 # ============ 高效的文件解析函数 ============
 
@@ -149,9 +157,9 @@ parse_file_to_hashes() {
         return
     fi
     
-    # 创建临时目录
-    local tmpdir
-    tmpdir=$(mktemp -d)
+    # 使用全局临时目录（由 trap 管理清理）
+    local tmpdir="$TMPDIR/hashes"
+    mkdir -p "$tmpdir"
     
     if [ "$file_type" == "ticket" ]; then
         awk -v tmpdir="$tmpdir" '
@@ -180,7 +188,7 @@ parse_file_to_hashes() {
             }
         ' "$file"
     else
-        # CS_KI 文件
+        # CS_KI 文件 - 使用 sub 提取 ID，兼容 macOS awk
         awk -v tmpdir="$tmpdir" '
             /^# CS_KI_/ {
                 if (current_id != "" && entry != "") {
@@ -189,11 +197,10 @@ parse_file_to_hashes() {
                     close(tmpfile)
                     print current_id
                 }
-                # 使用字段分割提取 ID，避免特殊字符问题
-                split($0, parts, "_")
-                current_id = parts[3]
-                # 去掉所有非数字字符
-                gsub(/[^0-9]/, "", current_id)
+                # 提取 CS_KI_ 后的数字 ID
+                current_id = $0
+                sub(/.*CS_KI_/, "", current_id)
+                sub(/[^0-9].*/, "", current_id)
                 entry = ""
                 next
             }
@@ -218,9 +225,6 @@ parse_file_to_hashes() {
         fi
         echo "$id|$hash"
     done
-    
-    # 清理临时目录
-    rm -rf "$tmpdir"
 }
 
 # 快速模式：只统计 ID 数量，不计算哈希
@@ -235,7 +239,8 @@ parse_file_to_ids_fast() {
     if [ "$file_type" == "ticket" ]; then
         grep "^# ID:" "$file" | awk '{print $3}' | sort -n
     else
-        grep "^# CS_KI_" "$file" | sed 's/# CS_KI_//' | awk '{print $1}' | sort -n
+        # 使用 grep -oE 提取数字 ID，更健壮
+        grep "^# CS_KI_" "$file" | grep -oE 'CS_KI_[0-9]+' | sed 's/CS_KI_//' | sort -n
     fi
 }
 
@@ -294,7 +299,7 @@ detect_changes() {
             total_ids=$(awk '/^# CS_KI_/ {count++} END {print count+0}' "$file" 2>/dev/null || echo "1")
         fi
         
-        # 分批处理显示进度
+        # 后台执行哈希计算
         parse_file_to_hashes "$file" "$file_type" > "$current_file" &
         local pid=$!
         
@@ -313,7 +318,7 @@ detect_changes() {
             fi
             sleep 0.1
         done
-        # 确保显示100%
+        # 确保显示 100%
         if [ "$processed" -lt "$total_ids" ]; then
             show_progress $total_ids $total_ids "分析 ${desc}"
         fi
@@ -349,7 +354,7 @@ detect_changes() {
             fi
             sleep 0.1
         done
-        # 确保显示100%
+        # 确保显示 100%
         if [ "$processed" -lt "$total_ids_old" ]; then
             show_progress $total_ids_old $total_ids_old "对比历史版本"
         fi
@@ -391,8 +396,8 @@ detect_changes_fast() {
     last_ids=$(git show HEAD:"$file" 2>/dev/null | parse_file_to_ids_fast - "$file_type")
     
     local added_count deleted_count
-    added_count=$(comm -23 <(echo "$current_ids") <(echo "$last_ids") | wc -l)
-    deleted_count=$(comm -13 <(echo "$current_ids") <(echo "$last_ids") | wc -l)
+    added_count=$(comm -23 <(echo "$current_ids") <(echo "$last_ids") | wc -l | tr -d ' ')
+    deleted_count=$(comm -13 <(echo "$current_ids") <(echo "$last_ids") | wc -l | tr -d ' ')
     
     echo "ADDED:${added_count}|DELETED:${deleted_count}|MODIFIED:0"
 }
@@ -617,6 +622,13 @@ main() {
     # 解析命令行参数
     parse_args "$@"
     
+    # 检查 ossutil 是否安装（dry-run 模式除外）
+    if [ "$DRY_RUN" != "true" ] && ! command -v ossutil >/dev/null 2>&1; then
+        echo -e "${RED}❌ ossutil 未安装，请先安装阿里云 OSS 工具${NC}"
+        echo "   安装方法：https://help.aliyun.com/document_detail/50452.html"
+        exit 1
+    fi
+    
     echo "🔍 检查文件变更..."
     
     CHANGED_FILES=()
@@ -648,11 +660,13 @@ main() {
     
     COMMIT_PARTS=()
     
+    # 生成工单消息
     if [[ " ${CHANGED_FILES[@]} " =~ " ${TICKET_FILE} " ]]; then
         TICKET_MSG=$(generate_ticket_message)
         COMMIT_PARTS+=("$TICKET_MSG")
     fi
     
+    # 生成 CSKI 消息
     if [[ " ${CHANGED_FILES[@]} " =~ " ${CSKI_FILE} " ]]; then
         CSKI_MSG=$(generate_cski_message)
         COMMIT_PARTS+=("$CSKI_MSG")
@@ -669,7 +683,18 @@ main() {
     echo "  $SUGGESTED_MSG"
     echo ""
     
-    read -p "使用建议的 message? [回车确认 / 输入自定义内容 / n取消]: " user_input
+    # Dry-run 模式：跳过交互，直接退出
+    if [ "$DRY_RUN" == "true" ]; then
+        echo -e "${GREEN}✅ [DRY RUN] 完成 - 未执行任何实际修改${NC}"
+        echo ""
+        echo "实际文件变更:"
+        for file in "${CHANGED_FILES[@]}"; do
+            echo "  $file"
+        done
+        exit 0
+    fi
+    
+    read -p "使用建议的 message? [回车确认 / 输入自定义内容 / n 取消]: " user_input
     
     if [ -z "$user_input" ]; then
         COMMIT_MSG="$SUGGESTED_MSG"
@@ -684,17 +709,40 @@ main() {
     echo "将使用 commit message: $COMMIT_MSG"
     echo ""
     
+    echo ""
+    echo "将使用 commit message: $COMMIT_MSG"
+    echo ""
+    
+    # Dry-run 模式：到此为止，不执行实际修改
+    if [ "$DRY_RUN" == "true" ]; then
+        echo ""
+        echo -e "${GREEN}✅ [DRY RUN] 完成 - 未执行任何实际修改${NC}"
+        echo ""
+        echo "建议的 commit message:"
+        echo "  $COMMIT_MSG"
+        echo ""
+        echo "实际文件变更:"
+        for file in "${CHANGED_FILES[@]}"; do
+            echo "  $file"
+        done
+        exit 0
+    fi
+    
+    # 准备日志文件
+    GIT_LOG="/tmp/sync_git_$$.log"
+    OSS_LOG="/tmp/sync_oss_$$.log"
+    
     echo "📦 Git 操作..."
     for file in "${CHANGED_FILES[@]}"; do
         git add "$file"
     done
     git commit -m "$COMMIT_MSG"
-    git push origin main &
+    git push origin main > "$GIT_LOG" 2>&1 &
     GIT_PID=$!
     
     echo "☁️  上传到阿里云 OSS..."
     for file in "${CHANGED_FILES[@]}"; do
-        ossutil cp "$file" "$OSS_BUCKET/$file" -f --endpoint "$OSS_ENDPOINT" &
+        ossutil cp "$file" "$OSS_BUCKET/$file" -f --endpoint "$OSS_ENDPOINT" >> "$OSS_LOG" 2>&1 &
     done
     OSS_PID=$!
     
@@ -708,6 +756,11 @@ main() {
     wait $OSS_PID
     OSS_STATUS=$?
     
+    # 清理日志文件（成功时）
+    if [ $GIT_STATUS -eq 0 ] && [ $OSS_STATUS -eq 0 ]; then
+        rm -f "$GIT_LOG" "$OSS_LOG"
+    fi
+    
     echo ""
     echo "================================"
     echo "         同步结果报告"
@@ -715,10 +768,30 @@ main() {
     
     if [ $GIT_STATUS -eq 0 ]; then
         echo -e "${GREEN}✅ GitHub 备份${NC}"
-        echo "   分支: main"
+        echo "   分支：main"
         echo "   Commit: $(git log -1 --oneline)"
     else
         echo -e "${RED}❌ GitHub 备份失败 (exit code: $GIT_STATUS)${NC}"
+        echo "   错误日志:"
+        if [ -f "$GIT_LOG" ]; then
+            cat "$GIT_LOG" | sed 's/^/     /'
+        fi
+    fi
+    
+    echo ""
+    
+    if [ $OSS_STATUS -eq 0 ]; then
+        echo -e "${GREEN}✅ OSS 上传成功${NC}"
+        echo "   Bucket: $OSS_BUCKET"
+        for file in "${CHANGED_FILES[@]}"; do
+            echo "   文件：$file"
+        done
+    else
+        echo -e "${RED}❌ OSS 上传失败 (exit code: $OSS_STATUS)${NC}"
+        echo "   错误日志:"
+        if [ -f "$OSS_LOG" ]; then
+            cat "$OSS_LOG" | sed 's/^/     /'
+        fi
     fi
     
     echo ""
