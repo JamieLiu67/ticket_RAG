@@ -1,4 +1,110 @@
 
+# ID: 39216
+
+SDK Product: RTC
+
+SDK Platform: Electron
+
+SDK Version: 4.5.2
+
+Request Type: 集成问题咨询
+
+Request Description: 在 Linux（Ubuntu）环境中，安装 agora-electron-sdknpm 包失败，导致基于 Electron 的客户端无法启动。
+
+Reply: 您好，我们的 electron SDK 不支持 Linux 环境，如果有 Linux 加入 RTC 频道的需求，可以用[RTC 服务端 SDK](https://doc.shengwang.cn/doc/rtc-server-sdk/cpp/get-started/run-example)
+
+---
+# ID: 39217
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 说欠费了，没有任何地方看到具体的消费明细及欠费明细，而且各种套餐包显示还有大量可用分钟数，而且总的就用了7分钟，怎么就欠费了。问题是充值了也还是用不了。
+
+Reply: 您好，计费问题可以电话联系您的对接销售，声网 console 左侧边栏-设置-工作空间设置里拨打销售负责人的手机号。如果没有对接销售，可以拨打：400 6326626
+
+---
+# ID: 39222
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.2
+
+Request Type: 其他问题
+
+Request Description: 美颜素材包能否发我一下，我测试一下高级美颜。
+
+Reply: 您好，请先电话联系：400 6326626，申请一位销售跟进，然后填写这份[高级美颜问卷](https://my.feishu.cn/share/base/form/shrcnFAOuPGRMzFYxpB5k0SPqeb?from=navigation)，填完以后告诉销售，销售后续会提供素材包下载地址的。如果您已经有销售了，直接填写问卷然后同步销售就行了。
+
+---
+# ID: 39227
+
+SDK Product: Console
+
+SDK Platform: All
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 已经企业实名认证，申请变更企业
+
+Reply: 您好，实名认证类问题可以联系您的对接销售处理，可以在声网 console 左侧边栏-设置-工作空间设置里拨打销售负责人的手机号，如果没有销售的话可以拨打 400 6326626
+
+---
+# ID: 39229
+
+SDK Product: Flexible-classroom
+
+SDK Platform: Android
+
+SDK Version: 2.8.100
+
+Request Type: 集成问题咨询
+
+Request Description: 我是做语聊房功能，跑通完整的demo后将voice 模块导入到自己的项目，然后从我自己的项目跳转到io.agora.scene.voice.ui.activity.VoiceRoomListActivity，能正常跳转，但是无法创建房间，只是提示创建房间失败，没有具体错误信息，想问一下是不是还有其它的准备工作没做
+
+Reply: 您好，新集成建议有条件的话用 PAAS SDK ，灵动课堂属于 APAAS，对于 UI 以外的定制化需求支持有限，建议直接集成 [RTC SDK](https://doc.shengwang.cn/doc/rtc/homepage)
+
+---
+# ID: 39230
+
+SDK Product: RTC
+
+SDK Platform: mini-app
+
+SDK Version: 2.6.5
+
+Request Type: 其他问题
+
+Request Description: 您好，我现在在新服务器安装了视频本地录制SDK Agora_Recording_SDK_for_Linux_FULL   现在需要给服务器开通防火墙 最小权限防火墙 应该开通哪些？
+
+Reply: 您好，本地服务端录制 SDK 有防火墙白名单的话需要联系销售购买[云代理](https://doc.shengwang.cn/doc/recording/cpp/user-guides/cloud-proxy)服务后才能提供
+
+---
+# ID: 39231
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.23.x
+
+Request Type: 集成问题咨询
+
+Request Description: rtt服务开通
+
+Reply: 您好，RTT 就是 Speech To Text，就是实时转录翻译产品，参考文档可以自助[开通声网服务](https://doc.shengwang.cn/doc/speech-to-text/restful/get-started/enable-service)
+
+---
+
 # ID: 39205
 
 SDK Product: RTC
@@ -21548,5 +21654,155 @@ AV_SAMPLE_FMT_NB ///< Number of sample formats. DO NOT USE if linking dynamicall
 回答思维链：通过问题描述看，客户想咨询linux sdk 音频自采集接口相关功能；这里涉及到sendAudioPcmData()接口的使用，以及与FFMPGA的AVSampleFormat 之间的使用关联
 
 Reply:  您好，对应声网sdk来说，pcm都是16位的，即2个字节，对应的是bytes_per_sample这个字段。
+
+---
+# ID: 99990
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.2
+
+Request Type: 功能咨询
+
+Request Description: 测试工单条目 99990
+
+Reply: 测试回复 99990
+
+---
+# ID: 99991
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.2
+
+Request Type: 功能咨询
+
+Request Description: 测试工单条目 99991
+
+Reply: 测试回复 99991
+
+---
+# ID: 99992
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.2
+
+Request Type: 功能咨询
+
+Request Description: 测试工单条目 99992
+
+Reply: 测试回复 99992
+
+---
+# ID: 99993
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.2
+
+Request Type: 功能咨询
+
+Request Description: 测试工单条目 99993
+
+Reply: 测试回复 99993
+
+---
+# ID: 99994
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.2
+
+Request Type: 功能咨询
+
+Request Description: 测试工单条目 99994
+
+Reply: 测试回复 99994
+
+---
+# ID: 99995
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.2
+
+Request Type: 功能咨询
+
+Request Description: 测试工单条目 99995
+
+Reply: 测试回复 99995
+
+---
+# ID: 99996
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.2
+
+Request Type: 功能咨询
+
+Request Description: 测试工单条目 99996
+
+Reply: 测试回复 99996
+
+---
+# ID: 99997
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.2
+
+Request Type: 功能咨询
+
+Request Description: 测试工单条目 99997
+
+Reply: 测试回复 99997
+
+---
+# ID: 99998
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.2
+
+Request Type: 功能咨询
+
+Request Description: 测试工单条目 99998
+
+Reply: 测试回复 99998
+
+---
+# ID: 99999
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.2
+
+Request Type: 功能咨询
+
+Request Description: 测试工单条目 99999
+
+Reply: 测试回复 99999
 
 ---
