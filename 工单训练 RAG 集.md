@@ -1,4 +1,166 @@
 
+# ID: 39233
+
+SDK Product: Console
+
+SDK Platform: All
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 已经打款认证，为何认证状态不变
+
+Reply: 您好，认证的相关商务问题可以直接咨询您的对接销售，声网 console 左侧边栏-设置-工作空间设置里拨打销售负责人的手机号，没有销售的话可以拨打 400 6326626
+
+---
+# ID: 39234
+
+SDK Product: CDN
+
+SDK Platform: CDN
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 目前使用免费版本做测试用不了
+
+Reply: 声网融合 CDN 直播每个月提供 800 GB 的免费用量的，请问您说的测试用不了具体是什么表现？可以提供下推拉流地址，我们这边试试看
+
+---
+# ID: 39236
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 4.3.0
+
+Request Type: 其他问题
+
+Request Description: 我在做机器人项目，目前系统安装的是ubuntu系统，或者是树莓派这种也是装的ubuntu系统，该用那个SDK做推流呢?用于把设备的摄像头画面推送到声网RTC.
+
+Reply: 低性能开发板可以用 [RTSA](https://doc.shengwang.cn/doc/rtsa/c/landing-page)
+性能不错的服务器可以用 [RTC 服务端 SDK](https://doc.shengwang.cn/doc/rtc-server-sdk/cpp/landing-page)
+
+---
+# ID: 39237
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 开通权限、提供配额
+
+Request Description: 你好，请问对话时ai 引擎，是必须开通 启用 实时消息RTM Stream Channel 配置才能用实时字幕功能吗？也就是必须升级为startup 套餐吗
+为什么现在无论怎样改代码就是弄不出实时字幕功能
+
+Reply: 实时字幕没有用到Stream Channel 能力，也不需要购买startup 套餐，实时字幕是有封装好的组件的，可以先读一下文档[实时字幕](https://doc.shengwang.cn/doc/convoai/restful/user-guides/realtime-sub)，跑一下组件 Demo
+
+---
+# ID: 39238
+
+SDK Product: RTC
+
+SDK Platform: Windows
+
+SDK Version: 4.3.0
+
+Request Type: 其他问题
+
+Request Description:  `buildTokenWithUid(appId, appCertificate, channelName, uid, RtcTokenBuilder2.Role.ROLE_PUBLISHER, tokenExpirationInSeconds, privilegeExpirationInSeconds);`
+java使用这个方法获取的token无法推流，使用平台生成临时token可以正常使用。请问下可能是什么原因，如何获取和平台临时token一样权限的token
+
+Reply: 临时 token 不校验 uid 所以能进频道，自己生成的 token 是要校验 uid 的，需要保证生成时的 uid 频道名和 join 时传入的完全一致才能加进频道
+
+控制台有自助检验工具，可以自行校验下token：控制台-辅助工具-Token生成/校验–Token校验
+将您的token粘贴进去，解析一下，看解析出来的结果和您join传入的参数是否一致
+
+---
+# ID: 39242
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.23.x
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 我的业务服务器在日本东京，现在加拿大的用户反馈，拨电话接电话延迟特别高，想请问下是什么问题？如何解决，谢谢~
+
+Reply: RTC 是公网传输，和您的业务服务器没有关系，加拿大的用户应该是优先连接我们当地节点的，除非您在初始化 SDK 的时候配置了区域限制访问，可以检查下是不是配置了[限制访问区域](https://doc.shengwang.cn/doc/rtc/javascript/advanced-features/region)
+
+---
+# ID: 39243
+
+SDK Product: Speech-To-Text
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 问题：转写服务启动成功（status: RUNNING），但机器人没有加入频道，视频语音后没有收到OnStreamMessage的回调
+已确认：
+1. 用户已成功加入频道（uid: 2513647859）
+2. 麦克风正常工作（LOCAL_AUDIO_STREAM_STATE_ENCODING）
+3. 已发布音频（UpdateChannelMediaOptions: 0）
+4. 转写服务启动成功（status: RUNNING）
+问题：
+5. 机器人（pubBotUid）没有加入频道
+6. 没有收到 OnStreamMessage 回调
+7. 持续说话超过 30 秒，仍无响应
+请帮忙检查：
+8. 机器人加入频道需要多长时间？
+9. 是否需要特殊配置才能让机器人加入频道？
+10. 是否有其他限制？
+
+Reply: 如果接口调用返回 200 了但是没在频道里看见转录的机器人，可能是 token 不正确导致加频道失败了，subBot 和 pubBot 都配置 token 了吗？机器人需要用自己 uid 对应的 token 才能加进 RTC 频道
+
+---
+# ID: 39247
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 您好，我们现在用的时实时互动rtc服务，一直提示当前网络质量差，请检查网络！但是我们下载和上传都正常，这个是为什么？
+
+Reply: 您好，声网提供的是 PAAS SDK 服务，您说的提示应该是 app 业务的提示，SDK 本身是不会直接提示这个内容的。
+如果是您自己的项目，请先找研发确定下这个提示是什么情况下才会触发的，涉及到调用声网 SDK 的代码可以展示下
+如果使用我们的项目，麻烦提供具体截图和获取项目的文档地址
+
+---
+# ID: 39248
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 想问下当前是否支持：
+
+人说话之后，LLM 返回回复文本，TTS部分除了返回音频，是否支持返回自定义数据？
+
+方便App客户端在播放回复音频的时候，例如第1.2s （agent判断的结果）的时候触发客户端自己的动画效果。
+
+
+Reply: 有传递自定义数据需求的话可以参考下这篇文档：[传递自定义信息](https://doc.shengwang.cn/doc/convoai/restful/user-guides/custom-data)
+
+---
+
 # ID: 39216
 
 SDK Product: RTC
