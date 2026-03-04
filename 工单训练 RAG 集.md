@@ -1,4 +1,65 @@
 
+# ID: 39251
+
+SDK Product: RTC
+
+SDK Platform: mini-app
+
+SDK Version: 2.6.5
+
+Request Type: 集成问题咨询
+
+Request Description: 小程序无法自定义更改分辨率推送，SDK 不支持 setVideoEncoderConfigurationPreset！
+
+Reply: 您好，我们的小程序 SDK 只负责传输，采集是小程序组件实现的，所以自定义更改分辨率推送需要看[小程序组件的文档](https://developers.weixin.qq.com/miniprogram/dev/component/live-pusher.html)，我们 SDK 没有能够实现的接口，咨询小程序团队来解决
+
+---
+# ID: 39252
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 开通权限、提供配额
+
+Request Description: 我这边需要对话式 AI 引擎接电话外呼功能，需要开通 PSTN/SIP。想咨询一下如何开通？
+
+Reply: 您好，目前自服务客户只推荐用 console 上的 call center，在我们 AI studio 平台上配置号码和呼叫任务，参考文档[智能呼叫中心产品手册](https://my.feishu.cn/wiki/Vl2bwG6EkiSEu5kgwpncNUmZnpb?from=from_copylink)
+
+---
+# ID: 39253
+
+SDK Product: IM
+
+SDK Platform: iOS
+
+SDK Version: 1.3.2
+
+Request Type: 集成问题咨询
+
+Request Description: iOS 端想修改输入框，按钮怎么修改，我再文档上没有找到
+
+Reply: 参考[设置聊天页面输入框](https://im.shengwang.cn/docs/uikit/chatuikit/ios/chatuikit_custom_chat.html#%E8%AE%BE%E7%BD%AE%E8%81%8A%E5%A4%A9%E9%A1%B5%E9%9D%A2%E8%BE%93%E5%85%A5%E6%A1%86)来调整输入框
+
+---
+# ID: 39255
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 使用时，感觉声音会被主动降噪，背景的音乐声几乎都被切掉了。有办法保证声音的正常音质吗？
+
+Reply: SDK 本身确实自带降噪算法，请问现在是什么场景和需求？一般 Web 通话不推荐同时开启第三方音乐外放的，降噪算法会把人声也一起压制
+
+---
+
 # ID: 39233
 
 SDK Product: Console
@@ -4130,7 +4191,11 @@ Request Type: 集成问题咨询
 
 Request Description: sdk版本 3.7.0   能小屏幕直播吗？ 增加小窗口，可以缩小直播间
 
-Reply: 您好，小窗、画中画功能是 4.x 才实现的，您至少需要升级到 4.x 才可以用到[PictureInPicture](https://github.com/AgoraIO/API-Examples/tree/main/iOS/APIExample/APIExample/Examples/Advanced/PictureInPicture)
+Reply: 您好，您说的小窗口是画中画能力吗？3.x 和 4.x 都支持画中画的，
+3.x 画中画 Demo 参考：[PictureInPicture 3.x](https://github.com/AgoraIO/API-Examples/tree/3.7.2/iOS/APIExample/Examples/Advanced/PictureInPicture)
+4.x 画中画 Demo 参考：[PictureInPicture 4.x](https://github.com/AgoraIO/API-Examples/tree/main/iOS/APIExample/APIExample/Examples/Advanced/PictureInPicture)
+其中两个版本都需要留意App 是否在 Info.plist 中声明了 Audio, AirPlay, and Picture in Picture 后台模式。
+两个版本渲染远端画面时推荐用自渲染的方式实现，其中 3.x 需要配置私参开启后台硬解，详见 Demo。
 
 ---
 
