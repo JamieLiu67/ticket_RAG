@@ -1,4 +1,106 @@
 
+# ID: 39260
+
+SDK Product: RTC
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 现成的demo，我让他用韩语做一个自我介绍，无法完成，请问怎样才能够支持韩语的对话交流
+
+Reply: 请问现在用的是什么 Demo？convoAI 吗？convoAI 的语音输出是您指定的第三方 TTS 实现的，TTS 本身需要支持韩语能力才行
+
+---
+# ID: 39261
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 集成问题咨询
+
+Request Description: 我当前需求如下:
+1.这边录音asr 转文字
+2.那边播放tts转语音
+3.两者不互相感染..带有aec 功能 
+
+这个我应该使用哪个sdk,适用于那种场景呢?
+
+Reply: 您好，这个需求建议看下 [对话式 AI 引擎](https://doc.shengwang.cn/doc/convoai/restful/landing-page)
+可以先尝试跑通我们的在线 playground，对话式 AI 引擎 是 restful 接口产品，调用接口后会直接往 RTC 频道里加一个智能体，Android 或者 IOS 这类客户端只要集成 RTC SDK 加到对应的频道里开麦就可以和智能体互动了，客户端 SDK 自带回声消除算法
+
+---
+# ID: 39262
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 其他问题
+
+Request Description: 我想问一下，在视频通话中。是否通过 配置 RTSP 地址 进行推流 到视频通话中
+
+Reply: 有输入 RTSP 流画面到 RTC 频道内的需求用客户端 SDK 的[媒体播放器](https://doc.shengwang.cn/doc/rtc/android/advanced-features/media-player)是可以的
+
+---
+# ID: 39264
+
+SDK Product: Flexible-classroom
+
+SDK Platform: Web
+
+SDK Version: 2.9.40
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 现在web端和手机h5经常在进入直播间时会出现加载时间特别长，请问这个是什么问题？有什么解决方案
+
+Reply: 请问用的是灵动课堂吗？麻烦提供下具体的课程频道名、时间点、耗时久的用户名或 uid，我们调查下对应的加频道记录
+本地排查可以让用户检查下网络是否通畅，以及是否有开启 VPN，有的话需要关闭。
+
+---
+# ID: 39265
+
+SDK Product: RTC-Linux
+
+SDK Platform: Linux-Go
+
+SDK Version: 其他版本
+
+Request Type: 线上报错
+
+Request Description: 请求接口返回
+```
+{"code":404,"err":"/v3/projects/xxx/pids/xxx/licenses","message":"path not found"}
+```
+
+Reply: 请问现在用的是 RTSA SDK 吗？目前您用的 url 路径不在我们对外公开的范围内，RTSA SDK 的 restful 接口没有 `licenses` 结尾的 url，请仔细阅读文档找下正确的接口路径：[申请和使用 License](https://doc.shengwang.cn/doc/rtsa/c/basic-features/license)
+
+---
+# ID: 39266
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 集成问题咨询
+
+Request Description: 在文档上看到了 AUIVoiceRoom 这个demo，然后下下来之后准备跑通看看效果，Android studio 里面包缺文件资源，麻烦帮忙看一下是什么原因，我们的需求是做语音互动语聊房项目，想快速实现业务功能，所以就想直接以uiKit的方式集成
+
+Reply: 您好，这个仓库已经停止更新维护很久了，不推荐使用
+目前我们的 PAAS SDK 没有现成的 UIKIT 工具可以提供，但语聊房的 RTC 能力实现可以参考我们的 [api-example](https://doc.shengwang.cn/doc/rtc/android/get-started/run-demo) 来改造
+
+---
+
 # ID: 39251
 
 SDK Product: RTC
