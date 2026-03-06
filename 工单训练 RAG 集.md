@@ -1,4 +1,53 @@
 
+# ID: 39273
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 想质询一下，贵司的实时通话产品
+跨境问题，越南 泰国 马来西亚
+这些地方和国内使用，试试通话会一直提示连接中
+有什么解决方案吗
+
+Reply: 我们的 RTC 本身就是全球可用的，理论上不应该出现这个情况。不过 SDK 本身不自带连接中的 UI 提示，我们只会从接口回调里返回，可以提供下复现问题时的 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)，说明下什么时间点下，加频道用了多久，我看看记录
+
+---
+# ID: 39274
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.2
+
+Request Type: 商务问题
+
+Request Description: 是否支持本地化部署？支持的话费用如何计费，费用是多少
+
+Reply: 支持私有化部署，具体报价和技术细节可以先联系销售：400 6326626
+
+---
+# ID: 39278
+
+SDK Product: RTM
+
+SDK Platform: HarmonyOS
+
+SDK Version: 2.2.8
+
+Request Type: 集成问题咨询
+
+Request Description: 仅初始化时监听有日志记录  远端用户加入房间 presence监听没有日志反馈  
+
+Reply: 麻烦提供复现问题时双方的 [rtm 日志](https://doc.shengwang.cn/doc/rtm2/harmonyos/error-codes)
+
+---
+
 # ID: 39260
 
 SDK Product: RTC
