@@ -1,4 +1,167 @@
 
+# ID: 39286
+
+SDK Product: RTM
+
+SDK Platform: JavaScript
+
+SDK Version: 2.2.3
+
+Request Type: 其他问题
+
+Request Description: 已经打开了历史消息功能，但是通过临时token还是拉取不到历史消息
+请求的 url 是：`https://api.sd-rtn.com/rtm/v2/history/xxx/userId/testA/channelType/message/channel/Chat_room?start=0&end=1772975000000&messageCount=100`
+
+返回：
+```json
+{
+	"data": null,
+	"error": true,
+	"errorCode": 500,
+	"operation": "history",
+	"reason": "Sync Server Error",
+	"requestId": "xxx"
+}
+```
+
+Reply: start 的时间戳要大于end，您现在反过来了
+
+---
+# ID: 39289
+
+SDK Product: RTC
+
+SDK Platform: HarmonyOS
+
+SDK Version: 4.4.2
+
+Request Type: 集成问题咨询
+
+Request Description: 房间ID：xxx，时间：xxx，发起端uid：xxx，接收端uid: xxx
+实时音视频卡顿，发起端为鸿蒙，接收端为鸿蒙微信小程序，接收端看发起端推送的音视频，有3-4秒的音视频延迟
+
+Reply: 您好，当前声网小程序sdk并不支持在纯血鸿蒙小程序上使用，后续也没有任何优化计划；建议您这边测试下鸿蒙sdk 和其它平台（如web）互通是否有高延时；如果其他平台延时在可接受范围内，及是纯血鸿蒙小程序平台问题；
+
+---
+# ID: 39290
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 其他问题
+
+Request Description: 安卓调用` enableLocalAudio(false)`  后麦克风占用状态依旧存在
+
+Reply: 您好，可以将 audioScenario 修改为 default 再试试，一般 1v1 场景下用 chatroom 就会这样
+
+---
+# ID: 39291
+
+SDK Product: Speech-To-Text
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: 控制台 -> 实时互动RTC -> 功能配置，无法选择实时转录功能。我需要开通该功能，麻烦帮忙处理下。
+
+Reply: 您好，实时转录翻译当前可以再声网console上自助开通，参考文档：
+[开通服务](https://doc.shengwang.cn/doc/speech-to-text/restful/get-started/enable-service#%E9%85%8D%E7%BD%AE%E5%AE%9E%E6%97%B6%E8%BD%AC%E5%BD%95%E7%BF%BB%E8%AF%91%E6%9C%8D%E5%8A%A1)
+
+---
+# ID: 39297
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 集成问题咨询
+
+Request Description:   customerKey: 
+  customerSecret:  这两个参事在哪里获取
+
+Reply: 您好，customerKey、customerSecret 是 HTTP 基本认证 使用到的客户 ID 和客户密钥；参考文档
+[开通服务](https://doc.shengwang.cn/doc/rtc/restful/get-started/enable-service#%E8%8E%B7%E5%8F%96%E5%AE%A2%E6%88%B7-id-%E5%92%8C%E5%AE%A2%E6%88%B7%E5%AF%86%E9%92%A5)
+
+---
+# ID: 39298
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 集成问题咨询
+
+Request Description: 加入房间失败，一直报错appid不存在，appid是国内控制台创建，有在页面初始化的时候把AgoraRTC.setArea("CHINA");appid=xxx
+
+Reply: 您好，请先登录console 确认appid是否正确以及有效
+
+然后确认：
+App ID 所属项目已启用 RTC 服务；
+项目区域设置为 中国；
+未误开启“仅限云服务”等限制客户端接入的配置。
+
+---
+# ID: 39308
+
+SDK Product: Speech-To-Text
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 集成问题咨询
+
+Request Description: [接收 Webhook 事件](https://doc.shengwang.cn/doc/speech-to-text/restful/webhook/receive-webhook)
+接收 Webhook 只能拿到状态，有没有办法能在服务端拿到转录结果，我们还需要在转录结果上做一些 AI 相关的操作
+
+Reply: 具体的消息内容要让服务端集成 SDK 加入 RTC 频道接收频道里发送的 datastream 才能拿到，Webhook 里没有的。
+如果对时效性没有太高要求，可以考虑可以在 [ STT 的 join](https://doc.shengwang.cn/doc/speech-to-text/restful/v7/operations/join) 请求里配置captionConfig 字段，这样每次翻译任务完成后都会上传一份 vtt 文件到您指定的 OSS 里，可以用 vtt 文件做 AI 处理
+
+---
+# ID: 39311
+
+SDK Product: Speech-To-Text
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 通过使用[ STT 的 join](https://doc.shengwang.cn/doc/speech-to-text/restful/v7/operations/join)接口，得到的 agent_id ，用[获取实时转录翻译任务的状态](https://doc.shengwang.cn/doc/speech-to-text/restful/v7/operations/get)
+请求返回的body 是 task not found
+
+Reply: 是不是 token 没写或者 token 错了？这种马上报 404 的说明任务没有启动成功所以才会提示找不到任务
+
+---
+# ID: 39312
+
+SDK Product: RTM
+
+SDK Platform: Flutter
+
+SDK Version: 2.2.6
+
+Request Type: 商务问题
+
+Request Description: 1.能否基于 Agora（声网）中国站 + 国际站双架构，实现中国海外用户即时通讯，音视频等功能
+2.以此为前提数据是否合规，有指导文档吗
+
+Reply: 1、RTM 本身就可以全球互通，不需要双架构也能支持的
+2、数据合规问题参考 [实时消息 SDK 合规使用说明](https://doc.shengwang.cn/doc/rtm2/flutter/security)即可，具体细节可以电话联系 400 6326626 寻找销售跟进
+
+---
+
 # ID: 39273
 
 SDK Product: RTC
