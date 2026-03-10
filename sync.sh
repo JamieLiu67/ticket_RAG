@@ -23,7 +23,8 @@ export TERM=xterm-256color
 
 # ============ 配置 ============
 TICKET_FILE="工单训练 RAG 集.md"
-CSKI_FILE="CS_KI_RAG优化版.md"
+CSKI_FILE="CS_KI_RAG 优化版.md"
+VIDEO_FILE="Video私有参数.md"
 OSS_BUCKET="oss://agora-rte-rag-hz"
 OSS_ENDPOINT="oss-cn-hangzhou.aliyuncs.com"
 
@@ -165,7 +166,6 @@ parse_file_to_hashes() {
         awk -v tmpdir="$tmpdir" '
             /^# ID: / {
                 if (current_id != "" && entry != "") {
-                    # 写入临时文件然后计算哈希
                     tmpfile = tmpdir "/" current_id
                     printf "%s", entry > tmpfile
                     close(tmpfile)
@@ -187,8 +187,7 @@ parse_file_to_hashes() {
                 }
             }
         ' "$file"
-    else
-        # CS_KI 文件 - 使用 sub 提取 ID，兼容 macOS awk
+    elif [ "$file_type" == "cski" ]; then
         awk -v tmpdir="$tmpdir" '
             /^# CS_KI_/ {
                 if (current_id != "" && entry != "") {
@@ -197,10 +196,35 @@ parse_file_to_hashes() {
                     close(tmpfile)
                     print current_id
                 }
-                # 提取 CS_KI_ 后的数字 ID
                 current_id = $0
                 sub(/.*CS_KI_/, "", current_id)
                 sub(/[^0-9].*/, "", current_id)
+                entry = ""
+                next
+            }
+            current_id != "" {
+                entry = entry $0 "\n"
+            }
+            END {
+                if (current_id != "" && entry != "") {
+                    tmpfile = tmpdir "/" current_id
+                    printf "%s", entry > tmpfile
+                    close(tmpfile)
+                    print current_id
+                }
+            }
+        ' "$file"
+    elif [ "$file_type" == "video" ]; then
+        awk -v tmpdir="$tmpdir" '
+            /^# rtc\.video\./ {
+                if (current_id != "" && entry != "") {
+                    tmpfile = tmpdir "/" current_id
+                    printf "%s", entry > tmpfile
+                    close(tmpfile)
+                    print current_id
+                }
+                current_id = $0
+                sub(/^# /, "", current_id)
                 entry = ""
                 next
             }
@@ -238,9 +262,12 @@ parse_file_to_ids_fast() {
     
     if [ "$file_type" == "ticket" ]; then
         grep "^# ID:" "$file" | awk '{print $3}' | sort -n
-    else
+    elif [ "$file_type" == "cski" ]; then
         # 使用 grep -oE 提取数字 ID，更健壮
         grep "^# CS_KI_" "$file" | grep -oE 'CS_KI_[0-9]+' | sed 's/CS_KI_//' | sort -n
+    elif [ "$file_type" == "video" ]; then
+        # Video 文件：提取 rtc.video.xxx 作为 ID
+        grep "^# rtc.video\." "$file" | sed 's/^# //' | sort
     fi
 }
 
@@ -629,6 +656,43 @@ main() {
         exit 1
     fi
     
+    # ============ 从远端拉取 Video 私有参数.md ============
+    VIDEO_UPDATED=false
+    REMOTE_VIDEO_EXISTS=false
+    REMOTE_VIDEO_BLOB=""
+    echo "📥 检查远端 Video 私有参数.md..."
+    if git fetch origin main 2>/dev/null; then
+        # 使用 git ls-tree 检测文件是否存在并获取 blob hash
+        REMOTE_VIDEO_BLOB=$(git ls-tree origin/main 2>/dev/null | grep "Video" | awk '{print $3}')
+        if [ -n "$REMOTE_VIDEO_BLOB" ]; then
+            REMOTE_VIDEO_EXISTS=true
+        fi
+        
+        if [ "$REMOTE_VIDEO_EXISTS" == "true" ]; then
+            # 如果本地文件不存在，从远端拉取
+            if [ ! -f "$VIDEO_FILE" ]; then
+                git show "$REMOTE_VIDEO_BLOB" > "$VIDEO_FILE" 2>/dev/null
+                VIDEO_UPDATED=true
+                echo -e "${GREEN}✓ 已从远端下载 $VIDEO_FILE${NC}"
+            else
+                # 本地文件存在，比较远端和本地的差异
+                git show "$REMOTE_VIDEO_BLOB" > "$TMPDIR/video_remote.md" 2>/dev/null
+                if ! diff -q "$TMPDIR/video_remote.md" "$VIDEO_FILE" >/dev/null 2>&1; then
+                    # 远端和本地不同，使用远端版本并标记为已更新
+                    cp "$TMPDIR/video_remote.md" "$VIDEO_FILE"
+                    VIDEO_UPDATED=true
+                    echo -e "${GREEN}✓ 远端 Video 私有参数.md 有更新，已同步到本地${NC}"
+                else
+                    echo -e "${GREEN}✓ 本地 $VIDEO_FILE 已是最新版本${NC}"
+                fi
+            fi
+        else
+            echo -e "${YELLOW}⚠️  远端仓库中没有 Video 私有参数.md，跳过拉取${NC}"
+        fi
+    else
+        echo -e "${YELLOW}⚠️  无法连接远端仓库，使用本地 $VIDEO_FILE${NC}"
+    fi
+    
     echo "🔍 检查文件变更..."
     
     CHANGED_FILES=()
@@ -646,118 +710,174 @@ main() {
         GIT_PAGER=cat git diff --stat HEAD -- "$CSKI_FILE" 2>/dev/null || true
     fi
     
+    # 判断是否只有 Video 文件有更新
+    ONLY_VIDEO_UPDATE=false
+    if [ ${#CHANGED_FILES[@]} -eq 0 ] && [ "$VIDEO_UPDATED" == "true" ]; then
+        ONLY_VIDEO_UPDATE=true
+    fi
+    
     if [ ${#CHANGED_FILES[@]} -eq 0 ]; then
-        echo -e "${YELLOW}⚠️  警告：没有检测到文件变更${NC}"
-        read -p "是否继续同步？(y/N): " continue_anyway
-        if [[ ! "$continue_anyway" =~ ^[Yy]$ ]]; then
-            echo "已取消"
-            exit 0
+        if [ "$VIDEO_UPDATED" != "true" ]; then
+            echo -e "${YELLOW}⚠️  警告：没有检测到文件变更${NC}"
+            read -p "是否继续同步？(y/N): " continue_anyway
+            if [[ ! "$continue_anyway" =~ ^[Yy]$ ]]; then
+                echo "已取消"
+                exit 0
+            fi
+        else
+            echo -e "${GREEN}✓ Video 文件有更新，将上传到 OSS${NC}"
         fi
     fi
     
-    echo ""
-    echo "📝 生成建议的 commit message..."
-    
-    COMMIT_PARTS=()
-    
-    # 生成工单消息
-    if [[ " ${CHANGED_FILES[@]} " =~ " ${TICKET_FILE} " ]]; then
-        TICKET_MSG=$(generate_ticket_message)
-        COMMIT_PARTS+=("$TICKET_MSG")
-    fi
-    
-    # 生成 CSKI 消息
-    if [[ " ${CHANGED_FILES[@]} " =~ " ${CSKI_FILE} " ]]; then
-        CSKI_MSG=$(generate_cski_message)
-        COMMIT_PARTS+=("$CSKI_MSG")
-    fi
-    
-    if [ ${#COMMIT_PARTS[@]} -eq 2 ]; then
-        SUGGESTED_MSG="${COMMIT_PARTS[0]}；${COMMIT_PARTS[1]}"
-    else
-        SUGGESTED_MSG="${COMMIT_PARTS[0]}"
-    fi
-    
-    echo ""
-    echo "建议的 commit message:"
-    echo "  $SUGGESTED_MSG"
-    echo ""
-    
-    # Dry-run 模式：跳过交互，直接退出
-    if [ "$DRY_RUN" == "true" ]; then
-        echo -e "${GREEN}✅ [DRY RUN] 完成 - 未执行任何实际修改${NC}"
+    # 只有非 Video 文件更新时才生成 commit message
+    if [ "$ONLY_VIDEO_UPDATE" != "true" ]; then
         echo ""
-        echo "实际文件变更:"
-        for file in "${CHANGED_FILES[@]}"; do
-            echo "  $file"
-        done
-        exit 0
-    fi
-    
-    read -p "使用建议的 message? [回车确认 / 输入自定义内容 / n 取消]: " user_input
-    
-    if [ -z "$user_input" ]; then
-        COMMIT_MSG="$SUGGESTED_MSG"
-    elif [[ "$user_input" =~ ^[Nn]$ ]]; then
-        echo "已取消"
-        exit 0
-    else
-        COMMIT_MSG="$user_input"
-    fi
-    
-    echo ""
-    echo "将使用 commit message: $COMMIT_MSG"
-    echo ""
-    
-    echo ""
-    echo "将使用 commit message: $COMMIT_MSG"
-    echo ""
-    
-    # Dry-run 模式：到此为止，不执行实际修改
-    if [ "$DRY_RUN" == "true" ]; then
-        echo ""
-        echo -e "${GREEN}✅ [DRY RUN] 完成 - 未执行任何实际修改${NC}"
+        echo "📝 生成建议的 commit message..."
+        
+        COMMIT_PARTS=()
+        
+        # 生成工单消息
+        if [[ " ${CHANGED_FILES[@]} " =~ " ${TICKET_FILE} " ]]; then
+            TICKET_MSG=$(generate_ticket_message)
+            COMMIT_PARTS+=("$TICKET_MSG")
+        fi
+        
+        # 生成 CSKI 消息
+        if [[ " ${CHANGED_FILES[@]} " =~ " ${CSKI_FILE} " ]]; then
+            CSKI_MSG=$(generate_cski_message)
+            COMMIT_PARTS+=("$CSKI_MSG")
+        fi
+        
+        # 合并 commit message
+        if [ ${#COMMIT_PARTS[@]} -eq 2 ]; then
+            SUGGESTED_MSG="${COMMIT_PARTS[0]}；${COMMIT_PARTS[1]}"
+        elif [ ${#COMMIT_PARTS[@]} -eq 1 ]; then
+            SUGGESTED_MSG="${COMMIT_PARTS[0]}"
+        else
+            SUGGESTED_MSG="同步 RAG 知识库"
+        fi
+        
         echo ""
         echo "建议的 commit message:"
-        echo "  $COMMIT_MSG"
+        echo "  $SUGGESTED_MSG"
         echo ""
-        echo "实际文件变更:"
-        for file in "${CHANGED_FILES[@]}"; do
-            echo "  $file"
-        done
-        exit 0
+        
+        # Dry-run 模式：跳过交互，直接退出
+        if [ "$DRY_RUN" == "true" ]; then
+            echo -e "${GREEN}✅ [DRY RUN] 完成 - 未执行任何实际修改${NC}"
+            echo ""
+            echo "实际文件变更:"
+            if [ "$VIDEO_UPDATED" == "true" ]; then
+                echo "  $VIDEO_FILE (仅上传 OSS，不提交 git)"
+            fi
+            for file in "${CHANGED_FILES[@]}"; do
+                echo "  $file"
+            done
+            exit 0
+        fi
+        
+        read -p "使用建议的 message? [回车确认 / 输入自定义内容 / n 取消]: " user_input
+        
+        if [ -z "$user_input" ]; then
+            COMMIT_MSG="$SUGGESTED_MSG"
+        elif [[ "$user_input" =~ ^[Nn]$ ]]; then
+            echo "已取消"
+            exit 0
+        else
+            COMMIT_MSG="$user_input"
+        fi
+        
+        echo ""
+        echo "将使用 commit message: $COMMIT_MSG"
+        echo ""
+    else
+        # 只有 Video 文件更新，不需要 commit message
+        echo ""
+        echo "📝 Video 文件更新（无需 git commit，直接上传 OSS）"
+        echo ""
+        
+        # Dry-run 模式：跳过执行，直接退出
+        if [ "$DRY_RUN" == "true" ]; then
+            echo -e "${GREEN}✅ [DRY RUN] 完成 - 未执行任何实际修改${NC}"
+            echo ""
+            echo "实际文件变更:"
+            echo "  $VIDEO_FILE (仅上传 OSS，不提交 git)"
+            exit 0
+        fi
+        
+        read -p "是否继续上传到 OSS? [回车确认 / n 取消]: " user_input
+        
+        if [[ "$user_input" =~ ^[Nn]$ ]]; then
+            echo "已取消"
+            exit 0
+        fi
+        
+        COMMIT_MSG=""
     fi
     
     # 准备日志文件
     GIT_LOG="/tmp/sync_git_$$.log"
     OSS_LOG="/tmp/sync_oss_$$.log"
+    touch "$OSS_LOG"
     
-    echo "📦 Git 操作..."
-    for file in "${CHANGED_FILES[@]}"; do
-        git add "$file"
-    done
-    git commit -m "$COMMIT_MSG"
-    git push origin main > "$GIT_LOG" 2>&1 &
-    GIT_PID=$!
+    # 只有非 Video 文件更新时才执行 git 操作
+    if [ "$ONLY_VIDEO_UPDATE" != "true" ]; then
+        echo "📦 Git 操作..."
+        for file in "${CHANGED_FILES[@]}"; do
+            git add "$file"
+        done
+        if [ ${#CHANGED_FILES[@]} -gt 0 ]; then
+            git commit -m "$COMMIT_MSG"
+        fi
+        git push origin main > "$GIT_LOG" 2>&1 &
+        GIT_PID=$!
+    else
+        echo "📦 跳过 Git 操作（Video 文件不提交 git）"
+        GIT_PID=""
+    fi
     
     echo "☁️  上传到阿里云 OSS..."
-    for file in "${CHANGED_FILES[@]}"; do
-        ossutil cp "$file" "$OSS_BUCKET/$file" -f --endpoint "$OSS_ENDPOINT" >> "$OSS_LOG" 2>&1 &
-    done
-    OSS_PID=$!
+    # Video 文件单独上传（如果有更新）- 同步执行确保能看到状态
+    VIDEO_OSS_STATUS=0
+    if [ "$VIDEO_UPDATED" == "true" ]; then
+        echo -n "  - $VIDEO_FILE (直接上传 OSS，不经过 git) ... "
+        if ossutil cp "$VIDEO_FILE" "$OSS_BUCKET/$VIDEO_FILE" -f --endpoint "$OSS_ENDPOINT" >> "$OSS_LOG" 2>&1; then
+            echo -e "${GREEN}✅${NC}"
+        else
+            echo -e "${RED}❌${NC}"
+            VIDEO_OSS_STATUS=1
+        fi
+    fi
+    # 其他文件上传（后台并行）
+    OSS_PID=""
+    if [ ${#CHANGED_FILES[@]} -gt 0 ]; then
+        for file in "${CHANGED_FILES[@]}"; do
+            echo "  - $file"
+            ossutil cp "$file" "$OSS_BUCKET/$file" -f --endpoint "$OSS_ENDPOINT" >> "$OSS_LOG" 2>&1 &
+        done
+        OSS_PID=$!
+    fi
     
     echo ""
     echo "⏳ 等待同步完成（并行执行中）..."
     echo ""
     
-    wait $GIT_PID
-    GIT_STATUS=$?
+    # 等待 git 操作（如果有）
+    GIT_STATUS=0
+    if [ -n "$GIT_PID" ]; then
+        wait $GIT_PID
+        GIT_STATUS=$?
+    fi
     
-    wait $OSS_PID
-    OSS_STATUS=$?
+    # 等待其他文件 OSS 上传（如果有）
+    OSS_STATUS=0
+    if [ -n "$OSS_PID" ] && [ ${#CHANGED_FILES[@]} -gt 0 ]; then
+        wait $OSS_PID
+        OSS_STATUS=$?
+    fi
     
     # 清理日志文件（成功时）
-    if [ $GIT_STATUS -eq 0 ] && [ $OSS_STATUS -eq 0 ]; then
+    if [ $GIT_STATUS -eq 0 ] && [ $OSS_STATUS -eq 0 ] && [ $VIDEO_OSS_STATUS -eq 0 ]; then
         rm -f "$GIT_LOG" "$OSS_LOG"
     fi
     
@@ -766,53 +886,76 @@ main() {
     echo "         同步结果报告"
     echo "================================"
     
-    if [ $GIT_STATUS -eq 0 ]; then
-        echo -e "${GREEN}✅ GitHub 备份${NC}"
-        echo "   分支：main"
-        echo "   Commit: $(git log -1 --oneline)"
-    else
-        echo -e "${RED}❌ GitHub 备份失败 (exit code: $GIT_STATUS)${NC}"
-        echo "   错误日志:"
-        if [ -f "$GIT_LOG" ]; then
-            cat "$GIT_LOG" | sed 's/^/     /'
+    # GitHub 备份结果（只有非 Video 文件更新时才显示）
+    if [ "$ONLY_VIDEO_UPDATE" != "true" ] && [ ${#CHANGED_FILES[@]} -gt 0 ]; then
+        if [ $GIT_STATUS -eq 0 ]; then
+            echo -e "${GREEN}✅ GitHub 备份${NC}"
+            echo "   分支：main"
+            echo "   Commit: $(git log -1 --oneline)"
+        else
+            echo -e "${RED}❌ GitHub 备份失败 (exit code: $GIT_STATUS)${NC}"
+            echo "   错误日志:"
+            if [ -f "$GIT_LOG" ]; then
+                cat "$GIT_LOG" | sed 's/^/     /'
+            fi
         fi
+        echo ""
     fi
     
-    echo ""
-    
-    if [ $OSS_STATUS -eq 0 ]; then
-        echo -e "${GREEN}✅ OSS 上传成功${NC}"
-        echo "   Bucket: $OSS_BUCKET"
-        for file in "${CHANGED_FILES[@]}"; do
-            echo "   文件：$file"
-        done
-    else
-        echo -e "${RED}❌ OSS 上传失败 (exit code: $OSS_STATUS)${NC}"
-        echo "   错误日志:"
-        if [ -f "$OSS_LOG" ]; then
-            cat "$OSS_LOG" | sed 's/^/     /'
+    # Video 文件 OSS 上传结果
+    if [ "$VIDEO_UPDATED" == "true" ]; then
+        if [ $VIDEO_OSS_STATUS -eq 0 ]; then
+            echo -e "${GREEN}✅ Video 文件上传 OSS 成功${NC}"
+            echo "   文件：$VIDEO_FILE"
+            echo "   路径：$OSS_BUCKET/$VIDEO_FILE"
+            echo "   （不提交 git，直接上传 OSS）"
+        else
+            echo -e "${RED}❌ Video 文件上传 OSS 失败${NC}"
+            echo "   文件：$VIDEO_FILE"
+            echo "   错误日志:"
+            if [ -f "$OSS_LOG" ]; then
+                tail -5 "$OSS_LOG" | sed 's/^/     /'
+            fi
         fi
+        echo ""
     fi
     
-    echo ""
-    
-    if [ $OSS_STATUS -eq 0 ]; then
-        echo -e "${GREEN}✅ OSS 上传成功${NC}"
-        echo "   Bucket: $OSS_BUCKET"
-        for file in "${CHANGED_FILES[@]}"; do
-            echo "   文件: $file"
-        done
-    else
-        echo -e "${RED}❌ OSS 上传失败 (exit code: $OSS_STATUS)${NC}"
+    # 其他文件 OSS 上传结果
+    if [ ${#CHANGED_FILES[@]} -gt 0 ]; then
+        if [ $OSS_STATUS -eq 0 ]; then
+            echo -e "${GREEN}✅ 工单/CSKI 文件上传 OSS${NC}"
+            echo "   Bucket: $OSS_BUCKET"
+            for file in "${CHANGED_FILES[@]}"; do
+                echo "   文件：$file"
+            done
+        else
+            echo -e "${RED}❌ 工单/CSKI 文件上传 OSS 失败 (exit code: $OSS_STATUS)${NC}"
+            echo "   错误日志:"
+            if [ -f "$OSS_LOG" ]; then
+                cat "$OSS_LOG" | sed 's/^/     /'
+            fi
+        fi
     fi
     
     echo ""
     echo "================================"
     
-    if [ $GIT_STATUS -eq 0 ] && [ $OSS_STATUS -eq 0 ]; then
+    ALL_SUCCESS=true
+    # 只有非 Video 更新时才检查 git 状态
+    if [ "$ONLY_VIDEO_UPDATE" != "true" ] && [ ${#CHANGED_FILES[@]} -gt 0 ] && [ $GIT_STATUS -ne 0 ]; then
+        ALL_SUCCESS=false
+    fi
+    if [ "$VIDEO_UPDATED" == "true" ] && [ $VIDEO_OSS_STATUS -ne 0 ]; then
+        ALL_SUCCESS=false
+    fi
+    if [ ${#CHANGED_FILES[@]} -gt 0 ] && [ $OSS_STATUS -ne 0 ]; then
+        ALL_SUCCESS=false
+    fi
+    
+    if [ "$ALL_SUCCESS" == "true" ]; then
         echo -e "${GREEN}🎉 全部同步完成！${NC}"
         echo ""
-        echo "下次同步将在百炼平台自动生效"
+        echo "OSS 文件约 1-2 分钟后在百炼平台自动生效"
         exit 0
     else
         echo -e "${YELLOW}⚠️  部分任务失败${NC}"
