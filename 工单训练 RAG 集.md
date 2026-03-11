@@ -1,3 +1,56 @@
+# ID: 11
+
+SDK Product: RTC
+
+SDK Platform: 所有平台
+
+SDK Version: 4.x
+
+Request Type: 集成问题
+
+Request Description: 为什么我本地`mutelocalaudiostream(true)`后，`volumeindiaction`还是会报告本地的音量？
+
+Reply: 1、这是 SDK 的预期行为。即使调用 `muteLocalAudioStream(true)` 将本地音频流静音，`onAudioVolumeIndication `回调仍会继续报告本地用户的音量。  
+2、原因在于：`muteLocalAudioStream` 仅停止音频数据的发送，但不会停止音频采集，因此 SDK 仍能检测到本地麦克风的输入音量，并在 `volumeIndication` 中上报。  
+3、相比之下，远端用户静音后，其音量会在 20 秒后从回调中移除；但本地用户的音量回调不受 mute 状态影响，会持续返回（可能为 0 或实际采集值）。
+
+建议：  
+- 若需完全停止本地音量检测，可考虑调用 `enableLocalAudio(false)` 来关闭本地采集；  
+- 如仅需 UI 上不显示本地音量，可在业务层根据 `muteLocalAudioStream` 的状态过滤掉本地音量回调。
+
+---
+
+# ID: 39323
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 其他问题
+
+Request Description: 在使用贵公司的服务时，我们是否签了相关合同或者协议，如果有的的话，我们应该在哪里下载
+
+Reply: 您好，合同相关信息可以直接咨询您的对接商务：声网 console 左侧边栏-设置-工作空间设置里拨打销售负责人的手机号，没有销售的话可以拨打400 6326626
+
+---
+# ID: 39326
+
+SDK Product: RTC-Linux
+
+SDK Platform: Linux-Python
+
+SDK Version: 2.2.4
+
+Request Type: 集成问题咨询
+
+Request Description: 你好，我下载了agora-python-server sdk aarch64 想要往对应频道发送视频流。但是提醒缺少libagora-ffmpeg.so，请问这个该怎么办？
+
+Reply: 下载的是 arm64 版本？
+服务端一般只推荐用 x86 版本的 [Agora-Python-Server-SDK](https://github.com/AgoraIO-Extensions/Agora-Python-Server-SDK/tree/main)
+
+---
 
 # ID: 39286
 
