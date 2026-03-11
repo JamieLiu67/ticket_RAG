@@ -656,41 +656,53 @@ main() {
         exit 1
     fi
     
-    # ============ 从远端拉取 Video 私有参数.md ============
+    # ============ Phase 1: 先与远端同步（拿到同事最新的 Video，本地 HEAD 与远端一致） ============
     VIDEO_UPDATED=false
-    REMOTE_VIDEO_EXISTS=false
-    REMOTE_VIDEO_BLOB=""
-    echo "📥 检查远端 Video 私有参数.md..."
+    FETCH_OK=false
+    echo "📥 与远端同步..."
     if git fetch origin main 2>/dev/null; then
-        # 使用 git ls-tree 检测文件是否存在并获取 blob hash
-        REMOTE_VIDEO_BLOB=$(git ls-tree origin/main 2>/dev/null | grep "Video" | awk '{print $3}')
-        if [ -n "$REMOTE_VIDEO_BLOB" ]; then
-            REMOTE_VIDEO_EXISTS=true
-        fi
-        
-        if [ "$REMOTE_VIDEO_EXISTS" == "true" ]; then
-            # 如果本地文件不存在，从远端拉取
-            if [ ! -f "$VIDEO_FILE" ]; then
-                git show "$REMOTE_VIDEO_BLOB" > "$VIDEO_FILE" 2>/dev/null
-                VIDEO_UPDATED=true
-                echo -e "${GREEN}✓ 已从远端下载 $VIDEO_FILE${NC}"
-            else
-                # 本地文件存在，比较远端和本地的差异
-                git show "$REMOTE_VIDEO_BLOB" > "$TMPDIR/video_remote.md" 2>/dev/null
-                if ! diff -q "$TMPDIR/video_remote.md" "$VIDEO_FILE" >/dev/null 2>&1; then
-                    # 远端和本地不同，使用远端版本并标记为已更新
-                    cp "$TMPDIR/video_remote.md" "$VIDEO_FILE"
-                    VIDEO_UPDATED=true
-                    echo -e "${GREEN}✓ 远端 Video 私有参数.md 有更新，已同步到本地${NC}"
-                else
-                    echo -e "${GREEN}✓ 本地 $VIDEO_FILE 已是最新版本${NC}"
-                fi
-            fi
+        FETCH_OK=true
+        LOCAL_HEAD=$(git rev-parse HEAD 2>/dev/null)
+        REMOTE_HEAD=$(git rev-parse origin/main 2>/dev/null)
+        if [ -z "$LOCAL_HEAD" ] || [ -z "$REMOTE_HEAD" ] || [ "$LOCAL_HEAD" = "$REMOTE_HEAD" ]; then
+            echo -e "${GREEN}✓ 本地已与远端一致${NC}"
+        elif [ "$DRY_RUN" = "true" ]; then
+            echo -e "${CYAN}[DRY RUN] 将执行: git merge origin/main（或 --ff-only）${NC}"
         else
-            echo -e "${YELLOW}⚠️  远端仓库中没有 Video 私有参数.md，跳过拉取${NC}"
+            STASHED=false
+            if [ -n "$(git status --porcelain 2>/dev/null)" ]; then
+                echo "  存在未提交修改，临时 stash..."
+                if ! git stash push -m "sync.sh temp" 2>/dev/null; then
+                    echo -e "${RED}❌ git stash 失败，请先提交或还原本地修改后重试${NC}"
+                    exit 1
+                fi
+                STASHED=true
+            fi
+            if git merge origin/main --ff-only 2>/dev/null; then
+                echo -e "${GREEN}✓ 已快进到远端最新提交 $(git rev-parse --short HEAD)${NC}"
+            else
+                if ! git merge origin/main --no-edit 2>/dev/null; then
+                    echo -e "${RED}❌ 与远端合并失败（可能存在冲突），请手动解决后重试${NC}"
+                    if [ "$STASHED" = "true" ]; then
+                        git stash pop 2>/dev/null || true
+                    fi
+                    exit 1
+                fi
+                echo -e "${GREEN}✓ 已合并远端最新提交 $(git rev-parse --short HEAD)${NC}"
+            fi
+            if [ "$STASHED" = "true" ]; then
+                if ! git stash pop 2>/dev/null; then
+                    echo -e "${RED}❌ stash pop 冲突，请手动解决后重试${NC}"
+                    exit 1
+                fi
+                echo -e "${GREEN}✓ 已恢复本地未提交修改${NC}"
+            fi
+        fi
+        if [ -f "$VIDEO_FILE" ]; then
+            VIDEO_UPDATED=true
         fi
     else
-        echo -e "${YELLOW}⚠️  无法连接远端仓库，使用本地 $VIDEO_FILE${NC}"
+        echo -e "${YELLOW}⚠️  无法连接远端仓库，将仅基于本地状态提交并推送（不更新 Video）${NC}"
     fi
     
     echo "🔍 检查文件变更..."
