@@ -658,6 +658,7 @@ main() {
     
     # ============ Phase 1: 先与远端同步（拿到同事最新的 Video，本地 HEAD 与远端一致） ============
     VIDEO_UPDATED=false
+    VIDEO_MERGED=false
     FETCH_OK=false
     echo "📥 与远端同步..."
     if git fetch origin main 2>/dev/null; then
@@ -679,6 +680,7 @@ main() {
                 STASHED=true
             fi
             if git merge origin/main --ff-only 2>/dev/null; then
+                VIDEO_MERGED=true
                 echo -e "${GREEN}✓ 已快进到远端最新提交 $(git rev-parse --short HEAD)${NC}"
             else
                 if ! git merge origin/main --no-edit 2>/dev/null; then
@@ -688,6 +690,7 @@ main() {
                     fi
                     exit 1
                 fi
+                VIDEO_MERGED=true
                 echo -e "${GREEN}✓ 已合并远端最新提交 $(git rev-parse --short HEAD)${NC}"
             fi
             if [ "$STASHED" = "true" ]; then
@@ -698,7 +701,7 @@ main() {
                 echo -e "${GREEN}✓ 已恢复本地未提交修改${NC}"
             fi
         fi
-        if [ -f "$VIDEO_FILE" ]; then
+        if [ "$VIDEO_MERGED" = "true" ] && [ -f "$VIDEO_FILE" ]; then
             VIDEO_UPDATED=true
         fi
     else
