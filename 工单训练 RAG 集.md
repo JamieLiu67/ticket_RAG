@@ -1,3 +1,85 @@
+
+# ID: 39336
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.23.x
+
+Request Type: 集成问题咨询
+
+Request Description: web 端的 sdk 可以收集系统音频发布吗
+比如用户带着耳机,播放了一首音乐,可以把这个音乐 让直播间内其他用户听到吗
+
+Reply: 您好，声网sdk 正常无法通过mic收集系统播放的声音并传到远端；
+建议您这边使用我们的audiomix方案，参考文档：[播放音效或音乐文件](https://doc.shengwang.cn/doc/rtc/javascript/advanced-features/audio-effect-mixing)
+
+---
+# ID: 39339
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.23.x
+
+Request Type: 其他问题
+
+Request Description: 直播在进行，但是云录制生成的文件中有结束标识 #EXT-X-ENDLIST ，这是为什么
+
+Reply: 这是我们录制的默认行为，不代表实际录制已经结束了，有需要的话可以通过配置调整成直播形态的，请问现在是什么场景和需求？
+
+---
+# ID: 39340
+
+SDK Product: RTC-Linux
+
+SDK Platform: Linux-Python
+
+SDK Version: 2.2.4
+
+Request Type: 集成问题咨询
+
+Request Description: 你好，我下载了agora-python-server sdk想要往对应频道发送视频流。但是提醒缺少libagora-ffmpeg.so，请问这个该怎么办？
+sdk版本是2.4.3,在rk3576芯片的开发版运行ubuntu22系统测试。我们需要音视频推流
+
+Reply: 非 x86 服务器的开发版建议用我们的 [RTSA SDK](https://doc.shengwang.cn/doc/rtsa/c/resources)，是给 IOT 设备专用的。
+里面针对 aarch64 做了适配。
+
+---
+# ID: 39345
+
+SDK Product: ConvoAI
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 我们有一款应用是需要esp32与服务端采用RTC进行通信的，能不能给一个rtc sdk和 server sdk。
+
+Reply: ESP32 平台用 [RTSA SDK](https://doc.shengwang.cn/doc/rtsa/c/resources)
+服务端用[RTC 服务端 SDK](https://doc.shengwang.cn/doc/rtc-server-sdk/cpp/landing-page)
+
+---
+# ID: 39349
+
+SDK Product: RTC
+
+SDK Platform: mini-app
+
+SDK Version: 其他版本
+
+Request Type: 其他问题
+
+Request Description: 声网返回结果:`{"code":500,"message":"项目未开启 License 校验配置"}` 是在哪里配置呢
+
+Reply: 这个报错是 appid 没有开通 RTSA License 校验。您联系对接销售，让销售针对您要用的 appid 开启 license 校验就行
+
+---
+
 # ID: 11
 
 SDK Product: RTC
