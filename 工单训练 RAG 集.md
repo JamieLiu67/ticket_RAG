@@ -1,3 +1,80 @@
+# ID: 12
+
+SDK Product: RTC
+
+SDK Platform: 所有平台
+
+SDK Version: 4.5.x
+
+Request Type: 集成问题
+
+Request Description: 升级到 4.5.x 以后日志路径下有许多压缩包，还不能正常解压
+
+Reply: 这个是 4.5.x 上为了减少线上拉日志拉到的被后面新日志冲掉了没有当时有效信息而新加的特性功能，这些压缩包都是用内部平台工具处理后才能看到原文内容的，所以无法直接解压。
+需要关闭的话可以用`setParameters("{\"rtc.enable_upload_log_with_range\": false}");`
+
+---
+
+# ID: 39353
+
+SDK Product: Flexible-classroom
+
+SDK Platform: iOS
+
+SDK Version: 2.8.100
+
+Request Type: 集成问题咨询
+
+Request Description: 需要集成灵动会议，按照灵动会议文档集成不对，需要给下SDK和demo，以及iOS和Android的集成方式、方法及文档
+
+Reply: 您好，灵动会议目前不推荐自服务集成，有需求的话可以电话联系：400 6326626，联系销售后拉群支持
+
+---
+# ID: 39357
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.5.2
+
+Request Type: 其他问题
+
+Request Description: 相芯美颜特效 这个美颜道具高级版试用包现在是0元/月，以后正式使用了。是否是其他的价格呢？
+
+Reply: 您好，云市场插件正式版是有单独报价的，可以电话咨询：400 6326626 了解下云市场插件-相芯插件的具体价格
+
+---
+# ID: 39369
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 4.24.x
+
+Request Type: 集成问题咨询
+
+Request Description: 咨询下，这个`setMuted`接口调用之后，还会发静音包吗？服务端还能从音频回调接口收到web sdk发送的静音包数据吗？  如果不可以，应该如何设置能够使得web端静音后服务端还能收到静音数据
+
+Reply: 请问您这边是什么需求和场景需要区分远端发的是不是静音包？远端如果调用 mute 是会触发服务端本地回调的，不一定要用静音包来区分远端的发流状态
+
+---
+# ID: 39374
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 其他版本
+
+Request Type: 效果不佳、不达预期
+
+Request Description: 安卓进行音视频通话, 遇到一点问题, 我们的安卓平板只支持16k,单通道的音频采样率, 现在拉流端 听到的声音有些滋滋的声音, 怎么优化一下
+
+Reply: 可以提供下平板这边的 [SDK 日志](https://doc.shengwang.cn/faq/integration-issues/set-log-file)，以及远端收到滋滋声的录像，我们这边看下情况
+
+---
 
 # ID: 39336
 
@@ -26,7 +103,7 @@ SDK Version: 4.23.x
 
 Request Type: 其他问题
 
-Request Description: 直播在进行，但是云录制生成的文件中有结束标识 #EXT-X-ENDLIST ，这是为什么
+Request Description: 直播在进行，但是云录制生成的文件中有结束标识 `#EXT-X-ENDLIST` ，这是为什么
 
 Reply: 这是我们录制的默认行为，不代表实际录制已经结束了，有需要的话可以通过配置调整成直播形态的，请问现在是什么场景和需求？
 
