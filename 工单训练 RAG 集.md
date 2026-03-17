@@ -1,3 +1,37 @@
+
+# ID: 39375
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.2
+
+Request Type: 集成问题咨询
+
+Request Description: 我想在`IVideoEncodedFrameObserver`接口的方法`onEncodedVideoFrameReceived`中接收h264，然后做其他的处理。虽然设置了使用h264编码，但是接收到还是h265。怎么才能保证接收的是我设置的编码格式？
+
+Reply: 可以在发送端 joinchannel 之前加个私参调用：`setParameters("{\"che.video.videoCodecIndex\": 1}");`
+这个参数可以强制 SDK 发 h264，看下这样以后双方互通的协议是否符合预期
+
+---
+# ID: 39378
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.3.0
+
+Request Type: 其他问题
+
+Request Description: 16号晚上充值120000分钟时长，一场直播后，今天来看剩余分钟，难道一场直播消耗了13万的时长吗？也没地方可以看具体细节，也不清楚单场直播如何扣款的。
+
+Reply: 您好，商务问题清在声网 console 左侧边栏-设置-工作空间设置里拨打销售负责人的手机号，没有销售的话可以拨打400 6326626
+可以找销售，要求拉一下用量详单
+
+---
+
 # ID: 12
 
 SDK Product: RTC
