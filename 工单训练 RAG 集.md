@@ -1,4 +1,39 @@
 
+# ID: 39397
+
+SDK Product: RTC
+
+SDK Platform: MacOS
+
+SDK Version: 4.6.2
+
+Request Type: 集成问题咨询
+
+Request Description: 声音采集功能实现
+
+我调用`self.rtcKit?.enableLoopbackRecording(true, deviceName: "AgoraALD")` 方法每次调用会弹出安装界面
+AgoraALD.driver 这个虚拟声卡是在Demo里面复制过来的，我的系统是26.2，是有什么限制吗？如果需要新版本的AgoraALD.driver，那么下载地址是什么呢？
+
+Reply: AgoraALD 虚拟声卡相关集成、下载问题可以参考下这篇文档：[如何自动安装AgoraALD 虚拟声卡](https://i46hiqvame.feishu.cn/wiki/KbBuwwtXziWk33kOCjFcvHULnve?from=from_copylink)
+
+---
+# ID: 39401
+
+SDK Product: RTC
+
+SDK Platform: Flutter
+
+SDK Version: 6.5.2
+
+Request Type: 集成问题咨询
+
+Request Description: 我集成了语音通话功能，那我在通话过程中想要监听到系统电话，或者微信语音电话这样的，来进行挂断声网语音通话，我应该从哪个监听回调处理？
+
+Reply: SDK 本身就做了系统来电打断 RTC 传输的处理，不用额外处理的
+但是微信电话不属于系统来电，监听不了
+
+---
+
 # ID: 39375
 
 SDK Product: RTC
