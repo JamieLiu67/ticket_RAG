@@ -26,6 +26,18 @@
 
 私参说明：SDK默认texture采集，但小部分机型存在兼容性问题，尤其是学习机，开发板等低端设备，会遇到无采集，花屏，绿屏等问题需要指定yuv格式采集规避；规避采集异常问题时优先使用camera1尝试，若不能解决问题，再尝试yuv采集。
 
+# che.video.android_camera_lowPower
+模块：采集
+平台：Android
+类型：Boolean
+写法：`setParameters("{\"che.video.android_camera_lowPower\": true}")`
+默认值：false
+值说明:
+- `true`:  低功耗采集
+- `false`: 降噪模式采集
+
+私参说明：SDK默认降噪模式采集，打开了自动人脸对焦，自动白平衡，templaveType为录制模式，硬件降噪开启。线上出现过机型后置摄像头对焦呼吸现象，打开低功耗采集，关闭高级采集参数后规避了问题。
+
 # rtc.camera_capture_mirror_mode
 模块：采集
 平台：Androd/iOS
@@ -108,6 +120,38 @@
 私参说明：SDK自4.5.2版本开始，为了节约美颜的性能消耗，支持将onCaptureVideoFrame缩放至编码分辨率缩放，默认关闭（开启后本地预览画质受影响）。工作机制是开启后，若采集1080P，编码720P，onCaptureVideoFrame大小为720P。
 注：缩放会损伤画质，尤其在缩放比例超过4倍时。根据实际场景决定是否启用功能，若追求画质，建议采集分辨率跟随编码分辨率。
 
+# rtc.video.enable_face_beauty
+模块：前处理-美颜
+平台：Android
+类型：Boolean
+写法：`setParameters("{\"rtc.video.enable_face_beauty\": true}")`
+默认值：true
+值说明:
+- `true`: 美颜走yuv链路
+- `false`: 美颜走texture链路
+
+私参说明：建议需要跑ai模型（高级美颜），走texture链路，基础美颜走yuv或双buffer链路；值为true时基础美颜的磨皮只作用于人脸上，关掉的话会影响一点效果。
+
+# che.video.lowest_dev_score_4_beauty
+模块：前处理-美颜
+平台：Native
+类型：Int
+写法：`setParameters("{\"che.video.lowest_dev_score_4_beauty\": 1}")`
+默认值：Android/Windows为65分，Mac/iOS为-1分
+值说明：设置SDK基础美颜设备分数阈值
+
+私参说明：SDK 默认策略限制设备性能评分低于阈值时禁用基础美颜功能。开发者可通过配置私有参数调整该阈值，从而在低端设备上强制启用美颜，但不保证可用性和效果。
+
+# che.video.lowest_dev_score_4_seg
+模块：前处理-虚拟背景
+平台：Native
+类型：Int
+写法：`setParameters("{\"che.video.lowest_dev_score_4_seg\": 1}")`
+默认值：Android为70分，Windows为65分，Mac/iOS为-1分
+值说明：设置SDK虚拟背景分数阈值
+
+私参说明：SDK 默认策略限制设备性能评分低于阈值时禁用虚拟背景功能。开发者可通过配置私有参数调整该阈值，从而在低端设备上强制启用虚拟背景，但不保证可用性和效果。
+
 # engine.video.enable_hw_encoder
 模块：编码
 平台：Native
@@ -184,6 +228,31 @@
 - `6`： 540P 15帧及以上H264硬编
 
 私参说明：通常同等分辨率码率时，软编画质高于硬编，若追求画质，接受牺牲一定的性能，可以通过rtc.video.h264_hw_min_res_level提高H264软硬编的分辨率阈值。
+ 
+# che.video.vtenc_default_pixel_format
+模块：编码
+平台：Mac/IOS
+类型：Number
+写法：`setParameters("{\"che.video.vtenc_default_pixel_format\": 4}")`
+默认值：0
+值说明：
+- `0`：NV12 fullRange
+- `1`： NV12 videoRange
+- `2`： YUV fullRange
+- `3`： YUV videoRange
+- `4`： BGRA
+
+私参说明：设置Mac/IOS硬编默认的编码器格式。屏幕分享和自采集格式/裸数据处理格式为BGRA时，建议通过参数设置4，避免编码器重启，提高编码可用性。
+
+# rtc.video.minbitrate_ratio
+模块：编码
+平台：Native
+类型：String
+写法：`setParameters("{\"rtc.video.minbitrate_ratio\": "0.4"}")`
+默认值："0"
+值说明：设置视频目标码率的最低值
+
+私参说明：该参数类型为String。在特定弱网环境下，若 SDK 估测的目标码率过低，可通过此私有参数设置最低目标码率，其值为当前 Profile 码率的百分比。建议配置为 `"0.4"` 或 `"0.6"`
 
 # che.video.enable_auto_fallback_sw_encoder
 模块：编码
@@ -198,40 +267,8 @@
 私参说明：为避免码率异常波动（如低发、超发）及画质不稳定等问题，SDK 默认启用了从硬编码fallback软编的容错机制。建议非带宽计费客户在高分辨率场景下禁用该 fallback 策略，以节约性能消耗。
 
 
-# rtc.video.enable_face_beauty
-模块：前处理-美颜
-平台：Android
-类型：Boolean
-写法：`setParameters("{\"rtc.video.enable_face_beauty\": true}")`
-默认值：true
-值说明:
-- `true`: 美颜走yuv链路
-- `false`: 美颜走texture链路
-
-私参说明：建议需要跑ai模型（高级美颜），走texture链路，基础美颜走yuv或双buffer链路；值为true时基础美颜的磨皮只作用于人脸上，关掉的话会影响一点效果。
-
-# che.video.lowest_dev_score_4_beauty
-模块：前处理-美颜
-平台：Native
-类型：Int
-写法：`setParameters("{\"che.video.lowest_dev_score_4_beauty\": 1}")`
-默认值：Android/Windows为65分，Mac/iOS为-1分
-值说明：设置SDK基础美颜设备分数阈值
-
-私参说明：SDK 默认策略限制设备性能评分低于阈值时禁用基础美颜功能。开发者可通过配置私有参数调整该阈值，从而在低端设备上强制启用美颜，但不保证可用性和效果。
-
-# che.video.lowest_dev_score_4_seg
-模块：前处理-虚拟背景
-平台：Native
-类型：Int
-写法：`setParameters("{\"che.video.lowest_dev_score_4_seg\": 1}")`
-默认值：Android为70分，Windows为65分，Mac/iOS为-1分
-值说明：设置SDK虚拟背景分数阈值
-
-私参说明：SDK 默认策略限制设备性能评分低于阈值时禁用虚拟背景功能。开发者可通过配置私有参数调整该阈值，从而在低端设备上强制启用虚拟背景，但不保证可用性和效果。
-
 # engine.video.enable_hw_decoder
-模块：编码
+模块：解码
 平台：Native
 类型：Boolean
 写法：`setParameters("{\"engine.video.enable_hw_decoder\": true}")`
@@ -320,6 +357,52 @@ mode:
 - `false`: 关闭功能
 
 私参说明：Windows发送端屏幕分享开启勾边，接收端可以看见勾边，可以通过这个参数，在屏幕分享放大镜采集模式（屏蔽窗口）时，使勾边不被接收端看到，若没有屏蔽窗口的需求，可以传入一个不存在的窗口开启放大镜采集。
+
+# che.video.screenCaptureMode
+模块：屏幕分享
+平台：Mac
+类型：Number
+写法：`setParameters("{\"che.video.screenCaptureMode\": 1}")`
+默认值：0
+值说明：
+- `0`：非高清采集
+- `1`： 高清采集
+
+私参说明：苹果 Retina 屏幕采用逻辑分辨率与物理分辨率分离的机制，其中 1 个逻辑点对应 2×2 共 4 个物理像素。SDK 默认基于逻辑分辨率进行采集；若需实现高清屏幕分享，可通过启用私有参数切换至物理像素采集模式。
+
+# che.video.h265_screen_enable
+模块：屏幕分享
+平台：Native
+类型：Boolean
+写法：`setParameters("{\"che.video.h265_screen_enable\": true}")`
+默认值：auto
+值说明:
+- `true`: 屏幕分享可H265编码
+- `false`: 屏幕分享不可H265编码
+
+私参说明：SDK452版本起，
+PC屏幕分享文档模式编码格式默认AV1，gaming模式 默认H265
+移动端屏幕分享默认H265
+
+若PC屏幕分享编码格式需要修改成H265，则配置che.video.h265_screen_enable true和che.video.videoCodecIndex 2
+
+若PC屏幕分享编码格式需要修改成H264，则配置che.video.videoCodecIndex  1
+
+# rtc.video.av1_screen_enable
+模块：屏幕分享
+平台：Native
+类型：Boolean
+写法：`setParameters("{\"rtc.video.av1_screen_enable\": true}")`
+默认值：auto
+值说明:
+- `true`: 屏幕分享可av1编码
+- `false`: 屏幕分享不可av1编码
+
+私参说明：SDK452版本起，
+PC屏幕分享文档模式编码格式默认AV1，gaming模式 默认H265，可以通过这个参数设为false，关闭PC端屏幕分享的AV1编码。
+
+
+
 
 
 
