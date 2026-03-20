@@ -11,6 +11,9 @@ Thumbs.db
 .obsidian/
 *.canvas
 
+# sync.sh 记录的 OSS 已上传 blob（勿提交）
+.oss_last_upload
+
 # 临时文件
 *.tmp
 *.temp
