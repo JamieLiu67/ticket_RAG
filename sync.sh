@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# RAG 知识库同步脚本 v2.0
-# 功能：一键同步工单和CS_KI文件到 GitHub 和阿里云 OSS
-# 优化：高效哈希计算、图形进度条、超时机制
+# RAG 知识库同步脚本 v3.0
+# 功能：双阶段 — Block A：条件化 GitHub（工单/CS_KI）；Block B：始终执行 OSS（按 HEAD blob 增量）
+# Prep：fetch + pull --rebase；Video 远端更新时可选 diff 摘要（不写 commit）
 
 set -e
 
@@ -23,10 +23,12 @@ export TERM=xterm-256color
 
 # ============ 配置 ============
 TICKET_FILE="工单训练 RAG 集.md"
-CSKI_FILE="CS_KI_RAG 优化版.md"
+CSKI_FILE="CS_KI_RAG优化版.md"
 VIDEO_FILE="Video私有参数.md"
 OSS_BUCKET="oss://agora-rte-rag-hz"
 OSS_ENDPOINT="oss-cn-hangzhou.aliyuncs.com"
+# OSS 同步清单（与仓库内文件名一致）
+OSS_SYNC_FILES=("$TICKET_FILE" "$CSKI_FILE" "$VIDEO_FILE")
 
 # 最多显示的 ID 数量（超过则只显示数量）
 MAX_DISPLAY_IDS=10
@@ -38,6 +40,11 @@ TIMEOUT_SECONDS=60
 FAST_MODE=false
 SHOW_PROGRESS=true
 DRY_RUN=false
+AUTO_YES=false
+
+# Block 间共享状态（由 main 初始化）
+REPO_ROOT=""
+OSS_STATE_FILE=""
 
 # ============ 命令行参数解析 ============
 parse_args() {
@@ -53,6 +60,10 @@ parse_args() {
                 ;;
             --dry-run)
                 DRY_RUN=true
+                shift
+                ;;
+            --yes|-y)
+                AUTO_YES=true
                 shift
                 ;;
             --help|-h)
@@ -75,7 +86,11 @@ show_help() {
     echo "  --fast          快速模式（不计算哈希，只统计数量）"
     echo "  --no-progress   不显示进度条"
     echo "  --dry-run       模拟模式（检测变动但不实际提交和上传）"
+    echo "  --yes, -y       跳过 OSS 上传前的确认提示"
     echo "  --help, -h      显示帮助信息"
+    echo ""
+    echo "流程：Prep（fetch + rebase）→ Block A（仅工单/CS_KI 有变更或未 push 时操作 GitHub）"
+    echo "      → Block B（始终根据 .oss_last_upload 与 HEAD blob 增量上传 OSS）"
     echo ""
     echo "示例:"
     echo "  ./sync.sh                    # 默认精确模式"
@@ -643,6 +658,320 @@ generate_cski_message() {
     fi
 }
 
+# ============ v3：仓库根目录、blob、OSS 状态 ============
+
+# 当前 HEAD 下路径对应 blob；未纳入版本控制则对磁盘文件 hash-object
+get_head_blob() {
+    local path="$1"
+    local sha
+    sha=$(git rev-parse "HEAD:$path" 2>/dev/null) || true
+    if [ -n "$sha" ]; then
+        echo "$sha"
+        return
+    fi
+    if [ -f "$path" ]; then
+        git hash-object "$path" 2>/dev/null || echo ""
+    else
+        echo ""
+    fi
+}
+
+read_oss_state_blob() {
+    local path="$1"
+    local statefile="$2"
+    if [ ! -f "$statefile" ]; then
+        echo ""
+        return
+    fi
+    awk -F '\t' -v p="$path" '$1 == p { print $2; exit }' "$statefile"
+}
+
+upsert_oss_state_blob() {
+    local path="$1"
+    local blob="$2"
+    local statefile="$3"
+    local tmp
+    tmp=$(mktemp)
+    if [ -f "$statefile" ]; then
+        awk -F '\t' -v p="$path" '$1 != p' "$statefile" > "$tmp" || true
+    else
+        : > "$tmp"
+    fi
+    printf '%s\t%s\n' "$path" "$blob" >> "$tmp"
+    mv "$tmp" "$statefile"
+}
+
+file_has_uncommitted_changes() {
+    local path="$1"
+    if ! git diff --quiet HEAD -- "$path" 2>/dev/null; then
+        return 0
+    fi
+    if [ -n "$(git status --porcelain "$path" 2>/dev/null)" ]; then
+        return 0
+    fi
+    return 1
+}
+
+# Prep：进入仓库根目录、fetch、可选 pull --rebase；Video blob 变化时打印 diff --stat
+prep_sync() {
+    REPO_ROOT=$(git rev-parse --show-toplevel 2>/dev/null) || {
+        echo -e "${RED}❌ 当前目录不是 git 仓库${NC}"
+        exit 1
+    }
+    OSS_STATE_FILE="$REPO_ROOT/.oss_last_upload"
+    cd "$REPO_ROOT" || exit 1
+
+    FETCH_OK=false
+    local video_blob_pre video_blob_remote
+    video_blob_pre=$(git rev-parse "HEAD:$VIDEO_FILE" 2>/dev/null) || true
+    video_blob_remote=""
+
+    echo "📥 Prep：与远端同步（fetch + pull --rebase）..."
+    if git fetch origin main 2>/dev/null; then
+        FETCH_OK=true
+        video_blob_remote=$(git rev-parse "origin/main:$VIDEO_FILE" 2>/dev/null) || true
+        if [ -n "$video_blob_pre" ] && [ -n "$video_blob_remote" ] && [ "$video_blob_pre" != "$video_blob_remote" ]; then
+            echo -e "${CYAN}ℹ️  远端 origin/main 上 $VIDEO_FILE 与本地 HEAD 版本不同（将尝试 rebase 拉取）${NC}"
+        fi
+
+        local local_head remote_head
+        local_head=$(git rev-parse HEAD 2>/dev/null)
+        remote_head=$(git rev-parse origin/main 2>/dev/null)
+        if [ -z "$local_head" ] || [ -z "$remote_head" ] || [ "$local_head" = "$remote_head" ]; then
+            echo -e "${GREEN}✓ 本地已与 origin/main 一致${NC}"
+        elif [ "$DRY_RUN" = "true" ]; then
+            echo -e "${CYAN}[DRY RUN] 将执行: git pull --rebase origin main（工作区脏时会先 stash）${NC}"
+        else
+            local stashed=false
+            if [ -n "$(git status --porcelain 2>/dev/null)" ]; then
+                echo "  存在未提交修改，临时 stash..."
+                if ! git stash push -m "sync.sh temp" 2>/dev/null; then
+                    echo -e "${RED}❌ git stash 失败，请先提交或还原本地修改后重试${NC}"
+                    exit 1
+                fi
+                stashed=true
+            fi
+            if ! git pull --rebase origin main; then
+                echo -e "${RED}❌ git pull --rebase 失败（可能存在冲突），请手动解决后重试${NC}"
+                if [ "$stashed" = "true" ]; then
+                    git stash pop 2>/dev/null || true
+                fi
+                exit 1
+            fi
+            echo -e "${GREEN}✓ 已 rebase 到 origin/main 最新 $(git rev-parse --short HEAD)${NC}"
+            if [ "$stashed" = "true" ]; then
+                if ! git stash pop; then
+                    echo -e "${RED}❌ stash pop 冲突，请手动解决后重试${NC}"
+                    exit 1
+                fi
+                echo -e "${GREEN}✓ 已恢复本地未提交修改${NC}"
+            fi
+            local video_blob_post
+            video_blob_post=$(git rev-parse "HEAD:$VIDEO_FILE" 2>/dev/null) || true
+            if [ -n "$video_blob_pre" ] && [ -n "$video_blob_post" ] && [ "$video_blob_pre" != "$video_blob_post" ]; then
+                echo ""
+                echo -e "${BLUE}── $VIDEO_FILE 相对 rebase 前 HEAD 的变更摘要（仅供参考，不写入 commit）──${NC}"
+                GIT_PAGER=cat git diff --stat "$video_blob_pre" "$video_blob_post" 2>/dev/null || true
+                echo ""
+            fi
+        fi
+    else
+        echo -e "${YELLOW}⚠️  无法 fetch origin main，将仅基于本地 HEAD 继续（GitHub/OSS 状态可能滞后）${NC}"
+    fi
+}
+
+# Block A：仅工单 + CS_KI；有未提交变更则 commit 建议；仅有未 push 则直接 push
+# 返回值通过全局变量：GITHUB_RAN_PUSH, GITHUB_STATUS, GITHUB_SKIPPED_REASON, CHANGED_GITHUB_FILES
+block_github() {
+    GITHUB_RAN_PUSH=false
+    GITHUB_STATUS=0
+    GITHUB_SKIPPED_REASON=""
+    CHANGED_GITHUB_FILES=()
+
+    if file_has_uncommitted_changes "$TICKET_FILE"; then
+        CHANGED_GITHUB_FILES+=("$TICKET_FILE")
+        echo -e "${GREEN}✓ 检测到 $TICKET_FILE 有未提交变更${NC}"
+        GIT_PAGER=cat git diff --stat HEAD -- "$TICKET_FILE" 2>/dev/null || true
+    fi
+    if file_has_uncommitted_changes "$CSKI_FILE"; then
+        CHANGED_GITHUB_FILES+=("$CSKI_FILE")
+        echo -e "${GREEN}✓ 检测到 $CSKI_FILE 有未提交变更${NC}"
+        GIT_PAGER=cat git diff --stat HEAD -- "$CSKI_FILE" 2>/dev/null || true
+    fi
+
+    local unpushed_count=0
+    if [ "$FETCH_OK" = "true" ] && git rev-parse origin/main >/dev/null 2>&1; then
+        unpushed_count=$(git rev-list --count origin/main..HEAD 2>/dev/null | tr -d ' \n')
+        unpushed_count=${unpushed_count:-0}
+    fi
+
+    if [ ${#CHANGED_GITHUB_FILES[@]} -eq 0 ] && [ "${unpushed_count:-0}" -eq 0 ]; then
+        GITHUB_SKIPPED_REASON="无工单/CS_KI 未提交变更，且无未 push 的本地提交"
+        echo -e "${CYAN}⏭ Block A：跳过 GitHub（${GITHUB_SKIPPED_REASON}）${NC}"
+        return
+    fi
+
+    echo ""
+    echo "📌 Block A：GitHub（main）"
+
+    if [ ${#CHANGED_GITHUB_FILES[@]} -gt 0 ]; then
+        echo ""
+        echo "📝 生成建议的 commit message（仅工单/CS_KI）..."
+        local commit_parts=()
+        local f
+        for f in "${CHANGED_GITHUB_FILES[@]}"; do
+            if [ "$f" = "$TICKET_FILE" ]; then
+                commit_parts+=("$(generate_ticket_message)")
+            elif [ "$f" = "$CSKI_FILE" ]; then
+                commit_parts+=("$(generate_cski_message)")
+            fi
+        done
+        local suggested_msg
+        if [ ${#commit_parts[@]} -eq 2 ]; then
+            suggested_msg="${commit_parts[0]}；${commit_parts[1]}"
+        elif [ ${#commit_parts[@]} -eq 1 ]; then
+            suggested_msg="${commit_parts[0]}"
+        else
+            suggested_msg="同步 RAG 知识库"
+        fi
+        echo ""
+        echo "建议的 commit message:"
+        echo "  $suggested_msg"
+        echo ""
+
+        if [ "$DRY_RUN" = "true" ]; then
+            echo -e "${CYAN}[DRY RUN] 将 git add 上述文件并 commit${NC}"
+        else
+            local user_input
+            read -r -p "使用建议的 message? [回车确认 / 输入自定义内容 / n 取消]: " user_input
+            if [[ "$user_input" =~ ^[Nn]$ ]]; then
+                echo "已取消"
+                exit 0
+            fi
+            local commit_msg
+            if [ -z "$user_input" ]; then
+                commit_msg="$suggested_msg"
+            else
+                commit_msg="$user_input"
+            fi
+            echo ""
+            echo "将使用 commit message: $commit_msg"
+            echo ""
+            echo "📦 Git：add + commit..."
+            for f in "${CHANGED_GITHUB_FILES[@]}"; do
+                git add "$f"
+            done
+            git commit -m "$commit_msg"
+        fi
+    fi
+
+    if [ "$DRY_RUN" = "true" ]; then
+        echo -e "${CYAN}[DRY RUN] 将执行: git push origin main（若存在未推送提交）${NC}"
+        GITHUB_RAN_PUSH=false
+        return
+    fi
+
+    echo "📦 Git：push origin main..."
+    local git_log="/tmp/sync_git_$$.log"
+    if git push origin main > "$git_log" 2>&1; then
+        GITHUB_STATUS=0
+        rm -f "$git_log"
+    else
+        GITHUB_STATUS=$?
+        echo -e "${RED}❌ git push 失败 (exit $GITHUB_STATUS)${NC}"
+        if [ -f "$git_log" ]; then
+            sed 's/^/     /' "$git_log"
+        fi
+    fi
+    GITHUB_RAN_PUSH=true
+}
+
+# Block B：比较 HEAD blob 与 .oss_last_upload，按需 ossutil cp
+block_oss() {
+    OSS_TO_UPLOAD=()
+    OSS_DRYRUN_UPLOADS=()
+    OSS_UPLOADED_FILES=()
+    OSS_SKIPPED_FILES=()
+    OSS_FAIL_FILES=()
+    local f blob stored entry path
+    echo ""
+    echo "☁️  Block B：阿里云 OSS（增量，状态文件 .oss_last_upload）"
+
+    for f in "${OSS_SYNC_FILES[@]}"; do
+        blob=$(get_head_blob "$f")
+        if [ -z "$blob" ]; then
+            echo -e "${YELLOW}⚠️  跳过（无法得到 blob）: $f${NC}"
+            OSS_FAIL_FILES+=("$f")
+            continue
+        fi
+        stored=$(read_oss_state_blob "$f" "$OSS_STATE_FILE")
+        if [ "$blob" = "$stored" ]; then
+            OSS_SKIPPED_FILES+=("$f")
+            echo -e "  ${GREEN}○${NC} $f （与上次 OSS 一致，blob ${blob:0:7}…）"
+            continue
+        fi
+        OSS_TO_UPLOAD+=("$f|$blob")
+    done
+
+    if [ ${#OSS_TO_UPLOAD[@]} -eq 0 ]; then
+        if [ ${#OSS_FAIL_FILES[@]} -gt 0 ]; then
+            echo -e "${RED}❌ 部分文件无法计算 HEAD blob，请确认文件已纳入 git 且路径正确${NC}"
+            return 1
+        fi
+        echo -e "${GREEN}✓ 无需上传：三个 RAG 文件相对上次 OSS 均无变化${NC}"
+        return 0
+    fi
+
+    echo ""
+    echo "以下文件将上传至 OSS（相对 .oss_last_upload 已变化）："
+    local entry path b
+    for entry in "${OSS_TO_UPLOAD[@]}"; do
+        path="${entry%%|*}"
+        b="${entry#*|}"
+        echo "  - $path  (HEAD blob ${b:0:7}…)"
+    done
+    echo ""
+
+    if [ "$DRY_RUN" = "true" ]; then
+        for entry in "${OSS_TO_UPLOAD[@]}"; do
+            OSS_DRYRUN_UPLOADS+=("${entry%%|*}")
+        done
+        echo -e "${CYAN}[DRY RUN] 将 ossutil cp 上述文件至 $OSS_BUCKET/ ，且不更新 .oss_last_upload${NC}"
+        return 0
+    fi
+
+    if [ "$AUTO_YES" != "true" ]; then
+        local cont
+        read -r -p "确认上传到 OSS? [回车确认 / n 取消]: " cont
+        if [[ "$cont" =~ ^[Nn]$ ]]; then
+            echo "已跳过 OSS 上传"
+            return 2
+        fi
+    fi
+
+    local oss_log="/tmp/sync_oss_$$.log"
+    : > "$oss_log"
+    local st=0
+    for entry in "${OSS_TO_UPLOAD[@]}"; do
+        path="${entry%%|*}"
+        b="${entry#*|}"
+        echo -n "  - $path ... "
+        if ossutil cp "$path" "$OSS_BUCKET/$path" -f --endpoint "$OSS_ENDPOINT" >> "$oss_log" 2>&1; then
+            echo -e "${GREEN}✅${NC}"
+            upsert_oss_state_blob "$path" "$b" "$OSS_STATE_FILE"
+            OSS_UPLOADED_FILES+=("$path")
+        else
+            echo -e "${RED}❌${NC}"
+            OSS_FAIL_FILES+=("$path")
+            st=1
+        fi
+    done
+    if [ $st -eq 0 ]; then
+        rm -f "$oss_log"
+    fi
+    return $st
+}
+
 # ============ 主程序 ============
 
 main() {
@@ -656,326 +985,103 @@ main() {
         exit 1
     fi
     
-    # ============ Phase 1: 先与远端同步（拿到同事最新的 Video，本地 HEAD 与远端一致） ============
-    VIDEO_UPDATED=false
-    VIDEO_MERGED=false
-    FETCH_OK=false
-    echo "📥 与远端同步..."
-    if git fetch origin main 2>/dev/null; then
-        FETCH_OK=true
-        LOCAL_HEAD=$(git rev-parse HEAD 2>/dev/null)
-        REMOTE_HEAD=$(git rev-parse origin/main 2>/dev/null)
-        if [ -z "$LOCAL_HEAD" ] || [ -z "$REMOTE_HEAD" ] || [ "$LOCAL_HEAD" = "$REMOTE_HEAD" ]; then
-            echo -e "${GREEN}✓ 本地已与远端一致${NC}"
-        elif [ "$DRY_RUN" = "true" ]; then
-            echo -e "${CYAN}[DRY RUN] 将执行: git merge origin/main（或 --ff-only）${NC}"
-        else
-            STASHED=false
-            if [ -n "$(git status --porcelain 2>/dev/null)" ]; then
-                echo "  存在未提交修改，临时 stash..."
-                if ! git stash push -m "sync.sh temp" 2>/dev/null; then
-                    echo -e "${RED}❌ git stash 失败，请先提交或还原本地修改后重试${NC}"
-                    exit 1
-                fi
-                STASHED=true
-            fi
-            if git merge origin/main --ff-only 2>/dev/null; then
-                VIDEO_MERGED=true
-                echo -e "${GREEN}✓ 已快进到远端最新提交 $(git rev-parse --short HEAD)${NC}"
-            else
-                if ! git merge origin/main --no-edit 2>/dev/null; then
-                    echo -e "${RED}❌ 与远端合并失败（可能存在冲突），请手动解决后重试${NC}"
-                    if [ "$STASHED" = "true" ]; then
-                        git stash pop 2>/dev/null || true
-                    fi
-                    exit 1
-                fi
-                VIDEO_MERGED=true
-                echo -e "${GREEN}✓ 已合并远端最新提交 $(git rev-parse --short HEAD)${NC}"
-            fi
-            if [ "$STASHED" = "true" ]; then
-                if ! git stash pop 2>/dev/null; then
-                    echo -e "${RED}❌ stash pop 冲突，请手动解决后重试${NC}"
-                    exit 1
-                fi
-                echo -e "${GREEN}✓ 已恢复本地未提交修改${NC}"
-            fi
-        fi
-        if [ "$VIDEO_MERGED" = "true" ] && [ -f "$VIDEO_FILE" ]; then
-            VIDEO_UPDATED=true
-        fi
-    else
-        echo -e "${YELLOW}⚠️  无法连接远端仓库，将仅基于本地状态提交并推送（不更新 Video）${NC}"
-    fi
-    
-    echo "🔍 检查文件变更..."
-    
-    CHANGED_FILES=()
-    
-    # 使用 GIT_PAGER=cat 避免 less 分页
-    if ! git diff --quiet HEAD -- "$TICKET_FILE" 2>/dev/null || [ -n "$(git status --porcelain "$TICKET_FILE" 2>/dev/null)" ]; then
-        CHANGED_FILES+=("$TICKET_FILE")
-        echo -e "${GREEN}✓ 检测到 $TICKET_FILE 有变更${NC}"
-        GIT_PAGER=cat git diff --stat HEAD -- "$TICKET_FILE" 2>/dev/null || true
-    fi
-    
-    if ! git diff --quiet HEAD -- "$CSKI_FILE" 2>/dev/null || [ -n "$(git status --porcelain "$CSKI_FILE" 2>/dev/null)" ]; then
-        CHANGED_FILES+=("$CSKI_FILE")
-        echo -e "${GREEN}✓ 检测到 $CSKI_FILE 有变更${NC}"
-        GIT_PAGER=cat git diff --stat HEAD -- "$CSKI_FILE" 2>/dev/null || true
-    fi
-    
-    # 判断是否只有 Video 文件有更新
-    ONLY_VIDEO_UPDATE=false
-    if [ ${#CHANGED_FILES[@]} -eq 0 ] && [ "$VIDEO_UPDATED" == "true" ]; then
-        ONLY_VIDEO_UPDATE=true
-    fi
-    
-    if [ ${#CHANGED_FILES[@]} -eq 0 ]; then
-        if [ "$VIDEO_UPDATED" != "true" ]; then
-            echo -e "${YELLOW}⚠️  警告：没有检测到文件变更${NC}"
-            read -p "是否继续同步？(y/N): " continue_anyway
-            if [[ ! "$continue_anyway" =~ ^[Yy]$ ]]; then
-                echo "已取消"
-                exit 0
-            fi
-        else
-            echo -e "${GREEN}✓ Video 文件有更新，将上传到 OSS${NC}"
-        fi
-    fi
-    
-    # 只有非 Video 文件更新时才生成 commit message
-    if [ "$ONLY_VIDEO_UPDATE" != "true" ]; then
-        echo ""
-        echo "📝 生成建议的 commit message..."
-        
-        COMMIT_PARTS=()
-        
-        # 生成工单消息
-        if [[ " ${CHANGED_FILES[@]} " =~ " ${TICKET_FILE} " ]]; then
-            TICKET_MSG=$(generate_ticket_message)
-            COMMIT_PARTS+=("$TICKET_MSG")
-        fi
-        
-        # 生成 CSKI 消息
-        if [[ " ${CHANGED_FILES[@]} " =~ " ${CSKI_FILE} " ]]; then
-            CSKI_MSG=$(generate_cski_message)
-            COMMIT_PARTS+=("$CSKI_MSG")
-        fi
-        
-        # 合并 commit message
-        if [ ${#COMMIT_PARTS[@]} -eq 2 ]; then
-            SUGGESTED_MSG="${COMMIT_PARTS[0]}；${COMMIT_PARTS[1]}"
-        elif [ ${#COMMIT_PARTS[@]} -eq 1 ]; then
-            SUGGESTED_MSG="${COMMIT_PARTS[0]}"
-        else
-            SUGGESTED_MSG="同步 RAG 知识库"
-        fi
-        
-        echo ""
-        echo "建议的 commit message:"
-        echo "  $SUGGESTED_MSG"
-        echo ""
-        
-        # Dry-run 模式：跳过交互，直接退出
-        if [ "$DRY_RUN" == "true" ]; then
-            echo -e "${GREEN}✅ [DRY RUN] 完成 - 未执行任何实际修改${NC}"
-            echo ""
-            echo "实际文件变更:"
-            if [ "$VIDEO_UPDATED" == "true" ]; then
-                echo "  $VIDEO_FILE (仅上传 OSS，不提交 git)"
-            fi
-            for file in "${CHANGED_FILES[@]}"; do
-                echo "  $file"
-            done
-            exit 0
-        fi
-        
-        read -p "使用建议的 message? [回车确认 / 输入自定义内容 / n 取消]: " user_input
-        
-        if [ -z "$user_input" ]; then
-            COMMIT_MSG="$SUGGESTED_MSG"
-        elif [[ "$user_input" =~ ^[Nn]$ ]]; then
-            echo "已取消"
-            exit 0
-        else
-            COMMIT_MSG="$user_input"
-        fi
-        
-        echo ""
-        echo "将使用 commit message: $COMMIT_MSG"
-        echo ""
-    else
-        # 只有 Video 文件更新，不需要 commit message
-        echo ""
-        echo "📝 Video 文件更新（无需 git commit，直接上传 OSS）"
-        echo ""
-        
-        # Dry-run 模式：跳过执行，直接退出
-        if [ "$DRY_RUN" == "true" ]; then
-            echo -e "${GREEN}✅ [DRY RUN] 完成 - 未执行任何实际修改${NC}"
-            echo ""
-            echo "实际文件变更:"
-            echo "  $VIDEO_FILE (仅上传 OSS，不提交 git)"
-            exit 0
-        fi
-        
-        read -p "是否继续上传到 OSS? [回车确认 / n 取消]: " user_input
-        
-        if [[ "$user_input" =~ ^[Nn]$ ]]; then
-            echo "已取消"
-            exit 0
-        fi
-        
-        COMMIT_MSG=""
-    fi
-    
-    # 准备日志文件
-    GIT_LOG="/tmp/sync_git_$$.log"
-    OSS_LOG="/tmp/sync_oss_$$.log"
-    touch "$OSS_LOG"
-    
-    # 只有非 Video 文件更新时才执行 git 操作
-    if [ "$ONLY_VIDEO_UPDATE" != "true" ]; then
-        echo "📦 Git 操作..."
-        for file in "${CHANGED_FILES[@]}"; do
-            git add "$file"
-        done
-        if [ ${#CHANGED_FILES[@]} -gt 0 ]; then
-            git commit -m "$COMMIT_MSG"
-        fi
-        git push origin main > "$GIT_LOG" 2>&1 &
-        GIT_PID=$!
-    else
-        echo "📦 跳过 Git 操作（Video 文件不提交 git）"
-        GIT_PID=""
-    fi
-    
-    echo "☁️  上传到阿里云 OSS..."
-    # Video 文件单独上传（如果有更新）- 同步执行确保能看到状态
-    VIDEO_OSS_STATUS=0
-    if [ "$VIDEO_UPDATED" == "true" ]; then
-        echo -n "  - $VIDEO_FILE (直接上传 OSS，不经过 git) ... "
-        if ossutil cp "$VIDEO_FILE" "$OSS_BUCKET/$VIDEO_FILE" -f --endpoint "$OSS_ENDPOINT" >> "$OSS_LOG" 2>&1; then
-            echo -e "${GREEN}✅${NC}"
-        else
-            echo -e "${RED}❌${NC}"
-            VIDEO_OSS_STATUS=1
-        fi
-    fi
-    # 其他文件上传（后台并行）
-    OSS_PID=""
-    if [ ${#CHANGED_FILES[@]} -gt 0 ]; then
-        for file in "${CHANGED_FILES[@]}"; do
-            echo "  - $file"
-            ossutil cp "$file" "$OSS_BUCKET/$file" -f --endpoint "$OSS_ENDPOINT" >> "$OSS_LOG" 2>&1 &
-        done
-        OSS_PID=$!
-    fi
-    
     echo ""
-    echo "⏳ 等待同步完成（并行执行中）..."
+    echo "======== sync.sh v3：Prep → Block A（GitHub）→ Block B（OSS）========"
     echo ""
+
+    prep_sync
+
+    echo ""
+    echo "🔍 Block A 前置：检查工单/CS_KI 未提交变更..."
     
-    # 等待 git 操作（如果有）
-    GIT_STATUS=0
-    if [ -n "$GIT_PID" ]; then
-        wait $GIT_PID
-        GIT_STATUS=$?
-    fi
-    
-    # 等待其他文件 OSS 上传（如果有）
-    OSS_STATUS=0
-    if [ -n "$OSS_PID" ] && [ ${#CHANGED_FILES[@]} -gt 0 ]; then
-        wait $OSS_PID
-        OSS_STATUS=$?
-    fi
-    
-    # 清理日志文件（成功时）
-    if [ $GIT_STATUS -eq 0 ] && [ $OSS_STATUS -eq 0 ] && [ $VIDEO_OSS_STATUS -eq 0 ]; then
-        rm -f "$GIT_LOG" "$OSS_LOG"
-    fi
-    
+    block_github
+
+    echo ""
+    block_oss
+    local oss_rc=$?
+
     echo ""
     echo "================================"
     echo "         同步结果报告"
     echo "================================"
-    
-    # GitHub 备份结果（只有非 Video 文件更新时才显示）
-    if [ "$ONLY_VIDEO_UPDATE" != "true" ] && [ ${#CHANGED_FILES[@]} -gt 0 ]; then
-        if [ $GIT_STATUS -eq 0 ]; then
-            echo -e "${GREEN}✅ GitHub 备份${NC}"
-            echo "   分支：main"
-            echo "   Commit: $(git log -1 --oneline)"
+    echo ""
+    echo -e "${BLUE}Block A（GitHub）${NC}"
+    if [ -n "$GITHUB_SKIPPED_REASON" ]; then
+        echo "  状态：已跳过"
+        echo "  原因：$GITHUB_SKIPPED_REASON"
+    elif [ "$DRY_RUN" = "true" ]; then
+        echo "  状态：[DRY RUN] 未执行 push"
+    elif [ "$GITHUB_RAN_PUSH" = "true" ]; then
+        if [ "$GITHUB_STATUS" -eq 0 ]; then
+            echo -e "  状态：${GREEN}✅ push 成功${NC}"
+            echo "  分支：main"
+            echo "  HEAD：$(git log -1 --oneline 2>/dev/null)"
         else
-            echo -e "${RED}❌ GitHub 备份失败 (exit code: $GIT_STATUS)${NC}"
-            echo "   错误日志:"
-            if [ -f "$GIT_LOG" ]; then
-                cat "$GIT_LOG" | sed 's/^/     /'
-            fi
+            echo -e "  状态：${RED}❌ push 失败 (exit $GITHUB_STATUS)${NC}"
         fi
-        echo ""
+    else
+        echo "  状态：未执行 push"
     fi
-    
-    # Video 文件 OSS 上传结果
-    if [ "$VIDEO_UPDATED" == "true" ]; then
-        if [ $VIDEO_OSS_STATUS -eq 0 ]; then
-            echo -e "${GREEN}✅ Video 文件上传 OSS 成功${NC}"
-            echo "   文件：$VIDEO_FILE"
-            echo "   路径：$OSS_BUCKET/$VIDEO_FILE"
-            echo "   （不提交 git，直接上传 OSS）"
-        else
-            echo -e "${RED}❌ Video 文件上传 OSS 失败${NC}"
-            echo "   文件：$VIDEO_FILE"
-            echo "   错误日志:"
-            if [ -f "$OSS_LOG" ]; then
-                tail -5 "$OSS_LOG" | sed 's/^/     /'
-            fi
-        fi
-        echo ""
+
+    echo ""
+    echo -e "${BLUE}Block B（OSS）${NC}"
+    if [ "$DRY_RUN" = "true" ] && [ ${#OSS_DRYRUN_UPLOADS[@]} -gt 0 ]; then
+        echo -e "  状态：${CYAN}[DRY RUN] 将上传（相对 .oss_last_upload 有变化）${NC}"
+        local df
+        for df in "${OSS_DRYRUN_UPLOADS[@]}"; do
+            echo "    - $df → $OSS_BUCKET/$df"
+        done
+    elif [ "$oss_rc" -eq 2 ]; then
+        echo -e "  状态：${YELLOW}已跳过（用户取消 OSS 上传）${NC}"
+    elif [ "$oss_rc" -ne 0 ]; then
+        echo -e "  状态：${RED}❌ 部分或全部上传失败${NC}"
+    elif [ ${#OSS_UPLOADED_FILES[@]} -gt 0 ]; then
+        echo -e "  状态：${GREEN}✅ 已上传${NC}"
+        local uf
+        for uf in "${OSS_UPLOADED_FILES[@]}"; do
+            echo "    - $uf → $OSS_BUCKET/$uf"
+        done
+    else
+        echo -e "  状态：${GREEN}✓ 无需上传（与 .oss_last_upload 一致）${NC}"
     fi
-    
-    # 其他文件 OSS 上传结果
-    if [ ${#CHANGED_FILES[@]} -gt 0 ]; then
-        if [ $OSS_STATUS -eq 0 ]; then
-            echo -e "${GREEN}✅ 工单/CSKI 文件上传 OSS${NC}"
-            echo "   Bucket: $OSS_BUCKET"
-            for file in "${CHANGED_FILES[@]}"; do
-                echo "   文件：$file"
-            done
-        else
-            echo -e "${RED}❌ 工单/CSKI 文件上传 OSS 失败 (exit code: $OSS_STATUS)${NC}"
-            echo "   错误日志:"
-            if [ -f "$OSS_LOG" ]; then
-                cat "$OSS_LOG" | sed 's/^/     /'
-            fi
-        fi
+    if [ ${#OSS_SKIPPED_FILES[@]} -gt 0 ]; then
+        echo "  未变化（未传）："
+        local sf
+        for sf in "${OSS_SKIPPED_FILES[@]}"; do
+            echo "    ○ $sf"
+        done
     fi
-    
+    if [ ${#OSS_FAIL_FILES[@]} -gt 0 ]; then
+        echo -e "  ${RED}失败：${NC}"
+        local ff
+        for ff in "${OSS_FAIL_FILES[@]}"; do
+            echo "    ✗ $ff"
+        done
+    fi
+
     echo ""
     echo "================================"
-    
-    ALL_SUCCESS=true
-    # 只有非 Video 更新时才检查 git 状态
-    if [ "$ONLY_VIDEO_UPDATE" != "true" ] && [ ${#CHANGED_FILES[@]} -gt 0 ] && [ $GIT_STATUS -ne 0 ]; then
-        ALL_SUCCESS=false
-    fi
-    if [ "$VIDEO_UPDATED" == "true" ] && [ $VIDEO_OSS_STATUS -ne 0 ]; then
-        ALL_SUCCESS=false
-    fi
-    if [ ${#CHANGED_FILES[@]} -gt 0 ] && [ $OSS_STATUS -ne 0 ]; then
-        ALL_SUCCESS=false
-    fi
-    
-    if [ "$ALL_SUCCESS" == "true" ]; then
-        echo -e "${GREEN}🎉 全部同步完成！${NC}"
-        echo ""
-        echo "OSS 文件约 1-2 分钟后在百炼平台自动生效"
-        exit 0
-    else
-        echo -e "${YELLOW}⚠️  部分任务失败${NC}"
+
+    if [ -z "$GITHUB_SKIPPED_REASON" ] && [ "$DRY_RUN" != "true" ] && [ "$GITHUB_RAN_PUSH" = "true" ] && [ "$GITHUB_STATUS" -ne 0 ]; then
         exit 1
     fi
+    if [ "$oss_rc" -eq 1 ]; then
+        exit 1
+    fi
+    if [ "$oss_rc" -eq 0 ] || [ "$oss_rc" -eq 2 ]; then
+        if [ "$DRY_RUN" = "true" ]; then
+            echo -e "${GREEN}✅ [DRY RUN] 流程预览结束（未修改 git / OSS / .oss_last_upload）。${NC}"
+        elif [ "$oss_rc" -eq 0 ] && [ ${#OSS_UPLOADED_FILES[@]} -gt 0 ]; then
+            echo -e "${GREEN}🎉 同步流程结束。${NC}"
+            echo "OSS 新上传文件约 1-2 分钟后在百炼平台自动生效"
+        elif [ "$oss_rc" -eq 0 ]; then
+            echo -e "${GREEN}🎉 同步流程结束（OSS 无增量）。${NC}"
+        else
+            echo -e "${YELLOW}流程结束（已跳过 OSS）。${NC}"
+        fi
+        exit 0
+    fi
+    exit 1
 }
 
 # 运行主程序
