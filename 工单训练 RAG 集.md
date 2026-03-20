@@ -1,4 +1,52 @@
 
+# ID: 39420
+
+SDK Product: RTC
+
+SDK Platform: Restful
+
+SDK Version: 当前版本
+
+Request Type: 其他问题
+
+Request Description: 我想配置webHook，之前都可以完成健康检查，但是今天我点，发现校验不通过，发现是验证签名不通过，导致我这边返回的不是200，请问健康检查这一步不会携带正确的请求包体过来吗
+
+Reply: 校验不通过就是密钥错了，需要先在 console 上获取密钥，然后配置到自己的服务端，然后再去新建事件
+中间不能刷新我们的 console 页面，不然刷新完密钥就变了，会导致永远匹配不上。
+
+---
+# ID: 39421
+
+SDK Product: RTC
+
+SDK Platform: Android
+
+SDK Version: 4.6.0
+
+Request Type: 其他问题
+
+Request Description: 使用查询主播列表接口获取房间中的用户channel_exist(指定的频道是否存在)返回false，实际频道里是有人的应该返回 true
+
+Reply: 您好，可以检查下查询频道里客户端加频道时配置的 `channelprofile`是否是直播模式，查询主播列表的 restful 接口只能查询到直播模式下主播的信息。如果频道里都是通信模式的话这个接口是查不到的，需要用[查询用户列表](https://doc.shengwang.cn/doc/rtc/restful/channel-management/operations/get-dev-v1-channel-user-appid-channelName)的接口才可以
+
+---
+# ID: 39430
+
+SDK Product: RTC
+
+SDK Platform: Web
+
+SDK Version: 其他版本
+
+Request Type: 线上报错
+
+Request Description: 网页端无法触发`stream-subscribed`
+
+Reply: 现在用的是什么版本的 SDK？最新的 4.x 已经移除`stream-subscribed`了，3.x已经停止更新维护很久了。
+[订阅远端音视频并播放](https://doc.shengwang.cn/doc/rtc/javascript/overview/migration-guide#%E8%AE%A2%E9%98%85%E8%BF%9C%E7%AB%AF%E9%9F%B3%E8%A7%86%E9%A2%91%E5%B9%B6%E6%92%AD%E6%94%BE)
+
+
+---
 
 # ID: 39397
 
@@ -17097,11 +17145,9 @@ SDK Version: 4.5.2
 
 Request Type: 效果不佳、不达预期
 
-Request Description: 现象：在1920x1080分辨率的屏幕上，接收1512x982分辨率的mbp的屏幕共享画面时，显示效果不及预期，文档文字会出现明显的模糊
+Request Description: 现象：在1920x1080分辨率的屏幕上，接收1512x982分辨率的mbp的屏幕共享画面时，显示效果不及预期，文档文字会出现明显的模糊。有什么合适的参数可以适配这个使用场景吗？
 
-问题：有什么合适的参数可以适配这个使用场景吗？
-
-Reply: 您好，请问您现在屏幕共享的平台是 Windows 还是 Mac？Mac 的 dpi 和 Windows 不同，所以直接用标准采集方式采集到的画面会糊一些，您可以升级当前 SDK 版本到最新，用我们最新版本的 SDK 试一下。如果还有问题，稍后人工工程师会为您提供几个调整采集方式的私参来解决。
+Reply: 您好，请问您现在屏幕共享的平台是 Windows 还是 Mac？Mac 的 dpi 和 Windows 不同，所以直接用标准采集方式采集到的画面会糊一些，您可以升级当前 SDK 版本到最新，用我们最新版本的 SDK 试一下。如果屏幕共享画面还是不清晰，可以在初始化 SDK 后加一个私参调用`agoraKit.setParameters("{\"che.video.screenCaptureMode\": 1}");`来解决。
 
 ---
 
